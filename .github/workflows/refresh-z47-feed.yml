@@ -1,0 +1,44 @@
+name: Refresh Z47'47 feed
+
+# Hourly during NSE market hours (09:15–15:30 IST), Mon–Fri.
+# IST = UTC + 5:30, so the UTC window is 03:45–10:00. The cron below fires at
+# minute :30 of UTC hours 04–10  →  10:00, 11:00 … 16:00 IST.
+# The 16:00 IST run lands just after the 15:30 close, so it captures the close.
+# NOTE: GitHub Actions scheduled runs can be delayed 5–15 min (and rarely skipped)
+# under load — fine for an hourly feed. Schedules only run on the default branch.
+on:
+  schedule:
+    - cron: "30 4-10 * * 1-5"
+  workflow_dispatch: {}        # adds a manual "Run workflow" button
+
+permissions:
+  contents: write              # needed to commit the refreshed JSON/CSV back
+
+concurrency:
+  group: z47-feed
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build feed
+        run: python3 build_z47_json.py --write-history
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "z47-feed-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add z47_index.json z47_history.csv
+          if git diff --staged --quiet; then
+            echo "No changes — nothing to commit."
+          else
+            git commit -m "data: refresh Z47'47 feed ($(date -u +'%Y-%m-%dT%H:%MZ'))"
+            git push
+          fi
