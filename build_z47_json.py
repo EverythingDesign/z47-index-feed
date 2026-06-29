@@ -33,8 +33,11 @@ from __future__ import annotations
 import csv
 import json
 import os
+import random
 import ssl
 import sys
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -168,14 +171,31 @@ def yf_ticker(c: dict) -> str:
     return c["ticker"] + ".NS" if c["exchange"] == "NSE" else c["ticker"]
 
 
+YF_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
+# A realistic browser UA + rotating hosts + back-off: Yahoo aggressively
+# rate-limits (429) / blocks (401/403) datacenter IPs such as GitHub Actions
+# runners. From a home IP a bare "Mozilla/5.0" burst is fine; from a runner it
+# isn't — so we look like a browser and retry politely.
+YF_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+         "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+
+
 def fetch_chart(symbol: str, period1: int, period2: int, interval: str = "1d"):
-    """Return (meta, [(iso_date, close), ...] sorted ascending) from Yahoo v8."""
+    """Return (meta, [(iso_date, close), ...] sorted ascending) from Yahoo v8.
+
+    Resilient to datacenter rate-limiting: rotates query1/query2 hosts and backs
+    off (honouring Retry-After) on 429/401/403/503 before giving up."""
     q = urllib.parse.quote(symbol, safe="")
-    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{q}"
-           f"?period1={period1}&period2={period2}&interval={interval}")
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    path = (f"/v8/finance/chart/{q}"
+            f"?period1={period1}&period2={period2}&interval={interval}")
     last_err = None
-    for _ in range(3):
+    for attempt in range(5):
+        host = YF_HOSTS[attempt % len(YF_HOSTS)]
+        req = urllib.request.Request(
+            f"https://{host}{path}",
+            headers={"User-Agent": YF_UA,
+                     "Accept": "application/json,text/plain,*/*",
+                     "Accept-Language": "en-US,en;q=0.9"})
         try:
             with urllib.request.urlopen(req, timeout=25, context=CTX) as r:
                 d = json.load(r)
@@ -192,8 +212,17 @@ def fetch_chart(symbol: str, period1: int, period2: int, interval: str = "1d"):
                 series.append((iso, float(c)))
             series.sort(key=lambda x: x[0])
             return meta, series
+        except urllib.error.HTTPError as e:  # noqa: PERF203
+            last_err = e
+            if e.code in (429, 401, 403, 503):
+                ra = e.headers.get("Retry-After") if e.headers else None
+                wait = float(ra) if (ra and ra.isdigit()) else 2 ** attempt
+                time.sleep(min(wait, 30) + random.uniform(0, 1.0))
+            else:
+                time.sleep(1 + random.uniform(0, 1.0))
         except Exception as e:  # noqa: BLE001
             last_err = e
+            time.sleep(1 + random.uniform(0, 1.0))
     raise RuntimeError(f"fetch failed for {symbol}: {last_err}")
 
 
@@ -271,7 +300,9 @@ def main():
     symbols = tickers + [N500_YF]
     fetched: dict[str, tuple] = {}
     errors: list[str] = []
-    with ThreadPoolExecutor(max_workers=12) as ex:
+    # Gentle concurrency (4, not 12): a 48-request burst from a datacenter IP
+    # is an instant Yahoo 429. fetch_chart() also backs off per request.
+    with ThreadPoolExecutor(max_workers=4) as ex:
         futs = {ex.submit(fetch_chart, s, period1, period2): s for s in symbols}
         for fut in as_completed(futs):
             s = futs[fut]
@@ -283,6 +314,23 @@ def main():
         print("  [warn]", e, file=sys.stderr)
 
     n500_meta, n500_series = fetched.get(N500_YF, ({}, []))
+
+    # ── Health guard ───────────────────────────────────────────────────────
+    # Never overwrite the last-good feed with a half-fetched one. If Yahoo
+    # rate-limited the runner (missing constituents or benchmark), abort RED
+    # without writing — the page keeps showing the last good data, stale but
+    # correct, rather than crashing downstream or publishing a broken index.
+    def _priced(tk):
+        meta, series = fetched.get(tk, ({}, []))
+        return bool(series) or meta.get("regularMarketPrice") is not None
+    priced_ok = sum(1 for tk in tickers if _priced(tk))
+    bench_ok = bool(n500_series) or n500_meta.get("regularMarketPrice") is not None
+    if priced_ok < len(tickers) or not bench_ok:
+        print(f"ABORT: incomplete fetch — priced {priced_ok}/{len(tickers)} "
+              f"constituents, benchmark={'ok' if bench_ok else 'MISSING'}. "
+              f"Keeping last-good feed (not overwriting z47_index.json).",
+              file=sys.stderr)
+        sys.exit(1)
 
     # Master trading-day calendar from the benchmark (>= anchor), plus today.
     calendar = sorted({d for d, _ in n500_series if d >= ANCHOR_DATE})
