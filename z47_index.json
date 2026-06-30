@@ -1,12 +1,12 @@
 {
   "meta": {
-    "generated_at": "2026-07-01T00:57:30+05:30",
-    "generated_at_ist": "01 Jul 2026, 00:57 IST",
+    "generated_at": "2026-07-01T01:26:42+05:30",
+    "generated_at_ist": "01 Jul 2026, 01:26 IST",
     "market_open": false,
     "usdinr": {
       "value": 94.65,
       "daily_pct": 0.13,
-      "as_of": "00:57 IST"
+      "as_of": "01:26 IST"
     },
     "base_date": "2024-01-02",
     "anchor_date": "2026-06-16",
@@ -23,7 +23,7 @@
     "value_mcap": 126.41,
     "daily_pct": 1.22,
     "returns": {
-      "1M": 5.04,
+      "1M": 5.03,
       "3M": 15.98,
       "6M": -6.41,
       "1Y": -5.39,
@@ -3266,13 +3266,18 @@
       "nifty500": 119.0299
     },
     {
+      "date": "2026-06-26",
+      "z47": 121.9264,
+      "nifty500": 119.0299
+    },
+    {
       "date": "2026-06-29",
       "z47": 122.7607,
       "nifty500": 118.4444
     },
     {
       "date": "2026-06-30",
-      "z47": 124.2592,
+      "z47": 124.2586,
       "nifty500": 118.422
     }
   ],
@@ -3424,12 +3429,12 @@
       "exchange": "NASDAQ",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 25.74,
-      "price": 54.01,
+      "price": 53.39,
       "ccy": "USD",
-      "daily_pct": 0.22,
-      "ret_1m": 14.14,
-      "since_pct": 17.62,
-      "mcap_mn": 5123.8
+      "daily_pct": -0.93,
+      "ret_1m": 12.83,
+      "since_pct": 16.27,
+      "mcap_mn": 479398.4
     },
     {
       "num": 12,
@@ -3522,12 +3527,12 @@
       "exchange": "NASDAQ",
       "sector": "SaaS / AI",
       "float_pct": 79.18,
-      "price": 10.18,
+      "price": 10.11,
       "ccy": "USD",
-      "daily_pct": 0.3,
-      "ret_1m": -4.68,
-      "since_pct": -53.89,
-      "mcap_mn": 2814.1
+      "daily_pct": -0.34,
+      "ret_1m": -5.29,
+      "since_pct": -54.19,
+      "mcap_mn": 264653.8
     },
     {
       "num": 19,
@@ -3983,16 +3988,16 @@
         "ret_1m": -7.31
       },
       {
+        "name": "Freshworks",
+        "ticker": "FRSH",
+        "sector": "SaaS / AI",
+        "ret_1m": -5.29
+      },
+      {
         "name": "Awfis Space Solutions",
         "ticker": "AWFIS",
         "sector": "B2B",
         "ret_1m": -4.98
-      },
-      {
-        "name": "Freshworks",
-        "ticker": "FRSH",
-        "sector": "SaaS / AI",
-        "ret_1m": -4.68
       },
       {
         "name": "Swiggy",
@@ -4006,8 +4011,8 @@
     {
       "name": "Consumer / Consumer Tech",
       "count": 19,
-      "weight_pct": 57.7,
-      "avg_ret_1m": 10.73,
+      "weight_pct": 58.0,
+      "avg_ret_1m": 10.66,
       "top_mover": {
         "name": "CarTrade",
         "ret_1m": 51.97
@@ -4016,7 +4021,7 @@
     {
       "name": "Fintech / Financial Services",
       "count": 13,
-      "weight_pct": 31.1,
+      "weight_pct": 29.6,
       "avg_ret_1m": 5.16,
       "top_mover": {
         "name": "Aye Finance",
@@ -4026,8 +4031,8 @@
     {
       "name": "SaaS / AI",
       "count": 9,
-      "weight_pct": 5.2,
-      "avg_ret_1m": 3.61,
+      "weight_pct": 6.7,
+      "avg_ret_1m": 3.55,
       "top_mover": {
         "name": "Amagi Media Labs",
         "ret_1m": 37.02
@@ -4036,7 +4041,7 @@
     {
       "name": "B2B",
       "count": 6,
-      "weight_pct": 6.0,
+      "weight_pct": 5.7,
       "avg_ret_1m": 6.18,
       "top_mover": {
         "name": "Shadowfax",
