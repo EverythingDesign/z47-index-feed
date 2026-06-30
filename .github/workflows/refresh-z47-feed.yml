@@ -1,14 +1,17 @@
 name: Refresh Z47'47 feed
 
-# Hourly during NSE market hours (09:15–15:30 IST), Mon–Fri.
-# IST = UTC + 5:30, so the UTC window is 03:45–10:00. The cron below fires at
-# minute :30 of UTC hours 04–10  →  10:00, 11:00 … 16:00 IST.
-# The 16:00 IST run lands just after the 15:30 close, so it captures the close.
-# NOTE: GitHub Actions scheduled runs can be delayed 5–15 min (and rarely skipped)
-# under load — fine for an hourly feed. Schedules only run on the default branch.
+# TWICE a day, Mon–Fri (NSE trades 09:15–15:30 IST). Hourly polling got our IP
+# rate-limited/blocked by Yahoo; for an index only the CLOSE really matters, so we
+# pull just twice — once after the open, once after the close — cutting the Yahoo
+# footprint ~90%. IST = UTC + 5:30.
+#   05:15 UTC = 10:45 IST  → ~1.5h after open (intraday snapshot, settled prices)
+#   10:45 UTC = 16:15 IST  → ~45m after the 15:30 close (THE value that matters)
+# GitHub schedules can be delayed 5–15 min (rarely skipped) — fine here, we don't
+# need exact timing, just "after open" and "after close". Runs only on the default branch.
 on:
   schedule:
-    - cron: "30 4-10 * * 1-5"
+    - cron: "15 5 * * 1-5"     # ~10:45 IST — after market open
+    - cron: "45 10 * * 1-5"    # ~16:15 IST — after market close (the close value)
   workflow_dispatch: {}        # adds a manual "Run workflow" button
 
 permissions:
@@ -27,6 +30,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      # yfinance does Yahoo's cookie+crumb handshake, so the runner (a datacenter
+      # IP) gets served where bare requests now 429. This is the same library the
+      # source dashboard uses, so our numbers match it.
+      - name: Install deps
+        run: python3 -m pip install --quiet --upgrade yfinance
 
       - name: Build feed
         run: python3 build_z47_json.py --write-history
