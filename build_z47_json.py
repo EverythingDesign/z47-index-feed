@@ -44,6 +44,7 @@ import random
 import ssl
 import sys
 import time
+from collections import Counter
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -512,13 +513,33 @@ def main():
               file=sys.stderr)
         sys.exit(1)
 
-    # Master trading-day calendar from the benchmark (>= anchor), plus today.
-    calendar = sorted({d for d, _ in n500_series if d >= ANCHOR_DATE})
+    # Master NSE trading-day calendar from the CONSTITUENTS, not the benchmark.
+    # ^CRSLDX (an index) has occasional NaN bars on Yahoo; using it as the calendar
+    # silently dropped real trading days from the WHOLE chart (e.g. 26 Jun, when all
+    # 47 stocks traded but ^CRSLDX was missing → a gap vs the source). Build the
+    # calendar from the NSE names instead — a day counts only if a majority of them
+    # have a bar (excludes stray single bars and the US names' NASDAQ-only dates) —
+    # then forward-fill the benchmark onto it. >= anchor only, plus today.
+    nse_tickers = [yf_ticker(c) for c in COMPANIES if c["exchange"] == "NSE"]
+    _daycount = Counter()
+    for tk in nse_tickers:
+        for d, _ in fetched.get(tk, ({}, []))[1]:
+            if d >= ANCHOR_DATE:
+                _daycount[d] += 1
+    _thresh = max(1, len(nse_tickers) // 2)
+    calendar = sorted(d for d, n in _daycount.items() if n >= _thresh)
     if calendar and calendar[-1] < today_iso and n500_meta.get("regularMarketPrice"):
         calendar.append(today_iso)
 
     ff = {tk: ffill_on_calendar(fetched.get(tk, ({}, []))[1], calendar) for tk in tickers}
     one_mo_target = (now_ist.date() - timedelta(days=30)).isoformat()
+
+    # USD/INR up front — used to convert the USD names' (MMYT/FRSH) market cap to
+    # INR for the table/sector weights, matching the source (which shows all caps in
+    # INR mn). NOTE: this is display only; the index VALUE still sums USD prices as
+    # INR (the documented model quirk), untouched.
+    usdinr = fetch_usdinr()
+    usd_to_inr = (usdinr or {}).get("value") or 90.0   # fallback rate if FX fetch fails
 
     # ── Per-constituent live snapshot ──────────────────────────────────────
     constituents = []
@@ -544,12 +565,18 @@ def main():
         sh = SHARE_DATA.get(tk, {})
         ccy = "INR" if c["exchange"] == "NSE" else "USD"
         # Prefer Yahoo's live market cap (what the source shows); fall back to
-        # price × our total shares only if fast_info didn't supply it.
+        # price × our total shares only if fast_info didn't supply it. For the USD
+        # names (MMYT/FRSH) Yahoo's cap is in USD — convert to INR mn so the table
+        # and sector weights are comparable with the INR names (source convention).
         mcap_mn = None
         if meta.get("_mcap"):
             mcap_mn = meta["_mcap"] / 1e6
+            if c["exchange"] != "NSE":
+                mcap_mn *= usd_to_inr
         elif price and sh.get("ts"):
             mcap_mn = price * sh["ts"] / 1e6
+            if c["exchange"] != "NSE":
+                mcap_mn *= usd_to_inr
         constituents.append({
             "num": c["num"], "name": c["name"], "ticker": c["ticker"],
             "exchange": c["exchange"], "sector": c["sector"], "float_pct": c["float_pct"],
@@ -644,8 +671,6 @@ def main():
         events = []
 
     market_open = (now_ist.weekday() < 5 and _time(9, 15) <= now_ist.time() <= _time(15, 35))
-
-    usdinr = fetch_usdinr()
 
     out = {
         "meta": {
