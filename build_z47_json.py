@@ -3,8 +3,14 @@
 build_z47_json.py — Z47'47 index feed builder.
 
 Produces z47_index.json: the single data file the FortySeven landing page reads.
-Pure standard library — NO yfinance / pandas — so the GitHub Action that runs this
-on a schedule needs zero dependencies and won't break on Python version bumps.
+
+FETCH: yfinance (preferred) with a pure-stdlib urllib fallback. Yahoo now 429s
+*unauthenticated* requests broadly (every IP, not just datacenter) — they require
+a cookie+crumb session. yfinance performs that handshake automatically, so it
+works from any IP including GitHub Actions runners (this is the same library the
+source-of-truth dashboard uses, so our numbers match it). If yfinance isn't
+importable, we fall back to the bare urllib chart endpoint (works only from IPs
+Yahoo still serves unauthenticated). Set Z47_NO_YF=1 to force the stdlib path.
 
 DATA SOURCE OF TRUTH: github.com/GirishZ47/z47-dashboard (companies.py,
 calc_index_extension.py, constituent_events.json, z47_history.csv). The constants
@@ -17,7 +23,8 @@ Methodology (mirrors calc_index_extension.py, the authoritative model):
     stays continuous with z47_history.csv.
   - z47_mcap uses total shares instead of free-float shares.
   - Benchmark = NIFTY 500 (^CRSLDX), rebased to 100 on 2024-01-02 (base 19418.40).
-  - Prices from Yahoo Finance public v8 chart endpoint.
+  - Prices from Yahoo Finance via yfinance (history) + fast_info (live price /
+    previous close / market cap), mirroring the source dashboard's fetching.
 
 KNOWN METHODOLOGY ITEM (replicated faithfully so the public number matches Z47's
 dashboard — not silently "fixed"):
@@ -166,6 +173,42 @@ def _ssl_ctx() -> ssl.SSLContext:
 
 CTX = _ssl_ctx()
 
+# ── yfinance probe ──────────────────────────────────────────────────────────
+# Preferred fetch path: yfinance does Yahoo's cookie+crumb handshake, so it works
+# from any IP (incl. GitHub runners) where bare requests now 429. Falls back to
+# the urllib chart endpoint below if yfinance is missing or Z47_NO_YF is set.
+try:
+    import yfinance as _yf  # type: ignore
+    USE_YF = os.environ.get("Z47_NO_YF") != "1"
+except Exception:
+    _yf = None
+    USE_YF = False
+
+
+def _fi_num(fi, *keys):
+    """Read a numeric field from a yfinance fast_info (attr- or dict-style),
+    tolerant of version differences. Returns a positive float or None."""
+    for k in keys:
+        v = None
+        try:
+            v = getattr(fi, k)
+        except Exception:
+            v = None
+        if v is None:
+            try:
+                v = fi[k]
+            except Exception:
+                v = None
+        if v is None:
+            continue
+        try:
+            f = float(v)
+        except Exception:
+            continue
+        if f == f and f != 0:  # not NaN, not zero
+            return f
+    return None
+
 
 def yf_ticker(c: dict) -> str:
     return c["ticker"] + ".NS" if c["exchange"] == "NSE" else c["ticker"]
@@ -226,19 +269,140 @@ def fetch_chart(symbol: str, period1: int, period2: int, interval: str = "1d"):
     raise RuntimeError(f"fetch failed for {symbol}: {last_err}")
 
 
+def session_asof(now):
+    """Most recent NSE trading-session date as of `now` (holidays ignored — a rare
+    off-by-a-day on the latest point that self-corrects on the next run).
+
+    Yahoo's daily-history endpoint lags the live quote: right after a close (and in
+    the pre-open hours) the just-finished session is still NaN in history while
+    fast_info already carries it. So we date the live price by the session calendar,
+    not by `today` — otherwise a pre-open live price (= yesterday's close) gets
+    mislabelled today, creating a phantom future point and a gap."""
+    if now.weekday() < 5 and now.time() >= _time(9, 15):
+        d = now                      # weekday, session has opened → today
+    else:
+        d = now - timedelta(days=1)  # before open / weekend → step back to last weekday
+        while d.weekday() >= 5:
+            d -= timedelta(days=1)
+    return d.date().isoformat()
+
+
+def fetch_all_yf(symbols, period1, period2, asof_iso):
+    """Fetch history + live snapshot for every symbol via yfinance.
+
+    Returns {symbol: (meta, series)} matching fetch_chart()'s shape so the whole
+    downstream pipeline is unchanged. `series` is ascending (iso_date, close) with
+    the latest bar (dated `asof_iso`) set from the live price; `meta` carries
+    regularMarketPrice plus two private fields we use directly: `_prev` (official
+    previous close, for the day change) and `_mcap` (Yahoo market cap, for the
+    constituent table / sector weights). Closes are UNADJUSTED to stay continuous
+    with the published history.
+    """
+    start = datetime.fromtimestamp(period1, IST).date().isoformat()
+    end   = datetime.fromtimestamp(period2, IST).date().isoformat()  # exclusive (already +1d)
+
+    # 1) One batched daily-history download for all symbols.
+    df = _yf.download(symbols, start=start, end=end, interval="1d",
+                      auto_adjust=False, group_by="ticker", threads=True,
+                      progress=False)
+
+    def _series_from_df(sym):
+        try:
+            sub = df[sym] if len(symbols) > 1 else df
+            closes = sub["Close"]
+        except Exception:
+            return []
+        s = []
+        for idx, val in closes.items():
+            try:
+                f = float(val)
+            except Exception:
+                continue
+            if f != f:  # NaN (e.g. today's forming intraday bar)
+                continue
+            d = idx.date().isoformat() if hasattr(idx, "date") else str(idx)[:10]
+            s.append((d, f))
+        s.sort(key=lambda x: x[0])
+        return s
+
+    out = {}
+    for sym in symbols:
+        series = _series_from_df(sym)
+        if not series:  # per-symbol fallback if the batch missed this ticker
+            try:
+                h = _yf.Ticker(sym).history(start=start, end=end, interval="1d",
+                                            auto_adjust=False)
+                for idx, val in h["Close"].items():
+                    try:
+                        f = float(val)
+                    except Exception:
+                        continue
+                    if f == f:
+                        d = idx.date().isoformat() if hasattr(idx, "date") else str(idx)[:10]
+                        series.append((d, f))
+                series.sort(key=lambda x: x[0])
+            except Exception:
+                pass
+
+        # Drop any history bar dated on/after the as-of session — we set that point
+        # from the live price so series[-1] is the latest value (correctly dated)
+        # and series[-2] is the prior close.
+        series = [(d, c) for (d, c) in series if d < asof_iso]
+        prior_close = series[-1][1] if series else None
+
+        last_price = prev_close = mcap = None
+        try:
+            fi = _yf.Ticker(sym).fast_info
+            last_price = _fi_num(fi, "last_price", "lastPrice")
+            prev_close = _fi_num(fi, "previous_close", "previousClose")
+            mcap       = _fi_num(fi, "market_cap", "marketCap")
+        except Exception:
+            pass
+        if last_price is None:
+            last_price = prior_close          # after-close fallback: history's close
+        if prev_close is None:
+            prev_close = prior_close
+        if last_price is not None:
+            series.append((asof_iso, last_price))
+
+        out[sym] = ({
+            "regularMarketPrice": last_price,
+            "regularMarketTime": int(datetime.now(IST).timestamp()),
+            "_prev": prev_close,
+            "_mcap": mcap,
+        }, series)
+    return out
+
+
 def fetch_usdinr():
     """USD/INR spot from Yahoo (INR=X) → {value, daily_pct, as_of}, or None on failure."""
+    if USE_YF:
+        try:
+            fi = _yf.Ticker("INR=X").fast_info
+            val = _fi_num(fi, "last_price", "lastPrice")
+            prev = _fi_num(fi, "previous_close", "previousClose")
+            if val:
+                out = {"value": round(val, 2)}
+                if prev:
+                    out["daily_pct"] = round((val - prev) / prev * 100, 2)
+                out["as_of"] = datetime.now(IST).strftime("%H:%M IST")
+                return out
+        except Exception:
+            pass
     try:
         now = datetime.now(IST)
         p2 = int(now.timestamp())
         p1 = p2 - 14 * 86400
         meta, series = fetch_chart("INR=X", p1, p2, interval="1d")
+        today_iso = now.date().isoformat()
         val = meta.get("regularMarketPrice")
         if val is None and series:
             val = series[-1][1]
-        prev = meta.get("chartPreviousClose") or meta.get("previousClose")
-        if (not prev) and len(series) >= 2:
-            prev = series[-2][1]
+        # real previous close = last daily close before today (not chartPreviousClose,
+        # which over a 14-day range is ~2 weeks old → a wrong "daily" FX change)
+        prev = None
+        if series:
+            prev = series[-2][1] if (series[-1][0] >= today_iso and len(series) >= 2) else series[-1][1]
         out = {"value": round(float(val), 2)}
         if prev:
             out["daily_pct"] = round((float(val) - float(prev)) / float(prev) * 100, 2)
@@ -289,27 +453,43 @@ def ret_over(pairs, days, today_iso):
 def main():
     write_history = "--write-history" in sys.argv
     now_ist = datetime.now(IST)
-    today_iso = now_ist.date().isoformat()
+    # "today_iso" = the date of the LATEST data point, i.e. the most recent trading
+    # session — not the wall-clock date. Before the open (and just after a close,
+    # while Yahoo's daily history still lags) the latest price belongs to the prior
+    # session; dating it by the calendar avoids a phantom future point. See session_asof().
+    today_iso = session_asof(now_ist)
     # Fetch from base date so we can derive per-constituent "since" returns too.
     period1 = int(datetime(2024, 1, 1, tzinfo=IST).timestamp())
     period2 = int(now_ist.timestamp()) + 86400
 
     tickers = [yf_ticker(c) for c in COMPANIES]
 
-    # ── Fetch everything concurrently ──────────────────────────────────────
+    # ── Fetch everything ───────────────────────────────────────────────────
     symbols = tickers + [N500_YF]
     fetched: dict[str, tuple] = {}
     errors: list[str] = []
-    # Gentle concurrency (4, not 12): a 48-request burst from a datacenter IP
-    # is an instant Yahoo 429. fetch_chart() also backs off per request.
-    with ThreadPoolExecutor(max_workers=4) as ex:
-        futs = {ex.submit(fetch_chart, s, period1, period2): s for s in symbols}
-        for fut in as_completed(futs):
-            s = futs[fut]
-            try:
-                fetched[s] = fut.result()
-            except Exception as e:  # noqa: BLE001
-                errors.append(f"{s}: {e}")
+
+    # Preferred: yfinance (authenticated session — works from any IP).
+    if USE_YF:
+        try:
+            print("  fetching via yfinance (cookie+crumb session)…", file=sys.stderr)
+            fetched = fetch_all_yf(symbols, period1, period2, today_iso)
+        except Exception as e:  # noqa: BLE001
+            print(f"  [warn] yfinance path failed ({e}); falling back to urllib",
+                  file=sys.stderr)
+            fetched = {}
+
+    # Fallback: bare urllib chart endpoint. Gentle concurrency (4, not 12) — a
+    # burst from a datacenter IP is an instant 429; fetch_chart() also backs off.
+    if not fetched:
+        with ThreadPoolExecutor(max_workers=4) as ex:
+            futs = {ex.submit(fetch_chart, s, period1, period2): s for s in symbols}
+            for fut in as_completed(futs):
+                s = futs[fut]
+                try:
+                    fetched[s] = fut.result()
+                except Exception as e:  # noqa: BLE001
+                    errors.append(f"{s}: {e}")
     for e in errors:
         print("  [warn]", e, file=sys.stderr)
 
@@ -348,9 +528,12 @@ def main():
         price = meta.get("regularMarketPrice")
         if price is None and series:
             price = series[-1][1]
-        prev = meta.get("chartPreviousClose")
-        if prev is None and len(series) >= 2:
-            prev = series[-2][1]
+        # Official previous close from fast_info (matches the source's day change).
+        # Fallback to the last daily close before today. (NOT meta.chartPreviousClose:
+        # for a 2024-start range that's the pre-2024 close → the multi-year "+109%" day bug.)
+        prev = meta.get("_prev")
+        if prev is None and series:
+            prev = series[-2][1] if (series[-1][0] >= today_iso and len(series) >= 2) else series[-1][1]
         daily = (price / prev - 1) * 100 if price and prev else None
         base_1m = close_on_or_after(series, one_mo_target)
         ret_1m = (price / base_1m - 1) * 100 if price and base_1m else None
@@ -360,7 +543,13 @@ def main():
         since = (price / since_base - 1) * 100 if price and since_base else None
         sh = SHARE_DATA.get(tk, {})
         ccy = "INR" if c["exchange"] == "NSE" else "USD"
-        mcap_mn = price * sh["ts"] / 1e6 if price and sh.get("ts") else None
+        # Prefer Yahoo's live market cap (what the source shows); fall back to
+        # price × our total shares only if fast_info didn't supply it.
+        mcap_mn = None
+        if meta.get("_mcap"):
+            mcap_mn = meta["_mcap"] / 1e6
+        elif price and sh.get("ts"):
+            mcap_mn = price * sh["ts"] / 1e6
         constituents.append({
             "num": c["num"], "name": c["name"], "ticker": c["ticker"],
             "exchange": c["exchange"], "sector": c["sector"], "float_pct": c["float_pct"],
