@@ -1,17 +1,18 @@
 name: Refresh Z47'47 feed
 
-# TWICE a day, Mon–Fri (NSE trades 09:15–15:30 IST). Hourly polling got our IP
-# rate-limited/blocked by Yahoo; for an index only the CLOSE really matters, so we
-# pull just twice — once after the open, once after the close — cutting the Yahoo
-# footprint ~90%. IST = UTC + 5:30.
-#   05:15 UTC = 10:45 IST  → ~1.5h after open (intraday snapshot, settled prices)
-#   10:45 UTC = 16:15 IST  → ~45m after the 15:30 close (THE value that matters)
-# GitHub schedules can be delayed 5–15 min (rarely skipped) — fine here, we don't
-# need exact timing, just "after open" and "after close". Runs only on the default branch.
+# HOURLY during market hours + a settled close, Mon–Fri (NSE trades 09:15–15:30 IST).
+# Yahoo used to 429 hourly polling, but that was UNauthenticated requests — we now fetch
+# via yfinance's cookie+crumb session (works from the runner), so hourly is viable again.
+# IST = UTC + 5:30, so whole IST hours fall at :30 past the UTC hour.
+#   30 4-9 UTC = 10:00,11:00,12:00,13:00,14:00,15:00 IST → intraday snapshots
+#   45 10 UTC = 16:15 IST → ~45m after the 15:30 close, once prices settle (THE close value)
+# GitHub schedules can be delayed 5–15 min (rarely skipped) — fine here, we don't need
+# exact timing. If Yahoo ever throttles, the builder's health guard keeps the last-good
+# feed instead of publishing a partial one. Runs only on the default branch.
 on:
   schedule:
-    - cron: "15 5 * * 1-5"     # ~10:45 IST — after market open
-    - cron: "45 10 * * 1-5"    # ~16:15 IST — after market close (the close value)
+    - cron: "30 4-9 * * 1-5"   # hourly 10:00–15:00 IST (intraday, Mon–Fri)
+    - cron: "45 10 * * 1-5"    # ~16:15 IST — settled official close (the value that matters)
   workflow_dispatch: {}        # adds a manual "Run workflow" button
 
 permissions:
