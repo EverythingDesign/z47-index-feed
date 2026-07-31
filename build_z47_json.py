@@ -458,12 +458,12 @@ def mcap_mn_inr(c, meta, price, sh, usd_to_inr):
             # Yahoo ~10× inflated only on some large-cap .NS names (e.g. IndiaMart).
             # E2E also hits this ratio but Yahoo is correct — don't divide when < 500k mn.
             return yahoo_mn / 10 if yahoo_mn >= 500_000 else yahoo_mn
+        if yahoo_mn / calc_mn >= 1.8:
+            return calc_mn  # Yahoo ~2× inflated (e.g. MedPlus); SHARE_DATA ts is reliable
         if calc_mn / yahoo_mn >= 8:
             return yahoo_mn
         if calc_mn > yahoo_mn * 1.5:
             return yahoo_mn  # SHARE_DATA ts ~2× high (Lenskart, Meesho, Groww)
-        if calc_mn < yahoo_mn * 0.65:
-            return yahoo_mn  # SHARE_DATA ts too low (MedPlus, Shadowfax, …)
         return yahoo_mn
     return yahoo_mn or calc_mn
 
