@@ -451,21 +451,21 @@ def mcap_mn_inr(c, meta, price, sh, usd_to_inr):
         if c["exchange"] != "NSE":
             calc_mn *= usd_to_inr
     if c["exchange"] != "NSE":
-        return calc_mn or yahoo_mn
-    # NSE: Yahoo fast_info market_cap is often ~10× inflated for .NS tickers;
-    # SHARE_DATA total shares can be stale for some names — reconcile both.
+        return yahoo_mn or calc_mn
+    # NSE display: prefer Yahoo live market_cap; SHARE_DATA ts is stale for many names.
     if calc_mn and yahoo_mn:
-        ratio = yahoo_mn / calc_mn
-        if ratio >= 8:
-            return yahoo_mn / 10  # Yahoo market_cap ~10× inflated for this .NS ticker
+        if yahoo_mn / calc_mn >= 8:
+            # Yahoo ~10× inflated only on some large-cap .NS names (e.g. IndiaMart).
+            # E2E also hits this ratio but Yahoo is correct — don't divide when < 500k mn.
+            return yahoo_mn / 10 if yahoo_mn >= 500_000 else yahoo_mn
         if calc_mn / yahoo_mn >= 8:
             return yahoo_mn
-        if calc_mn > yahoo_mn * 2:
-            return yahoo_mn
-        if yahoo_mn > calc_mn * 2:
-            return calc_mn
-        return calc_mn
-    return calc_mn or yahoo_mn
+        if calc_mn > yahoo_mn * 1.5:
+            return yahoo_mn  # SHARE_DATA ts ~2× high (Lenskart, Meesho, Groww)
+        if calc_mn < yahoo_mn * 0.65:
+            return yahoo_mn  # SHARE_DATA ts too low (MedPlus, Shadowfax, …)
+        return yahoo_mn
+    return yahoo_mn or calc_mn
 
 
 def ret_over(pairs, days, today_iso):
