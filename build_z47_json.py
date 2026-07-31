@@ -438,6 +438,36 @@ def r2(x, n=2):
     return round(x, n) if x is not None else None
 
 
+def mcap_mn_inr(c, meta, price, sh, usd_to_inr):
+    """Market cap in INR millions for the constituent table / sector weights."""
+    yahoo_mn = None
+    if meta.get("_mcap"):
+        yahoo_mn = meta["_mcap"] / 1e6
+        if c["exchange"] != "NSE":
+            yahoo_mn *= usd_to_inr
+    calc_mn = None
+    if price and sh.get("ts"):
+        calc_mn = price * sh["ts"] / 1e6
+        if c["exchange"] != "NSE":
+            calc_mn *= usd_to_inr
+    if c["exchange"] != "NSE":
+        return calc_mn or yahoo_mn
+    # NSE: Yahoo fast_info market_cap is often ~10× inflated for .NS tickers;
+    # SHARE_DATA total shares can be stale for some names — reconcile both.
+    if calc_mn and yahoo_mn:
+        ratio = yahoo_mn / calc_mn
+        if ratio >= 8:
+            return yahoo_mn / 10  # Yahoo market_cap ~10× inflated for this .NS ticker
+        if calc_mn / yahoo_mn >= 8:
+            return yahoo_mn
+        if calc_mn > yahoo_mn * 2:
+            return yahoo_mn
+        if yahoo_mn > calc_mn * 2:
+            return calc_mn
+        return calc_mn
+    return calc_mn or yahoo_mn
+
+
 def ret_over(pairs, days, today_iso):
     """% return of an indexed/value series over the last `days` calendar days."""
     if not pairs or pairs[-1][1] is None:
@@ -564,21 +594,7 @@ def main():
         since = (price / since_base - 1) * 100 if price and since_base else None
         sh = SHARE_DATA.get(tk, {})
         ccy = "INR" if c["exchange"] == "NSE" else "USD"
-        # Market cap in INR mn for the table/sector weights. NSE names: price × total
-        # shares (Yahoo fast_info market_cap is ~10× inflated for .NS tickers). USD
-        # names (MMYT/FRSH): Yahoo cap in USD — convert to INR mn; fall back to
-        # price × total shares if fast_info didn't supply it.
-        mcap_mn = None
-        if c["exchange"] == "NSE" and price and sh.get("ts"):
-            mcap_mn = price * sh["ts"] / 1e6
-        elif meta.get("_mcap"):
-            mcap_mn = meta["_mcap"] / 1e6
-            if c["exchange"] != "NSE":
-                mcap_mn *= usd_to_inr
-        elif price and sh.get("ts"):
-            mcap_mn = price * sh["ts"] / 1e6
-            if c["exchange"] != "NSE":
-                mcap_mn *= usd_to_inr
+        mcap_mn = mcap_mn_inr(c, meta, price, sh, usd_to_inr)
         constituents.append({
             "num": c["num"], "name": c["name"], "ticker": c["ticker"],
             "exchange": c["exchange"], "sector": c["sector"], "float_pct": c["float_pct"],
