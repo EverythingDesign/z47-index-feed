@@ -564,12 +564,14 @@ def main():
         since = (price / since_base - 1) * 100 if price and since_base else None
         sh = SHARE_DATA.get(tk, {})
         ccy = "INR" if c["exchange"] == "NSE" else "USD"
-        # Prefer Yahoo's live market cap (what the source shows); fall back to
-        # price × our total shares only if fast_info didn't supply it. For the USD
-        # names (MMYT/FRSH) Yahoo's cap is in USD — convert to INR mn so the table
-        # and sector weights are comparable with the INR names (source convention).
+        # Market cap in INR mn for the table/sector weights. NSE names: price × total
+        # shares (Yahoo fast_info market_cap is ~10× inflated for .NS tickers). USD
+        # names (MMYT/FRSH): Yahoo cap in USD — convert to INR mn; fall back to
+        # price × total shares if fast_info didn't supply it.
         mcap_mn = None
-        if meta.get("_mcap"):
+        if c["exchange"] == "NSE" and price and sh.get("ts"):
+            mcap_mn = price * sh["ts"] / 1e6
+        elif meta.get("_mcap"):
             mcap_mn = meta["_mcap"] / 1e6
             if c["exchange"] != "NSE":
                 mcap_mn *= usd_to_inr
