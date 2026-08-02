@@ -1,21 +1,22 @@
 {
   "meta": {
-    "generated_at": "2026-08-02T19:28:27+05:30",
-    "generated_at_ist": "02 Aug 2026, 19:28 IST",
+    "generated_at": "2026-08-02T20:10:46+05:30",
+    "generated_at_ist": "02 Aug 2026, 20:10 IST",
     "market_open": false,
     "usdinr": {
       "value": 95.39,
       "daily_pct": -0.29,
-      "as_of": "19:28 IST"
+      "as_of": "20:10 IST"
     },
     "base_date": "2024-01-02",
     "anchor_date": "2026-06-16",
     "benchmark": "NIFTY 500",
     "constituents_priced": 47,
-    "source": "Yahoo Finance (delayed) \u2014 public landing feed",
+    "source": "Yahoo (prices/index) + Screener/BSE/NASDAQ (table mcap \u20b9 mn)",
     "data_source_of_truth": "github.com/GirishZ47/z47-dashboard (16 Jun 2026 rebalance)",
     "methodology_flags": [
-      "MMYT & FRSH summed in USD without FX conversion \u2014 existing model quirk."
+      "MMYT & FRSH summed in USD without FX conversion \u2014 existing model quirk.",
+      "Constituent Mkt Cap (\u20b9 mn) from Screener (NSE) / BSE fallback / NASDAQ\u00d7FX; not Yahoo mcap."
     ]
   },
   "index": {
@@ -3409,7 +3410,7 @@
       "daily_pct": -2.5,
       "ret_1m": 7.39,
       "since_pct": 142.93,
-      "mcap_mn": 2784171.3
+      "mcap_mn": 2918750.0
     },
     {
       "num": 2,
@@ -3423,7 +3424,7 @@
       "daily_pct": 0.68,
       "ret_1m": -5.87,
       "since_pct": 48.0,
-      "mcap_mn": 1203456.8
+      "mcap_mn": 1219400.0
     },
     {
       "num": 3,
@@ -3437,7 +3438,7 @@
       "daily_pct": -3.08,
       "ret_1m": 14.74,
       "since_pct": -37.53,
-      "mcap_mn": 746333.6
+      "mcap_mn": 786300.0
     },
     {
       "num": 4,
@@ -3451,7 +3452,7 @@
       "daily_pct": -1.43,
       "ret_1m": 18.52,
       "since_pct": 19.06,
-      "mcap_mn": 794288.0
+      "mcap_mn": 795130.0
     },
     {
       "num": 5,
@@ -3465,7 +3466,7 @@
       "daily_pct": -0.11,
       "ret_1m": 5.33,
       "since_pct": 39.27,
-      "mcap_mn": 972030.6
+      "mcap_mn": 976120.0
     },
     {
       "num": 6,
@@ -3479,7 +3480,7 @@
       "daily_pct": 0.79,
       "ret_1m": 9.96,
       "since_pct": 107.86,
-      "mcap_mn": 860439.3
+      "mcap_mn": 860440.0
     },
     {
       "num": 7,
@@ -3493,7 +3494,7 @@
       "daily_pct": 0.36,
       "ret_1m": 9.33,
       "since_pct": -13.86,
-      "mcap_mn": 628226.8
+      "mcap_mn": 628230.0
     },
     {
       "num": 8,
@@ -3507,7 +3508,7 @@
       "daily_pct": -0.16,
       "ret_1m": 7.44,
       "since_pct": 93.95,
-      "mcap_mn": 954820.2
+      "mcap_mn": 954820.0
     },
     {
       "num": 9,
@@ -3521,7 +3522,7 @@
       "daily_pct": 0.5,
       "ret_1m": 0.65,
       "since_pct": 99.96,
-      "mcap_mn": 739960.3
+      "mcap_mn": 741010.0
     },
     {
       "num": 10,
@@ -3535,7 +3536,7 @@
       "daily_pct": -0.03,
       "ret_1m": -2.41,
       "since_pct": 7.11,
-      "mcap_mn": 842368.2
+      "mcap_mn": 842150.0
     },
     {
       "num": 11,
@@ -3563,7 +3564,7 @@
       "daily_pct": 2.06,
       "ret_1m": -15.42,
       "since_pct": -16.85,
-      "mcap_mn": 272183.0
+      "mcap_mn": 272180.0
     },
     {
       "num": 13,
@@ -3577,7 +3578,7 @@
       "daily_pct": -0.88,
       "ret_1m": -4.05,
       "since_pct": -19.55,
-      "mcap_mn": 357147.0
+      "mcap_mn": 362290.0
     },
     {
       "num": 14,
@@ -3591,7 +3592,7 @@
       "daily_pct": 2.78,
       "ret_1m": -5.03,
       "since_pct": 25.39,
-      "mcap_mn": 361006.9
+      "mcap_mn": 361010.0
     },
     {
       "num": 15,
@@ -3605,7 +3606,7 @@
       "daily_pct": -0.25,
       "ret_1m": -18.9,
       "since_pct": -16.9,
-      "mcap_mn": 235100.1
+      "mcap_mn": 235130.0
     },
     {
       "num": 16,
@@ -3619,7 +3620,7 @@
       "daily_pct": 1.58,
       "ret_1m": 11.53,
       "since_pct": 316.9,
-      "mcap_mn": 496716.1
+      "mcap_mn": 496720.0
     },
     {
       "num": 17,
@@ -3633,7 +3634,7 @@
       "daily_pct": -0.74,
       "ret_1m": -10.99,
       "since_pct": -44.61,
-      "mcap_mn": 160351.7
+      "mcap_mn": 160350.0
     },
     {
       "num": 18,
@@ -3661,7 +3662,7 @@
       "daily_pct": -1.01,
       "ret_1m": -1.9,
       "since_pct": -22.44,
-      "mcap_mn": 189191.5
+      "mcap_mn": 199540.0
     },
     {
       "num": 20,
@@ -3675,7 +3676,7 @@
       "daily_pct": 2.15,
       "ret_1m": 0.6,
       "since_pct": 8.88,
-      "mcap_mn": 163507.6
+      "mcap_mn": 166270.0
     },
     {
       "num": 21,
@@ -3689,7 +3690,7 @@
       "daily_pct": 0.17,
       "ret_1m": -3.19,
       "since_pct": -68.74,
-      "mcap_mn": 103022.4
+      "mcap_mn": 110820.0
     },
     {
       "num": 22,
@@ -3703,7 +3704,7 @@
       "daily_pct": -5.89,
       "ret_1m": -9.26,
       "since_pct": -20.87,
-      "mcap_mn": 130807.1
+      "mcap_mn": 130810.0
     },
     {
       "num": 23,
@@ -3717,7 +3718,7 @@
       "daily_pct": 2.3,
       "ret_1m": -13.08,
       "since_pct": -57.61,
-      "mcap_mn": 170826.2
+      "mcap_mn": 178930.0
     },
     {
       "num": 24,
@@ -3731,7 +3732,7 @@
       "daily_pct": 3.32,
       "ret_1m": -4.23,
       "since_pct": -33.96,
-      "mcap_mn": 108244.8
+      "mcap_mn": 108250.0
     },
     {
       "num": 25,
@@ -3745,7 +3746,7 @@
       "daily_pct": -0.68,
       "ret_1m": -0.45,
       "since_pct": -25.42,
-      "mcap_mn": 161748.3
+      "mcap_mn": 161750.0
     },
     {
       "num": 26,
@@ -3759,7 +3760,7 @@
       "daily_pct": -1.64,
       "ret_1m": 0.74,
       "since_pct": 276.68,
-      "mcap_mn": 131428.8
+      "mcap_mn": 131430.0
     },
     {
       "num": 27,
@@ -3773,7 +3774,7 @@
       "daily_pct": -1.8,
       "ret_1m": 8.29,
       "since_pct": 20.14,
-      "mcap_mn": 223158.9
+      "mcap_mn": 223340.0
     },
     {
       "num": 28,
@@ -3787,7 +3788,7 @@
       "daily_pct": 0.29,
       "ret_1m": -1.18,
       "since_pct": 108.61,
-      "mcap_mn": 98810.2
+      "mcap_mn": 98820.0
     },
     {
       "num": 29,
@@ -3801,7 +3802,7 @@
       "daily_pct": 10.19,
       "ret_1m": 10.91,
       "since_pct": 58.22,
-      "mcap_mn": 130106.9
+      "mcap_mn": 125590.0
     },
     {
       "num": 30,
@@ -3815,7 +3816,7 @@
       "daily_pct": -1.37,
       "ret_1m": -14.24,
       "since_pct": -4.81,
-      "mcap_mn": 82256.4
+      "mcap_mn": 84690.0
     },
     {
       "num": 31,
@@ -3829,7 +3830,7 @@
       "daily_pct": 2.0,
       "ret_1m": -11.07,
       "since_pct": 19.25,
-      "mcap_mn": 87159.2
+      "mcap_mn": 87060.0
     },
     {
       "num": 32,
@@ -3843,7 +3844,7 @@
       "daily_pct": 0.12,
       "ret_1m": -2.64,
       "since_pct": 5.32,
-      "mcap_mn": 146564.2
+      "mcap_mn": 146560.0
     },
     {
       "num": 33,
@@ -3857,7 +3858,7 @@
       "daily_pct": -1.26,
       "ret_1m": 22.17,
       "since_pct": 86.85,
-      "mcap_mn": 140771.8
+      "mcap_mn": 140770.0
     },
     {
       "num": 34,
@@ -3871,7 +3872,7 @@
       "daily_pct": 0.76,
       "ret_1m": -7.73,
       "since_pct": -34.06,
-      "mcap_mn": 19901.7
+      "mcap_mn": 19900.0
     },
     {
       "num": 35,
@@ -3885,7 +3886,7 @@
       "daily_pct": 2.49,
       "ret_1m": -2.41,
       "since_pct": 28.56,
-      "mcap_mn": 108734.3
+      "mcap_mn": 108800.0
     },
     {
       "num": 36,
@@ -3899,7 +3900,7 @@
       "daily_pct": 0.34,
       "ret_1m": 25.93,
       "since_pct": -38.74,
-      "mcap_mn": 64708.4
+      "mcap_mn": 64710.0
     },
     {
       "num": 37,
@@ -3913,7 +3914,7 @@
       "daily_pct": 6.83,
       "ret_1m": 43.28,
       "since_pct": 49.49,
-      "mcap_mn": 124394.3
+      "mcap_mn": 124390.0
     },
     {
       "num": 38,
@@ -3927,7 +3928,7 @@
       "daily_pct": 10.25,
       "ret_1m": 7.74,
       "since_pct": 120.86,
-      "mcap_mn": 142117.1
+      "mcap_mn": 142170.0
     },
     {
       "num": 39,
@@ -3941,7 +3942,7 @@
       "daily_pct": -0.26,
       "ret_1m": -0.67,
       "since_pct": -34.92,
-      "mcap_mn": 41462.8
+      "mcap_mn": 41460.0
     },
     {
       "num": 40,
@@ -3955,7 +3956,7 @@
       "daily_pct": 2.79,
       "ret_1m": -5.42,
       "since_pct": 29.18,
-      "mcap_mn": 40722.8
+      "mcap_mn": 41090.0
     },
     {
       "num": 41,
@@ -3969,7 +3970,7 @@
       "daily_pct": 5.03,
       "ret_1m": 35.38,
       "since_pct": 648.68,
-      "mcap_mn": 106252.5
+      "mcap_mn": 106310.0
     },
     {
       "num": 42,
@@ -3983,7 +3984,7 @@
       "daily_pct": -3.22,
       "ret_1m": -3.44,
       "since_pct": -18.0,
-      "mcap_mn": 39525.4
+      "mcap_mn": 39580.0
     },
     {
       "num": 43,
@@ -3997,7 +3998,7 @@
       "daily_pct": 0.46,
       "ret_1m": -4.46,
       "since_pct": -22.86,
-      "mcap_mn": 26743.3
+      "mcap_mn": 26740.0
     },
     {
       "num": 44,
@@ -4011,7 +4012,7 @@
       "daily_pct": 0.08,
       "ret_1m": 1.99,
       "since_pct": 52.33,
-      "mcap_mn": 53543.9
+      "mcap_mn": 53540.0
     },
     {
       "num": 45,
@@ -4025,7 +4026,7 @@
       "daily_pct": 5.05,
       "ret_1m": -7.85,
       "since_pct": -4.14,
-      "mcap_mn": 139644.3
+      "mcap_mn": 139640.0
     },
     {
       "num": 46,
@@ -4039,7 +4040,7 @@
       "daily_pct": 3.26,
       "ret_1m": 1.23,
       "since_pct": -61.13,
-      "mcap_mn": 16159.7
+      "mcap_mn": 16160.0
     },
     {
       "num": 47,
@@ -4053,7 +4054,7 @@
       "daily_pct": -0.09,
       "ret_1m": -6.94,
       "since_pct": -59.68,
-      "mcap_mn": 9519.6
+      "mcap_mn": 9520.0
     }
   ],
   "movers": {
@@ -4126,7 +4127,7 @@
     {
       "name": "Consumer / Consumer Tech",
       "count": 19,
-      "weight_pct": 59.6,
+      "weight_pct": 60.0,
       "avg_ret_1m": 3.47,
       "top_mover": {
         "name": "BlueStone",
@@ -4136,7 +4137,7 @@
     {
       "name": "Fintech / Financial Services",
       "count": 13,
-      "weight_pct": 27.9,
+      "weight_pct": 27.6,
       "avg_ret_1m": -3.66,
       "top_mover": {
         "name": "Paytm",
@@ -4146,7 +4147,7 @@
     {
       "name": "SaaS / AI",
       "count": 9,
-      "weight_pct": 7.0,
+      "weight_pct": 6.9,
       "avg_ret_1m": 9.2,
       "top_mover": {
         "name": "E2E Networks",
@@ -4156,7 +4157,7 @@
     {
       "name": "B2B",
       "count": 6,
-      "weight_pct": 5.5,
+      "weight_pct": 5.4,
       "avg_ret_1m": -1.64,
       "top_mover": {
         "name": "Shadowfax",
