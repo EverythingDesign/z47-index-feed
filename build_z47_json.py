@@ -24,11 +24,15 @@ Methodology (mirrors calc_index_extension.py, the authoritative model):
   - z47_mcap uses total shares instead of free-float shares.
   - Benchmark = NIFTY 500 (^CRSLDX), rebased to 100 on 2024-01-02 (base 19418.40).
   - Prices from Yahoo Finance via yfinance (history) + fast_info (live price /
-    previous close / market cap), mirroring the source dashboard's fetching.
+    previous close), mirroring the source dashboard's fetching.
+  - Constituent table Mkt Cap (₹ mn): Screener.in (NSE) → BSE fallback;
+    MMYT/FRSH from NASDAQ via Yahoo × USD/INR. Always ₹ millions (cr × 10).
+    Optional env SCREENER_SESSIONID if Screener rate-limits the runner.
 
 KNOWN METHODOLOGY ITEM (replicated faithfully so the public number matches Z47's
 dashboard — not silently "fixed"):
-  - MMYT & FRSH are priced in USD but summed as if INR (no FX conversion).
+  - MMYT & FRSH are priced in USD but summed as if INR (no FX conversion) for the
+    index value; their *table* mcap is FX-converted to INR mn.
 Any constituent change requires re-deriving the divisor — update ANCHOR_* below
 to the last good point under the new basket, and re-sync COMPANIES / SHARE_DATA.
 
@@ -41,6 +45,7 @@ import csv
 import json
 import os
 import random
+import re
 import ssl
 import sys
 import time
@@ -438,8 +443,110 @@ def r2(x, n=2):
     return round(x, n) if x is not None else None
 
 
-def mcap_mn_inr(c, meta, price, sh, usd_to_inr):
-    """Market cap in INR millions for the constituent table / sector weights."""
+# ── Table mcap: Screener (NSE) → BSE fallback → Yahoo (NASDAQ / last resort) ─
+# Page column is always Mkt Cap (₹ mn). Screener/BSE publish ₹ cr → ×10.
+SCREENER_UA = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+)
+SCREENER_SESSION = os.environ.get("SCREENER_SESSIONID", "").strip()
+_bse_sym_to_scrip: dict[str, str] | None = None
+
+
+def _http_get(url: str, referer: str | None = None, cookies: str | None = None) -> bytes:
+    headers = {
+        "User-Agent": SCREENER_UA,
+        "Accept": "text/html,application/json,*/*",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    if referer:
+        headers["Referer"] = referer
+    if cookies:
+        headers["Cookie"] = cookies
+    req = urllib.request.Request(url, headers=headers)
+    # Prefer system CA; fall back to unverified if runner/macOS CA is broken.
+    try:
+        with urllib.request.urlopen(req, timeout=30, context=CTX) as r:
+            return r.read()
+    except Exception:
+        with urllib.request.urlopen(
+            req, timeout=30, context=ssl._create_unverified_context()
+        ) as r:
+            return r.read()
+
+
+def screener_mcap_cr(ticker: str) -> float | None:
+    """Screener.in Market Cap in ₹ crore, or None."""
+    url = f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
+    cookies = f"sessionid={SCREENER_SESSION}" if SCREENER_SESSION else None
+    try:
+        html = _http_get(url, referer="https://www.screener.in/", cookies=cookies).decode(
+            "utf-8", errors="ignore"
+        )
+    except Exception:
+        return None
+    m = re.search(
+        r'<span class="name">\s*Market Cap\s*</span>.*?'
+        r'<span class="number">([\d,]+(?:\.\d+)?)</span>',
+        html, re.S | re.I,
+    )
+    if not m:
+        return None
+    try:
+        return float(m.group(1).replace(",", ""))
+    except ValueError:
+        return None
+
+
+def _bse_map() -> dict[str, str]:
+    global _bse_sym_to_scrip
+    if _bse_sym_to_scrip is not None:
+        return _bse_sym_to_scrip
+    url = (
+        "https://api.bseindia.com/BseIndiaAPI/api/ListofScripData/w"
+        "?Group=&Scripcode=&industry=&segment=Equity&status=Active"
+    )
+    try:
+        data = json.loads(_http_get(url, referer="https://www.bseindia.com/"))
+    except Exception:
+        _bse_sym_to_scrip = {}
+        return _bse_sym_to_scrip
+    out: dict[str, str] = {}
+    for row in data:
+        sid = (row.get("scrip_id") or row.get("SCRIP_ID") or "").strip().upper()
+        code = str(row.get("scrip_cd") or row.get("SCRIP_CD") or "")
+        if sid and code:
+            out[sid] = code
+    _bse_sym_to_scrip = out
+    return out
+
+
+def bse_mcap_cr(ticker: str) -> float | None:
+    """BSE MktCapFull in ₹ crore, or None."""
+    scrip = _bse_map().get(ticker.upper())
+    if not scrip:
+        return None
+    try:
+        trade = json.loads(
+            _http_get(
+                f"https://api.bseindia.com/BseIndiaAPI/api/StockTrading/w"
+                f"?flag=&quotetype=EQ&scripcode={scrip}",
+                referer="https://www.bseindia.com/",
+            )
+        )
+    except Exception:
+        return None
+    raw = (trade.get("MktCapFull") or "").replace(",", "")
+    if not raw or raw == "--":
+        return None
+    try:
+        return float(raw)
+    except ValueError:
+        return None
+
+
+def yahoo_fallback_mcap_mn(c, meta, price, sh, usd_to_inr):
+    """Last-resort mcap in ₹ mn from Yahoo / price×shares (pre-Screener logic)."""
     yahoo_mn = None
     if meta.get("_mcap"):
         yahoo_mn = meta["_mcap"] / 1e6
@@ -452,20 +559,68 @@ def mcap_mn_inr(c, meta, price, sh, usd_to_inr):
             calc_mn *= usd_to_inr
     if c["exchange"] != "NSE":
         return yahoo_mn or calc_mn
-    # NSE display: prefer Yahoo live market_cap; SHARE_DATA ts is stale for many names.
     if calc_mn and yahoo_mn:
         if yahoo_mn / calc_mn >= 8:
-            # Yahoo ~10× inflated only on some large-cap .NS names (e.g. IndiaMart).
-            # E2E also hits this ratio but Yahoo is correct — don't divide when < 500k mn.
             return yahoo_mn / 10 if yahoo_mn >= 500_000 else yahoo_mn
         if yahoo_mn / calc_mn >= 1.8:
-            return calc_mn  # Yahoo ~2× inflated (e.g. MedPlus); SHARE_DATA ts is reliable
+            return calc_mn
         if calc_mn / yahoo_mn >= 8:
             return yahoo_mn
         if calc_mn > yahoo_mn * 1.5:
-            return yahoo_mn  # SHARE_DATA ts ~2× high (Lenskart, Meesho, Groww)
+            return yahoo_mn
         return yahoo_mn
     return yahoo_mn or calc_mn
+
+
+def fetch_table_mcap_mn(usd_to_inr: float) -> dict[str, tuple[float, str]]:
+    """Fetch display mcap (₹ mn) for all 47. Returns {ticker: (mcap_mn, source)}."""
+    out: dict[str, tuple[float, str]] = {}
+    print("  fetching table mcap via Screener / BSE / NASDAQ…", file=sys.stderr)
+    for c in COMPANIES:
+        t = c["ticker"]
+        mcap_mn = None
+        src = None
+        if c["exchange"] == "NASDAQ":
+            # Yahoo USD market_cap × FX → ₹ mn (not listed on Screener/BSE).
+            if USE_YF and _yf is not None:
+                try:
+                    fi = _yf.Ticker(t).fast_info
+                    mcap_usd = _fi_num(fi, "market_cap", "marketCap")
+                    if mcap_usd:
+                        mcap_mn = mcap_usd * usd_to_inr / 1e6
+                        src = "NASDAQ (Yahoo USD×INR)"
+                except Exception:  # noqa: BLE001
+                    pass
+        else:
+            cr = screener_mcap_cr(t)
+            if cr is not None:
+                mcap_mn = cr * 10.0  # ₹ cr → ₹ mn
+                src = "Screener"
+            else:
+                cr = bse_mcap_cr(t)
+                if cr is not None:
+                    mcap_mn = cr * 10.0
+                    src = "BSE"
+            time.sleep(0.30)  # polite pacing for Screener / BSE
+        if mcap_mn is not None and src:
+            out[t] = (mcap_mn, src)
+            print(f"    {t:<12} {mcap_mn:>12,.1f} mn  [{src}]", file=sys.stderr)
+        else:
+            print(f"    {t:<12} FAILED — will use Yahoo fallback", file=sys.stderr)
+    print(f"  table mcap: {len(out)}/{len(COMPANIES)} from Screener/BSE/NASDAQ",
+          file=sys.stderr)
+    return out
+
+
+def mcap_mn_inr(c, meta, price, sh, usd_to_inr, table_mcaps=None):
+    """Market cap in INR millions for the constituent table / sector weights.
+
+    Prefer Screener (NSE) / BSE / NASDAQ overlay; fall back to Yahoo reconciliation.
+    Always returns ₹ millions (page column: Mkt Cap (₹ mn)).
+    """
+    if table_mcaps and c["ticker"] in table_mcaps:
+        return table_mcaps[c["ticker"]][0]
+    return yahoo_fallback_mcap_mn(c, meta, price, sh, usd_to_inr)
 
 
 def ret_over(pairs, days, today_iso):
@@ -571,6 +726,9 @@ def main():
     usdinr = fetch_usdinr()
     usd_to_inr = (usdinr or {}).get("value") or 90.0   # fallback rate if FX fetch fails
 
+    # Table mcap (₹ mn): Screener → BSE → NASDAQ(Yahoo×FX). Price/day/1M stay on Yahoo.
+    table_mcaps = fetch_table_mcap_mn(usd_to_inr)
+
     # ── Per-constituent live snapshot ──────────────────────────────────────
     constituents = []
     for c in COMPANIES:
@@ -594,13 +752,13 @@ def main():
         since = (price / since_base - 1) * 100 if price and since_base else None
         sh = SHARE_DATA.get(tk, {})
         ccy = "INR" if c["exchange"] == "NSE" else "USD"
-        mcap_mn = mcap_mn_inr(c, meta, price, sh, usd_to_inr)
+        mcap_mn = mcap_mn_inr(c, meta, price, sh, usd_to_inr, table_mcaps=table_mcaps)
         constituents.append({
             "num": c["num"], "name": c["name"], "ticker": c["ticker"],
             "exchange": c["exchange"], "sector": c["sector"], "float_pct": c["float_pct"],
             "price": r2(price), "ccy": ccy,
             "daily_pct": r2(daily), "ret_1m": r2(ret_1m), "since_pct": r2(since),
-            "mcap_mn": r2(mcap_mn, 1),
+            "mcap_mn": r2(mcap_mn, 1),  # always ₹ millions (Screener/BSE cr × 10)
         })
 
     # ── Divisor from the fixed anchor (only tickers usable on the anchor) ───
@@ -699,10 +857,11 @@ def main():
             "base_date": BASE_DATE, "anchor_date": ANCHOR_DATE,
             "benchmark": "NIFTY 500",
             "constituents_priced": len(usable_f),
-            "source": "Yahoo Finance (delayed) — public landing feed",
+            "source": "Yahoo (prices/index) + Screener/BSE/NASDAQ (table mcap ₹ mn)",
             "data_source_of_truth": "github.com/GirishZ47/z47-dashboard (16 Jun 2026 rebalance)",
             "methodology_flags": [
                 "MMYT & FRSH summed in USD without FX conversion — existing model quirk.",
+                "Constituent Mkt Cap (₹ mn) from Screener (NSE) / BSE fallback / NASDAQ×FX; not Yahoo mcap.",
             ],
         },
         "index": {
