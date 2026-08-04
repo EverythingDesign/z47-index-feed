@@ -20,32 +20,47 @@
   function whenFonts(cb){ if (document.fonts && document.fonts.ready) document.fonts.ready.then(cb); else cb(); }
   function fromFeed(d){ return (d.sectors || []).map(function (s){ return { name:s.name, count:s.count, weight_pct:s.weight_pct }; }); }
 
-  // Legend is built from the chart's ACTUAL datapoints, so each square's colour is the
-  // exact arc fill it points to — no more mismapping. Called once the donut has drawn.
+  // Legend items are placed by each arc's mid-angle so the leader line sits
+  // next to the matching coloured segment (left column = west arcs, right = east).
   function buildLegend(chart, ord, vals){
     var ds = chart.data.datasets[0];
-    var colorOf = {}, countOf = {};
+    var meta = chart.getDatasetMeta(0);
+    var items = [];
     ord.forEach(function (n, i){
-      colorOf[n] = Array.isArray(ds.backgroundColor) ? ds.backgroundColor[i] : ds.backgroundColor;
-      countOf[n] = vals[i];
+      var arc = meta.data[i];
+      if (!arc) return;
+      var p = arc.getProps(["startAngle","endAngle"], true);
+      var mid = (p.startAngle + p.endAngle) / 2;
+      // Chart.js: 0 = right, -PI/2 = top. cos>0 => right half, sin>0 => bottom half.
+      var side = Math.cos(mid) >= 0 ? "right" : "left";
+      items.push({
+        name: n,
+        side: side,
+        mid: mid,
+        // top-to-bottom within a column: smaller sin(mid) is higher on screen
+        y: Math.sin(mid),
+        color: Array.isArray(ds.backgroundColor) ? ds.backgroundColor[i] : ds.backgroundColor,
+        count: vals[i]
+      });
     });
-    function item(name, side){
-      if (!(name in colorOf)) return "";
-      var c = colorOf[name], disp = DISP[name] || name, cnt = countOf[name];
+    function itemHtml(it){
+      var disp = DISP[it.name] || it.name;
       var content = '<div class="z47-leg-text">'
-        + '<div class="z47-leg-count"><span class="z47-sq" style="background:' + c + '"></span>'
-        + '<span class="z47-leg-num" style="color:' + c + '">' + cnt + ' COMPANIES</span></div>'
+        + '<div class="z47-leg-count"><span class="z47-sq" style="background:' + it.color + '"></span>'
+        + '<span class="z47-leg-num" style="color:' + it.color + '">' + it.count + ' COMPANIES</span></div>'
         + '<div class="z47-leg-name">' + disp + '</div></div>';
       var line = '<span class="z47-leg-line" style="background:' + LINE_COLOR + '"></span>';
-      // line always sits on the INNER side (toward the donut): after content on the
-      // left column, before it on the right. Content stays left-aligned on both.
-      return '<div class="z47-leg z47-leg--' + side + '">' + (side === "left" ? content + line : line + content) + '</div>';
+      return '<div class="z47-leg z47-leg--' + it.side + '">' + (it.side === "left" ? content + line : line + content) + '</div>';
     }
+    var left  = items.filter(function (it){ return it.side === "left"; })
+                     .sort(function (a, b){ return a.y - b.y; });
+    var right = items.filter(function (it){ return it.side === "right"; })
+                     .sort(function (a, b){ return a.y - b.y; });
     var L = document.querySelector(".z47-secL"), R = document.querySelector(".z47-secR");
-    if (L) L.innerHTML = item(LEFT[0], "left")  + item(LEFT[1], "left");
-    if (R) R.innerHTML = item(RIGHT[0], "right") + item(RIGHT[1], "right");
+    if (L) L.innerHTML = left.map(itemHtml).join("");
+    if (R) R.innerHTML = right.map(itemHtml).join("");
     var wrap = document.querySelector(".z47-sec-wrap");
-    if (wrap) wrap.classList.add("z47-ready");   // fade the legend in
+    if (wrap) wrap.classList.add("z47-ready");
   }
 
   // Fade the % labels in after the sweep finishes, rather than having them on from frame 1.

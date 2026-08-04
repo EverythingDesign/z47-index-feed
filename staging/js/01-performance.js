@@ -355,31 +355,23 @@
     $all("[data-z47-period-label]").forEach(function (el) { el.textContent = period; });
   }
 
+  function removeInjectedPeriodTabs() {
+    // Designer will add period tabs manually — strip any JS-injected bar.
+    $all('[data-z47="period-tabs"]').forEach(function (el) { el.parentNode && el.parentNode.removeChild(el); });
+  }
+
   function wirePeriodTabs(d) {
+    removeInjectedPeriodTabs();
     if (window.__Z47_PERIOD_TABS_WIRED) {
       applyPeriod(d, DEFAULT_PERIOD);
       return;
     }
     window.__Z47_PERIOD_TABS_WIRED = true;
     var buttons = $all("[data-z47-period]");
+    // Do NOT auto-inject tabs — wire only designer-authored buttons when present.
     if (!buttons.length) {
-      // Inject minimal tab bar above return summary if designer hasn't added one yet
-      var host = byKey("return-summary")[0] || byKey("card-z47-value")[0] || document.querySelector("[data-z47='gainers-list']");
-      if (host && host.parentNode) {
-        var bar = document.createElement("div");
-        bar.setAttribute("data-z47", "period-tabs");
-        bar.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px;";
-        PERIODS.forEach(function (p) {
-          var b = document.createElement("button");
-          b.type = "button";
-          b.setAttribute("data-z47-period", p);
-          b.textContent = p;
-          b.style.cssText = "cursor:pointer;padding:6px 12px;border:1px solid #ccc;background:#fff;font:inherit;";
-          bar.appendChild(b);
-        });
-        host.parentNode.insertBefore(bar, host);
-        buttons = $all("[data-z47-period]");
-      }
+      applyPeriod(d, DEFAULT_PERIOD);
+      return;
     }
     buttons.forEach(function (btn) {
       btn.addEventListener("click", function (e) {
