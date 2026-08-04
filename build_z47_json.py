@@ -475,27 +475,53 @@ def _http_get(url: str, referer: str | None = None, cookies: str | None = None) 
             return r.read()
 
 
-def screener_mcap_cr(ticker: str) -> float | None:
-    """Screener.in Market Cap in ₹ crore, or None."""
+def screener_quote(ticker: str) -> dict:
+    """Screener.in live quote: {mcap_cr, price, daily_pct} (any field may be None)."""
     url = f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
     cookies = f"sessionid={SCREENER_SESSION}" if SCREENER_SESSION else None
+    out: dict = {"mcap_cr": None, "price": None, "daily_pct": None}
     try:
         html = _http_get(url, referer="https://www.screener.in/", cookies=cookies).decode(
             "utf-8", errors="ignore"
         )
     except Exception:
-        return None
+        return out
     m = re.search(
         r'<span class="name">\s*Market Cap\s*</span>.*?'
         r'<span class="number">([\d,]+(?:\.\d+)?)</span>',
         html, re.S | re.I,
     )
-    if not m:
-        return None
-    try:
-        return float(m.group(1).replace(",", ""))
-    except ValueError:
-        return None
+    if m:
+        try:
+            out["mcap_cr"] = float(m.group(1).replace(",", ""))
+        except ValueError:
+            pass
+    # Header: ₹ <price> + up/down <pct>%
+    m = re.search(
+        r'font-size-18[^>]*>.*?₹\s*([\d,]+(?:\.\d+)?)',
+        html, re.S | re.I,
+    )
+    if m:
+        try:
+            out["price"] = float(m.group(1).replace(",", ""))
+        except ValueError:
+            pass
+    m = re.search(
+        r'font-size-18[^>]*>.*?font-size-12\s+(up|down)[^>]*>.*?([\d.]+)%',
+        html, re.S | re.I,
+    )
+    if m:
+        try:
+            pct = float(m.group(2))
+            out["daily_pct"] = -pct if m.group(1).lower() == "down" else pct
+        except ValueError:
+            pass
+    return out
+
+
+def screener_mcap_cr(ticker: str) -> float | None:
+    """Screener.in Market Cap in ₹ crore, or None."""
+    return screener_quote(ticker).get("mcap_cr")
 
 
 def _bse_map() -> dict[str, str]:
@@ -521,11 +547,12 @@ def _bse_map() -> dict[str, str]:
     return out
 
 
-def bse_mcap_cr(ticker: str) -> float | None:
-    """BSE MktCapFull in ₹ crore, or None."""
+def bse_quote(ticker: str) -> dict:
+    """BSE live quote: {mcap_cr, price} (daily_pct not available here)."""
+    out: dict = {"mcap_cr": None, "price": None, "daily_pct": None}
     scrip = _bse_map().get(ticker.upper())
     if not scrip:
-        return None
+        return out
     try:
         trade = json.loads(
             _http_get(
@@ -534,15 +561,33 @@ def bse_mcap_cr(ticker: str) -> float | None:
                 referer="https://www.bseindia.com/",
             )
         )
+        header = json.loads(
+            _http_get(
+                f"https://api.bseindia.com/BseIndiaAPI/api/getScripHeaderData/w"
+                f"?Debtflag=&scripcode={scrip}&seriesid=",
+                referer="https://www.bseindia.com/",
+            )
+        )
     except Exception:
-        return None
+        return out
     raw = (trade.get("MktCapFull") or "").replace(",", "")
-    if not raw or raw == "--":
-        return None
-    try:
-        return float(raw)
-    except ValueError:
-        return None
+    if raw and raw != "--":
+        try:
+            out["mcap_cr"] = float(raw)
+        except ValueError:
+            pass
+    lp = header.get("CurrRate", {}).get("LTP") or header.get("Header", {}).get("LTP")
+    if lp:
+        try:
+            out["price"] = float(str(lp).replace(",", ""))
+        except ValueError:
+            pass
+    return out
+
+
+def bse_mcap_cr(ticker: str) -> float | None:
+    """BSE MktCapFull in ₹ crore, or None."""
+    return bse_quote(ticker).get("mcap_cr")
 
 
 def yahoo_fallback_mcap_mn(c, meta, price, sh, usd_to_inr):
@@ -572,55 +617,98 @@ def yahoo_fallback_mcap_mn(c, meta, price, sh, usd_to_inr):
     return yahoo_mn or calc_mn
 
 
-def fetch_table_mcap_mn(usd_to_inr: float) -> dict[str, tuple[float, str]]:
-    """Fetch display mcap (₹ mn) for all 47. Returns {ticker: (mcap_mn, source)}."""
-    out: dict[str, tuple[float, str]] = {}
-    print("  fetching table mcap via Screener / BSE / NASDAQ…", file=sys.stderr)
+def fetch_table_live(usd_to_inr: float) -> dict[str, dict]:
+    """Fetch table live fields for all 47.
+
+    Returns {ticker: {mcap_mn, price, daily_pct, source}}.
+    NSE: Screener (price/day/mcap) → BSE fallback (price/mcap).
+    NASDAQ (MMYT/FRSH): Yahoo USD mcap × FX; price/day stay Yahoo in main().
+    """
+    out: dict[str, dict] = {}
+    print("  fetching table live fields via Screener / BSE / NASDAQ…", file=sys.stderr)
     for c in COMPANIES:
         t = c["ticker"]
-        mcap_mn = None
-        src = None
+        row: dict = {"mcap_mn": None, "price": None, "daily_pct": None, "source": None}
         if c["exchange"] == "NASDAQ":
-            # Yahoo USD market_cap × FX → ₹ mn (not listed on Screener/BSE).
             if USE_YF and _yf is not None:
                 try:
                     fi = _yf.Ticker(t).fast_info
                     mcap_usd = _fi_num(fi, "market_cap", "marketCap")
                     if mcap_usd:
-                        mcap_mn = mcap_usd * usd_to_inr / 1e6
-                        src = "NASDAQ (Yahoo USD×INR)"
+                        row["mcap_mn"] = mcap_usd * usd_to_inr / 1e6
+                        row["source"] = "NASDAQ (Yahoo USD×INR)"
                 except Exception:  # noqa: BLE001
                     pass
         else:
-            cr = screener_mcap_cr(t)
-            if cr is not None:
-                mcap_mn = cr * 10.0  # ₹ cr → ₹ mn
-                src = "Screener"
+            q = screener_quote(t)
+            if q.get("mcap_cr") is not None:
+                row["mcap_mn"] = q["mcap_cr"] * 10.0
+                row["price"] = q.get("price")
+                row["daily_pct"] = q.get("daily_pct")
+                row["source"] = "Screener"
             else:
-                cr = bse_mcap_cr(t)
-                if cr is not None:
-                    mcap_mn = cr * 10.0
-                    src = "BSE"
-            time.sleep(0.30)  # polite pacing for Screener / BSE
-        if mcap_mn is not None and src:
-            out[t] = (mcap_mn, src)
-            print(f"    {t:<12} {mcap_mn:>12,.1f} mn  [{src}]", file=sys.stderr)
+                bq = bse_quote(t)
+                if bq.get("mcap_cr") is not None:
+                    row["mcap_mn"] = bq["mcap_cr"] * 10.0
+                    row["price"] = bq.get("price")
+                    row["source"] = "BSE"
+            time.sleep(0.30)
+        if row["mcap_mn"] is not None and row["source"]:
+            out[t] = row
+            extra = ""
+            if row["price"] is not None:
+                extra += f"  px={row['price']}"
+            if row["daily_pct"] is not None:
+                extra += f"  d={row['daily_pct']:+.2f}%"
+            print(f"    {t:<12} {row['mcap_mn']:>12,.1f} mn  [{row['source']}]{extra}",
+                  file=sys.stderr)
         else:
             print(f"    {t:<12} FAILED — will use Yahoo fallback", file=sys.stderr)
-    print(f"  table mcap: {len(out)}/{len(COMPANIES)} from Screener/BSE/NASDAQ",
+    print(f"  table live: {len(out)}/{len(COMPANIES)} from Screener/BSE/NASDAQ",
           file=sys.stderr)
     return out
 
 
-def mcap_mn_inr(c, meta, price, sh, usd_to_inr, table_mcaps=None):
+# Back-compat alias used by fetch_mcap_table.py / older call sites
+def fetch_table_mcap_mn(usd_to_inr: float) -> dict[str, tuple[float, str]]:
+    live = fetch_table_live(usd_to_inr)
+    return {t: (v["mcap_mn"], v["source"]) for t, v in live.items() if v.get("mcap_mn") is not None}
+
+
+def mcap_mn_inr(c, meta, price, sh, usd_to_inr, table_live=None):
     """Market cap in INR millions for the constituent table / sector weights.
 
     Prefer Screener (NSE) / BSE / NASDAQ overlay; fall back to Yahoo reconciliation.
     Always returns ₹ millions (page column: Mkt Cap (₹ mn)).
     """
-    if table_mcaps and c["ticker"] in table_mcaps:
-        return table_mcaps[c["ticker"]][0]
+    if table_live and c["ticker"] in table_live and table_live[c["ticker"]].get("mcap_mn"):
+        return table_live[c["ticker"]]["mcap_mn"]
+    # Legacy tuple-shaped overlay from fetch_table_mcap_mn
+    if table_live and c["ticker"] in table_live:
+        v = table_live[c["ticker"]]
+        if isinstance(v, tuple):
+            return v[0]
     return yahoo_fallback_mcap_mn(c, meta, price, sh, usd_to_inr)
+
+
+def company_slug(c: dict) -> str:
+    """URL slug for Thursday stub / Friday company detail pages."""
+    return re.sub(r"[^a-z0-9]+", "-", c["ticker"].lower()).strip("-")
+
+
+def ret_from_series(price, series, today_iso, days=None, ytd=False):
+    """% return from live price vs a historical close on `series`."""
+    if price is None or not series:
+        return None
+    if ytd:
+        ytd_cut = f"{today_iso[:4]}-01-01"
+        base = close_on_or_after(series, ytd_cut)
+    else:
+        cut = (datetime.fromisoformat(today_iso).date() - timedelta(days=days)).isoformat()
+        base = close_on_or_after(series, cut)
+    if not base:
+        return None
+    return (price / base - 1) * 100
 
 
 def ret_over(pairs, days, today_iso):
@@ -717,7 +805,6 @@ def main():
         calendar.append(today_iso)
 
     ff = {tk: ffill_on_calendar(fetched.get(tk, ({}, []))[1], calendar) for tk in tickers}
-    one_mo_target = (now_ist.date() - timedelta(days=30)).isoformat()
 
     # USD/INR up front — used to convert the USD names' (MMYT/FRSH) market cap to
     # INR for the table/sector weights, matching the source (which shows all caps in
@@ -726,15 +813,19 @@ def main():
     usdinr = fetch_usdinr()
     usd_to_inr = (usdinr or {}).get("value") or 90.0   # fallback rate if FX fetch fails
 
-    # Table mcap (₹ mn): Screener → BSE → NASDAQ(Yahoo×FX). Price/day/1M stay on Yahoo.
-    table_mcaps = fetch_table_mcap_mn(usd_to_inr)
+    # Table live fields (₹ mn mcap + NSE price/day): Screener → BSE → NASDAQ(Yahoo×FX).
+    table_live = fetch_table_live(usd_to_inr)
 
     # ── Per-constituent live snapshot ──────────────────────────────────────
     constituents = []
     for c in COMPANIES:
         tk = yf_ticker(c)
         meta, series = fetched.get(tk, ({}, []))
-        price = meta.get("regularMarketPrice")
+        live = table_live.get(c["ticker"], {})
+        # NSE: prefer Screener/BSE live price; NASDAQ / fallback: Yahoo.
+        price = live.get("price") if c["exchange"] == "NSE" else None
+        if price is None:
+            price = meta.get("regularMarketPrice")
         if price is None and series:
             price = series[-1][1]
         # Official previous close from fast_info (matches the source's day change).
@@ -743,22 +834,36 @@ def main():
         prev = meta.get("_prev")
         if prev is None and series:
             prev = series[-2][1] if (series[-1][0] >= today_iso and len(series) >= 2) else series[-1][1]
-        daily = (price / prev - 1) * 100 if price and prev else None
-        base_1m = close_on_or_after(series, one_mo_target)
-        ret_1m = (price / base_1m - 1) * 100 if price and base_1m else None
+        daily = live.get("daily_pct") if c["exchange"] == "NSE" else None
+        if daily is None:
+            daily = (price / prev - 1) * 100 if price and prev else None
+        ret_1m = ret_from_series(price, series, today_iso, days=30)
+        ret_3m = ret_from_series(price, series, today_iso, days=90)
+        ret_6m = ret_from_series(price, series, today_iso, days=180)
+        ret_1y = ret_from_series(price, series, today_iso, days=365)
+        ret_ytd = ret_from_series(price, series, today_iso, ytd=True)
         # "Since" = since base date for pre-2024 listers, else since listing day
         # (= earliest available close), matching the index base convention.
         since_base = series[0][1] if series else None
         since = (price / since_base - 1) * 100 if price and since_base else None
         sh = SHARE_DATA.get(tk, {})
         ccy = "INR" if c["exchange"] == "NSE" else "USD"
-        mcap_mn = mcap_mn_inr(c, meta, price, sh, usd_to_inr, table_mcaps=table_mcaps)
+        mcap_mn = mcap_mn_inr(c, meta, price, sh, usd_to_inr, table_live=table_live)
+        mcap_cr = (mcap_mn / 10.0) if mcap_mn is not None else None
+        mcap_usd_mn = (mcap_mn / usd_to_inr) if mcap_mn is not None and usd_to_inr else None
         constituents.append({
             "num": c["num"], "name": c["name"], "ticker": c["ticker"],
+            "slug": company_slug(c),
             "exchange": c["exchange"], "sector": c["sector"], "float_pct": c["float_pct"],
             "price": r2(price), "ccy": ccy,
-            "daily_pct": r2(daily), "ret_1m": r2(ret_1m), "since_pct": r2(since),
-            "mcap_mn": r2(mcap_mn, 1),  # always ₹ millions (Screener/BSE cr × 10)
+            "daily_pct": r2(daily),
+            "ret_1m": r2(ret_1m), "ret_3m": r2(ret_3m), "ret_6m": r2(ret_6m),
+            "ret_1y": r2(ret_1y), "ret_ytd": r2(ret_ytd),
+            "since_pct": r2(since),
+            "mcap_mn": r2(mcap_mn, 1),       # ₹ millions
+            "mcap_cr": r2(mcap_cr, 1),       # ₹ crores  (mn / 10)
+            "mcap_usd_mn": r2(mcap_usd_mn, 1),  # USD millions
+            "detail_url": f"/z47-forty-seven/company/{company_slug(c)}",
         })
 
     # ── Divisor from the fixed anchor (only tickers usable on the anchor) ───
@@ -819,11 +924,31 @@ def main():
     n500_now     = n500_meta.get("regularMarketPrice")
     n500_indexed_now = n500_now / N500_BASE * 100 if n500_now else None
 
-    # ── Movers (by 1-month return) ─────────────────────────────────────────
-    ranked = sorted([c for c in constituents if c["ret_1m"] is not None],
-                    key=lambda c: c["ret_1m"], reverse=True)
-    mv = lambda c: {"name": c["name"], "ticker": c["ticker"], "sector": c["sector"], "ret_1m": c["ret_1m"]}
-    movers = {"gainers": [mv(c) for c in ranked[:5]], "losers": [mv(c) for c in ranked[-5:][::-1]]}
+    # ── Movers by period (for Performance tabs 1M/3M/6M/YTD/1Y) ────────────
+    PERIOD_RET_KEYS = {
+        "1M": "ret_1m", "3M": "ret_3m", "6M": "ret_6m",
+        "YTD": "ret_ytd", "1Y": "ret_1y",
+    }
+
+    def movers_for(ret_key: str):
+        ranked = sorted(
+            [c for c in constituents if c.get(ret_key) is not None],
+            key=lambda c: c[ret_key], reverse=True,
+        )
+        mv = lambda c: {
+            "name": c["name"], "ticker": c["ticker"], "sector": c["sector"],
+            "slug": c["slug"], "detail_url": c["detail_url"],
+            "ret": c[ret_key],
+            # keep ret_1m key for backward-compatible page JS until tabs ship
+            "ret_1m": c[ret_key],
+        }
+        return {
+            "gainers": [mv(c) for c in ranked[:5]],
+            "losers": [mv(c) for c in ranked[-5:][::-1]],
+        }
+
+    movers_by_period = {period: movers_for(key) for period, key in PERIOD_RET_KEYS.items()}
+    movers = movers_by_period["1M"]  # default / backward compatible
 
     # ── Sectors (count + mcap weight + avg 1M + top mover) ─────────────────
     total_mcap = sum(c["mcap_mn"] for c in constituents if c["mcap_mn"]) or 1
@@ -857,11 +982,12 @@ def main():
             "base_date": BASE_DATE, "anchor_date": ANCHOR_DATE,
             "benchmark": "NIFTY 500",
             "constituents_priced": len(usable_f),
-            "source": "Yahoo (prices/index) + Screener/BSE/NASDAQ (table mcap ₹ mn)",
+            "source": "Yahoo (index/history) + Screener/BSE (NSE live table) + NASDAQ×FX (MMYT/FRSH)",
             "data_source_of_truth": "github.com/GirishZ47/z47-dashboard (16 Jun 2026 rebalance)",
             "methodology_flags": [
                 "MMYT & FRSH summed in USD without FX conversion — existing model quirk.",
-                "Constituent Mkt Cap (₹ mn) from Screener (NSE) / BSE fallback / NASDAQ×FX; not Yahoo mcap.",
+                "NSE table price/day/mcap from Screener (BSE fallback); NASDAQ mcap = Yahoo×USD/INR.",
+                "Mkt Cap emitted as mcap_mn (₹ mn), mcap_cr (₹ cr), mcap_usd_mn (USD mn).",
             ],
         },
         "index": {
@@ -875,6 +1001,7 @@ def main():
         "history": hist_rows,
         "constituents": constituents,
         "movers": movers,
+        "movers_by_period": movers_by_period,
         "sectors": sectors,
         "events": events,
     }

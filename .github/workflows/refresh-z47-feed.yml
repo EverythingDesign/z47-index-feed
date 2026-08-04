@@ -39,6 +39,9 @@ jobs:
         run: python3 -m pip install --quiet --upgrade yfinance
 
       - name: Build feed
+        env:
+          # Optional — set in repo Settings → Secrets if Screener rate-limits GHA
+          SCREENER_SESSIONID: ${{ secrets.SCREENER_SESSIONID }}
         run: python3 build_z47_json.py --write-history
 
       - name: Commit if changed
@@ -50,5 +53,6 @@ jobs:
             echo "No changes — nothing to commit."
           else
             git commit -m "data: refresh Z47'47 feed ($(date -u +'%Y-%m-%dT%H:%MZ'))"
+            git pull --rebase origin main
             git push
           fi
