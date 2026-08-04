@@ -100,37 +100,7 @@
   }
 
   function markMcapHeaders() {
-    // Split single dual header into ₹ Cr + $ Mn when possible
-    document.querySelectorAll("div, span, th, p").forEach(function (el) {
-      if (el.children && el.children.length > 0) return;
-      var t = (el.textContent || "").trim();
-      if (!t) return;
-      var low = t.toLowerCase();
-      if (low === "mkt cap (₹ mn)" || low === "mkt cap (rs mn)" || low === "mkt cap (₹ cr / $ mn)" ||
-          low === "mkt cap (rs cr / $ mn)" || /^mkt cap/i.test(t) && /cr\s*\/\s*\$/i.test(t)) {
-        el.textContent = "Mkt Cap (\u20B9 Cr)";
-        // Insert sibling header for USD if parent is a header cell row
-        var cell = el.closest(".summary-th, th, [class*='header']") || el.parentElement;
-        if (cell && cell.parentNode && !cell.parentNode.querySelector("[data-z47-mcap-usd-header]")) {
-          var usd = cell.cloneNode(true);
-          usd.setAttribute("data-z47-mcap-usd-header", "1");
-          var textEl = usd.querySelector("div, span") || usd;
-          // find deepest text-ish
-          var leaf = usd;
-          while (leaf.children && leaf.children.length === 1) leaf = leaf.children[0];
-          if (leaf.childNodes.length && leaf.childNodes[0].nodeType === 3) leaf.childNodes[0].textContent = "Mkt Cap ($ Mn)";
-          else {
-            var inner = usd.querySelector("div, span");
-            if (inner && !inner.children.length) inner.textContent = "Mkt Cap ($ Mn)";
-            else leaf.textContent = "Mkt Cap ($ Mn)";
-          }
-          cell.parentNode.insertBefore(usd, cell.nextSibling);
-        }
-      } else if (low === "mkt cap (₹ cr)" || low.indexOf("mkt cap") === 0 && low.indexOf("cr") !== -1 && low.indexOf("$") === -1) {
-        // already cr-only; still ensure usd sibling once
-        el.textContent = "Mkt Cap (\u20B9 Cr)";
-      }
-    });
+    /* layout left to Designer — do not inject/split header columns */
   }
 
   function start() {
@@ -141,7 +111,6 @@
     }
     hideHeroStatusStrip();
     wireReadMore();
-    markMcapHeaders();
     document.documentElement.setAttribute("data-z47-staging-ready", "1");
     console.info("[z47-staging] Thursday overlay active");
   }

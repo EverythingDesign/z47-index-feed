@@ -35,17 +35,8 @@
     a.title = "Company page (staging stub until Friday)";
     el.appendChild(a);
   }
-  function fmtCr(c) {
-    var v = c.mcap_cr != null ? c.mcap_cr : (c.mcap_mn != null ? c.mcap_mn / 10 : null);
-    return v == null ? "\u2014" : "\u20B9" + fmtNum(v, 0) + " Cr";
-  }
-  function fmtUsd(c) {
-    var v = c.mcap_usd_mn;
-    return v == null ? "\u2014" : "$" + fmtNum(v, 0) + "M";
-  }
-  // One template ROW only — if the grid already has N painted rows, cloning all
-  // of them per company explodes into N×47 cells.
   function rowTemplate(grid) {
+    // CRITICAL: only clone ONE row. Cloning all painted rows → N×47 explosion.
     var cells = $all(":scope > *", grid);
     if (!cells.length) return [];
     var seen = {};
@@ -58,64 +49,34 @@
       if (seen[k]) { rowLen = i; break; }
       seen[k] = true;
     }
-    // Fallback: if no repeating keys, assume a fixed column count of unique keys
     if (rowLen === cells.length && Object.keys(seen).length) rowLen = Object.keys(seen).length;
     return cells.slice(0, rowLen).map(function (n) { return n.cloneNode(true); });
-  }
-  function ensureUsdColumn(tpl) {
-    var hasUsd = tpl.some(function (ct) {
-      var t = ct.querySelector("[data-z47-cell]");
-      if (!t && ct.getAttribute && ct.getAttribute("data-z47-cell")) t = ct;
-      var k = t && t.getAttribute("data-z47-cell");
-      return k === "mcap_usd" || k === "mcap_usd_mn";
-    });
-    if (hasUsd) return tpl;
-    var mcapIdx = -1;
-    for (var i = 0; i < tpl.length; i++) {
-      var t = tpl[i].querySelector("[data-z47-cell]");
-      if (!t && tpl[i].getAttribute && tpl[i].getAttribute("data-z47-cell")) t = tpl[i];
-      var k = t && t.getAttribute("data-z47-cell");
-      if (k === "mcap" || k === "mcap_dual" || k === "mcap_cr" || k === "mcap_mn") { mcapIdx = i; break; }
-    }
-    if (mcapIdx < 0) return tpl;
-    // Normalize the existing mcap cell to ₹ Cr, then clone a $ Mn sibling column.
-    var mcapCell = tpl[mcapIdx];
-    var mt = mcapCell.querySelector("[data-z47-cell]");
-    if (!mt && mcapCell.getAttribute && mcapCell.getAttribute("data-z47-cell")) mt = mcapCell;
-    if (mt) mt.setAttribute("data-z47-cell", "mcap_cr");
-    var usd = mcapCell.cloneNode(true);
-    var ut = usd.querySelector("[data-z47-cell]");
-    if (!ut && usd.getAttribute && usd.getAttribute("data-z47-cell")) ut = usd;
-    if (ut) ut.setAttribute("data-z47-cell", "mcap_usd");
-    tpl.splice(mcapIdx + 1, 0, usd);
-    return tpl;
-  }
-  function fillCell(t, c) {
-    var k = t.getAttribute("data-z47-cell");
-    if      (k === "name")   setNameLink(t, c);
-    else if (k === "sector") t.textContent = c.sector;
-    else if (k === "price")  t.textContent = (c.ccy === "USD" ? "$" : "\u20B9") + fmtNum(c.price, 1);
-    else if (k === "day")  { t.classList.remove(UP, DOWN);
-                             if (c.daily_pct == null) { t.textContent = "\u2014"; t.style.color = "#9a9a9a"; }
-                             else { t.textContent = fmtPct(c.daily_pct); t.classList.add(sign(c.daily_pct)); t.style.color = colorFor(c.daily_pct); } }
-    else if (k === "ret1m"){ t.textContent = fmtPct(c.ret_1m); t.classList.remove(UP, DOWN); t.classList.add(sign(c.ret_1m)); t.style.color = colorFor(c.ret_1m); }
-    else if (k === "mcap" || k === "mcap_dual" || k === "mcap_cr" || k === "mcap_mn") t.textContent = fmtCr(c);
-    else if (k === "mcap_usd" || k === "mcap_usd_mn") t.textContent = fmtUsd(c);
   }
   function paint(ROWS) {
     byKey("constituents-body").forEach(function (grid) {
       var tpl = rowTemplate(grid);
       if (!tpl.length) return;
-      tpl = ensureUsdColumn(tpl);
-      // Expand CSS grid so the new $ Mn column gets its own track
-      grid.style.gridTemplateColumns = "repeat(" + tpl.length + ", minmax(0, 1fr))";
+      // Do not touch grid-template-columns — leave Webflow layout alone.
       grid.innerHTML = "";
       ROWS.forEach(function (c) {
         tpl.forEach(function (ct) {
           var cell = ct.cloneNode(true);
           var t = cell.querySelector("[data-z47-cell]");
           if (!t && cell.getAttribute && cell.getAttribute("data-z47-cell")) t = cell;
-          if (t) fillCell(t, c);
+          if (t) {
+            var k = t.getAttribute("data-z47-cell");
+            if      (k === "name")   setNameLink(t, c);
+            else if (k === "sector") t.textContent = c.sector;
+            else if (k === "price")  t.textContent = (c.ccy === "USD" ? "$" : "\u20B9") + fmtNum(c.price, 1);
+            else if (k === "day")  { t.classList.remove(UP, DOWN);
+                                     if (c.daily_pct == null) { t.textContent = "\u2014"; t.style.color = "#9a9a9a"; }
+                                     else { t.textContent = fmtPct(c.daily_pct); t.classList.add(sign(c.daily_pct)); t.style.color = colorFor(c.daily_pct); } }
+            else if (k === "ret1m"){ t.textContent = fmtPct(c.ret_1m); t.classList.remove(UP, DOWN); t.classList.add(sign(c.ret_1m)); t.style.color = colorFor(c.ret_1m); }
+            else if (k === "mcap" || k === "mcap_mn" || k === "mcap_dual" || k === "mcap_cr" || k === "mcap_usd") {
+              // Original single column: ₹ mn (same as live page)
+              t.textContent = fmtNum(c.mcap_mn, 0);
+            }
+          }
           grid.appendChild(cell);
         });
       });
