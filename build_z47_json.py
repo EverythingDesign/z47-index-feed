@@ -863,7 +863,7 @@ def main():
             "mcap_mn": r2(mcap_mn, 1),       # ₹ millions
             "mcap_cr": r2(mcap_cr, 1),       # ₹ crores  (mn / 10)
             "mcap_usd_mn": r2(mcap_usd_mn, 1),  # USD millions
-            "detail_url": f"/z47-forty-seven/company/{company_slug(c)}",
+            "detail_url": f"/companies/{company_slug(c)}",
         })
 
     # ── Divisor from the fixed anchor (only tickers usable on the anchor) ───

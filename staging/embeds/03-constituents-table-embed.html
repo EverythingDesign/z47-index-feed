@@ -1,4 +1,14 @@
+<!--
+  Z47 — Tab: Constituent · Live prices
+  File: staging/embeds/03-constituents-table-embed.html
+  Paste into the .live-prices-list / constituents-body HtmlEmbed on p2 (or staging).
 
+  Fills: name | sector | price | day | ret1m | mcap (₹ Cr) | mcap_usd_mn ($ mn)
+  Feed:  https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json
+  Updated: 2026-08-07 — company links → /companies/{slug} (CMS)
+-->
+<style>.ai-color-parrotgreen{color:#249200;}.ai-color-red{color:#D31F03;}</style>
+<script>
 (function () {
   "use strict";
   var FEED_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
@@ -74,18 +84,18 @@
             else if (k === "ret1m"){ t.textContent = fmtPct(c.ret_1m); t.classList.remove(UP, DOWN); t.classList.add(sign(c.ret_1m)); t.style.color = colorFor(c.ret_1m); }
             else if (k === "mcap_usd_mn" || k === "mcap_usd") {
               t.textContent = (c.mcap_usd_mn != null && isFinite(c.mcap_usd_mn))
-                ? "$" + fmtNum(c.mcap_usd_mn, 0)
+                ? fmtNum(c.mcap_usd_mn, 0)
                 : "\u2014";
             }
             else if (k === "mcap_cr") {
               t.textContent = (c.mcap_cr != null && isFinite(c.mcap_cr))
-                ? "\u20B9" + fmtNum(c.mcap_cr, 0)
-                : (c.mcap_mn != null ? "\u20B9" + fmtNum(c.mcap_mn / 10, 0) : "\u2014");
+                ? fmtNum(c.mcap_cr, 0)
+                : (c.mcap_mn != null ? fmtNum(c.mcap_mn / 10, 0) : "\u2014");
             }
             else if (k === "mcap" || k === "mcap_mn" || k === "mcap_dual") {
               // Dual-column pages use header "mkt cap (₹ Cr)" on this cell — prefer ₹ Cr.
-              if (c.mcap_cr != null && isFinite(c.mcap_cr)) t.textContent = "\u20B9" + fmtNum(c.mcap_cr, 0);
-              else if (c.mcap_mn != null) t.textContent = "\u20B9" + fmtNum(c.mcap_mn, 0);
+              if (c.mcap_cr != null && isFinite(c.mcap_cr)) t.textContent = fmtNum(c.mcap_cr, 0);
+              else if (c.mcap_mn != null) t.textContent = fmtNum(c.mcap_mn, 0);
               else t.textContent = "\u2014";
             }
           }
@@ -102,3 +112,5 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+</script>
