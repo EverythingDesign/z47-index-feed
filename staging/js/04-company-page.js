@@ -147,6 +147,57 @@
       setLink("link-nse", h.nse_url || "#", "NSE : " + h.nse_symbol);
     }
     if (h.name) setText(co("name"), h.name);
+    paintPL(h.pl);
+  }
+  function paintPL(pl) {
+    if (!pl || !pl.periods || !pl.rows || !pl.rows.length) return;
+    co("pl-table").forEach(function (host) {
+      var wrap = host.querySelector(".constituent-summary-table.main-wrap") || host;
+      var header = wrap.querySelector(".live-prices-header");
+      var body = wrap.querySelector(".live-prices-list, [data-z47=\"constituents-body\"]");
+      if (!header || !body) return;
+
+      var hCells = $all(":scope > *", header);
+      var bCells = $all(":scope > *", body);
+      if (hCells.length < 2 || bCells.length < 2) return;
+      var cols = pl.periods.length + 1; // label + years
+      var hTpl = hCells.slice(0, cols).map(function (n) { return n.cloneNode(true); });
+      var bTpl = bCells.slice(0, cols).map(function (n) { return n.cloneNode(true); });
+      if (hTpl.length < cols || bTpl.length < cols) return;
+
+      // Header: Company + periods
+      header.innerHTML = "";
+      hTpl.forEach(function (cell, i) {
+        var node = cell.cloneNode(true);
+        var t = node.querySelector(".summary-heading, [data-z47-cell], div");
+        if (t) {
+          if (i === 0) t.textContent = "Company";
+          else t.textContent = pl.periods[i - 1] || "";
+        }
+        header.appendChild(node);
+      });
+
+      // Body rows
+      body.innerHTML = "";
+      pl.rows.forEach(function (row) {
+        bTpl.forEach(function (cell, i) {
+          var node = cell.cloneNode(true);
+          var t = node.querySelector("[data-z47-cell], .summary-heading, .text-size-medium, div");
+          if (!t) t = node;
+          if (i === 0) {
+            t.textContent = row.label || "";
+            t.classList.add("summary-heading");
+          } else {
+            var v = (row.values && row.values[i - 1] != null) ? String(row.values[i - 1]) : "—";
+            t.textContent = v === "" ? "—" : v;
+            // mild colour for negatives
+            if (/^-/.test(v)) t.style.color = NEG_COLOR;
+            else t.style.color = "";
+          }
+          body.appendChild(node);
+        });
+      });
+    });
   }
   function start() {
     var key = resolveKey();

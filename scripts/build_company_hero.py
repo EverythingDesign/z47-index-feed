@@ -189,6 +189,77 @@ def parse_screener_hero(html: str) -> dict:
     return out
 
 
+PL_YEAR_FROM = 2020
+PL_YEAR_TO = 2025
+
+
+def parse_screener_pl(html: str) -> dict | None:
+    """Top-level P&L rows for Mar PL_YEAR_FROM–PL_YEAR_TO (no nested expanders)."""
+    sec = re.search(
+        r'id="profit-loss"[\s\S]*?(?=<section|id="balancesheet"|id="cash-flow"|id="ratios"|$)',
+        html,
+        re.I,
+    )
+    if not sec:
+        return None
+    table = re.search(r"<table[\s\S]*?</table>", sec.group(0))
+    if not table:
+        return None
+    rows = re.findall(r"<tr[^>]*>([\s\S]*?)</tr>", table.group(0))
+    if not rows:
+        return None
+
+    def cells(tr: str) -> list[str]:
+        return [
+            re.sub(
+                r"\s+",
+                " ",
+                re.sub(r"<[^>]+>", "", c)
+                .replace("\xa0", " ")
+                .replace("&nbsp;", " ")
+                .strip(),
+            )
+            for c in re.findall(r"<t[dh][^>]*>([\s\S]*?)</t[dh]>", tr)
+        ]
+
+    header = cells(rows[0])
+    periods_all = header[1:]
+    idxs: list[int] = []
+    periods: list[str] = []
+    for i, p in enumerate(periods_all):
+        m = re.search(r"(20\d{2})", p)
+        if not m:
+            continue
+        year = int(m.group(1))
+        if PL_YEAR_FROM <= year <= PL_YEAR_TO:
+            idxs.append(i)
+            periods.append(f"Mar {year}")
+    if not periods:
+        return None
+
+    out_rows = []
+    for tr in rows[1:]:
+        cs = cells(tr)
+        if not cs or not cs[0]:
+            continue
+        label = cs[0].replace("+", "").strip()
+        if not label:
+            continue
+        vals = cs[1:]
+        selected = [vals[i] if i < len(vals) else "" for i in idxs]
+        key = re.sub(r"[^a-z0-9]+", "_", label.lower()).strip("_")
+        out_rows.append({"key": key, "label": label, "values": selected})
+
+    if not out_rows:
+        return None
+    return {
+        "unit": "Rs. Crores",
+        "consolidated": True,
+        "periods": periods,
+        "rows": out_rows,
+    }
+
+
 def yahoo_fallback(ticker: str, exchange: str) -> dict:
     """PE / 52w high-low / about / website when Screener is thin."""
     out: dict = {}
@@ -251,6 +322,32 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
             if row.get(k) is None and v is not None:
                 row[k] = v
 
+    # P&L from consolidated page (top-level rows, Mar 2020–2025)
+    pl = None
+    if c["exchange"] != "NASDAQ":
+        for attempt in range(1, retries + 1):
+            try:
+                pl_html = _http_get(
+                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
+                )
+                pl = parse_screener_pl(pl_html)
+                if pl and pl.get("rows"):
+                    break
+                # Some names only have standalone results
+                pl_html = _http_get(
+                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
+                )
+                pl = parse_screener_pl(pl_html)
+                if pl and pl.get("rows"):
+                    if pl.get("consolidated"):
+                        pl["consolidated"] = False
+                    break
+            except Exception:
+                pl = None
+            time.sleep(1.0 * attempt + random.random())
+    if pl:
+        row["pl"] = pl
+
     now = datetime.now(IST)
     row["generated_at"] = now.isoformat()
     row["generated_at_ist"] = now.strftime("%d %b %Y, %H:%M IST")
@@ -286,10 +383,11 @@ def main() -> int:
         status = "ok" if row.get("ratios_ok", 0) >= 4 else "thin"
         if status == "ok":
             ok += 1
+        pl_n = len((row.get("pl") or {}).get("rows") or [])
         print(
             f"[{i}/{len(companies)}] {row['ticker']:12} {status} "
             f"pe={row.get('pe')} roce={row.get('roce')} roe={row.get('roe')} "
-            f"hl={row.get('high')}/{row.get('low')}"
+            f"hl={row.get('high')}/{row.get('low')} pl_rows={pl_n}"
         )
         time.sleep(args.sleep + random.random() * 0.4)
 

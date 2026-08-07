@@ -20,7 +20,100 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=BLUESTONE",
   "screener_id": "1285596",
   "ratios_ok": 6,
-  "generated_at": "2026-08-07T15:43:33.548319+05:30",
-  "generated_at_ist": "07 Aug 2026, 15:43 IST",
+  "pl": {
+    "unit": "Rs. Crores",
+    "consolidated": true,
+    "periods": [
+      "Mar 2025"
+    ],
+    "rows": [
+      {
+        "key": "sales",
+        "label": "Sales",
+        "values": [
+          "1,770"
+        ]
+      },
+      {
+        "key": "expenses",
+        "label": "Expenses",
+        "values": [
+          "1,694"
+        ]
+      },
+      {
+        "key": "operating_profit",
+        "label": "Operating Profit",
+        "values": [
+          "76"
+        ]
+      },
+      {
+        "key": "opm",
+        "label": "OPM %",
+        "values": [
+          "4.3%"
+        ]
+      },
+      {
+        "key": "other_income",
+        "label": "Other Income",
+        "values": [
+          "58"
+        ]
+      },
+      {
+        "key": "interest",
+        "label": "Interest",
+        "values": [
+          "208"
+        ]
+      },
+      {
+        "key": "depreciation",
+        "label": "Depreciation",
+        "values": [
+          "147"
+        ]
+      },
+      {
+        "key": "profit_before_tax",
+        "label": "Profit before tax",
+        "values": [
+          "-222"
+        ]
+      },
+      {
+        "key": "tax",
+        "label": "Tax %",
+        "values": [
+          "0%"
+        ]
+      },
+      {
+        "key": "net_profit",
+        "label": "Net Profit",
+        "values": [
+          "-222"
+        ]
+      },
+      {
+        "key": "eps_in_rs",
+        "label": "EPS in Rs",
+        "values": [
+          "-62.91"
+        ]
+      },
+      {
+        "key": "dividend_payout",
+        "label": "Dividend Payout %",
+        "values": [
+          "0%"
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:01:34.651876+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:01 IST",
   "source": "screener"
 }

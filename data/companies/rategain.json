@@ -20,7 +20,165 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=RATEGAIN",
   "screener_id": "1275119",
   "ratios_ok": 6,
-  "generated_at": "2026-08-07T15:43:22.931383+05:30",
-  "generated_at_ist": "07 Aug 2026, 15:43 IST",
+  "pl": {
+    "unit": "Rs. Crores",
+    "consolidated": true,
+    "periods": [
+      "Mar 2020",
+      "Mar 2021",
+      "Mar 2022",
+      "Mar 2023",
+      "Mar 2024",
+      "Mar 2025"
+    ],
+    "rows": [
+      {
+        "key": "sales",
+        "label": "Sales",
+        "values": [
+          "399",
+          "251",
+          "367",
+          "565",
+          "957",
+          "1,077"
+        ]
+      },
+      {
+        "key": "expenses",
+        "label": "Expenses",
+        "values": [
+          "423",
+          "244",
+          "334",
+          "479",
+          "766",
+          "843"
+        ]
+      },
+      {
+        "key": "operating_profit",
+        "label": "Operating Profit",
+        "values": [
+          "-24",
+          "7",
+          "32",
+          "87",
+          "191",
+          "234"
+        ]
+      },
+      {
+        "key": "opm",
+        "label": "OPM %",
+        "values": [
+          "-6%",
+          "2.9%",
+          "9%",
+          "15%",
+          "20%",
+          "22%"
+        ]
+      },
+      {
+        "key": "other_income",
+        "label": "Other Income",
+        "values": [
+          "59",
+          "13",
+          "16",
+          "20",
+          "42",
+          "76"
+        ]
+      },
+      {
+        "key": "interest",
+        "label": "Interest",
+        "values": [
+          "10",
+          "9",
+          "7",
+          "3",
+          "3",
+          "3"
+        ]
+      },
+      {
+        "key": "depreciation",
+        "label": "Depreciation",
+        "values": [
+          "43",
+          "36",
+          "30",
+          "36",
+          "41",
+          "35"
+        ]
+      },
+      {
+        "key": "profit_before_tax",
+        "label": "Profit before tax",
+        "values": [
+          "-18",
+          "-25",
+          "11",
+          "67",
+          "189",
+          "272"
+        ]
+      },
+      {
+        "key": "tax",
+        "label": "Tax %",
+        "values": [
+          "13%",
+          "16%",
+          "22%",
+          "-2%",
+          "23%",
+          "23%"
+        ]
+      },
+      {
+        "key": "net_profit",
+        "label": "Net Profit",
+        "values": [
+          "-20",
+          "-29",
+          "8",
+          "68",
+          "145",
+          "209"
+        ]
+      },
+      {
+        "key": "eps_in_rs",
+        "label": "EPS in Rs",
+        "values": [
+          "-306.87",
+          "-436.20",
+          "0.78",
+          "6.31",
+          "12.34",
+          "17.70"
+        ]
+      },
+      {
+        "key": "dividend_payout",
+        "label": "Dividend Payout %",
+        "values": [
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:01:29.658209+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:01 IST",
   "source": "screener"
 }

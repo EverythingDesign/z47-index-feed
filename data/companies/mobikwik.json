@@ -20,7 +20,152 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=MOBIKWIK",
   "screener_id": "1285186",
   "ratios_ok": 6,
-  "generated_at": "2026-08-07T15:44:24.460057+05:30",
-  "generated_at_ist": "07 Aug 2026, 15:44 IST",
+  "pl": {
+    "unit": "Rs. Crores",
+    "consolidated": true,
+    "periods": [
+      "Mar 2021",
+      "Mar 2022",
+      "Mar 2023",
+      "Mar 2024",
+      "Mar 2025"
+    ],
+    "rows": [
+      {
+        "key": "sales",
+        "label": "Sales",
+        "values": [
+          "289",
+          "527",
+          "539",
+          "875",
+          "1,170"
+        ]
+      },
+      {
+        "key": "expenses",
+        "label": "Expenses",
+        "values": [
+          "404",
+          "659",
+          "617",
+          "853",
+          "1,272"
+        ]
+      },
+      {
+        "key": "operating_profit",
+        "label": "Operating Profit",
+        "values": [
+          "-115",
+          "-132",
+          "-78",
+          "22",
+          "-102"
+        ]
+      },
+      {
+        "key": "opm",
+        "label": "OPM %",
+        "values": [
+          "-40%",
+          "-25%",
+          "-14%",
+          "2.5%",
+          "-9%"
+        ]
+      },
+      {
+        "key": "other_income",
+        "label": "Other Income",
+        "values": [
+          "14",
+          "17",
+          "22",
+          "15",
+          "22"
+        ]
+      },
+      {
+        "key": "interest",
+        "label": "Interest",
+        "values": [
+          "7",
+          "11",
+          "20",
+          "19",
+          "27"
+        ]
+      },
+      {
+        "key": "depreciation",
+        "label": "Depreciation",
+        "values": [
+          "1",
+          "2",
+          "4",
+          "4",
+          "13"
+        ]
+      },
+      {
+        "key": "profit_before_tax",
+        "label": "Profit before tax",
+        "values": [
+          "-110",
+          "-128",
+          "-81",
+          "14",
+          "-120"
+        ]
+      },
+      {
+        "key": "tax",
+        "label": "Tax %",
+        "values": [
+          "1%",
+          "-0%",
+          "4%",
+          "0%",
+          "2%"
+        ]
+      },
+      {
+        "key": "net_profit",
+        "label": "Net Profit",
+        "values": [
+          "-111",
+          "-128",
+          "-84",
+          "14",
+          "-122"
+        ]
+      },
+      {
+        "key": "eps_in_rs",
+        "label": "EPS in Rs",
+        "values": [
+          "-1,107.46",
+          "-22.41",
+          "-14.66",
+          "2.46",
+          "-15.64"
+        ]
+      },
+      {
+        "key": "dividend_payout",
+        "label": "Dividend Payout %",
+        "values": [
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:01:58.705289+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:01 IST",
   "source": "screener"
 }
