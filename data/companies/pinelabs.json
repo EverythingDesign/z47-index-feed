@@ -4,11 +4,11 @@
   "name": "Pine Labs",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/PINELABS/",
-  "mcap_cr": 17839.0,
-  "price": 155.0,
+  "mcap_cr": 17798.0,
+  "price": 154.0,
   "high": 284.0,
   "low": 135.0,
-  "pe": 107.0,
+  "pe": 106.0,
   "roce": 5.21,
   "roe": 3.6,
   "about": "Incorporated in 1998, Pine Labs is a leading Indian merchant commerce platform that provides point-of-sale (POS) solutions, payment processing, and merchant financing services.[1]",
@@ -178,7 +178,115 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:00:50.421754+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:00 IST",
+  "growth": {
+    "cards": [
+      {
+        "key": "sales",
+        "title": "Compounded Sales Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 32.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 19.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 20.0
+          }
+        ]
+      },
+      {
+        "key": "profit",
+        "title": "Compounded Profit Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 32.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 36.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 262.0
+          }
+        ]
+      },
+      {
+        "key": "stock",
+        "title": "Stock Price CAGR",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": null
+          },
+          {
+            "key": "1y",
+            "label": "1 Year:",
+            "value": null
+          }
+        ]
+      },
+      {
+        "key": "roe",
+        "title": "Return on Equity",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": -4.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": -3.0
+          },
+          {
+            "key": "last",
+            "label": "Last Year:",
+            "value": 2.0
+          }
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:08:40.817809+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:08 IST",
   "source": "screener"
 }

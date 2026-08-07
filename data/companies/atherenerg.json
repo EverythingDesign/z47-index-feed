@@ -4,8 +4,8 @@
   "name": "Ather Energy",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/ATHERENERG/",
-  "mcap_cr": 58385.0,
-  "price": 1480.0,
+  "mcap_cr": 58417.0,
+  "price": 1481.0,
   "high": 1506.0,
   "low": 398.0,
   "pe": null,
@@ -178,7 +178,115 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:00:49.200127+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:00 IST",
+  "growth": {
+    "cards": [
+      {
+        "key": "sales",
+        "title": "Compounded Sales Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 115.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 27.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 67.0
+          }
+        ]
+      },
+      {
+        "key": "profit",
+        "title": "Compounded Profit Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 12.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 52.0
+          }
+        ]
+      },
+      {
+        "key": "stock",
+        "title": "Stock Price CAGR",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": null
+          },
+          {
+            "key": "1y",
+            "label": "1 Year:",
+            "value": 265.0
+          }
+        ]
+      },
+      {
+        "key": "roe",
+        "title": "Return on Equity",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": -102.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": -84.0
+          },
+          {
+            "key": "last",
+            "label": "Last Year:",
+            "value": -33.0
+          }
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:08:39.332122+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:08 IST",
   "source": "screener"
 }

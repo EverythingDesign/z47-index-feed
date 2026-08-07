@@ -4,7 +4,7 @@
   "name": "Five-Star Business Finance",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/FIVESTAR/",
-  "mcap_cr": 16032.0,
+  "mcap_cr": 16036.0,
   "price": 543.0,
   "high": 666.0,
   "low": 338.0,
@@ -178,7 +178,115 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:01:11.486007+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:01 IST",
+  "growth": {
+    "cards": [
+      {
+        "key": "sales",
+        "title": "Compounded Sales Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 25.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 28.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 10.0
+          }
+        ]
+      },
+      {
+        "key": "profit",
+        "title": "Compounded Profit Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 25.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 22.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 2.0
+          }
+        ]
+      },
+      {
+        "key": "stock",
+        "title": "Stock Price CAGR",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": -11.0
+          },
+          {
+            "key": "1y",
+            "label": "1 Year:",
+            "value": -5.0
+          }
+        ]
+      },
+      {
+        "key": "roe",
+        "title": "Return on Equity",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": 17.0
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 17.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 17.0
+          },
+          {
+            "key": "last",
+            "label": "Last Year:",
+            "value": 16.0
+          }
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:09:01.693067+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:09 IST",
   "source": "screener"
 }

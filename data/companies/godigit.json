@@ -4,11 +4,11 @@
   "name": "Go Digit Insurance",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/GODIGIT/",
-  "mcap_cr": 25057.0,
-  "price": 271.0,
+  "mcap_cr": 25172.0,
+  "price": 272.0,
   "high": 381.0,
   "low": 244.0,
-  "pe": 50.9,
+  "pe": 51.1,
   "roce": 13.1,
   "roe": 12.2,
   "about": "Incorporated in 2016, Go Digit \nGeneral Insurance Ltd provides\nmotor, health, and other insurances[1]",
@@ -165,7 +165,115 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:00:47.303859+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:00 IST",
+  "growth": {
+    "cards": [
+      {
+        "key": "sales",
+        "title": "Compounded Sales Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 35.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 19.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 7.0
+          }
+        ]
+      },
+      {
+        "key": "profit",
+        "title": "Compounded Profit Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 45.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 148.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 7.0
+          }
+        ]
+      },
+      {
+        "key": "stock",
+        "title": "Stock Price CAGR",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": null
+          },
+          {
+            "key": "1y",
+            "label": "1 Year:",
+            "value": -26.0
+          }
+        ]
+      },
+      {
+        "key": "roe",
+        "title": "Return on Equity",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 6.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 11.0
+          },
+          {
+            "key": "last",
+            "label": "Last Year:",
+            "value": 12.0
+          }
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:08:37.679347+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:08 IST",
   "source": "screener"
 }

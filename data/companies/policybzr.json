@@ -178,7 +178,115 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:00:28.807124+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:00 IST",
+  "growth": {
+    "cards": [
+      {
+        "key": "sales",
+        "title": "Compounded Sales Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": 54.0
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 50.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 38.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 38.0
+          }
+        ]
+      },
+      {
+        "key": "profit",
+        "title": "Compounded Profit Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": 22.0
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 42.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 50.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 99.0
+          }
+        ]
+      },
+      {
+        "key": "stock",
+        "title": "Stock Price CAGR",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 28.0
+          },
+          {
+            "key": "1y",
+            "label": "1 Year:",
+            "value": -10.0
+          }
+        ]
+      },
+      {
+        "key": "roe",
+        "title": "Return on Equity",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": -1.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 6.0
+          },
+          {
+            "key": "last",
+            "label": "Last Year:",
+            "value": 10.0
+          }
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-08-07T16:08:17.646154+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:08 IST",
   "source": "screener"
 }

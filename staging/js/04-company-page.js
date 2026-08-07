@@ -148,6 +148,73 @@
     }
     if (h.name) setText(co("name"), h.name);
     paintPL(h.pl);
+    paintGrowth(h.growth);
+  }
+  function fmtGrowthPct(n) {
+    if (n == null || !isFinite(n)) return "—";
+    return Number(n).toLocaleString("en-IN", {
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0
+    }) + "%";
+  }
+  function paintGrowth(g) {
+    if (!g || !g.cards || !g.cards.length) return;
+    var byTitle = {};
+    g.cards.forEach(function (c) { byTitle[c.title] = c; });
+
+    $all(".pl-cards", root()).forEach(function (card) {
+      var titleEl = card.querySelector(".text-size-xlarge");
+      if (!titleEl) return;
+      var title = (titleEl.textContent || "").trim();
+      var data = byTitle[title];
+      if (!data || !data.rows || !data.rows.length) return;
+
+      var wrap = card.querySelector(".pe-card-data-wrap");
+      if (!wrap) return;
+      var tpl = wrap.querySelector(".pe-card-data");
+      if (!tpl) return;
+
+      wrap.innerHTML = "";
+      data.rows.forEach(function (row) {
+        var node = tpl.cloneNode(true);
+        var labelEl = node.querySelector(".ai-tag-2");
+        var valEl = node.querySelector(".ai-tag-3") || node.querySelector("[data-z47-co]");
+        if (labelEl) labelEl.textContent = row.label || "";
+        var txt = fmtGrowthPct(row.value);
+        if (valEl) {
+          valEl.textContent = txt;
+          valEl.setAttribute(
+            "data-z47-co",
+            (data.key || "growth") + "_" + (row.key || "x")
+          );
+          if (row.value != null && isFinite(row.value) && row.value < 0) {
+            valEl.style.color = NEG_COLOR;
+          } else {
+            valEl.style.color = "";
+          }
+        }
+        wrap.appendChild(node);
+      });
+    });
+
+    // Legacy attr names from early Webflow markup
+    g.cards.forEach(function (card) {
+      (card.rows || []).forEach(function (row) {
+        var txt = fmtGrowthPct(row.value);
+        setText(co(card.key + "_" + row.key), txt);
+        if (card.key === "sales" || card.key === "profit") {
+          setText(co(card.key + "_cagr_" + row.key), txt);
+        }
+        if (card.key === "stock") {
+          setText(co("stock_cagr_" + row.key), txt);
+          if (row.key === "1y") setText(co("stock_cagr_ttm"), txt);
+        }
+        if (card.key === "roe") {
+          setText(co("roe_" + row.key), txt);
+          if (row.key === "last") setText(co("roe_ttm"), txt);
+        }
+      });
+    });
   }
   function paintPL(pl) {
     if (!pl || !pl.periods || !pl.rows || !pl.rows.length) return;

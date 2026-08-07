@@ -4,7 +4,8 @@ build_company_hero.py — scrape Screener.in hero fields for each Z47 constituen
 
 Writes data/companies/{slug}.json (+ data/companies/_index.json).
 
-Fields: about, website/BSE/NSE links, mcap_cr, price, high, low, pe, roce, roe.
+Fields: about, website/BSE/NSE links, mcap_cr, price, high, low, pe, roce, roe,
+P&L (Mar 2020–2025), growth cards (sales/profit/stock/ROE ranges).
 
 Uses /company/{TICKER}/ (not /consolidated/) — ratios are server-rendered there.
 NASDAQ names (MMYT, FRSH) fall back to Yahoo when Screener ratios are empty.
@@ -260,6 +261,72 @@ def parse_screener_pl(html: str) -> dict | None:
     }
 
 
+GROWTH_TITLES = {
+    "Compounded Sales Growth": "sales",
+    "Compounded Profit Growth": "profit",
+    "Stock Price CAGR": "stock",
+    "Return on Equity": "roe",
+}
+
+GROWTH_PERIOD_KEYS = {
+    "10 Years": "10y",
+    "5 Years": "5y",
+    "3 Years": "3y",
+    "TTM": "ttm",
+    "1 Year": "1y",
+    "Last Year": "last",
+}
+
+
+def parse_screener_growth(html: str) -> dict | None:
+    """Four Screener ranges-table cards (sales / profit / stock / ROE)."""
+    cards: list[dict] = []
+    for m in re.finditer(
+        r'<table[^>]*class="[^"]*ranges-table[^"]*"[^>]*>([\s\S]*?)</table>',
+        html,
+        re.I,
+    ):
+        block = m.group(1)
+        th = re.search(r"<th[^>]*>([\s\S]*?)</th>", block)
+        if not th:
+            continue
+        title = re.sub(r"<[^>]+>", "", th.group(1)).strip()
+        key = GROWTH_TITLES.get(title)
+        if not key:
+            continue
+        rows: list[dict] = []
+        for tr in re.findall(r"<tr[^>]*>([\s\S]*?)</tr>", block)[1:]:
+            cells = [
+                re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", c)).strip()
+                for c in re.findall(r"<t[dh][^>]*>([\s\S]*?)</t[dh]>", tr)
+            ]
+            if len(cells) < 2:
+                continue
+            label = cells[0].rstrip(":").strip()
+            period = GROWTH_PERIOD_KEYS.get(label)
+            if not period:
+                continue
+            raw = cells[1].strip()
+            # Screener uses bare "%" when unavailable
+            if raw in ("", "%"):
+                val = None
+            else:
+                val = _f(raw)
+            rows.append(
+                {
+                    "key": period,
+                    "label": label + ":",
+                    "value": val,
+                }
+            )
+        if rows:
+            cards.append({"key": key, "title": title, "rows": rows})
+
+    if not cards:
+        return None
+    return {"cards": cards}
+
+
 def yahoo_fallback(ticker: str, exchange: str) -> dict:
     """PE / 52w high-low / about / website when Screener is thin."""
     out: dict = {}
@@ -300,6 +367,7 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         "screener_url": f"https://www.screener.in/company/{ticker}/",
     }
     parsed: dict = {}
+    html = ""
     for attempt in range(1, retries + 1):
         try:
             html = _http_get(
@@ -310,10 +378,13 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
                 break
         except Exception as e:
             parsed = {"error": str(e)}
+            html = ""
         time.sleep(1.2 * attempt + random.random())
 
     row.update({k: v for k, v in parsed.items() if k != "ratios_ok"})
     row["ratios_ok"] = parsed.get("ratios_ok", 0)
+
+    growth = parse_screener_growth(html) if html else None
 
     need_fb = row.get("ratios_ok", 0) < 4 or c["exchange"] == "NASDAQ"
     if need_fb:
@@ -322,7 +393,7 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
             if row.get(k) is None and v is not None:
                 row[k] = v
 
-    # P&L from consolidated page (top-level rows, Mar 2020–2025)
+    # P&L + prefer consolidated growth (top-level rows, Mar 2020–2025)
     pl = None
     if c["exchange"] != "NASDAQ":
         for attempt in range(1, retries + 1):
@@ -331,6 +402,9 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
                     f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
                 )
                 pl = parse_screener_pl(pl_html)
+                g2 = parse_screener_growth(pl_html)
+                if g2 and g2.get("cards"):
+                    growth = g2
                 if pl and pl.get("rows"):
                     break
                 # Some names only have standalone results
@@ -338,6 +412,9 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
                     f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
                 )
                 pl = parse_screener_pl(pl_html)
+                g2 = parse_screener_growth(pl_html)
+                if g2 and g2.get("cards"):
+                    growth = g2
                 if pl and pl.get("rows"):
                     if pl.get("consolidated"):
                         pl["consolidated"] = False
@@ -347,6 +424,8 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
             time.sleep(1.0 * attempt + random.random())
     if pl:
         row["pl"] = pl
+    if growth:
+        row["growth"] = growth
 
     now = datetime.now(IST)
     row["generated_at"] = now.isoformat()
@@ -384,10 +463,11 @@ def main() -> int:
         if status == "ok":
             ok += 1
         pl_n = len((row.get("pl") or {}).get("rows") or [])
+        g_n = len((row.get("growth") or {}).get("cards") or [])
         print(
             f"[{i}/{len(companies)}] {row['ticker']:12} {status} "
             f"pe={row.get('pe')} roce={row.get('roce')} roe={row.get('roe')} "
-            f"hl={row.get('high')}/{row.get('low')} pl_rows={pl_n}"
+            f"hl={row.get('high')}/{row.get('low')} pl_rows={pl_n} growth={g_n}"
         )
         time.sleep(args.sleep + random.random() * 0.4)
 
