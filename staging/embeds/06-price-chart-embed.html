@@ -1,0 +1,324 @@
+<!--
+  Z47 — Company price / PE performance chart
+  File: staging/embeds/06-price-chart-embed.html
+  Paste near the Price Performance Chart section.
+
+  Expects:
+    [data-z47-period="1M|6M|1Y|3Y|5Y|10Y|Max"]
+    [data-z47-series="price|pe"]
+    [data-z47-co="chart"] > canvas#z47-chart
+    [data-z47="chart-legend"].price-performance-legend
+
+  Feed: data/companies/{slug}-chart.json
+-->
+<script>
+(function (global) {
+  "use strict";
+  var CHART_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/data/companies/";
+  var ACTIVE = "is-active";
+  var PRICE_COLOR = "#5B4FC7";
+  var DMA50_COLOR = "#E67E22";
+  var DMA200_COLOR = "#16A085";
+  var VOLUME_COLOR = "rgba(147, 179, 214, 0.55)";
+  var PE_COLOR = "#5B4FC7";
+
+  var period = "1M";
+  var seriesMode = "price"; // price | pe
+  var layers = { price: true, dma50: false, dma200: false, volume: true };
+  var payload = null;
+  var chart = null;
+
+  function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function root() { return document.querySelector("[data-z47-company]") || document; }
+  function canvas() {
+    var host = root().querySelector('[data-z47-co="chart"]');
+    if (!host) return null;
+    return host.querySelector("canvas") || host;
+  }
+  function legendHost() {
+    return root().querySelector('[data-z47="chart-legend"], .price-performance-legend');
+  }
+  function slugFromPath() {
+    var parts = (location.pathname || "").split("/").filter(Boolean);
+    var i = parts.indexOf("companies");
+    if (i >= 0 && parts[i + 1]) return parts[i + 1].toLowerCase();
+    return "";
+  }
+  function resolveSlug() {
+    var r = document.querySelector("[data-z47-company]");
+    return ((r && r.getAttribute("data-z47-slug")) || slugFromPath() || "").toLowerCase();
+  }
+  function ensureChartJs(cb) {
+    if (global.Chart) return cb();
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+    s.onload = cb;
+    (document.head || document.body).appendChild(s);
+  }
+  function monthLabel(iso) {
+    var dt = new Date(iso + "T00:00:00");
+    return dt.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+  }
+  function ptsToXY(pts) {
+    return (pts || []).map(function (p) { return { x: p[0], y: p[1] }; });
+  }
+  function wireTabs() {
+    $all("[data-z47-period]", root()).forEach(function (a) {
+      if (a.__z47ChartPeriod) return;
+      a.__z47ChartPeriod = true;
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        period = a.getAttribute("data-z47-period") || "1M";
+        $all("[data-z47-period]", root()).forEach(function (b) {
+          b.classList.toggle(ACTIVE, b === a);
+        });
+        render();
+      });
+    });
+    $all("[data-z47-series]", root()).forEach(function (a) {
+      if (a.__z47ChartSeries) return;
+      a.__z47ChartSeries = true;
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        seriesMode = a.getAttribute("data-z47-series") || "price";
+        $all("[data-z47-series]", root()).forEach(function (b) {
+          b.classList.toggle(ACTIVE, b === a);
+        });
+        paintLegend();
+        render();
+      });
+    });
+    var ap = $all("[data-z47-period]." + ACTIVE, root())[0];
+    if (ap) period = ap.getAttribute("data-z47-period") || period;
+    var as = $all("[data-z47-series]." + ACTIVE, root())[0];
+    if (as) seriesMode = as.getAttribute("data-z47-series") || seriesMode;
+  }
+  function paintLegend() {
+    var host = legendHost();
+    if (!host) return;
+    if (seriesMode === "pe") {
+      host.innerHTML =
+        '<label class="z47-chart-lgnd"><span class="z47-sw" style="background:' + PE_COLOR + '"></span>' +
+        '<input type="checkbox" checked disabled> PE Ratio</label>';
+      return;
+    }
+    var items = [
+      ["price", "Price on NSE", PRICE_COLOR, layers.price],
+      ["dma50", "50 DMA", DMA50_COLOR, layers.dma50],
+      ["dma200", "200 DMA", DMA200_COLOR, layers.dma200],
+      ["volume", "Volume", "#93B3D6", layers.volume]
+    ];
+    host.innerHTML = items.map(function (it) {
+      return '<label class="z47-chart-lgnd" data-layer="' + it[0] + '">' +
+        '<span class="z47-sw" style="background:' + it[2] + '"></span>' +
+        '<input type="checkbox"' + (it[3] ? " checked" : "") + '> ' + it[1] +
+        "</label>";
+    }).join("");
+    $all("input[type=checkbox]", host).forEach(function (inp) {
+      inp.addEventListener("change", function () {
+        var key = inp.closest("[data-layer]").getAttribute("data-layer");
+        layers[key] = !!inp.checked;
+        render();
+      });
+    });
+  }
+  function injectLegendCss() {
+    if (document.getElementById("z47-chart-legend-css")) return;
+    var st = document.createElement("style");
+    st.id = "z47-chart-legend-css";
+    st.textContent =
+      ".price-performance-legend,.z47-chart-lgnd{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;}" +
+      ".z47-chart-lgnd{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none;}" +
+      ".z47-chart-lgnd input{margin:0;}" +
+      ".z47-sw{width:12px;height:12px;border-radius:2px;display:inline-block;flex:0 0 auto;}";
+    (document.head || document.body).appendChild(st);
+  }
+  function currentPack() {
+    if (!payload || !payload.periods) return null;
+    return payload.periods[period] || payload.periods["1Y"] || null;
+  }
+  function render() {
+    var el = canvas();
+    if (!el || !global.Chart) return;
+    var pack = currentPack();
+    if (!pack) return;
+
+    var datasets = [];
+    var scales = {
+      x: {
+        type: "category",
+        grid: { display: false },
+        ticks: {
+          maxTicksLimit: 8,
+          maxRotation: 0,
+          autoSkip: true,
+          callback: function (v) {
+            var lab = this.getLabelForValue(v);
+            return lab ? monthLabel(lab) : "";
+          }
+        }
+      }
+    };
+
+    if (seriesMode === "pe") {
+      var pe = pack.pe || [];
+      datasets.push({
+        type: "line",
+        label: "PE Ratio",
+        data: pe.map(function (p) { return p[1]; }),
+        borderColor: PE_COLOR,
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.15,
+        yAxisID: "y"
+      });
+      scales.y = {
+        position: "right",
+        title: { display: true, text: "PE" },
+        grid: { color: "rgba(0,0,0,0.06)" },
+        ticks: { maxTicksLimit: 7 }
+      };
+      var labels = pe.map(function (p) { return p[0]; });
+    } else {
+      var price = pack.price || [];
+      var labels = price.map(function (p) { return p[0]; });
+      var byDate = {};
+      labels.forEach(function (d, i) { byDate[d] = i; });
+
+      function align(pts) {
+        var arr = labels.map(function () { return null; });
+        (pts || []).forEach(function (p) {
+          var i = byDate[p[0]];
+          if (i != null) arr[i] = p[1];
+        });
+        return arr;
+      }
+
+      if (layers.volume) {
+        datasets.push({
+          type: "bar",
+          label: "Volume",
+          data: align(pack.volume),
+          backgroundColor: VOLUME_COLOR,
+          borderWidth: 0,
+          yAxisID: "yVol",
+          order: 3
+        });
+      }
+      if (layers.dma50) {
+        datasets.push({
+          type: "line",
+          label: "50 DMA",
+          data: align(pack.dma50),
+          borderColor: DMA50_COLOR,
+          borderWidth: 1.5,
+          pointRadius: 0,
+          tension: 0.15,
+          yAxisID: "y",
+          order: 2
+        });
+      }
+      if (layers.dma200) {
+        datasets.push({
+          type: "line",
+          label: "200 DMA",
+          data: align(pack.dma200),
+          borderColor: DMA200_COLOR,
+          borderWidth: 1.5,
+          pointRadius: 0,
+          tension: 0.15,
+          yAxisID: "y",
+          order: 2
+        });
+      }
+      if (layers.price) {
+        datasets.push({
+          type: "line",
+          label: "Price on NSE",
+          data: align(pack.price),
+          borderColor: PRICE_COLOR,
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.15,
+          yAxisID: "y",
+          order: 1
+        });
+      }
+      scales.yVol = {
+        position: "left",
+        display: !!layers.volume,
+        grid: { drawOnChartArea: false },
+        ticks: {
+          maxTicksLimit: 5,
+          callback: function (v) {
+            if (v >= 1e6) return (v / 1e6).toFixed(0) + "M";
+            if (v >= 1e3) return (v / 1e3).toFixed(0) + "k";
+            return v;
+          }
+        }
+      };
+      scales.y = {
+        position: "right",
+        title: { display: true, text: "Price" },
+        grid: { color: "rgba(0,0,0,0.06)" },
+        ticks: { maxTicksLimit: 7 }
+      };
+    }
+
+    var data = { labels: labels, datasets: datasets };
+    var options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: function (items) {
+              var lab = items[0] && items[0].label;
+              return lab ? monthLabel(lab) + " · " + lab : "";
+            }
+          }
+        }
+      },
+      scales: scales
+    };
+
+    if (chart) {
+      chart.data = data;
+      chart.options = options;
+      chart.update();
+    } else {
+      var prev = global.Chart.getChart ? global.Chart.getChart(el) : null;
+      if (prev) prev.destroy();
+      chart = new global.Chart(el, { type: "line", data: data, options: options });
+    }
+  }
+  function load() {
+    var slug = resolveSlug();
+    if (!slug) return;
+    fetch(CHART_URL + encodeURIComponent(slug) + "-chart.json", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (d) {
+        payload = d;
+        global.__Z47_CHART = d;
+        paintLegend();
+        render();
+      })
+      .catch(function () {
+        console.warn("[z47] company chart feed missing for", slug);
+      });
+  }
+  function boot() {
+    injectLegendCss();
+    wireTabs();
+    paintLegend();
+    ensureChartJs(load);
+  }
+  global.__Z47_renderCompanyChart = function () { render(); };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})(window);
+
+</script>
