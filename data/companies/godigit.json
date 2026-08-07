@@ -4,11 +4,11 @@
   "name": "Go Digit Insurance",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/GODIGIT/",
-  "mcap_cr": 25172.0,
-  "price": 272.0,
+  "mcap_cr": 25057.0,
+  "price": 271.0,
   "high": 381.0,
   "low": 244.0,
-  "pe": 51.1,
+  "pe": 50.9,
   "roce": 13.1,
   "roe": 12.2,
   "about": "Incorporated in 2016, Go Digit \nGeneral Insurance Ltd provides\nmotor, health, and other insurances[1]",
@@ -273,7 +273,153 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:08:37.679347+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:08 IST",
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Jun 2024",
+        "Sep 2024",
+        "Dec 2024",
+        "Mar 2025",
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "73.58%",
+            "73.28%",
+            "73.18%",
+            "73.12%",
+            "73.10%",
+            "73.09%",
+            "73.02%",
+            "73.01%",
+            "73.00%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "5.10%",
+            "5.51%",
+            "6.47%",
+            "7.86%",
+            "8.28%",
+            "8.48%",
+            "8.26%",
+            "8.01%",
+            "8.23%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "16.22%",
+            "15.57%",
+            "15.18%",
+            "15.26%",
+            "14.38%",
+            "14.12%",
+            "14.34%",
+            "14.62%",
+            "15.01%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "5.10%",
+            "5.62%",
+            "5.18%",
+            "3.76%",
+            "4.24%",
+            "4.31%",
+            "4.38%",
+            "4.35%",
+            "3.77%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "67,000",
+            "63,484",
+            "66,301",
+            "71,321",
+            "66,167",
+            "65,851",
+            "61,261",
+            "59,152",
+            "60,707"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Mar 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "73.12%",
+            "73.01%",
+            "73.00%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "7.86%",
+            "8.01%",
+            "8.23%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "15.26%",
+            "14.62%",
+            "15.01%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "3.76%",
+            "4.35%",
+            "3.77%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "71,321",
+            "59,152",
+            "60,707"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-07T16:22:17.928702+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:22 IST",
   "source": "screener"
 }

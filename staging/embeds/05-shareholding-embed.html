@@ -1,0 +1,138 @@
+<!--
+  Z47 — Shareholding pattern (CMS company page)
+  File: staging/embeds/05-shareholding-embed.html
+  Paste near the Shareholding section (filters + table).
+
+  Expects:
+    [data-z47-sh="quarterly|yearly"] filter links
+    [data-z47-co="shareholding"] table host
+
+  Data from company page embed via window.__Z47_COMPANY.shareholding
+-->
+<script>
+(function (global) {
+  "use strict";
+  var NEG_COLOR = "#D31F03";
+  var ACTIVE = "is-active";
+  var mode = "quarterly";
+  var data = null;
+
+  function $all(s, c) {
+    return Array.prototype.slice.call((c || document).querySelectorAll(s));
+  }
+  function root() {
+    return document.querySelector("[data-z47-company]") || document;
+  }
+  function hosts() {
+    return $all('[data-z47-co="shareholding"]', root());
+  }
+  function filters() {
+    return $all("[data-z47-sh]", root());
+  }
+  function setMode(next) {
+    if (next !== "quarterly" && next !== "yearly") return;
+    mode = next;
+    filters().forEach(function (a) {
+      var on = (a.getAttribute("data-z47-sh") || "") === mode;
+      a.classList.toggle(ACTIVE, on);
+    });
+    paint(data);
+  }
+  function setGridCols(el, n) {
+    if (!el) return;
+    el.style.gridTemplateColumns = "repeat(" + n + ", minmax(0, 1fr))";
+  }
+  function paintTable(host, table) {
+    if (!host || !table || !table.periods || !table.rows) return;
+    var wrap = host.querySelector(".constituent-summary-table.main-wrap") || host;
+    var grids = $all(":scope > .shareholding-pattern-table", wrap);
+    // Prefer: first grid = header periods, body = [data-z47=constituents-body]
+    var header = grids[0] || wrap.querySelector(".shareholding-pattern-table");
+    var body =
+      wrap.querySelector('[data-z47="constituents-body"]') ||
+      grids[1] ||
+      null;
+    if (!header || !body) return;
+
+    var hCells = $all(":scope > *", header);
+    var bCells = $all(":scope > *", body);
+    if (hCells.length < 2 || bCells.length < 2) return;
+
+    var cols = table.periods.length + 1;
+    var hTpl = [];
+    var bTpl = [];
+    var i;
+    for (i = 0; i < cols; i++) {
+      hTpl.push(hCells[Math.min(i, hCells.length - 1)].cloneNode(true));
+      bTpl.push(bCells[Math.min(i, bCells.length - 1)].cloneNode(true));
+    }
+
+    setGridCols(header, cols);
+    setGridCols(body, cols);
+
+    header.innerHTML = "";
+    hTpl.forEach(function (cell, idx) {
+      var node = cell.cloneNode(true);
+      var t = node.querySelector(".summary-heading, [data-z47-cell], div") || node;
+      if (idx === 0) t.textContent = "";
+      else t.textContent = table.periods[idx - 1] || "";
+      header.appendChild(node);
+    });
+
+    body.innerHTML = "";
+    table.rows.forEach(function (row) {
+      bTpl.forEach(function (cell, idx) {
+        var node = cell.cloneNode(true);
+        var t = node.querySelector("[data-z47-cell], .summary-heading, .text-size-medium, div") || node;
+        if (idx === 0) {
+          t.textContent = row.label || "";
+          t.classList.add("summary-heading");
+        } else {
+          var v = row.values && row.values[idx - 1] != null ? String(row.values[idx - 1]) : "—";
+          t.textContent = v === "" ? "—" : v;
+          if (/^-/.test(v)) t.style.color = NEG_COLOR;
+          else t.style.color = "";
+        }
+        body.appendChild(node);
+      });
+    });
+  }
+  function paint(sh) {
+    data = sh || data;
+    if (!data) return;
+    var table = data[mode] || data.quarterly || data.yearly;
+    if (!table) return;
+    hosts().forEach(function (host) {
+      paintTable(host, table);
+    });
+  }
+  function wireFilters() {
+    filters().forEach(function (a) {
+      if (a.__z47ShWired) return;
+      a.__z47ShWired = true;
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        setMode(a.getAttribute("data-z47-sh") || "quarterly");
+      });
+    });
+    // honor Designer default active tab if present
+    var active = filters().find(function (a) {
+      return a.classList.contains(ACTIVE);
+    });
+    if (active) mode = active.getAttribute("data-z47-sh") || mode;
+  }
+  function boot() {
+    wireFilters();
+    if (global.__Z47_COMPANY && global.__Z47_COMPANY.shareholding) {
+      paint(global.__Z47_COMPANY.shareholding);
+    }
+  }
+
+  global.__Z47_paintShareholding = paint;
+  global.__Z47_setShareholdingMode = setMode;
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})(window);
+
+</script>

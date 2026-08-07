@@ -278,7 +278,13 @@
       var d = pair[0], h = pair[1];
       var c = d ? findConstituent(d, key) : null;
       if (c) paintIndex(c, d.meta || {});
-      if (h) paintHero(h, c && c.ccy);
+      if (h) {
+        window.__Z47_COMPANY = h;
+        paintHero(h, c && c.ccy);
+        if (typeof window.__Z47_paintShareholding === "function" && h.shareholding) {
+          window.__Z47_paintShareholding(h.shareholding);
+        }
+      }
       var r = document.querySelector("[data-z47-company]");
       if (r) {
         var t = (h && h.ticker) || (c && c.ticker);

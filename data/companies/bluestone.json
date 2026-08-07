@@ -221,7 +221,117 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:09:22.127791+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:09 IST",
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "16.36%",
+            "16.36%",
+            "16.27%",
+            "16.25%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "35.24%",
+            "34.94%",
+            "34.19%",
+            "34.69%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "32.49%",
+            "32.52%",
+            "33.90%",
+            "32.48%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "15.90%",
+            "16.19%",
+            "15.64%",
+            "16.59%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "46,553",
+            "42,074",
+            "39,697",
+            "40,653"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "16.27%",
+            "16.25%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "34.19%",
+            "34.69%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "33.90%",
+            "32.48%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "15.64%",
+            "16.59%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "39,697",
+            "40,653"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-07T16:23:05.281031+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:23 IST",
   "source": "screener"
 }

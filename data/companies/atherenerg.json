@@ -286,7 +286,129 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:08:39.332122+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:08 IST",
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026",
+        "Jul 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "42.09%",
+            "41.22%",
+            "40.86%",
+            "40.76%",
+            "40.72%",
+            "39.58%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "24.07%",
+            "23.61%",
+            "17.45%",
+            "17.21%",
+            "16.23%",
+            "16.77%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "24.01%",
+            "23.60%",
+            "28.10%",
+            "28.97%",
+            "29.28%",
+            "29.82%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "9.82%",
+            "11.58%",
+            "13.58%",
+            "13.03%",
+            "13.76%",
+            "13.82%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "1,41,409",
+            "1,41,467",
+            "1,73,478",
+            "1,69,887",
+            "2,29,896",
+            "2,54,569"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Mar 2026",
+        "Jul 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "40.76%",
+            "39.58%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "17.21%",
+            "16.77%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "28.97%",
+            "29.82%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "13.03%",
+            "13.82%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "1,69,887",
+            "2,54,569"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-07T16:22:19.708687+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:22 IST",
   "source": "screener"
 }

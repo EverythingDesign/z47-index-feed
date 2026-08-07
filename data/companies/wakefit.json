@@ -273,7 +273,111 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:09:28.582300+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:09 IST",
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "37.39%",
+            "37.03%",
+            "36.88%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "19.54%",
+            "15.38%",
+            "14.48%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "22.44%",
+            "26.61%",
+            "25.85%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "20.62%",
+            "20.97%",
+            "22.79%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "43,498",
+            "27,962",
+            "34,580"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "37.03%",
+            "36.88%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "15.38%",
+            "14.48%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "26.61%",
+            "25.85%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "20.97%",
+            "22.79%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "27,962",
+            "34,580"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-07T16:23:12.257835+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:23 IST",
   "source": "screener"
 }

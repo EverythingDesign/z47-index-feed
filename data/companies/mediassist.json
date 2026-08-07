@@ -4,11 +4,11 @@
   "name": "Medi Assist",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/MEDIASSIST/",
-  "mcap_cr": 2726.0,
-  "price": 365.0,
+  "mcap_cr": 2721.0,
+  "price": 364.0,
   "high": 594.0,
   "low": 293.0,
-  "pe": 52.4,
+  "pe": 52.3,
   "roce": 20.4,
   "roe": 14.5,
   "about": "Incorporated in June 2000, Medi Assist Healthcare Services Limited is a health-tech and insurance-tech company that manages health benefits for employers, retail members, and public health schemes, primarily serving insurance companies.[1]",
@@ -286,7 +286,165 @@
       }
     ]
   },
-  "generated_at": "2026-08-07T16:09:40.116489+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:09 IST",
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Mar 2024",
+        "Jun 2024",
+        "Sep 2024",
+        "Dec 2024",
+        "Mar 2025",
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "38.91%",
+            "38.85%",
+            "20.60%",
+            "20.56%",
+            "20.56%",
+            "20.55%",
+            "4.87%",
+            "4.62%",
+            "4.61%",
+            "4.61%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "9.67%",
+            "9.76%",
+            "16.25%",
+            "14.04%",
+            "13.26%",
+            "13.89%",
+            "23.00%",
+            "25.27%",
+            "24.31%",
+            "25.42%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "30.60%",
+            "29.18%",
+            "41.33%",
+            "42.72%",
+            "42.91%",
+            "42.30%",
+            "48.90%",
+            "49.91%",
+            "49.18%",
+            "47.24%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "20.80%",
+            "22.21%",
+            "21.83%",
+            "22.68%",
+            "23.25%",
+            "23.27%",
+            "23.24%",
+            "20.19%",
+            "21.90%",
+            "22.74%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "92,833",
+            "78,445",
+            "88,203",
+            "95,871",
+            "99,984",
+            "1,02,991",
+            "98,805",
+            "93,181",
+            "88,970",
+            "88,148"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Mar 2024",
+        "Mar 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "38.91%",
+            "20.56%",
+            "4.61%",
+            "4.61%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "9.67%",
+            "13.26%",
+            "24.31%",
+            "25.42%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "30.60%",
+            "42.91%",
+            "49.18%",
+            "47.24%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "20.80%",
+            "23.25%",
+            "21.90%",
+            "22.74%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "92,833",
+            "99,984",
+            "88,970",
+            "88,148"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-07T16:23:25.599532+05:30",
+  "generated_at_ist": "07 Aug 2026, 16:23 IST",
   "source": "screener"
 }

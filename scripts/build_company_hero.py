@@ -5,7 +5,7 @@ build_company_hero.py — scrape Screener.in hero fields for each Z47 constituen
 Writes data/companies/{slug}.json (+ data/companies/_index.json).
 
 Fields: about, website/BSE/NSE links, mcap_cr, price, high, low, pe, roce, roe,
-P&L (Mar 2020–2025), growth cards (sales/profit/stock/ROE ranges).
+P&L (Mar 2020–2025), growth cards, shareholding (quarterly + yearly).
 
 Uses /company/{TICKER}/ (not /consolidated/) — ratios are server-rendered there.
 NASDAQ names (MMYT, FRSH) fall back to Yahoo when Screener ratios are empty.
@@ -327,6 +327,62 @@ def parse_screener_growth(html: str) -> dict | None:
     return {"cards": cards}
 
 
+def _clean_cell(s: str) -> str:
+    return (
+        re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", s))
+        .replace("\xa0", " ")
+        .replace("&nbsp;", " ")
+        .strip()
+    )
+
+
+def _parse_shp_table(table_html: str) -> dict | None:
+    rows = re.findall(r"<tr[^>]*>([\s\S]*?)</tr>", table_html)
+    if not rows:
+        return None
+
+    def cells(tr: str) -> list[str]:
+        return [_clean_cell(c) for c in re.findall(r"<t[dh][^>]*>([\s\S]*?)</t[dh]>", tr)]
+
+    header = cells(rows[0])
+    periods = [p for p in header[1:] if p]
+    if not periods:
+        return None
+
+    out_rows = []
+    for tr in rows[1:]:
+        cs = cells(tr)
+        if not cs or not cs[0]:
+            continue
+        label = cs[0].replace("+", "").strip()
+        if not label:
+            continue
+        key = re.sub(r"[^a-z0-9]+", "_", label.lower()).strip("_")
+        out_rows.append({"key": key, "label": label, "values": cs[1 : 1 + len(periods)]})
+
+    if not out_rows:
+        return None
+    return {"periods": periods, "rows": out_rows}
+
+
+def parse_screener_shareholding(html: str) -> dict | None:
+    """Top-level quarterly + yearly shareholding (no nested expanders)."""
+    out: dict = {}
+    for kind in ("quarterly", "yearly"):
+        # Must use <div id=… — Screener buttons reuse data-tab-id="…-shp"
+        m = re.search(rf'<div\s+id="{kind}-shp"[^>]*>', html, re.I)
+        if not m:
+            continue
+        chunk = html[m.end() : m.end() + 12000]
+        table = re.search(r"<table[\s\S]*?</table>", chunk)
+        if not table:
+            continue
+        parsed = _parse_shp_table(table.group(0))
+        if parsed:
+            out[kind] = parsed
+    return out or None
+
+
 def yahoo_fallback(ticker: str, exchange: str) -> dict:
     """PE / 52w high-low / about / website when Screener is thin."""
     out: dict = {}
@@ -393,8 +449,9 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
             if row.get(k) is None and v is not None:
                 row[k] = v
 
-    # P&L + prefer consolidated growth (top-level rows, Mar 2020–2025)
+    # P&L + prefer consolidated growth/shareholding
     pl = None
+    shareholding = parse_screener_shareholding(html) if html else None
     if c["exchange"] != "NASDAQ":
         for attempt in range(1, retries + 1):
             try:
@@ -405,6 +462,9 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
                 g2 = parse_screener_growth(pl_html)
                 if g2 and g2.get("cards"):
                     growth = g2
+                sh2 = parse_screener_shareholding(pl_html)
+                if sh2:
+                    shareholding = sh2
                 if pl and pl.get("rows"):
                     break
                 # Some names only have standalone results
@@ -415,6 +475,9 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
                 g2 = parse_screener_growth(pl_html)
                 if g2 and g2.get("cards"):
                     growth = g2
+                sh2 = parse_screener_shareholding(pl_html)
+                if sh2:
+                    shareholding = sh2
                 if pl and pl.get("rows"):
                     if pl.get("consolidated"):
                         pl["consolidated"] = False
@@ -426,6 +489,8 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         row["pl"] = pl
     if growth:
         row["growth"] = growth
+    if shareholding:
+        row["shareholding"] = shareholding
 
     now = datetime.now(IST)
     row["generated_at"] = now.isoformat()
@@ -464,10 +529,12 @@ def main() -> int:
             ok += 1
         pl_n = len((row.get("pl") or {}).get("rows") or [])
         g_n = len((row.get("growth") or {}).get("cards") or [])
+        sh = row.get("shareholding") or {}
+        sh_n = len((sh.get("quarterly") or {}).get("periods") or [])
         print(
             f"[{i}/{len(companies)}] {row['ticker']:12} {status} "
             f"pe={row.get('pe')} roce={row.get('roce')} roe={row.get('roe')} "
-            f"hl={row.get('high')}/{row.get('low')} pl_rows={pl_n} growth={g_n}"
+            f"hl={row.get('high')}/{row.get('low')} pl_rows={pl_n} growth={g_n} shp_q={sh_n}"
         )
         time.sleep(args.sleep + random.random() * 0.4)
 
