@@ -106,36 +106,29 @@
     if (meta && meta.generated_at_ist) setText(co("as_of"), meta.generated_at_ist);
     if (c.mcap_cr != null && isFinite(c.mcap_cr)) {
       setMetricByLabel(/^Market\s*Cap$/i, "₹" + fmtNum(c.mcap_cr, 0) + " Cr.");
-      setText(co("mcap_cr"), "₹" + fmtNum(c.mcap_cr, 0) + " Cr.");
     }
     setMetricByLabel(/^Current\s*Price$/i, money(c.price, c.ccy));
-    setText(co("current_price"), money(c.price, c.ccy));
   }
   function paintHero(h, ccy) {
     if (!h) return;
     if (h.about) setText(co("about"), h.about);
     if (h.pe != null && isFinite(h.pe)) {
-      var peTxt = fmtNum(h.pe, 1);
-      setMetricByLabel(/^(Stock\s*)?P\/?E$/i, peTxt);
-      setText(co("pe"), peTxt);
+      setMetricByLabel(/^(Stock\s*)?P\/?E$/i, fmtNum(h.pe, 1));
     }
     if (h.roce != null && isFinite(h.roce)) {
-      var roceTxt = fmtNum(h.roce, 1) + "%";
-      setMetricByLabel(/^ROCE$/i, roceTxt);
-      setText(co("roce"), roceTxt);
+      setMetricByLabel(/^ROCE$/i, fmtNum(h.roce, 1) + "%");
     }
     if (h.roe != null && isFinite(h.roe)) {
-      var roeTxt = fmtNum(h.roe, 1) + "%";
-      setMetricByLabel(/^ROE$/i, roeTxt);
-      setText(co("roe"), roeTxt);
+      setMetricByLabel(/^ROE$/i, fmtNum(h.roe, 1) + "%");
     }
     if (h.high != null && h.low != null && isFinite(h.high) && isFinite(h.low)) {
-      var hl = "₹" + fmtNum(h.high, 0) + " / " + fmtNum(h.low, 0);
-      setMetricByLabel(/^High\s*\/?\s*Low$/i, hl);
-      setText(co("high_low"), hl);
+      setMetricByLabel(/^High\s*\/?\s*Low$/i, "₹" + fmtNum(h.high, 0) + " / " + fmtNum(h.low, 0));
     }
     if (h.mcap_cr != null && isFinite(h.mcap_cr)) {
       setMetricByLabel(/^Market\s*Cap$/i, "₹" + fmtNum(h.mcap_cr, 0) + " Cr.");
+    }
+    if (h.price != null && isFinite(h.price)) {
+      setMetricByLabel(/^Current\s*Price$/i, money(h.price, ccy));
     }
     if (h.website) {
       setLink("link-web", h.website, (h.website_label || h.website).toUpperCase());
