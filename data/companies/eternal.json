@@ -3,14 +3,14 @@
   "ticker": "ETERNAL",
   "name": "Eternal (Zomato)",
   "exchange": "NSE",
-  "screener_url": "https://www.screener.in/company/ETERNAL/",
-  "mcap_cr": 304420.0,
-  "price": 315.0,
+  "screener_url": "https://www.screener.in/company/ETERNAL/consolidated/",
+  "mcap_cr": 303021.0,
+  "price": 314.0,
   "high": 368.0,
   "low": 213.0,
-  "pe": 115.0,
-  "roce": 8.12,
-  "roe": 7.19,
+  "pe": 700.0,
+  "roce": 2.48,
+  "roe": 0.38,
   "about": "Incorporated in 2010, Zomato Limited is one of the leading online Food Service platforms in terms of the value of food sold. Its offerings include food delivery, dining-out services, Loyalty programs, and others.",
   "website": "http://www.zomato.com",
   "website_label": "zomato.com",
@@ -20,6 +20,8 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=ETERNAL",
   "screener_id": "1274894",
   "ratios_ok": 6,
+  "daily_pct": -0.46,
+  "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
     "consolidated": true,
@@ -244,7 +246,7 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 19.0
+            "value": 18.0
           },
           {
             "key": "3y",
@@ -498,7 +500,7 @@
       ]
     }
   },
-  "generated_at": "2026-08-07T16:21:48.470109+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:21 IST",
-  "source": "screener"
+  "generated_at": "2026-08-10T13:20:44.431136+05:30",
+  "generated_at_ist": "10 Aug 2026, 13:20 IST",
+  "source": "screener-consolidated"
 }

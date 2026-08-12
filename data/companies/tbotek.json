@@ -3,14 +3,14 @@
   "ticker": "TBOTEK",
   "name": "TBO Tek",
   "exchange": "NSE",
-  "screener_url": "https://www.screener.in/company/TBOTEK/",
-  "mcap_cr": 17536.0,
-  "price": 1615.0,
+  "screener_url": "https://www.screener.in/company/TBOTEK/consolidated/",
+  "mcap_cr": 17493.0,
+  "price": 1611.0,
   "high": 1765.0,
   "low": 1004.0,
-  "pe": 288.0,
-  "roce": 9.48,
-  "roe": 6.98,
+  "pe": 65.0,
+  "roce": 18.3,
+  "roe": 17.4,
   "about": "Incorporated in 2006, TBO Tek Ltd is in the business of operating multiple online technology platforms and providing access to book global travel inventory aggregated through travel suppliers like airlines, hotels, etc.[1]",
   "website": "https://www.tbo.com/",
   "website_label": "tbo.com",
@@ -20,6 +20,8 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=TBOTEK",
   "screener_id": "1284773",
   "ratios_ok": 6,
+  "daily_pct": -0.04,
+  "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
     "consolidated": true,
@@ -218,12 +220,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 91.0
+            "value": 90.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 20.0
+            "value": 19.0
           },
           {
             "key": "ttm",
@@ -254,7 +256,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 19.0
+            "value": 18.0
           }
         ]
       },
@@ -275,12 +277,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 25.0
+            "value": 24.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 18.0
+            "value": 17.0
           }
         ]
       }
@@ -456,7 +458,7 @@
       ]
     }
   },
-  "generated_at": "2026-08-07T16:22:34.811046+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:22 IST",
-  "source": "screener"
+  "generated_at": "2026-08-10T13:21:42.789717+05:30",
+  "generated_at_ist": "10 Aug 2026, 13:21 IST",
+  "source": "screener-consolidated"
 }

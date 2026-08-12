@@ -3,14 +3,14 @@
   "ticker": "MEESHO",
   "name": "Meesho",
   "exchange": "NSE",
-  "screener_url": "https://www.screener.in/company/MEESHO/",
-  "mcap_cr": 88380.0,
-  "price": 191.0,
+  "screener_url": "https://www.screener.in/company/MEESHO/consolidated/",
+  "mcap_cr": 88750.0,
+  "price": 192.0,
   "high": 255.0,
   "low": 126.0,
-  "pe": 61.6,
-  "roce": 6.39,
-  "roe": 6.33,
+  "pe": null,
+  "roce": -35.6,
+  "roe": -42.3,
   "about": "The Company is an app-based marketplace that is operated under the brand of Meesho that connects sellers and end consumers. Its offerings span categories including fashion, accessories, electronics, home and kitchen items, health, and fitness equipment, and office supplies.[1]",
   "website": "http://www.meesho.com",
   "website_label": "meesho.com",
@@ -19,7 +19,9 @@
   "nse_symbol": "MEESHO",
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=MEESHO",
   "screener_id": "1285799",
-  "ratios_ok": 6,
+  "ratios_ok": 5,
+  "daily_pct": 0.39,
+  "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
     "consolidated": true,
@@ -351,7 +353,7 @@
       ]
     }
   },
-  "generated_at": "2026-08-07T16:22:01.659417+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:22 IST",
-  "source": "screener"
+  "generated_at": "2026-08-10T13:21:04.052397+05:30",
+  "generated_at_ist": "10 Aug 2026, 13:21 IST",
+  "source": "screener-consolidated"
 }

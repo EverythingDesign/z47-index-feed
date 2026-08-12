@@ -3,14 +3,14 @@
   "ticker": "GROWW",
   "name": "Groww",
   "exchange": "NSE",
-  "screener_url": "https://www.screener.in/company/GROWW/",
-  "mcap_cr": 119637.0,
-  "price": 191.0,
+  "screener_url": "https://www.screener.in/company/GROWW/consolidated/",
+  "mcap_cr": 121080.0,
+  "price": 193.0,
   "high": 227.0,
   "low": 112.0,
-  "pe": 63.7,
-  "roce": 35.1,
-  "roe": 26.4,
+  "pe": 49.7,
+  "roce": 37.3,
+  "roe": 28.8,
   "about": "Incorporated in 2017, Groww is a Bengaluru-based fintech company that provides retail investors direct-to-customer digital investment platform, providing multiple financial products and services.[1]",
   "website": "http://www.groww.in",
   "website_label": "groww.in",
@@ -20,6 +20,8 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=GROWW",
   "screener_id": "1285755",
   "ratios_ok": 6,
+  "daily_pct": 1.31,
+  "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
     "consolidated": true,
@@ -318,7 +320,7 @@
           "label": "No. of Shareholders",
           "values": [
             "7,71,434",
-            "7,06,904",
+            "7,06,903",
             "7,67,929"
           ]
         }
@@ -374,14 +376,14 @@
           "key": "no_of_shareholders",
           "label": "No. of Shareholders",
           "values": [
-            "7,06,904",
+            "7,06,903",
             "7,67,929"
           ]
         }
       ]
     }
   },
-  "generated_at": "2026-08-07T16:21:49.806742+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:21 IST",
-  "source": "screener"
+  "generated_at": "2026-08-10T13:20:46.872030+05:30",
+  "generated_at_ist": "10 Aug 2026, 13:20 IST",
+  "source": "screener-consolidated"
 }

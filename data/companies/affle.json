@@ -3,14 +3,14 @@
   "ticker": "AFFLE",
   "name": "Affle (Affle 3i)",
   "exchange": "NSE",
-  "screener_url": "https://www.screener.in/company/AFFLE/",
-  "mcap_cr": 23150.0,
-  "price": 1643.0,
+  "screener_url": "https://www.screener.in/company/AFFLE/consolidated/",
+  "mcap_cr": 23011.0,
+  "price": 1633.0,
   "high": 2187.0,
   "low": 1251.0,
-  "pe": 173.0,
-  "roce": 9.17,
-  "roe": 6.81,
+  "pe": 48.1,
+  "roce": 16.8,
+  "roe": 13.8,
   "about": "Incorporated in 1994, Affle is a global technology company with a proprietary consumer intelligence platform that transforms ads into recommendations helping marketers to effectively identify, engage, acquire and drive transactions with their potential and existing users[1]",
   "website": "http://www.affle.com",
   "website_label": "affle.com",
@@ -20,6 +20,8 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=AFFLE",
   "screener_id": "1274684",
   "ratios_ok": 6,
+  "daily_pct": -0.6,
+  "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
     "consolidated": true,
@@ -254,7 +256,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -13.0
+            "value": -16.0
           }
         ]
       },
@@ -512,7 +514,7 @@
       ]
     }
   },
-  "generated_at": "2026-08-07T16:22:45.579039+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:22 IST",
-  "source": "screener"
+  "generated_at": "2026-08-10T13:21:55.899662+05:30",
+  "generated_at_ist": "10 Aug 2026, 13:21 IST",
+  "source": "screener-consolidated"
 }

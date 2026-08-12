@@ -3,14 +3,14 @@
   "ticker": "ANGELONE",
   "name": "Angel One",
   "exchange": "NSE",
-  "screener_url": "https://www.screener.in/company/ANGELONE/",
-  "mcap_cr": 26698.0,
-  "price": 292.0,
+  "screener_url": "https://www.screener.in/company/ANGELONE/consolidated/",
+  "mcap_cr": 26908.0,
+  "price": 294.0,
   "high": 360.0,
   "low": 209.0,
-  "pe": 22.9,
-  "roce": 15.6,
-  "roe": 17.3,
+  "pe": 26.1,
+  "roce": 14.8,
+  "roe": 15.6,
   "about": "Angel One Ltd is a diversified financial services company and is primarily engaged in the business  of stock, commodity and currency broking, institutional broking, providing margin trading facility, depository services and distribution of mutual funds, lending as a NBFC and corporate agents of insurance companies.[1]",
   "website": "http://www.angelbroking.com",
   "website_label": "angelbroking.com",
@@ -20,6 +20,8 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=ANGELONE",
   "screener_id": "1274790",
   "ratios_ok": 6,
+  "daily_pct": 0.79,
+  "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
     "consolidated": true,
@@ -244,17 +246,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 18.0
+            "value": 20.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 20.0
+            "value": 19.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 12.0
+            "value": 14.0
           }
         ]
       },
@@ -505,7 +507,7 @@
       ]
     }
   },
-  "generated_at": "2026-08-07T16:22:13.357449+05:30",
-  "generated_at_ist": "07 Aug 2026, 16:22 IST",
-  "source": "screener"
+  "generated_at": "2026-08-10T13:21:17.797883+05:30",
+  "generated_at_ist": "10 Aug 2026, 13:21 IST",
+  "source": "screener-consolidated"
 }
