@@ -190,6 +190,22 @@ def parse_screener_hero(html: str) -> dict:
     return out
 
 
+def parse_screener_daily_pct(html: str) -> float | None:
+    """Day change % from Screener header (up/down pill near price)."""
+    m = re.search(
+        r"font-size-18[^>]*>.*?font-size-12\s+(up|down)[^>]*>.*?([\d.]+)%",
+        html,
+        re.S | re.I,
+    )
+    if not m:
+        return None
+    try:
+        pct = float(m.group(2))
+        return -pct if m.group(1).lower() == "down" else pct
+    except ValueError:
+        return None
+
+
 PL_YEAR_FROM = 2020
 PL_YEAR_TO = 2025
 
@@ -420,36 +436,63 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         "ticker": ticker,
         "name": c["name"],
         "exchange": c["exchange"],
-        "screener_url": f"https://www.screener.in/company/{ticker}/",
+        "screener_url": f"https://www.screener.in/company/{ticker}/consolidated/",
     }
     parsed: dict = {}
     html = ""
-    for attempt in range(1, retries + 1):
-        try:
-            html = _http_get(
-                f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
-            )
-            parsed = parse_screener_hero(html)
-            if parsed.get("ratios_ok", 0) >= 4 or parsed.get("about"):
-                break
-        except Exception as e:
-            parsed = {"error": str(e)}
-            html = ""
-        time.sleep(1.2 * attempt + random.random())
+    consolidated = False
+
+    if c["exchange"] != "NASDAQ":
+        # Hero ratios: prefer consolidated (matches Screener consolidated page)
+        for attempt in range(1, retries + 1):
+            try:
+                html = _http_get(
+                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
+                )
+                parsed = parse_screener_hero(html)
+                consolidated = True
+                if parsed.get("ratios_ok", 0) >= 4 or parsed.get("about"):
+                    break
+            except Exception as e:
+                parsed = {"error": str(e)}
+                html = ""
+            time.sleep(1.0 * attempt + random.random())
+
+    if not html or parsed.get("ratios_ok", 0) < 4:
+        for attempt in range(1, retries + 1):
+            try:
+                html = _http_get(
+                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
+                )
+                parsed = parse_screener_hero(html)
+                consolidated = False
+                row["screener_url"] = f"https://www.screener.in/company/{ticker}/"
+                if parsed.get("ratios_ok", 0) >= 4 or parsed.get("about"):
+                    break
+            except Exception as e:
+                parsed = {"error": str(e)}
+                html = ""
+            time.sleep(1.2 * attempt + random.random())
 
     row.update({k: v for k, v in parsed.items() if k != "ratios_ok"})
     row["ratios_ok"] = parsed.get("ratios_ok", 0)
+    if html:
+        dp = parse_screener_daily_pct(html)
+        if dp is not None:
+            row["daily_pct"] = dp
+    row["screener_consolidated"] = consolidated
 
     growth = parse_screener_growth(html) if html else None
 
-    need_fb = row.get("ratios_ok", 0) < 4 or c["exchange"] == "NASDAQ"
+    # Yahoo fallback only for NASDAQ (Screener has no NSE-equivalent page for FRSH/MMYT)
+    need_fb = c["exchange"] == "NASDAQ"
     if need_fb:
         yb = yahoo_fallback(ticker, c["exchange"])
         for k, v in yb.items():
             if row.get(k) is None and v is not None:
                 row[k] = v
 
-    # P&L + prefer consolidated growth/shareholding
+    # P&L + growth/shareholding from consolidated when available
     pl = None
     shareholding = parse_screener_shareholding(html) if html else None
     if c["exchange"] != "NASDAQ":
@@ -465,9 +508,16 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
                 sh2 = parse_screener_shareholding(pl_html)
                 if sh2:
                     shareholding = sh2
+                hero2 = parse_screener_hero(pl_html)
+                if hero2.get("ratios_ok", 0) >= row.get("ratios_ok", 0):
+                    row.update({k: v for k, v in hero2.items() if k != "ratios_ok"})
+                    row["ratios_ok"] = hero2.get("ratios_ok", 0)
+                    row["screener_consolidated"] = True
+                    dp = parse_screener_daily_pct(pl_html)
+                    if dp is not None:
+                        row["daily_pct"] = dp
                 if pl and pl.get("rows"):
                     break
-                # Some names only have standalone results
                 pl_html = _http_get(
                     f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
                 )
@@ -495,7 +545,13 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
     now = datetime.now(IST)
     row["generated_at"] = now.isoformat()
     row["generated_at_ist"] = now.strftime("%d %b %Y, %H:%M IST")
-    row["source"] = "screener" if row.get("ratios_ok", 0) >= 4 else "screener+yahoo"
+    row["source"] = (
+        "screener"
+        if row.get("ratios_ok", 0) >= 4 and c["exchange"] != "NASDAQ"
+        else ("screener+yahoo" if c["exchange"] == "NASDAQ" else "screener")
+    )
+    if row.get("screener_consolidated"):
+        row["source"] = "screener-consolidated"
     return row
 
 
