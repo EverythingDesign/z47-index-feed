@@ -1,58 +1,69 @@
 name: Refresh Z47'47 feed
 
-# HOURLY during market hours + a settled close, Mon–Fri (NSE trades 09:15–15:30 IST).
-# Yahoo used to 429 hourly polling, but that was UNauthenticated requests — we now fetch
-# via yfinance's cookie+crumb session (works from the runner), so hourly is viable again.
-# IST = UTC + 5:30, so whole IST hours fall at :30 past the UTC hour.
-#   30 4-9 UTC = 10:00,11:00,12:00,13:00,14:00,15:00 IST → intraday snapshots
-#   45 10 UTC = 16:15 IST → ~45m after the 15:30 close, once prices settle (THE close value)
-# GitHub schedules can be delayed 5–15 min (rarely skipped) — fine here, we don't need
-# exact timing. If Yahoo ever throttles, the builder's health guard keeps the last-good
-# feed instead of publishing a partial one. Runs only on the default branch.
+# Index: hourly Mon–Fri. Companies: once daily after close + manual run.
 on:
   schedule:
-    - cron: "30 4-9 * * 1-5"   # hourly 10:00–15:00 IST (intraday, Mon–Fri)
-    - cron: "45 10 * * 1-5"    # ~16:15 IST — settled official close (the value that matters)
-  workflow_dispatch: {}        # adds a manual "Run workflow" button
+    - cron: "30 4-9 * * 1-5"
+    - cron: "45 10 * * 1-5"
+  workflow_dispatch: {}
 
 permissions:
-  contents: write              # needed to commit the refreshed JSON/CSV back
+  contents: write
 
 concurrency:
   group: z47-feed
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  refresh-index:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      # yfinance does Yahoo's cookie+crumb handshake, so the runner (a datacenter
-      # IP) gets served where bare requests now 429. This is the same library the
-      # source dashboard uses, so our numbers match it.
       - name: Install deps
         run: python3 -m pip install --quiet --upgrade yfinance
-
-      - name: Build feed
+      - name: Build index feed
         env:
-          # Optional — set in repo Settings → Secrets if Screener rate-limits GHA
           SCREENER_SESSIONID: ${{ secrets.SCREENER_SESSIONID }}
         run: python3 build_z47_json.py --write-history
-
-      - name: Commit if changed
+      - name: Commit index if changed
         run: |
           git config user.name  "z47-feed-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add z47_index.json z47_history.csv
           if git diff --staged --quiet; then
-            echo "No changes — nothing to commit."
+            echo "No index changes."
           else
-            git commit -m "data: refresh Z47'47 feed ($(date -u +'%Y-%m-%dT%H:%MZ'))"
+            git commit -m "data: refresh Z47 index ($(date -u +'%Y-%m-%dT%H:%MZ'))"
+            git pull --rebase origin main
+            git push
+          fi
+
+  refresh-companies:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '45 10 * * 1-5'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: python3 -m pip install --quiet --upgrade yfinance
+      - name: Build all company pages (Screener + Yahoo)
+        env:
+          SCREENER_SESSIONID: ${{ secrets.SCREENER_SESSIONID }}
+        run: python3 scripts/build_company_hero.py --sleep 0.55
+      - name: Commit companies if changed
+        run: |
+          git config user.name  "z47-feed-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/companies/
+          if git diff --staged --quiet; then
+            echo "No company JSON changes."
+          else
+            git commit -m "data: refresh all company pages from Screener ($(date -u +'%Y-%m-%dT%H:%MZ'))"
             git pull --rebase origin main
             git push
           fi
