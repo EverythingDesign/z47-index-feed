@@ -1,6 +1,6 @@
 <!--
-  Z47 — Company page paint (CMS /companies/{slug})
-  Updated: 2026-08-10 — hero metrics label-only (fix attr swap)
+  Z47 — Company page paint — Screener consolidated source of truth
+  Updated: 2026-08-10
 -->
 <style>.ai-color-parrotgreen{color:#249200;}.ai-color-red{color:#D31F03;}</style>
 <script>
@@ -104,16 +104,15 @@
       }
     });
   }
-  function paintIndex(c, meta) {
+  function paintIndex(c, meta, hasHero) {
     if (!c) return;
-    setText(co("name"), c.name || "—");
-    setText(co("price"), money(c.price, c.ccy));
-    paintDaily(co("daily_pct"), c.daily_pct);
-    if (meta && meta.generated_at_ist) setText(co("as_of"), meta.generated_at_ist);
-    if (c.mcap_cr != null && isFinite(c.mcap_cr)) {
-      setMetricByLabel(/^Market\s*Cap$/i, "₹" + fmtNum(c.mcap_cr, 0) + " Cr.");
+    // Company JSON (Screener) is source of truth when present — index is fallback only
+    if (!hasHero) {
+      setText(co("name"), c.name || "—");
+      setText(co("price"), money(c.price, c.ccy));
+      paintDaily(co("daily_pct"), c.daily_pct);
     }
-    setMetricByLabel(/^Current\s*Price$/i, money(c.price, c.ccy));
+    if (meta && meta.generated_at_ist && !hasHero) setText(co("as_of"), meta.generated_at_ist);
   }
   function paintHero(h, ccy) {
     if (!h) return;
@@ -135,7 +134,12 @@
     }
     if (h.price != null && isFinite(h.price)) {
       setMetricByLabel(/^Current\s*Price$/i, money(h.price, ccy));
+      setText(co("price"), money(h.price, ccy));
     }
+    if (h.daily_pct != null && isFinite(h.daily_pct)) {
+      paintDaily(co("daily_pct"), h.daily_pct);
+    }
+    if (h.generated_at_ist) setText(co("as_of"), h.generated_at_ist);
     if (h.website) {
       setLink("link-web", h.website, (h.website_label || h.website).toUpperCase());
     }
@@ -276,7 +280,7 @@
     Promise.all([indexP, heroP]).then(function (pair) {
       var d = pair[0], h = pair[1];
       var c = d ? findConstituent(d, key) : null;
-      if (c) paintIndex(c, d.meta || {});
+      if (c) paintIndex(c, d.meta || {}, !!h);
       if (h) {
         window.__Z47_COMPANY = h;
         paintHero(h, c && c.ccy);
