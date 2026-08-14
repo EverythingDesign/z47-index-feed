@@ -36,8 +36,8 @@ dashboard — not silently "fixed"):
 Any constituent change requires re-deriving the divisor — update ANCHOR_* below
 to the last good point under the new basket, and re-sync COMPANIES / SHARE_DATA.
 
-Run:  python3 build_z47_json.py            # writes z47_index.json
-      python3 build_z47_json.py --write-history   # also upserts today's row into z47_history.csv
+Run:  python3 scripts/build_z47_json.py            # writes data/z47_index.json
+      python3 scripts/build_z47_json.py --write-history   # also upserts today's row into data/z47_history.csv
 """
 from __future__ import annotations
 
@@ -57,9 +57,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone, time as _time
 
 HERE        = os.path.dirname(os.path.abspath(__file__))
-HIST_CSV    = os.path.join(HERE, "z47_history.csv")
-EVENTS_JSON = os.path.join(HERE, "constituent_events.json")
-OUT_JSON    = os.path.join(HERE, "z47_index.json")
+ROOT        = os.path.dirname(HERE)
+DATA_DIR    = os.path.join(ROOT, "data")
+HIST_CSV    = os.path.join(DATA_DIR, "z47_history.csv")
+EVENTS_JSON = os.path.join(DATA_DIR, "constituent_events.json")
+OUT_JSON    = os.path.join(DATA_DIR, "z47_index.json")
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
@@ -622,21 +624,35 @@ def fetch_table_live(usd_to_inr: float) -> dict[str, dict]:
 
     Returns {ticker: {mcap_mn, price, daily_pct, source}}.
     NSE: Screener (price/day/mcap) → BSE fallback (price/mcap).
-    NASDAQ (MMYT/FRSH): Yahoo USD mcap × FX; price/day stay Yahoo in main().
+    NASDAQ (MMYT/FRSH): StockAnalysis USD × FX; Yahoo fallback.
     """
     out: dict[str, dict] = {}
-    print("  fetching table live fields via Screener / BSE / NASDAQ…", file=sys.stderr)
+    print("  fetching table live fields via Screener / BSE / StockAnalysis…", file=sys.stderr)
     for c in COMPANIES:
         t = c["ticker"]
         row: dict = {"mcap_mn": None, "price": None, "daily_pct": None, "source": None}
         if c["exchange"] == "NASDAQ":
-            if USE_YF and _yf is not None:
+            try:
+                from stockanalysis_nasdaq import nasdaq_live
+
+                sa = nasdaq_live(t, usd_to_inr=usd_to_inr)
+            except Exception:  # noqa: BLE001
+                sa = {}
+            if sa.get("mcap_mn") or sa.get("price"):
+                row["mcap_mn"] = sa.get("mcap_mn")
+                row["price"] = sa.get("price")
+                row["daily_pct"] = sa.get("daily_pct")
+                row["source"] = sa.get("source") or "NASDAQ (StockAnalysis USD×INR)"
+            elif USE_YF and _yf is not None:
                 try:
                     fi = _yf.Ticker(t).fast_info
                     mcap_usd = _fi_num(fi, "market_cap", "marketCap")
                     if mcap_usd:
                         row["mcap_mn"] = mcap_usd * usd_to_inr / 1e6
                         row["source"] = "NASDAQ (Yahoo USD×INR)"
+                    px = _fi_num(fi, "last_price", "lastPrice")
+                    if px:
+                        row["price"] = px
                 except Exception:  # noqa: BLE001
                     pass
         else:
@@ -653,7 +669,7 @@ def fetch_table_live(usd_to_inr: float) -> dict[str, dict]:
                     row["price"] = bq.get("price")
                     row["source"] = "BSE"
             time.sleep(0.30)
-        if row["mcap_mn"] is not None and row["source"]:
+        if row["source"] and (row["mcap_mn"] is not None or row["price"] is not None):
             out[t] = row
             extra = ""
             if row["price"] is not None:
@@ -664,7 +680,7 @@ def fetch_table_live(usd_to_inr: float) -> dict[str, dict]:
                   file=sys.stderr)
         else:
             print(f"    {t:<12} FAILED — will use Yahoo fallback", file=sys.stderr)
-    print(f"  table live: {len(out)}/{len(COMPANIES)} from Screener/BSE/NASDAQ",
+    print(f"  table live: {len(out)}/{len(COMPANIES)} from Screener/BSE/StockAnalysis",
           file=sys.stderr)
     return out
 
@@ -692,7 +708,7 @@ def mcap_mn_inr(c, meta, price, sh, usd_to_inr, table_live=None):
 
 
 def company_slug(c: dict) -> str:
-    """URL slug for Thursday stub / Friday company detail pages."""
+    """CMS slug for /z47-forty-seven/{slug} (ticker, matching Screener Companies)."""
     return re.sub(r"[^a-z0-9]+", "-", c["ticker"].lower()).strip("-")
 
 
@@ -822,8 +838,8 @@ def main():
         tk = yf_ticker(c)
         meta, series = fetched.get(tk, ({}, []))
         live = table_live.get(c["ticker"], {})
-        # NSE: prefer Screener/BSE live price; NASDAQ / fallback: Yahoo.
-        price = live.get("price") if c["exchange"] == "NSE" else None
+        # Prefer Screener/BSE (NSE) or StockAnalysis (MMYT/FRSH); else Yahoo.
+        price = live.get("price")
         if price is None:
             price = meta.get("regularMarketPrice")
         if price is None and series:
@@ -834,7 +850,7 @@ def main():
         prev = meta.get("_prev")
         if prev is None and series:
             prev = series[-2][1] if (series[-1][0] >= today_iso and len(series) >= 2) else series[-1][1]
-        daily = live.get("daily_pct") if c["exchange"] == "NSE" else None
+        daily = live.get("daily_pct")
         if daily is None:
             daily = (price / prev - 1) * 100 if price and prev else None
         ret_1m = ret_from_series(price, series, today_iso, days=30)
@@ -863,7 +879,7 @@ def main():
             "mcap_mn": r2(mcap_mn, 1),       # ₹ millions
             "mcap_cr": r2(mcap_cr, 1),       # ₹ crores  (mn / 10)
             "mcap_usd_mn": r2(mcap_usd_mn, 1),  # USD millions
-            "detail_url": f"/companies/{company_slug(c)}",
+            "detail_url": f"/z47-forty-seven/{company_slug(c)}",
         })
 
     # ── Divisor from the fixed anchor (only tickers usable on the anchor) ───
@@ -982,11 +998,11 @@ def main():
             "base_date": BASE_DATE, "anchor_date": ANCHOR_DATE,
             "benchmark": "NIFTY 500",
             "constituents_priced": len(usable_f),
-            "source": "Yahoo (index/history) + Screener/BSE (NSE live table) + NASDAQ×FX (MMYT/FRSH)",
+            "source": "Yahoo (index/history) + Screener/BSE (NSE live table) + StockAnalysis×FX (MMYT/FRSH)",
             "data_source_of_truth": "github.com/GirishZ47/z47-dashboard (16 Jun 2026 rebalance)",
             "methodology_flags": [
                 "MMYT & FRSH summed in USD without FX conversion — existing model quirk.",
-                "NSE table price/day/mcap from Screener (BSE fallback); NASDAQ mcap = Yahoo×USD/INR.",
+                "NSE table price/day/mcap from Screener (BSE fallback); NASDAQ live = StockAnalysis×USD/INR (Yahoo fallback).",
                 "Mkt Cap emitted as mcap_mn (₹ mn), mcap_cr (₹ cr), mcap_usd_mn (USD mn).",
             ],
         },
