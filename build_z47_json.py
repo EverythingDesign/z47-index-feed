@@ -57,11 +57,27 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone, time as _time
 
 HERE        = os.path.dirname(os.path.abspath(__file__))
-ROOT        = os.path.dirname(HERE)
-DATA_DIR    = os.path.join(ROOT, "data")
-HIST_CSV    = os.path.join(DATA_DIR, "z47_history.csv")
-EVENTS_JSON = os.path.join(DATA_DIR, "constituent_events.json")
-OUT_JSON    = os.path.join(DATA_DIR, "z47_index.json")
+# GitHub feed: this file is at repo root next to z47_index.json.
+# Cursor copy: this file lives in scripts/ and writes data/.
+_at_repo_root = os.path.isfile(os.path.join(HERE, "z47_history.csv")) or os.path.isfile(
+    os.path.join(HERE, "z47_index.json")
+)
+if _at_repo_root:
+    ROOT = HERE
+    DATA_DIR = HERE
+    SCRIPTS_DIR = os.path.join(HERE, "scripts")
+    HIST_CSV = os.path.join(HERE, "z47_history.csv")
+    EVENTS_JSON = os.path.join(HERE, "constituent_events.json")
+    OUT_JSON = os.path.join(HERE, "z47_index.json")
+else:
+    ROOT = os.path.dirname(HERE)
+    DATA_DIR = os.path.join(ROOT, "data")
+    SCRIPTS_DIR = HERE
+    HIST_CSV = os.path.join(DATA_DIR, "z47_history.csv")
+    EVENTS_JSON = os.path.join(DATA_DIR, "constituent_events.json")
+    OUT_JSON = os.path.join(DATA_DIR, "z47_index.json")
+if SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, SCRIPTS_DIR)
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
@@ -676,7 +692,8 @@ def fetch_table_live(usd_to_inr: float) -> dict[str, dict]:
                 extra += f"  px={row['price']}"
             if row["daily_pct"] is not None:
                 extra += f"  d={row['daily_pct']:+.2f}%"
-            print(f"    {t:<12} {row['mcap_mn']:>12,.1f} mn  [{row['source']}]{extra}",
+            mcap_s = f"{row['mcap_mn']:>12,.1f}" if row["mcap_mn"] is not None else f"{'—':>12}"
+            print(f"    {t:<12} {mcap_s} mn  [{row['source']}]{extra}",
                   file=sys.stderr)
         else:
             print(f"    {t:<12} FAILED — will use Yahoo fallback", file=sys.stderr)
