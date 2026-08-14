@@ -8,7 +8,7 @@ Fields: about, website/BSE/NSE links, mcap_cr, price, high, low, pe, roce, roe,
 P&L (Mar 2020–2025), growth cards, shareholding (quarterly + yearly).
 
 Uses /company/{TICKER}/ (not /consolidated/) — ratios are server-rendered there.
-NASDAQ names (MMYT, FRSH) fall back to Yahoo when Screener ratios are empty.
+NASDAQ names (MMYT, FRSH) use StockAnalysis.com; Yahoo fills any remaining gaps.
 
 Run:  python3 scripts/build_company_hero.py
       python3 scripts/build_company_hero.py --only SBICARD,TBOTEK
@@ -422,10 +422,54 @@ def yahoo_fallback(ticker: str, exchange: str) -> dict:
     if info.get("longBusinessSummary"):
         out["about"] = info["longBusinessSummary"]
     mcap = info.get("marketCap")
-    if isinstance(mcap, (int, float)) and exchange != "NASDAQ":
-        out["mcap_cr"] = round(mcap / 1e7, 1)  # INR → Cr
+    if isinstance(mcap, (int, float)):
+        if exchange == "NASDAQ":
+            try:
+                from stockanalysis_nasdaq import usd_inr_rate
+
+                out["mcap_cr"] = round(float(mcap) * usd_inr_rate() / 1e7, 1)
+            except Exception:
+                pass
+        else:
+            out["mcap_cr"] = round(mcap / 1e7, 1)  # INR → Cr
     out["source_yahoo"] = True
     return out
+
+
+def scrape_nasdaq_hero(c: dict, row: dict) -> dict:
+    """MMYT/FRSH: StockAnalysis live + Yahoo gap-fill. No Screener 404s."""
+    ticker = c["ticker"]
+    sa_url = f"https://stockanalysis.com/stocks/{ticker.lower()}/"
+    row["screener_url"] = sa_url
+    row["stockanalysis_url"] = sa_url
+    try:
+        from stockanalysis_nasdaq import nasdaq_live, usd_inr_rate
+
+        sa = nasdaq_live(ticker, usd_to_inr=usd_inr_rate())
+    except Exception:
+        sa = {}
+    for k in ("price", "daily_pct", "pe", "high", "low", "mcap_cr", "mcap_usd"):
+        if sa.get(k) is not None:
+            row[k] = sa[k]
+    if sa.get("stockanalysis_url"):
+        row["stockanalysis_url"] = sa["stockanalysis_url"]
+    yb = yahoo_fallback(ticker, "NASDAQ")
+    for k, v in yb.items():
+        if k == "source_yahoo":
+            continue
+        if row.get(k) is None and v is not None:
+            row[k] = v
+    if row.get("about") is None and sa.get("about"):
+        row["about"] = re.sub(r"\s*\[\s*Read more\s*\]\s*$", "", sa["about"], flags=re.I).strip()
+    row["ratios_ok"] = sum(
+        1 for k in ("mcap_cr", "price", "pe", "high") if row.get(k) is not None
+    )
+    row["screener_consolidated"] = False
+    now = datetime.now(IST)
+    row["generated_at"] = now.isoformat()
+    row["generated_at_ist"] = now.strftime("%d %b %Y, %H:%M IST")
+    row["source"] = "stockanalysis" if sa.get("price") is not None else "screener+yahoo"
+    return row
 
 
 def scrape_company(c: dict, retries: int = 3) -> dict:
@@ -438,6 +482,8 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         "exchange": c["exchange"],
         "screener_url": f"https://www.screener.in/company/{ticker}/consolidated/",
     }
+    if c["exchange"] == "NASDAQ":
+        return scrape_nasdaq_hero(c, row)
     parsed: dict = {}
     html = ""
     consolidated = False
@@ -483,14 +529,6 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
     row["screener_consolidated"] = consolidated
 
     growth = parse_screener_growth(html) if html else None
-
-    # Yahoo fallback only for NASDAQ (Screener has no NSE-equivalent page for FRSH/MMYT)
-    need_fb = c["exchange"] == "NASDAQ"
-    if need_fb:
-        yb = yahoo_fallback(ticker, c["exchange"])
-        for k, v in yb.items():
-            if row.get(k) is None and v is not None:
-                row[k] = v
 
     # P&L + growth/shareholding from consolidated when available
     pl = None
@@ -545,11 +583,7 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
     now = datetime.now(IST)
     row["generated_at"] = now.isoformat()
     row["generated_at_ist"] = now.strftime("%d %b %Y, %H:%M IST")
-    row["source"] = (
-        "screener"
-        if row.get("ratios_ok", 0) >= 4 and c["exchange"] != "NASDAQ"
-        else ("screener+yahoo" if c["exchange"] == "NASDAQ" else "screener")
-    )
+    row["source"] = "screener"
     if row.get("screener_consolidated"):
         row["source"] = "screener-consolidated"
     return row
