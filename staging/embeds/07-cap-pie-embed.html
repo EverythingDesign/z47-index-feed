@@ -1,0 +1,505 @@
+<!--
+  Z47 — Cap composition donut + SECTORS/CAPS toggle
+  File: staging/embeds/07-cap-pie-embed.html
+  Paste into .caps-consitutents HtmlEmbed ONLY.
+
+  Girish thresholds (dynamic from live feed mcap_cr):
+    Large  > ₹1,00,000 Cr
+    Mid     ₹30,000 – ₹1,00,000 Cr (inclusive)
+    Small  < ₹30,000 Cr
+  Slice + legend % = share of total market cap (not company count).
+
+  IMPORTANT: Clear/delete any older cap-pie script in .sector-caps-scripts
+  (that copy still has LARGE_MIN_CR=20000 / MID_MIN_CR=5000).
+-->
+<style>
+  .z47-cap-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:6px;
+    width:100%;
+    font-family:inherit;
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .z47-cap-wrap.z47-ready{opacity:1;}
+  /* Same box as sector: .z47-sec-donutbox is min(55%, 516px) */
+  .z47-cap-donutbox{
+    position:relative;
+    flex:0 0 auto;
+    width:min(55%,516px);
+    margin:0 auto;
+  }
+  .caps-consitutents,
+  .caps-constitutents,
+  .caps-constituents{
+    height:auto !important;
+  }
+  .z47-cap-legend{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:flex-start;
+    gap:12px 40px;
+    width:100%;
+    max-width:640px;
+  }
+  .z47-cap-leg{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    min-width:110px;
+  }
+  .z47-cap-sq{
+    width:18px;
+    height:18px;
+    border-radius:2px;
+    flex:0 0 auto;
+    margin-top:2px;
+  }
+  .z47-cap-leg-text{display:flex;flex-direction:column;gap:6px;}
+  .z47-cap-leg-name{
+    font-size:15px;
+    font-weight:500;
+    color:#111;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+  .z47-cap-leg-pct{
+    font-family:Kodemono,ui-monospace,Menlo,monospace;
+    font-weight:600;
+    font-size:18px;
+    letter-spacing:.02em;
+    color:#111;
+    line-height:1;
+  }
+  @media(max-width:720px){
+    .z47-cap-donutbox{width:min(86%,420px);}
+    .z47-cap-legend{gap:16px 28px;}
+    .z47-cap-leg-pct{font-size:16px;}
+  }
+  @media(max-width:480px){
+    .z47-cap-donutbox{width:min(94%,340px);}
+  }
+</style>
+<div class="z47-cap-wrap">
+  <div class="z47-cap-donutbox"><canvas id="z47-cap-donut"></canvas></div>
+  <div class="z47-cap-legend" aria-label="Market cap composition"></div>
+</div>
+<script>
+/**
+ * Z47 Constituents — SECTORS / CAPS toggle
+ */
+(function () {
+  "use strict";
+  var ACTIVE = "z47-chart-toggle-active";
+  var WF_ACTIVE = "is-active";
+
+  function capsPanel() {
+    var pg = document.querySelector(".sector-composition-playground");
+    if (!pg) return null;
+    return (
+      pg.querySelector(".caps-consitutents") ||
+      pg.querySelector(".caps-constitutents") ||
+      pg.querySelector(".caps-constituents") ||
+      pg.querySelector("[class*='caps-cons']")
+    );
+  }
+  function sectorPanel() {
+    var pg = document.querySelector(".sector-composition-playground");
+    return pg ? pg.querySelector(".sector-composition-canvas") : null;
+  }
+  function toggleRoot() {
+    var pg = document.querySelector(".sector-composition-playground");
+    return pg ? pg.querySelector(".sector-charts-toggle") : null;
+  }
+  function pickButtons(root) {
+    var tagged = root.querySelectorAll("a[data-z47-toggle], button[data-z47-toggle]");
+    if (tagged.length >= 2) return Array.prototype.slice.call(tagged);
+    return Array.prototype.slice.call(root.querySelectorAll("a.chart-tabs, a[data-z47-toggle]")).slice(0, 2);
+  }
+  function modeFromBtn(btn) {
+    var tagged = btn.getAttribute("data-z47-toggle");
+    if (tagged) return tagged.toLowerCase();
+    return (btn.textContent || "").toUpperCase().indexOf("CAP") >= 0 ? "caps" : "sectors";
+  }
+  function panelVisible(el, on) {
+    if (!el) return;
+    if (on) {
+      el.classList.remove("hide", "actual-hide");
+      el.style.removeProperty("display");
+    } else {
+      el.classList.add("hide");
+      el.style.display = "none";
+    }
+  }
+  function headingVisible(el, on) {
+    if (!el) return;
+    el.classList.remove("hide", "actual-hide", "w-hidden");
+    if (on) {
+      el.style.setProperty("display", "block", "important");
+    } else {
+      el.style.setProperty("display", "none", "important");
+    }
+  }
+  function headingEls() {
+    var h = document.querySelector(".sector-composition-header");
+    if (!h) return { sectors: null, caps: null };
+    return {
+      sectors: h.querySelector("h5.sectors, .disclaimer-heading.sectors"),
+      caps: h.querySelector("h5.mcaps, .disclaimer-heading.mcaps")
+    };
+  }
+  function setMode(mode) {
+    var sector = sectorPanel();
+    var caps = capsPanel();
+    var root = toggleRoot();
+    if (!sector || !caps || !root) return false;
+    var isSectors = mode !== "caps";
+    panelVisible(sector, isSectors);
+    panelVisible(caps, !isSectors);
+    var hd = headingEls();
+    headingVisible(hd.sectors, isSectors);
+    headingVisible(hd.caps, !isSectors);
+    var wrap = document.querySelector(".sector-composition-wrap");
+    var liveHdr = document.querySelector(".constituent-composition > .index-header-wrap");
+    if (wrap) {
+      if (!isSectors) wrap.style.setProperty("padding-top", "0", "important");
+      else wrap.style.removeProperty("padding-top");
+    }
+    if (liveHdr) {
+      if (!isSectors) liveHdr.style.setProperty("margin-bottom", "0", "important");
+      else liveHdr.style.removeProperty("margin-bottom");
+    }
+    pickButtons(root).forEach(function (btn) {
+      var on = modeFromBtn(btn) === (isSectors ? "sectors" : "caps");
+      btn.classList.toggle(WF_ACTIVE, on);
+      btn.classList.toggle(ACTIVE, on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    if (!isSectors) {
+      if (typeof window.__Z47_capChartTryCreate === "function") window.__Z47_capChartTryCreate();
+      if (window.__Z47_capChart) {
+        setTimeout(function () { window.__Z47_capChart.resize(); }, 80);
+      }
+    }
+    return true;
+  }
+  function wire() {
+    var root = toggleRoot();
+    var sector = sectorPanel();
+    var caps = capsPanel();
+    if (!root || !sector || !caps) return false;
+
+    pickButtons(root).forEach(function (btn) {
+      if (btn.__z47Toggle) return;
+      btn.__z47Toggle = true;
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        setMode(modeFromBtn(btn));
+      });
+    });
+
+    if (!window.__Z47_sectorCapToggleInit) {
+      window.__Z47_sectorCapToggleInit = true;
+      var initial = "sectors";
+      var active = root.querySelector("." + WF_ACTIVE + ", ." + ACTIVE);
+      if (active) initial = modeFromBtn(active);
+      setMode(initial);
+    }
+    return true;
+  }
+  function boot() {
+    wire();
+    var tries = 0;
+    var t = setInterval(function () {
+      if (wire() || ++tries > 20) clearInterval(t);
+    }, 500);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+
+/**
+ * Z47 Constituents — Large / Mid / Small Cap donut
+ * Figma legend: horizontal row under donut — square + name + % below
+ */
+(function () {
+  "use strict";
+  var FEED_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
+  // Girish: Large > ₹1,00,000 Cr; Mid ₹30,000–1,00,000 Cr; Small < ₹30,000 Cr
+  var LARGE_MIN_CR = 100000;
+  var MID_MIN_CR = 30000;
+  var ORDER = ["Large Cap", "Mid Cap", "Small Cap"];
+  var COLORS = { "Large Cap": "#FFF0D2", "Mid Cap": "#FF6800", "Small Cap": "#000000" };
+  var PCT_FONT = "Kodemono, ui-monospace, Menlo, monospace";
+  var PCT_SIZE = 16;
+  var CUTOUT = "58%";
+
+  function capsHost() {
+    return document.querySelector(".caps-consitutents") ||
+      document.querySelector(".caps-constitutents") ||
+      document.querySelector(".caps-constituents") ||
+      document.querySelector("[class*=\"caps-cons\"]");
+  }
+  function wrapEl() {
+    var h = capsHost();
+    return h ? h.querySelector(".z47-cap-wrap") : null;
+  }
+  function legendEl() {
+    var w = wrapEl();
+    return w ? w.querySelector(".z47-cap-legend") : null;
+  }
+
+  function mcapCr(c) {
+    if (c.mcap_cr != null && isFinite(c.mcap_cr)) return c.mcap_cr;
+    if (c.mcap_mn != null && isFinite(c.mcap_mn)) return c.mcap_mn / 10;
+    return null;
+  }
+  function bucketName(mcr) {
+    if (mcr == null || !isFinite(mcr)) return null;
+    if (mcr > LARGE_MIN_CR) return "Large Cap";
+    if (mcr >= MID_MIN_CR) return "Mid Cap";
+    return "Small Cap";
+  }
+  function fromFeed(d) {
+    var buckets = {};
+    ORDER.forEach(function (k) { buckets[k] = { count: 0, mcap_cr: 0 }; });
+    (d.constituents || []).forEach(function (c) {
+      var m = mcapCr(c);
+      var b = bucketName(m);
+      if (!b) return;
+      buckets[b].count += 1;
+      buckets[b].mcap_cr += m || 0;
+    });
+    var totalMcap = ORDER.reduce(function (s, k) { return s + buckets[k].mcap_cr; }, 0) || 1;
+    return ORDER.map(function (name) {
+      var b = buckets[name];
+      return {
+        name: name,
+        count: b.count,
+        mcap_cr: b.mcap_cr,
+        weight_pct: (b.mcap_cr / totalMcap) * 100
+      };
+    }).filter(function (s) { return s.count > 0; });
+  }
+
+  function ready(cb) {
+    if (window.Chart) return cb();
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+    s.onload = cb;
+    (document.head || document.body).appendChild(s);
+  }
+  function whenFonts(cb) {
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(cb);
+    else cb();
+  }
+
+  function buildLegend(ord, byName) {
+    var host = legendEl();
+    if (!host) return;
+    host.innerHTML = ord.map(function (n) {
+      var row = byName[n];
+      var color = COLORS[n] || "#999";
+      var pct = row.weight_pct.toFixed(1) + "%";
+      var border = n === "Large Cap" ? "border:1px solid rgba(0,0,0,.12);" : "";
+      return (
+        '<div class="z47-cap-leg" data-z47-cap="' + n + '">' +
+          '<span class="z47-cap-sq" style="background:' + color + ';' + border + '"></span>' +
+          '<div class="z47-cap-leg-text">' +
+            '<div class="z47-cap-leg-name">' + n + "</div>" +
+            '<div class="z47-cap-leg-pct">' + pct + "</div>" +
+          "</div>" +
+        "</div>"
+      );
+    }).join("");
+    var wrap = wrapEl();
+    if (wrap) wrap.classList.add("z47-ready");
+  }
+
+  function fadeLabelsIn(chart) {
+    var DURATION = 200, t0 = null;
+    chart.$labelsReady = true;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      chart.$labelAlpha = Math.min(1, (ts - t0) / DURATION);
+      chart.draw();
+      if (chart.$labelAlpha < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function draw(CAPS) {
+    var cv = document.getElementById("z47-cap-donut");
+    if (!cv || !window.Chart || !CAPS.length) return null;
+    var prev = window.Chart.getChart ? window.Chart.getChart(cv) : null;
+    if (prev) prev.destroy();
+
+    var byName = {};
+    CAPS.forEach(function (s) { byName[s.name] = s; });
+    var ord = ORDER.filter(function (n) { return byName[n] && byName[n].count > 0; });
+    // Slice size = bucket market-cap weight (dynamic as live mcaps move bands)
+    var vals = ord.map(function (n) { return byName[n].mcap_cr; });
+    var pcts = ord.map(function (n) { return byName[n].weight_pct; });
+    var fills = ord.map(function (n) { return COLORS[n] || "#999"; });
+
+    // % callouts outside the ring (Figma)
+    var pctLabels = {
+      id: "z47capPct",
+      afterDatasetsDraw: function (c) {
+        if (!c.$labelsReady) return;
+        var ctx = c.ctx, meta = c.getDatasetMeta(0);
+        ctx.save();
+        ctx.globalAlpha = c.$labelAlpha == null ? 1 : c.$labelAlpha;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "600 " + PCT_SIZE + "px " + PCT_FONT;
+        ctx.fillStyle = "#111111";
+        meta.data.forEach(function (arc, i) {
+          var p = arc.getProps(["x", "y", "startAngle", "endAngle", "outerRadius"], true);
+          var mid = (p.startAngle + p.endAngle) / 2;
+          var cos = Math.cos(mid);
+          var sin = Math.sin(mid);
+          var r = p.outerRadius + 36 + (pcts[i] < 3 ? 10 : 0);
+          var x = p.x + cos * r;
+          var y = p.y + sin * r;
+          var label = pcts[i].toFixed(1) + "%";
+          ctx.textAlign = cos >= 0 ? "left" : "right";
+          ctx.textBaseline = "middle";
+          var tw = ctx.measureText(label).width;
+          var m = 12;
+          if (ctx.textAlign === "left") x = Math.min(x, c.width - m - tw);
+          else x = Math.max(x, m + tw);
+          y = Math.min(c.height - m - 8, Math.max(m + 8, y));
+          ctx.fillText(label, x, y);
+        });
+        ctx.restore();
+      }
+    };
+
+    var chart = new Chart(cv, {
+      type: "doughnut",
+      data: {
+        labels: ord,
+        datasets: [{
+          data: vals,
+          backgroundColor: fills,
+          borderColor: "#FFFFFF",
+          borderWidth: 2,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: { padding: { top: 22, bottom: 4, left: 52, right: 52 } },
+        cutout: CUTOUT,
+        // Chart.js 4: degrees, 0 = 12 o'clock, clockwise.
+        // Start Large at 3 o'clock so it already fills 12 o'clock going
+        // clockwise, then Mid, then Small at ~3 o'clock (1.1% readable).
+        rotation: 90,
+        circumference: 360,
+        animation: {
+          animateRotate: true,
+          animateScale: false,
+          duration: 650,
+          easing: "easeOutCirc",
+          onComplete: function () {
+            if (chart.$revealed) return;
+            chart.$revealed = true;
+            buildLegend(ord, byName);
+            fadeLabelsIn(chart);
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        }
+      },
+      plugins: [pctLabels]
+    });
+    chart.$z47Ord = ord;
+    // If chart already drawn (no animation path), ensure legend
+    if (!chart.$revealed) {
+      // legend also after first frame in case animation skipped when hidden
+      setTimeout(function () {
+        if (!chart.$revealed) {
+          chart.$revealed = true;
+          buildLegend(ord, byName);
+          fadeLabelsIn(chart);
+        }
+      }, 700);
+    }
+    return chart;
+  }
+
+  var pending = null, made = false, theChart = null;
+  function tryCreate() {
+    if (!pending) return;
+    var cv = document.getElementById("z47-cap-donut");
+    if (!cv || cv.clientWidth === 0) return;
+    if (made && theChart) {
+      theChart.resize();
+      return;
+    }
+    made = true;
+    theChart = draw(pending);
+    window.__Z47_capChart = theChart;
+  }
+  window.__Z47_capChartTryCreate = function () {
+    made = false;
+    tryCreate();
+  };
+
+  function watch() {
+    var cv = document.getElementById("z47-cap-donut");
+    if (cv && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) tryCreate();
+        });
+      }).observe(cv);
+    }
+    tryCreate();
+    window.addEventListener("resize", function () {
+      if (theChart) theChart.resize();
+    });
+  }
+
+  function loadAndDraw() {
+    fetch(FEED_URL, { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("feed"); return r.json(); })
+      .then(function (d) {
+        pending = fromFeed(d);
+        made = false;
+        watch();
+        tryCreate();
+      })
+      .catch(function (err) {
+        console.warn("[z47] cap pie feed failed", err);
+      });
+  }
+
+  function start() {
+    if (!capsHost()) return;
+    // Reclaim chart if an older embed (20k/5k) also booted on the page
+    window.__Z47_capPieV = "20260820-girish";
+    ready(function () {
+      whenFonts(function () {
+        loadAndDraw();
+        // Win race against duplicate .sector-caps-scripts copy
+        setTimeout(loadAndDraw, 200);
+        setTimeout(loadAndDraw, 800);
+      });
+    });
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
+
+</script>
