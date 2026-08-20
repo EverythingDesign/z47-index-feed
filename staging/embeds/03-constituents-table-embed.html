@@ -1,6 +1,13 @@
 <!--
-  Z47 — Constituents live-prices HtmlEmbed (Webflow 10k limit)
-  Paste into .live-prices-list / constituents-body
+  Z47 — Tab: Constituent · Live prices
+  File: staging/embeds/03-constituents-table-embed.html
+  Paste into the .live-prices-list / constituents-body HtmlEmbed on the Index page.
+
+  Fills: name | sector | price | day | ret1m | mkt cap (₹ Cr) | mkt cap ($ mn)
+  Logic: staging/js/03-constituents-table.js (CDN — Webflow 10k limit)
+  Feed:  https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json
+  NOTE: Do NOT load JS from raw.githubusercontent.com — browsers block it (ORB).
+        Use jsDelivr below. Bump ?v= after pushing JS changes.
 -->
 <style>.ai-color-parrotgreen{color:#249200;}.ai-color-red{color:#D31F03;}</style>
-<script src="https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/staging/js/03-constituents-table.js?v=20260820c"></script>
+<script src="https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/03-constituents-table.js?v=20260820d"></script>
