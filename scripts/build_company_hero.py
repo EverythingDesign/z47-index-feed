@@ -41,7 +41,7 @@ COMPANIES = [
     {"name": "Info Edge (Naukri)", "ticker": "NAUKRI", "exchange": "NSE"},
     {"name": "Lenskart", "ticker": "LENSKART", "exchange": "NSE"},
     {"name": "Paytm", "ticker": "PAYTM", "exchange": "NSE"},
-    {"name": "SBI Cards", "ticker": "SBICARD", "exchange": "NSE"},
+    {"name": "Turtlemint", "ticker": "TURTLEMINT", "exchange": "NSE"},
     {"name": "Nykaa", "ticker": "NYKAA", "exchange": "NSE"},
     {"name": "PolicyBazaar", "ticker": "POLICYBZR", "exchange": "NSE"},
     {"name": "Meesho", "ticker": "MEESHO", "exchange": "NSE"},
@@ -80,8 +80,8 @@ COMPANIES = [
     {"name": "Medi Assist", "ticker": "MEDIASSIST", "exchange": "NSE"},
     {"name": "Kissht (OnEMI Technology)", "ticker": "KISSHT", "exchange": "NSE"},
     {"name": "Fractal Analytics", "ticker": "FRACTAL", "exchange": "NSE"},
-    {"name": "MobiKwik", "ticker": "MOBIKWIK", "exchange": "NSE"},
-    {"name": "Unicommerce", "ticker": "UNIECOM", "exchange": "NSE"},
+    {"name": "Shiprocket", "ticker": "SHIPROCKET", "exchange": "NSE"},
+    {"name": "Milky Mist", "ticker": "MILKYMIST", "exchange": "NSE"},
 ]
 
 CTX = ssl._create_unverified_context()
