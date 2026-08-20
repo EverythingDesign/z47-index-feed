@@ -9,8 +9,11 @@
     Small  < ₹30,000 Cr
   Slice + legend % = share of total market cap (not company count).
 
-  IMPORTANT: Clear/delete any older cap-pie script in .sector-caps-scripts
-  (that copy still has LARGE_MIN_CR=20000 / MID_MIN_CR=5000).
+  IMPORTANT: Clear/delete any older cap-pie / toggle scripts in .sector-caps-scripts
+  (stale LARGE_MIN_CR=20000 copy fights this one).
+
+  Cap donut JS loads via createElement (do NOT nest a raw <script src> here —
+  Webflow HtmlEmbed treats it as code and throws Unexpected token '<').
 -->
 <style>
   .z47-cap-wrap{
@@ -216,12 +219,23 @@
     wire();
     var tries = 0;
     var t = setInterval(function () {
-      if (wire() || ++tries > 20) clearInterval(t);
-    }, 500);
+      if (wire() || ++tries > 40) clearInterval(t);
+    }, 250);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
-})();
 
-<!-- Cap donut logic via CDN (Webflow 10k HtmlEmbed limit). Bump ?v= after JS pushes. -->
-<script src="https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/07-cap-pie.js?v=20260820e"></script>
+  // Load cap donut via createElement — Webflow HtmlEmbeds break on nested <script src>
+  // (SyntaxError: Unexpected token '<'), which also kills this toggle.
+  (function loadCapPie() {
+    if (window.__Z47_capPieLoader) return;
+    window.__Z47_capPieLoader = true;
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/07-cap-pie.js?v=20260820f";
+    s.async = true;
+    s.onerror = function () {
+      console.warn("[z47] failed to load 07-cap-pie.js");
+    };
+    (document.body || document.documentElement).appendChild(s);
+  })();
+})();
