@@ -1,10 +1,8 @@
 <!--
   Z47 — Performance chart HtmlEmbed (Webflow 10k limit)
-  Paste into .chart-embed on Index page.
-  Importers: Webflow HtmlEmbed `.chart-embed` only (not imported by other JS).
-  API/data: fetches z47_index.json (meta/index/benchmark/history/movers); no schema change.
-  User: "duh-uh. The first one itself." — full inline paste hit Webflow 50k/10k limit.
-  Logic: staging/js/01-performance.js on GitHub. Bump ?v= after pushes.
+  Paste into .chart-embed
+  Chart legend paints into [data-z47="chart-legend"] / .chart-embed-legend
+  (Z47 logo + NIFTY 500) — already in 01-performance.js, safe if slot missing.
 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
@@ -14,5 +12,17 @@
   [data-z47-period] { cursor: pointer; }
   a.z47-co-link{color:inherit;text-decoration:none;}
   a.z47-co-link:hover{text-decoration:underline;}
+  /* Chart legend (Z47 line + NIFTY 500) — also injected by JS if needed */
+  .z47-lgnd,[data-z47="chart-legend"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 34px;width:100%;}
+  .z47-lgnd-item{display:inline-flex;align-items:center;gap:10px;}
+  .z47-lgnd-sw{display:inline-block;width:28px;height:4px;border-radius:2px;flex:0 0 auto;}
+  .z47-lgnd-logo{height:20px;width:auto;display:block;}
+  .z47-lgnd-txt{font-size:17px;font-weight:600;color:#111;white-space:nowrap;line-height:1;}
+  @media(max-width:600px){
+    .z47-lgnd,[data-z47="chart-legend"]{gap:10px 22px;}
+    .z47-lgnd-sw{width:22px;}
+    .z47-lgnd-logo{height:16px;}
+    .z47-lgnd-txt{font-size:14px;}
+  }
 </style>
-<script src="https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/01-performance.js?v=20260820b"></script>
+<script src="https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/staging/js/01-performance.js?v=20260820c"></script>
