@@ -7,7 +7,8 @@ Writes data/companies/{slug}.json (+ data/companies/_index.json).
 Fields: about, website/BSE/NSE links, mcap_cr, price, high, low, pe, roce, roe,
 P&L (Mar 2020–2025), growth cards, shareholding (quarterly + yearly).
 
-Uses /company/{TICKER}/ (not /consolidated/) — ratios are server-rendered there.
+Hero ratios from /company/{TICKER}/ (standalone = Screener default UI).
+P&L prefers /consolidated/ when available; hero PE/ROE/ROCE are never overwritten by it.
 NASDAQ names (MMYT, FRSH) use StockAnalysis.com; Yahoo fills any remaining gaps.
 
 Run:  python3 scripts/build_company_hero.py
@@ -475,50 +476,34 @@ def scrape_nasdaq_hero(c: dict, row: dict) -> dict:
 def scrape_company(c: dict, retries: int = 3) -> dict:
     ticker = c["ticker"]
     slug = slugify(ticker)
+    # Callers: CLI + .github/workflows/refresh-z47-feed.yml; writes data/companies/{slug}.json
+    # User: "Fix the 2 and 3?" — hero PE/ROE/ROCE must match Screener default (standalone).
     row = {
         "slug": slug,
         "ticker": ticker,
         "name": c["name"],
         "exchange": c["exchange"],
-        "screener_url": f"https://www.screener.in/company/{ticker}/consolidated/",
+        "screener_url": f"https://www.screener.in/company/{ticker}/",
     }
     if c["exchange"] == "NASDAQ":
         return scrape_nasdaq_hero(c, row)
     parsed: dict = {}
     html = ""
-    consolidated = False
 
-    if c["exchange"] != "NASDAQ":
-        # Hero ratios: prefer consolidated (matches Screener consolidated page)
-        for attempt in range(1, retries + 1):
-            try:
-                html = _http_get(
-                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
-                )
-                parsed = parse_screener_hero(html)
-                consolidated = True
-                if parsed.get("ratios_ok", 0) >= 4 or parsed.get("about"):
-                    break
-            except Exception as e:
-                parsed = {"error": str(e)}
-                html = ""
-            time.sleep(1.0 * attempt + random.random())
-
-    if not html or parsed.get("ratios_ok", 0) < 4:
-        for attempt in range(1, retries + 1):
-            try:
-                html = _http_get(
-                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
-                )
-                parsed = parse_screener_hero(html)
-                consolidated = False
-                row["screener_url"] = f"https://www.screener.in/company/{ticker}/"
-                if parsed.get("ratios_ok", 0) >= 4 or parsed.get("about"):
-                    break
-            except Exception as e:
-                parsed = {"error": str(e)}
-                html = ""
-            time.sleep(1.2 * attempt + random.random())
+    # Hero ratios from standalone (Screener default). Consolidated differs
+    # (e.g. MILKYMIST PE 324 vs 113) and caused client-visible drift.
+    for attempt in range(1, retries + 1):
+        try:
+            html = _http_get(
+                f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
+            )
+            parsed = parse_screener_hero(html)
+            if parsed.get("ratios_ok", 0) >= 4 or parsed.get("about"):
+                break
+        except Exception as e:
+            parsed = {"error": str(e)}
+            html = ""
+        time.sleep(1.0 * attempt + random.random())
 
     row.update({k: v for k, v in parsed.items() if k != "ratios_ok"})
     row["ratios_ok"] = parsed.get("ratios_ok", 0)
@@ -526,53 +511,46 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         dp = parse_screener_daily_pct(html)
         if dp is not None:
             row["daily_pct"] = dp
-    row["screener_consolidated"] = consolidated
+    row["screener_consolidated"] = False
 
     growth = parse_screener_growth(html) if html else None
-
-    # P&L + growth/shareholding from consolidated when available
-    pl = None
     shareholding = parse_screener_shareholding(html) if html else None
-    if c["exchange"] != "NASDAQ":
-        for attempt in range(1, retries + 1):
-            try:
-                pl_html = _http_get(
-                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
-                )
-                pl = parse_screener_pl(pl_html)
-                g2 = parse_screener_growth(pl_html)
-                if g2 and g2.get("cards"):
-                    growth = g2
-                sh2 = parse_screener_shareholding(pl_html)
-                if sh2:
-                    shareholding = sh2
-                hero2 = parse_screener_hero(pl_html)
-                if hero2.get("ratios_ok", 0) >= row.get("ratios_ok", 0):
-                    row.update({k: v for k, v in hero2.items() if k != "ratios_ok"})
-                    row["ratios_ok"] = hero2.get("ratios_ok", 0)
-                    row["screener_consolidated"] = True
-                    dp = parse_screener_daily_pct(pl_html)
-                    if dp is not None:
-                        row["daily_pct"] = dp
-                if pl and pl.get("rows"):
-                    break
-                pl_html = _http_get(
-                    f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
-                )
-                pl = parse_screener_pl(pl_html)
-                g2 = parse_screener_growth(pl_html)
-                if g2 and g2.get("cards"):
-                    growth = g2
-                sh2 = parse_screener_shareholding(pl_html)
-                if sh2:
-                    shareholding = sh2
-                if pl and pl.get("rows"):
-                    if pl.get("consolidated"):
-                        pl["consolidated"] = False
-                    break
-            except Exception:
-                pl = None
-            time.sleep(1.0 * attempt + random.random())
+
+    # P&L / growth / shareholding: prefer consolidated tables when present
+    pl = None
+    for attempt in range(1, retries + 1):
+        try:
+            pl_html = _http_get(
+                f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
+            )
+            pl = parse_screener_pl(pl_html)
+            g2 = parse_screener_growth(pl_html)
+            if g2 and g2.get("cards"):
+                growth = g2
+            sh2 = parse_screener_shareholding(pl_html)
+            if sh2:
+                shareholding = sh2
+            # Do NOT overwrite hero ratios from consolidated
+            if pl and pl.get("rows"):
+                row["screener_consolidated"] = True
+                break
+            pl_html = _http_get(
+                f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
+            )
+            pl = parse_screener_pl(pl_html)
+            g2 = parse_screener_growth(pl_html)
+            if g2 and g2.get("cards"):
+                growth = g2
+            sh2 = parse_screener_shareholding(pl_html)
+            if sh2:
+                shareholding = sh2
+            if pl and pl.get("rows"):
+                if pl.get("consolidated"):
+                    pl["consolidated"] = False
+                break
+        except Exception:
+            pl = None
+        time.sleep(1.0 * attempt + random.random())
     if pl:
         row["pl"] = pl
     if growth:
@@ -584,8 +562,6 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
     row["generated_at"] = now.isoformat()
     row["generated_at_ist"] = now.strftime("%d %b %Y, %H:%M IST")
     row["source"] = "screener"
-    if row.get("screener_consolidated"):
-        row["source"] = "screener-consolidated"
     return row
 
 

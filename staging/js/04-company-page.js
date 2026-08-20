@@ -1,5 +1,31 @@
 (function () {
   "use strict";
+  if (!document.getElementById("z47-company-polish-css")) {
+    var st = document.createElement("style");
+    st.id = "z47-company-polish-css";
+    (document.head || document.body).appendChild(st);
+  }
+  document.getElementById("z47-company-polish-css").textContent = ""
+      + "[data-z47-co=\"about\"].z47-about-collapsed{"
+      + "display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;"
+      + "overflow:hidden;max-height:9.6em;line-height:1.6;"
+      + "}"
+      + "[data-z47-co=\"about\"].z47-about-open{"
+      + "display:block;-webkit-line-clamp:unset;max-height:none;overflow:visible;line-height:1.6;"
+      + "}"
+      + ".z47-about-more{"
+      + "display:inline-block;margin-top:8px;padding:0;border:0;background:none;"
+      + "font:inherit;font-size:14px;font-weight:500;color:#FF6800;cursor:pointer;"
+      + "text-decoration:underline;text-underline-offset:2px;"
+      + "}"
+      + ".z47-about-more[hidden]{display:none;}"
+      + ".screener-hero-mk{display:flex;align-items:baseline;justify-content:space-between;gap:16px;}"
+      + ".screener-hero-key{flex:0 1 auto;text-align:left;}"
+      + ".screener-hero-value,[data-z47-co].screener-hero-value{flex:1 1 auto;text-align:right;}"
+      + ".pl-cards .pe-card-data{display:flex;align-items:baseline;justify-content:space-between;gap:12px;width:100%;}"
+      + ".pl-cards .pe-card-data .ai-tag-2{flex:1 1 auto;text-align:left;}"
+      + ".pl-cards .pe-card-data .ai-tag-3{flex:0 0 auto;text-align:right;min-width:3.5em;}";
+
   var INDEX_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
   var COMPANY_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/data/companies/";
   var UP = "ai-color-parrotgreen", DOWN = "ai-color-red";
@@ -27,8 +53,11 @@
   }
   function slugFromPath() {
     var parts = (location.pathname || "").split("/").filter(Boolean);
-    var i = parts.indexOf("companies");
-    if (i >= 0 && parts[i + 1]) return parts[i + 1].toLowerCase();
+    var folders = { "z47-forty-seven": true, companies: true };
+    var i;
+    for (i = 0; i < parts.length; i++) {
+      if (folders[parts[i]] && parts[i + 1]) return parts[i + 1].toLowerCase();
+    }
     return "";
   }
   function resolveKey() {
@@ -98,38 +127,76 @@
       }
     });
   }
-  function paintIndex(c, meta) {
+  function paintAbout(text) {
+    co("about").forEach(function (el) {
+      el.textContent = text || "";
+      el.classList.add("z47-about-collapsed");
+      el.classList.remove("z47-about-open");
+      var parent = el.parentNode;
+      if (!parent) return;
+      var more = parent.querySelector(".z47-about-more");
+      if (!more) {
+        more = document.createElement("button");
+        more.type = "button";
+        more.className = "z47-about-more";
+        parent.appendChild(more);
+      }
+      more.textContent = "Read More...";
+      more.hidden = true;
+      more.onclick = function () {
+        var open = el.classList.contains("z47-about-open");
+        el.classList.toggle("z47-about-open", !open);
+        el.classList.toggle("z47-about-collapsed", open);
+        more.textContent = open ? "Read More..." : "Read less";
+      };
+      requestAnimationFrame(function () {
+        more.hidden = el.scrollHeight <= el.clientHeight + 2;
+      });
+    });
+  }
+  function paintIndex(c, meta, hasHero) {
     if (!c) return;
-    setText(co("name"), c.name || "—");
-    setText(co("price"), money(c.price, c.ccy));
-    paintDaily(co("daily_pct"), c.daily_pct);
-    if (meta && meta.generated_at_ist) setText(co("as_of"), meta.generated_at_ist);
-    if (c.mcap_cr != null && isFinite(c.mcap_cr)) {
-      setMetricByLabel(/^Market\s*Cap$/i, "₹" + fmtNum(c.mcap_cr, 0) + " Cr.");
+    // Company JSON (Screener) is source of truth when present — index is fallback only
+    if (!hasHero) {
+      setText(co("name"), c.name || "—");
+      setText(co("price"), money(c.price, c.ccy));
+      paintDaily(co("daily_pct"), c.daily_pct);
     }
-    setMetricByLabel(/^Current\s*Price$/i, money(c.price, c.ccy));
+    if (meta && meta.generated_at_ist && !hasHero) setText(co("as_of"), meta.generated_at_ist);
   }
   function paintHero(h, ccy) {
     if (!h) return;
-    if (h.about) setText(co("about"), h.about);
-    if (h.pe != null && isFinite(h.pe)) {
-      setMetricByLabel(/^(Stock\s*)?P\/?E$/i, fmtNum(h.pe, 1));
-    }
-    if (h.roce != null && isFinite(h.roce)) {
-      setMetricByLabel(/^ROCE$/i, fmtNum(h.roce, 1) + "%");
-    }
-    if (h.roe != null && isFinite(h.roe)) {
-      setMetricByLabel(/^ROE$/i, fmtNum(h.roe, 1) + "%");
-    }
+    if (h.about) paintAbout(h.about);
+    // Always paint — clears CMS leftovers when Screener has no PE/ratio.
+    // Callers: CMS template may load this via CDN; mirror of 04-company-page-embed.html.
+    // User: "Fix the 2 and 3?" = PE leftover + ratio drift vs Screener.
+    setMetricByLabel(
+      /^(Stock\s*)?P\/?E$/i,
+      (h.pe != null && isFinite(h.pe)) ? fmtNum(h.pe, 1) : "—"
+    );
+    setMetricByLabel(
+      /^ROCE$/i,
+      (h.roce != null && isFinite(h.roce)) ? fmtNum(h.roce, 1) + "%" : "—"
+    );
+    setMetricByLabel(
+      /^ROE$/i,
+      (h.roe != null && isFinite(h.roe)) ? fmtNum(h.roe, 1) + "%" : "—"
+    );
     if (h.high != null && h.low != null && isFinite(h.high) && isFinite(h.low)) {
-      setMetricByLabel(/^High\s*\/?\s*Low$/i, "₹" + fmtNum(h.high, 0) + " / " + fmtNum(h.low, 0));
+      var sym = ccy === "USD" ? "$" : "₹";
+      setMetricByLabel(/^High\s*\/?\s*Low$/i, sym + fmtNum(h.high, 0) + " / " + fmtNum(h.low, 0));
     }
     if (h.mcap_cr != null && isFinite(h.mcap_cr)) {
       setMetricByLabel(/^Market\s*Cap$/i, "₹" + fmtNum(h.mcap_cr, 0) + " Cr.");
     }
     if (h.price != null && isFinite(h.price)) {
       setMetricByLabel(/^Current\s*Price$/i, money(h.price, ccy));
+      setText(co("price"), money(h.price, ccy));
     }
+    if (h.daily_pct != null && isFinite(h.daily_pct)) {
+      paintDaily(co("daily_pct"), h.daily_pct);
+    }
+    if (h.generated_at_ist) setText(co("as_of"), h.generated_at_ist);
     if (h.website) {
       setLink("link-web", h.website, (h.website_label || h.website).toUpperCase());
     }
@@ -209,7 +276,41 @@
       });
     });
   }
+  function filterPLFrom2021(pl) {
+    if (!pl || !pl.periods || !pl.periods.length) return pl;
+    var keep = [];
+    pl.periods.forEach(function (p, i) {
+      var m = String(p).match(/(19|20)\d{2}/);
+      var y = m ? parseInt(m[0], 10) : 0;
+      if (y >= 2021) keep.push(i);
+    });
+    if (!keep.length || keep.length === pl.periods.length) return pl;
+    return {
+      unit: pl.unit,
+      consolidated: pl.consolidated,
+      periods: keep.map(function (i) { return pl.periods[i]; }),
+      rows: (pl.rows || []).map(function (row) {
+        return {
+          key: row.key,
+          label: row.label,
+          values: keep.map(function (i) {
+            return (row.values && row.values[i] != null) ? row.values[i] : "—";
+          })
+        };
+      })
+    };
+  }
+  function alignCell(node, t, isLabel) {
+    var align = isLabel ? "left" : "right";
+    node.style.textAlign = align;
+    if (t && t !== node) t.style.textAlign = align;
+    if (!isLabel) {
+      node.style.fontVariantNumeric = "tabular-nums";
+      if (t && t !== node) t.style.fontVariantNumeric = "tabular-nums";
+    }
+  }
   function paintPL(pl) {
+    pl = filterPLFrom2021(pl);
     if (!pl || !pl.periods || !pl.rows || !pl.rows.length) return;
     co("pl-table").forEach(function (host) {
       var wrap = host.querySelector(".constituent-summary-table.main-wrap") || host;
@@ -234,6 +335,7 @@
           if (i === 0) t.textContent = "Company";
           else t.textContent = pl.periods[i - 1] || "";
         }
+        alignCell(node, t || node, i === 0);
         header.appendChild(node);
       });
 
@@ -254,9 +356,16 @@
             if (/^-/.test(v)) t.style.color = NEG_COLOR;
             else t.style.color = "";
           }
+          alignCell(node, t, i === 0);
           body.appendChild(node);
         });
       });
+
+      // Webflow designer grid is often fixed at 7 cols (incl. Mar 2020).
+      // After filtering to Mar 2021+, sync tracks or rows wrap mid-metric.
+      var gridCols = "minmax(11em, 1.4fr) repeat(" + (cols - 1) + ", minmax(4.2em, 1fr))";
+      header.style.gridTemplateColumns = gridCols;
+      body.style.gridTemplateColumns = gridCols;
     });
   }
   function start() {
@@ -270,7 +379,7 @@
     Promise.all([indexP, heroP]).then(function (pair) {
       var d = pair[0], h = pair[1];
       var c = d ? findConstituent(d, key) : null;
-      if (c) paintIndex(c, d.meta || {});
+      if (c) paintIndex(c, d.meta || {}, !!h);
       if (h) {
         window.__Z47_COMPANY = h;
         paintHero(h, c && c.ccy);
