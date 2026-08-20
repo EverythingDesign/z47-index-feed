@@ -1,0 +1,108 @@
+<!--
+  Z47 — SECTORS / CAPS toggle ONLY
+  File: staging/embeds/08-sector-cap-toggle-embed.html
+
+  Paste into the EXTRA HtmlEmbed inside .sector-composition-playground
+  (the bare one that is NOT .sector-composition-canvas and NOT .caps-consitutents).
+
+  Webflow class typo on the caps panel is: .caps-consitutents
+  (older toggles looked for .caps-constitutents and never wired clicks).
+-->
+<script>
+(function () {
+  "use strict";
+  var ACTIVE = "z47-chart-toggle-active";
+  var WF_ACTIVE = "is-active";
+
+  function playground() { return document.querySelector(".sector-composition-playground"); }
+  function sectorPanel() {
+    var pg = playground();
+    return pg ? pg.querySelector(".sector-composition-canvas") : null;
+  }
+  function capsPanel() {
+    var pg = playground();
+    if (!pg) return null;
+    return (
+      pg.querySelector(".caps-consitutents") ||
+      pg.querySelector(".caps-constitutents") ||
+      pg.querySelector(".caps-constituents") ||
+      pg.querySelector("[class*='caps-cons']")
+    );
+  }
+  function toggleRoot() {
+    var pg = playground();
+    return pg ? pg.querySelector(".sector-charts-toggle") : null;
+  }
+  function pickButtons(root) {
+    var tagged = root.querySelectorAll("a[data-z47-toggle], button[data-z47-toggle]");
+    if (tagged.length >= 2) return Array.prototype.slice.call(tagged);
+    return Array.prototype.slice.call(root.querySelectorAll("a.chart-tabs")).slice(0, 2);
+  }
+  function modeFromBtn(btn) {
+    var tagged = btn.getAttribute("data-z47-toggle");
+    if (tagged) return tagged.toLowerCase();
+    return (btn.textContent || "").toUpperCase().indexOf("CAP") >= 0 ? "caps" : "sectors";
+  }
+  function panelVisible(el, on) {
+    if (!el) return;
+    if (on) {
+      el.classList.remove("hide", "actual-hide");
+      el.style.removeProperty("display");
+    } else {
+      el.classList.add("hide");
+      el.style.display = "none";
+    }
+  }
+  function setMode(mode) {
+    var sector = sectorPanel();
+    var caps = capsPanel();
+    var root = toggleRoot();
+    if (!sector || !caps || !root) return false;
+    var isSectors = mode !== "caps";
+    panelVisible(sector, isSectors);
+    panelVisible(caps, !isSectors);
+    pickButtons(root).forEach(function (btn) {
+      var on = modeFromBtn(btn) === (isSectors ? "sectors" : "caps");
+      btn.classList.toggle(WF_ACTIVE, on);
+      btn.classList.toggle(ACTIVE, on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    if (!isSectors) {
+      if (typeof window.__Z47_capChartTryCreate === "function") window.__Z47_capChartTryCreate();
+      if (window.__Z47_capChart) {
+        setTimeout(function () { window.__Z47_capChart.resize(); }, 80);
+      }
+    }
+    return true;
+  }
+  function wire() {
+    var root = toggleRoot();
+    var sector = sectorPanel();
+    var caps = capsPanel();
+    if (!root || !sector || !caps) return false;
+    pickButtons(root).forEach(function (btn) {
+      if (btn.__z47Toggle) return;
+      btn.__z47Toggle = true;
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        setMode(modeFromBtn(btn));
+      });
+    });
+    if (!window.__Z47_sectorCapToggleInit) {
+      window.__Z47_sectorCapToggleInit = true;
+      setMode("sectors");
+    }
+    return true;
+  }
+  function boot() {
+    wire();
+    var tries = 0;
+    var t = setInterval(function () {
+      if (wire() || ++tries > 40) clearInterval(t);
+    }, 250);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>

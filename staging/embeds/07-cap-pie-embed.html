@@ -1,19 +1,12 @@
 <!--
   Z47 — Cap composition donut + SECTORS/CAPS toggle
   File: staging/embeds/07-cap-pie-embed.html
-  Paste into .caps-consitutents HtmlEmbed ONLY.
+  Paste into .caps-consitutents HtmlEmbed ONLY (replace ALL existing code).
 
-  Girish thresholds (dynamic from live feed mcap_cr):
-    Large  > ₹1,00,000 Cr
-    Mid     ₹30,000 – ₹1,00,000 Cr (inclusive)
-    Small  < ₹30,000 Cr
-  Slice + legend % = share of total market cap (not company count).
+  Then DELETE any other HtmlEmbed in .sector-composition-playground that only
+  contains the SECTORS/CAPS toggle (or old Large/Mid/Small chart). One paste here.
 
-  IMPORTANT: Clear/delete any older cap-pie / toggle scripts in .sector-caps-scripts
-  (stale LARGE_MIN_CR=20000 copy fights this one).
-
-  Cap donut JS loads via createElement (do NOT nest a raw <script src> here —
-  Webflow HtmlEmbed treats it as code and throws Unexpected token '<').
+  Girish thresholds (in CDN JS): Large > 100000 Cr; Mid 30000-100000; Small < 30000.
 -->
 <style>
   .z47-cap-wrap{
@@ -28,7 +21,6 @@
     transition:opacity .3s ease;
   }
   .z47-cap-wrap.z47-ready{opacity:1;}
-  /* Same box as sector: .z47-sec-donutbox is min(55%, 516px) */
   .z47-cap-donutbox{
     position:relative;
     flex:0 0 auto;
@@ -93,7 +85,9 @@
 </div>
 <script>
 /**
- * Z47 Constituents — SECTORS / CAPS toggle
+ * Z47 Constituents — SECTORS / CAPS toggle + cap-donut CDN loader
+ * Always close this script tag. An unclosed script eats following Webflow HTML
+ * and throws SyntaxError so nothing wires.
  */
 (function () {
   "use strict";
@@ -225,13 +219,12 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 
-  // Load cap donut via createElement — Webflow HtmlEmbeds break on nested <script src>
-  // (SyntaxError: Unexpected token '<'), which also kills this toggle.
+  // Cap donut: append a script element (never put a raw script tag in this file).
   (function loadCapPie() {
     if (window.__Z47_capPieLoader) return;
     window.__Z47_capPieLoader = true;
     var s = document.createElement("script");
-    s.src = "https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/07-cap-pie.js?v=20260820f";
+    s.src = "https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/07-cap-pie.js?v=20260820g";
     s.async = true;
     s.onerror = function () {
       console.warn("[z47] failed to load 07-cap-pie.js");
@@ -239,3 +232,4 @@
     (document.body || document.documentElement).appendChild(s);
   })();
 })();
+</script>
