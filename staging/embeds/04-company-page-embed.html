@@ -173,14 +173,14 @@
   function paintHero(h, ccy) {
     if (!h) return;
     var slug = (h.slug || "").toLowerCase();
-    // Shiprocket: hide About (CMS still has Lenskart leftover; no feed about)
+    // Shiprocket: hide only .screener-hero-about (not the whole hero block)
     if (slug === "shiprocket" || h.hide_about) {
+      $all(".screener-hero-about", root()).forEach(function (el) {
+        el.style.display = "none";
+      });
       co("about").forEach(function (el) {
         el.textContent = "";
-        var p = el.parentElement;
-        if (p) p.style.display = "none";
-        var section = p && p.parentElement;
-        if (section) section.style.display = "none";
+        el.style.display = "none";
       });
     } else if (h.about) {
       paintAbout(h.about);

@@ -260,7 +260,7 @@
 
   function start() {
     if (!capsHost()) return;
-    window.__Z47_capPieV = "20260821-count";
+    window.__Z47_capPieV = "20260821-count-b";
     ready(function () {
       whenFonts(function () {
         loadAndDraw();

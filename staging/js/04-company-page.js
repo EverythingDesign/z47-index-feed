@@ -168,12 +168,12 @@
     if (!h) return;
     var slug = (h.slug || "").toLowerCase();
     if (slug === "shiprocket" || h.hide_about) {
+      $all(".screener-hero-about", root()).forEach(function (el) {
+        el.style.display = "none";
+      });
       co("about").forEach(function (el) {
         el.textContent = "";
-        var p = el.parentElement;
-        if (p) p.style.display = "none";
-        var section = p && p.parentElement;
-        if (section) section.style.display = "none";
+        el.style.display = "none";
       });
     } else if (h.about) {
       paintAbout(h.about);
