@@ -166,14 +166,24 @@
   }
   function paintHero(h, ccy) {
     if (!h) return;
-    if (h.about) paintAbout(h.about);
-    // Always paint — clears CMS leftovers when Screener has no PE/ratio.
-    // Callers: CMS template may load this via CDN; mirror of 04-company-page-embed.html.
-    // User: "Fix the 2 and 3?" = PE leftover + ratio drift vs Screener.
-    setMetricByLabel(
-      /^(Stock\s*)?P\/?E$/i,
-      (h.pe != null && isFinite(h.pe)) ? fmtNum(h.pe, 1) : "—"
-    );
+    var slug = (h.slug || "").toLowerCase();
+    if (slug === "shiprocket" || h.hide_about) {
+      co("about").forEach(function (el) {
+        el.textContent = "";
+        var p = el.parentElement;
+        if (p) p.style.display = "none";
+        var section = p && p.parentElement;
+        if (section) section.style.display = "none";
+      });
+    } else if (h.about) {
+      paintAbout(h.about);
+    } else {
+      paintAbout("");
+    }
+    var peBlank = slug === "shiprocket" || slug === "turtlemint" || h.pe_blank;
+    var peText = (!peBlank && h.pe != null && isFinite(h.pe)) ? fmtNum(h.pe, 1) : "—";
+    setMetricByLabel(/^(Stock\s*)?P\/?E$/i, peText);
+    setText(co("pe"), peText);
     setMetricByLabel(
       /^ROCE$/i,
       (h.roce != null && isFinite(h.roce)) ? fmtNum(h.roce, 1) + "%" : "—"

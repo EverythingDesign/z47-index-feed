@@ -5,7 +5,7 @@
 (function () {
   "use strict";
   var FEED_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
-  // Girish: Large > ₹1,00,000 Cr; Mid ₹30,000–1,00,000 Cr; Small < ₹30,000 Cr
+  // Girish: bands by mcap; slice/legend % = company COUNT / N (not mcap share)
   var LARGE_MIN_CR = 100000;
   var MID_MIN_CR = 30000;
   var ORDER = ["Large Cap", "Mid Cap", "Small Cap"];
@@ -50,14 +50,14 @@
       buckets[b].count += 1;
       buckets[b].mcap_cr += m || 0;
     });
-    var totalMcap = ORDER.reduce(function (s, k) { return s + buckets[k].mcap_cr; }, 0) || 1;
+    var totalCount = ORDER.reduce(function (s, k) { return s + buckets[k].count; }, 0) || 1;
     return ORDER.map(function (name) {
       var b = buckets[name];
       return {
         name: name,
         count: b.count,
         mcap_cr: b.mcap_cr,
-        weight_pct: (b.mcap_cr / totalMcap) * 100
+        weight_pct: (b.count / totalCount) * 100
       };
     }).filter(function (s) { return s.count > 0; });
   }
@@ -117,7 +117,7 @@
     var byName = {};
     CAPS.forEach(function (s) { byName[s.name] = s; });
     var ord = ORDER.filter(function (n) { return byName[n] && byName[n].count > 0; });
-    var vals = ord.map(function (n) { return byName[n].mcap_cr; });
+    var vals = ord.map(function (n) { return byName[n].count; });
     var pcts = ord.map(function (n) { return byName[n].weight_pct; });
     var fills = ord.map(function (n) { return COLORS[n] || "#999"; });
 
@@ -260,7 +260,7 @@
 
   function start() {
     if (!capsHost()) return;
-    window.__Z47_capPieV = "20260820-girish";
+    window.__Z47_capPieV = "20260821-count";
     ready(function () {
       whenFonts(function () {
         loadAndDraw();

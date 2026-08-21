@@ -530,7 +530,12 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
             sh2 = parse_screener_shareholding(pl_html)
             if sh2:
                 shareholding = sh2
-            # Do NOT overwrite hero ratios from consolidated
+            # Prefer consolidated top-ratios for PE/ROE/ROCE when present
+            # (Girish: MILKYMIST Screener shows 113 consol, not 324 standalone)
+            cons_hero = parse_screener_hero(pl_html)
+            for k in ("pe", "roce", "roe"):
+                if cons_hero.get(k) is not None:
+                    row[k] = cons_hero[k]
             if pl and pl.get("rows"):
                 row["screener_consolidated"] = True
                 break
@@ -557,6 +562,20 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         row["growth"] = growth
     if shareholding:
         row["shareholding"] = shareholding
+
+    # Manual overrides (Screener sometimes has google.co.in; Girish PE blanks)
+    WEBSITE_OVERRIDES = {
+        "SHIPROCKET": ("https://www.shiprocket.in/", "shiprocket.in"),
+        "MILKYMIST": ("https://www.milkymist.com/", "milkymist.com"),
+    }
+    if ticker in WEBSITE_OVERRIDES:
+        row["website"], row["website_label"] = WEBSITE_OVERRIDES[ticker]
+    if ticker in {"SHIPROCKET", "TURTLEMINT"}:
+        row["pe"] = None
+        row["pe_blank"] = True
+    if ticker == "SHIPROCKET":
+        row["hide_about"] = True
+        row.pop("about", None)
 
     now = datetime.now(IST)
     row["generated_at"] = now.isoformat()
