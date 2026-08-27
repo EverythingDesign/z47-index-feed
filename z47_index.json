@@ -1,12 +1,12 @@
 {
   "meta": {
-    "generated_at": "2026-08-27T20:52:37+05:30",
-    "generated_at_ist": "27 Aug 2026, 20:52 IST",
+    "generated_at": "2026-08-28T02:17:12+05:30",
+    "generated_at_ist": "28 Aug 2026, 02:17 IST",
     "market_open": false,
     "usdinr": {
       "value": 95.53,
       "daily_pct": 0.13,
-      "as_of": "20:53 IST"
+      "as_of": "02:17 IST"
     },
     "base_date": "2024-01-02",
     "anchor_date": "2026-08-20",
@@ -26,7 +26,7 @@
     "daily_pct": -0.14,
     "returns": {
       "1M": 7.92,
-      "3M": 20.75,
+      "3M": 20.74,
       "6M": 28.5,
       "1Y": 3.68,
       "YTD": 8.28,
@@ -3489,7 +3489,7 @@
     },
     {
       "date": "2026-08-27",
-      "z47": 143.7696,
+      "z47": 143.7694,
       "nifty500": 120.9265
     }
   ],
@@ -3722,18 +3722,18 @@
       "exchange": "NASDAQ",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 25.74,
-      "price": 59.39,
+      "price": 58.18,
       "ccy": "USD",
-      "daily_pct": 0.39,
-      "ret_1m": 10.55,
-      "ret_3m": 27.06,
-      "ret_6m": 6.17,
-      "ret_1y": -42.43,
-      "ret_ytd": -27.48,
-      "since_pct": 29.33,
-      "mcap_mn": 534012.7,
-      "mcap_cr": 53401.3,
-      "mcap_usd_mn": 5590.0,
+      "daily_pct": -1.66,
+      "ret_1m": 8.3,
+      "ret_3m": 24.48,
+      "ret_6m": 4.0,
+      "ret_1y": -43.61,
+      "ret_ytd": -28.95,
+      "since_pct": 26.7,
+      "mcap_mn": 522549.1,
+      "mcap_cr": 52254.9,
+      "mcap_usd_mn": 5470.0,
       "detail_url": "/z47-forty-seven/mmyt"
     },
     {
@@ -3876,18 +3876,18 @@
       "exchange": "NASDAQ",
       "sector": "SaaS / AI",
       "float_pct": 79.18,
-      "price": 13.5,
+      "price": 13.69,
       "ccy": "USD",
-      "daily_pct": 4.57,
-      "ret_1m": 20.75,
-      "ret_3m": 39.03,
-      "ret_6m": 67.08,
-      "ret_1y": -0.81,
-      "ret_ytd": 16.38,
-      "since_pct": -38.86,
-      "mcap_mn": 336265.6,
-      "mcap_cr": 33626.6,
-      "mcap_usd_mn": 3520.0,
+      "daily_pct": 6.04,
+      "ret_1m": 22.45,
+      "ret_3m": 40.99,
+      "ret_6m": 69.43,
+      "ret_1y": 0.59,
+      "ret_ytd": 18.02,
+      "since_pct": -38.0,
+      "mcap_mn": 341042.1,
+      "mcap_cr": 34104.2,
+      "mcap_usd_mn": 3570.0,
       "detail_url": "/z47-forty-seven/frsh"
     },
     {
@@ -4573,8 +4573,8 @@
         "sector": "SaaS / AI",
         "slug": "frsh",
         "detail_url": "/z47-forty-seven/frsh",
-        "ret": 20.75,
-        "ret_1m": 20.75
+        "ret": 22.45,
+        "ret_1m": 22.45
       }
     ],
     "losers": [
@@ -4670,8 +4670,8 @@
           "sector": "SaaS / AI",
           "slug": "frsh",
           "detail_url": "/z47-forty-seven/frsh",
-          "ret": 20.75,
-          "ret_1m": 20.75
+          "ret": 22.45,
+          "ret_1m": 22.45
         }
       ],
       "losers": [
@@ -5000,13 +5000,13 @@
           "ret_1m": -32.32
         },
         {
-          "name": "Pine Labs",
-          "ticker": "PINELABS",
-          "sector": "Fintech / Financial Services",
-          "slug": "pinelabs",
-          "detail_url": "/z47-forty-seven/pinelabs",
-          "ret": -27.7,
-          "ret_1m": -27.7
+          "name": "MakeMyTrip",
+          "ticker": "MMYT",
+          "sector": "Consumer / Consumer Tech",
+          "slug": "mmyt",
+          "detail_url": "/z47-forty-seven/mmyt",
+          "ret": -28.95,
+          "ret_1m": -28.95
         }
       ]
     },
@@ -5083,8 +5083,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "mmyt",
           "detail_url": "/z47-forty-seven/mmyt",
-          "ret": -42.43,
-          "ret_1m": -42.43
+          "ret": -43.61,
+          "ret_1m": -43.61
         },
         {
           "name": "Ixigo",
@@ -5112,7 +5112,7 @@
       "name": "Consumer / Consumer Tech",
       "count": 20,
       "weight_pct": 62.5,
-      "avg_ret_1m": 7.95,
+      "avg_ret_1m": 7.83,
       "top_mover": {
         "name": "Urban Company",
         "ret_1m": 28.17
@@ -5121,7 +5121,7 @@
     {
       "name": "Fintech / Financial Services",
       "count": 12,
-      "weight_pct": 24.9,
+      "weight_pct": 25.0,
       "avg_ret_1m": 5.75,
       "top_mover": {
         "name": "Paytm",
@@ -5132,10 +5132,10 @@
       "name": "SaaS / AI",
       "count": 8,
       "weight_pct": 6.8,
-      "avg_ret_1m": 3.41,
+      "avg_ret_1m": 3.62,
       "top_mover": {
         "name": "Freshworks",
-        "ret_1m": 20.75
+        "ret_1m": 22.45
       }
     },
     {
