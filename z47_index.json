@@ -1,12 +1,12 @@
 {
   "meta": {
-    "generated_at": "2026-09-14T15:32:29+05:30",
-    "generated_at_ist": "14 Sep 2026, 15:32 IST",
-    "market_open": true,
+    "generated_at": "2026-09-14T22:05:54+05:30",
+    "generated_at_ist": "14 Sep 2026, 22:05 IST",
+    "market_open": false,
     "usdinr": {
       "value": 95.54,
       "daily_pct": 0.0,
-      "as_of": "15:32 IST"
+      "as_of": "22:06 IST"
     },
     "base_date": "2024-01-02",
     "anchor_date": "2026-08-20",
@@ -29,7 +29,7 @@
       "3M": 20.9,
       "6M": 30.56,
       "1Y": 4.58,
-      "YTD": 9.26,
+      "YTD": 9.27,
       "since_base": 45.07
     }
   },
@@ -3549,7 +3549,7 @@
     },
     {
       "date": "2026-09-14",
-      "z47": 145.071,
+      "z47": 145.0737,
       "nifty500": 117.7569
     }
   ],
@@ -3782,18 +3782,18 @@
       "exchange": "NASDAQ",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 25.74,
-      "price": 50.09,
+      "price": 50.19,
       "ccy": "USD",
-      "daily_pct": 2.06,
-      "ret_1m": -16.1,
-      "ret_3m": 9.65,
-      "ret_6m": 16.81,
-      "ret_1y": -48.89,
-      "ret_ytd": -38.83,
-      "since_pct": 9.08,
-      "mcap_mn": 449993.4,
-      "mcap_cr": 44999.3,
-      "mcap_usd_mn": 4710.0,
+      "daily_pct": 0.2,
+      "ret_1m": -15.93,
+      "ret_3m": 9.87,
+      "ret_6m": 17.05,
+      "ret_1y": -48.79,
+      "ret_ytd": -38.71,
+      "since_pct": 9.3,
+      "mcap_mn": 450948.8,
+      "mcap_cr": 45094.9,
+      "mcap_usd_mn": 4720.0,
       "detail_url": "/z47-forty-seven/mmyt"
     },
     {
@@ -3936,18 +3936,18 @@
       "exchange": "NASDAQ",
       "sector": "SaaS / AI",
       "float_pct": 79.18,
-      "price": 11.89,
+      "price": 12.58,
       "ccy": "USD",
-      "daily_pct": 0.17,
-      "ret_1m": -3.57,
-      "ret_3m": 25.16,
-      "ret_6m": 48.25,
-      "ret_1y": -5.33,
-      "ret_ytd": 2.5,
-      "since_pct": -46.15,
-      "mcap_mn": 296174.0,
-      "mcap_cr": 29617.4,
-      "mcap_usd_mn": 3100.0,
+      "daily_pct": 5.8,
+      "ret_1m": 2.03,
+      "ret_3m": 32.42,
+      "ret_6m": 56.86,
+      "ret_1y": 0.16,
+      "ret_ytd": 8.45,
+      "since_pct": -43.03,
+      "mcap_mn": 313371.2,
+      "mcap_cr": 31337.1,
+      "mcap_usd_mn": 3280.0,
       "detail_url": "/z47-forty-seven/frsh"
     },
     {
@@ -4653,8 +4653,8 @@
         "sector": "Consumer / Consumer Tech",
         "slug": "mmyt",
         "detail_url": "/z47-forty-seven/mmyt",
-        "ret": -16.1,
-        "ret_1m": -16.1
+        "ret": -15.93,
+        "ret_1m": -15.93
       },
       {
         "name": "Capillary Technologies",
@@ -4750,8 +4750,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "mmyt",
           "detail_url": "/z47-forty-seven/mmyt",
-          "ret": -16.1,
-          "ret_1m": -16.1
+          "ret": -15.93,
+          "ret_1m": -15.93
         },
         {
           "name": "Capillary Technologies",
@@ -5056,8 +5056,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "mmyt",
           "detail_url": "/z47-forty-seven/mmyt",
-          "ret": -38.83,
-          "ret_1m": -38.83
+          "ret": -38.71,
+          "ret_1m": -38.71
         },
         {
           "name": "Ixigo",
@@ -5143,8 +5143,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "mmyt",
           "detail_url": "/z47-forty-seven/mmyt",
-          "ret": -48.89,
-          "ret_1m": -48.89
+          "ret": -48.79,
+          "ret_1m": -48.79
         },
         {
           "name": "Ixigo",
@@ -5172,7 +5172,7 @@
       "name": "Consumer / Consumer Tech",
       "count": 20,
       "weight_pct": 62.5,
-      "avg_ret_1m": 6.29,
+      "avg_ret_1m": 6.3,
       "top_mover": {
         "name": "Milky Mist",
         "ret_1m": 61.43
@@ -5191,11 +5191,11 @@
     {
       "name": "SaaS / AI",
       "count": 8,
-      "weight_pct": 6.3,
-      "avg_ret_1m": -7.0,
+      "weight_pct": 6.4,
+      "avg_ret_1m": -6.3,
       "top_mover": {
-        "name": "Amagi Media Labs",
-        "ret_1m": -0.52
+        "name": "Freshworks",
+        "ret_1m": 2.03
       }
     },
     {
