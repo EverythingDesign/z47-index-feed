@@ -4,9 +4,9 @@
   "name": "Ola Electric",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/OLAELEC/",
-  "mcap_cr": 17838.0,
-  "price": 38.5,
-  "high": 61.4,
+  "mcap_cr": 17866.0,
+  "price": 38.6,
+  "high": 61.0,
   "low": 21.2,
   "pe": null,
   "roce": -19.6,
@@ -18,7 +18,7 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=OLAELEC",
   "screener_id": "1284881",
   "ratios_ok": 5,
-  "daily_pct": -1.56,
+  "daily_pct": 0.1,
   "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
@@ -28,7 +28,8 @@
       "Mar 2022",
       "Mar 2023",
       "Mar 2024",
-      "Mar 2025"
+      "Mar 2025",
+      "Mar 2026"
     ],
     "rows": [
       {
@@ -39,7 +40,8 @@
           "373",
           "2,631",
           "5,010",
-          "4,514"
+          "4,514",
+          "2,253"
         ]
       },
       {
@@ -50,7 +52,8 @@
           "1,174",
           "3,883",
           "6,276",
-          "6,249"
+          "6,249",
+          "3,225"
         ]
       },
       {
@@ -61,7 +64,8 @@
           "-800",
           "-1,252",
           "-1,266",
-          "-1,735"
+          "-1,735",
+          "-972"
         ]
       },
       {
@@ -72,7 +76,8 @@
           "-214%",
           "-48%",
           "-25%",
-          "-38%"
+          "-38%",
+          "-43%"
         ]
       },
       {
@@ -83,7 +88,8 @@
           "83",
           "55",
           "226",
-          "391"
+          "391",
+          "207"
         ]
       },
       {
@@ -94,7 +100,8 @@
           "18",
           "108",
           "187",
-          "366"
+          "366",
+          "380"
         ]
       },
       {
@@ -105,7 +112,8 @@
           "49",
           "167",
           "358",
-          "566"
+          "566",
+          "684"
         ]
       },
       {
@@ -116,13 +124,15 @@
           "-784",
           "-1,472",
           "-1,584",
-          "-2,276"
+          "-2,276",
+          "-1,829"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
+          "0%",
           "0%",
           "0%",
           "0%",
@@ -138,7 +148,8 @@
           "-784",
           "-1,472",
           "-1,584",
-          "-2,276"
+          "-2,276",
+          "-1,833"
         ]
       },
       {
@@ -149,7 +160,8 @@
           "-4.01",
           "-7.53",
           "-8.10",
-          "-5.16"
+          "-5.16",
+          "-4.16"
         ]
       },
       {
@@ -160,10 +172,12 @@
           "0%",
           "0%",
           "0%",
+          "0%",
           "0%"
         ]
       }
-    ]
+    ],
+    "source_url": "https://www.screener.in/company/OLAELEC/consolidated/"
   },
   "growth": {
     "cards": [
@@ -241,7 +255,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -35.0
+            "value": -36.0
           }
         ]
       },
@@ -436,7 +450,14 @@
       ]
     }
   },
-  "generated_at": "2026-09-14T22:07:24.866632+05:30",
-  "generated_at_ist": "14 Sep 2026, 22:07 IST",
-  "source": "screener"
+  "generated_at": "2026-09-15T13:18:10.980426+05:30",
+  "generated_at_ist": "15 Sep 2026, 13:18 IST",
+  "source": "screener",
+  "website": "http://www.olaelectric.com",
+  "website_label": "olaelectric.com",
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
+  "source_observed_at": "2026-09-15T13:18:10.980426+05:30",
+  "review_snapshot": true
 }

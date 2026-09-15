@@ -5,10 +5,9 @@ build_company_hero.py — scrape Screener.in hero fields for each Z47 constituen
 Writes data/companies/{slug}.json (+ data/companies/_index.json).
 
 Fields: about, website/BSE/NSE links, mcap_cr, price, high, low, pe, roce, roe,
-P&L (Mar 2020–2025), growth cards, shareholding (quarterly + yearly).
+P&L (completed annual periods since 2020), growth cards, shareholding (quarterly + yearly).
 
-Hero ratios from /company/{TICKER}/ (standalone = Screener default UI).
-P&L prefers /consolidated/ when available; hero PE/ROE/ROCE are never overwritten by it.
+P&L and ratios use the same basis: consolidated when usable, otherwise standalone.
 NASDAQ names (MMYT, FRSH) use StockAnalysis.com; Yahoo fills any remaining gaps.
 
 Run:  python3 scripts/build_company_hero.py
@@ -27,6 +26,9 @@ import time
 import urllib.parse
 import urllib.request
 from datetime import datetime
+from html import unescape
+from html.parser import HTMLParser
+import calendar
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -156,14 +158,29 @@ def parse_screener_hero(html: str) -> dict:
     if about_m:
         out["about"] = re.sub(r"<[^>]+>", "", about_m.group(1)).strip()
 
-    web_m = re.search(
-        r'class="company-links[\s\S]*?<a href="(https?://[^"]+)"[^>]*>\s*<i class="icon-link"',
-        html,
-    )
-    if web_m:
-        out["website"] = web_m.group(1).strip()
-        host = urllib.parse.urlparse(out["website"]).netloc.replace("www.", "")
-        out["website_label"] = host
+    class WebsiteParser(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.href = None
+            self.website = None
+
+        def handle_starttag(self, tag, attrs):
+            attrs = dict(attrs)
+            if tag == "a":
+                self.href = attrs.get("href")
+            if tag == "i" and "icon-link" in attrs.get("class", "").split():
+                if self.href and urllib.parse.urlparse(self.href).scheme in {"http", "https"}:
+                    self.website = self.href
+
+        def handle_endtag(self, tag):
+            if tag == "a":
+                self.href = None
+
+    links = WebsiteParser()
+    links.feed(html)
+    if links.website:
+        out["website"] = unescape(links.website)
+        out["website_label"] = urllib.parse.urlparse(out["website"]).netloc.removeprefix("www.")
 
     bse_m = re.search(r"BSE:\s*(\d+)", html)
     bse_href = re.search(r'href="(https://www\.bseindia\.com/[^"]+)"', html)
@@ -208,11 +225,11 @@ def parse_screener_daily_pct(html: str) -> float | None:
 
 
 PL_YEAR_FROM = 2020
-PL_YEAR_TO = 2025
+
 
 
 def parse_screener_pl(html: str) -> dict | None:
-    """Top-level P&L rows for Mar PL_YEAR_FROM–PL_YEAR_TO (no nested expanders)."""
+    """Completed annual periods since 2020; preserve the source fiscal month, exclude TTM."""
     sec = re.search(
         r'id="profit-loss"[\s\S]*?(?=<section|id="balancesheet"|id="cash-flow"|id="ratios"|$)',
         html,
@@ -245,13 +262,14 @@ def parse_screener_pl(html: str) -> dict | None:
     idxs: list[int] = []
     periods: list[str] = []
     for i, p in enumerate(periods_all):
-        m = re.search(r"(20\d{2})", p)
-        if not m:
+        try:
+            period_date = datetime.strptime(p, "%b %Y").date()
+        except ValueError:
             continue
-        year = int(m.group(1))
-        if PL_YEAR_FROM <= year <= PL_YEAR_TO:
+        period_end = period_date.replace(day=calendar.monthrange(period_date.year, period_date.month)[1])
+        if period_date.year >= PL_YEAR_FROM and period_end <= datetime.now(IST).date():
             idxs.append(i)
-            periods.append(f"Mar {year}")
+            periods.append(p)
     if not periods:
         return None
 
@@ -473,11 +491,31 @@ def scrape_nasdaq_hero(c: dict, row: dict) -> dict:
     return row
 
 
+def select_financials(standalone_html: str, consolidated_html: str, ticker: str) -> dict:
+    """Choose usable consolidated statements, otherwise standalone, as one coherent set."""
+    pl = parse_screener_pl(consolidated_html)
+    consolidated = bool(pl and pl.get("rows"))
+    selected = consolidated_html if consolidated else standalone_html
+    if not consolidated:
+        pl = parse_screener_pl(standalone_html)
+    basis = "consolidated" if consolidated else "standalone"
+    source = f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/" + ("consolidated/" if consolidated else "")
+    hero = parse_screener_hero(selected)
+    out = {k: hero.get(k) for k in ("pe", "roce", "roe")}
+    out.update(screener_consolidated=consolidated, financial_basis=basis,
+               financial_source_url=source, ratios_source_url=source)
+    if pl:
+        pl.update(consolidated=consolidated, source_url=source)
+    out["pl"] = pl
+    out["growth"] = parse_screener_growth(selected)
+    out["shareholding"] = parse_screener_shareholding(selected)
+    return out
+
+
 def scrape_company(c: dict, retries: int = 3) -> dict:
     ticker = c["ticker"]
     slug = slugify(ticker)
     # Callers: CLI + .github/workflows/refresh-z47-feed.yml; writes data/companies/{slug}.json
-    # User: "Fix the 2 and 3?" — hero PE/ROE/ROCE must match Screener default (standalone).
     row = {
         "slug": slug,
         "ticker": ticker,
@@ -513,55 +551,17 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
             row["daily_pct"] = dp
     row["screener_consolidated"] = False
 
-    growth = parse_screener_growth(html) if html else None
-    shareholding = parse_screener_shareholding(html) if html else None
-
-    # P&L / growth / shareholding: prefer consolidated tables when present
-    pl = None
+    consolidated_html = ""
     for attempt in range(1, retries + 1):
         try:
-            pl_html = _http_get(
+            consolidated_html = _http_get(
                 f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
             )
-            pl = parse_screener_pl(pl_html)
-            g2 = parse_screener_growth(pl_html)
-            if g2 and g2.get("cards"):
-                growth = g2
-            sh2 = parse_screener_shareholding(pl_html)
-            if sh2:
-                shareholding = sh2
-            # Prefer consolidated top-ratios for PE/ROE/ROCE when present
-            # (Girish: MILKYMIST Screener shows 113 consol, not 324 standalone)
-            cons_hero = parse_screener_hero(pl_html)
-            for k in ("pe", "roce", "roe"):
-                if cons_hero.get(k) is not None:
-                    row[k] = cons_hero[k]
-            if pl and pl.get("rows"):
-                row["screener_consolidated"] = True
-                break
-            pl_html = _http_get(
-                f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/"
-            )
-            pl = parse_screener_pl(pl_html)
-            g2 = parse_screener_growth(pl_html)
-            if g2 and g2.get("cards"):
-                growth = g2
-            sh2 = parse_screener_shareholding(pl_html)
-            if sh2:
-                shareholding = sh2
-            if pl and pl.get("rows"):
-                if pl.get("consolidated"):
-                    pl["consolidated"] = False
-                break
+            break
         except Exception:
-            pl = None
-        time.sleep(1.0 * attempt + random.random())
-    if pl:
-        row["pl"] = pl
-    if growth:
-        row["growth"] = growth
-    if shareholding:
-        row["shareholding"] = shareholding
+            if attempt < retries:
+                time.sleep(2 * attempt + random.random())
+    row.update(select_financials(html, consolidated_html, ticker))
 
     # Manual overrides (Screener sometimes has google.co.in; Girish PE blanks)
     WEBSITE_OVERRIDES = {

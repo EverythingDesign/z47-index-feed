@@ -15,6 +15,7 @@ Run:  python3 scripts/build_company_chart.py
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 import random
@@ -23,6 +24,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from urllib.error import HTTPError
 from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -73,10 +75,10 @@ def _f(v):
         return None
 
 
-def fetch_screener_chart(company_id: str, q: str, days: int) -> dict:
+def fetch_screener_chart(company_id: str, q: str, days: int, consolidated: bool = True) -> dict:
     url = (
         f"https://www.screener.in/api/company/{company_id}/chart/"
-        f"?q={urllib.parse.quote(q)}&days={days}&consolidated=true"
+        f"?q={urllib.parse.quote(q)}&days={days}&consolidated={str(consolidated).lower()}"
     )
     return json.loads(_http_get(url).decode("utf-8", "replace"))
 
@@ -190,6 +192,7 @@ def load_company_meta() -> list:
                 "exchange": d.get("exchange") or "NSE",
                 "screener_id": d.get("screener_id"),
                 "name": d.get("name"),
+                "consolidated": d.get("screener_consolidated", True),
             }
         )
     return rows
@@ -211,27 +214,39 @@ def build_one(meta: dict, retries: int = 3) -> dict:
         for attempt in range(1, retries + 1):
             try:
                 daily = datasets_to_map(
-                    fetch_screener_chart(cid, "Price-DMA50-DMA200-Volume", 365)
+                    fetch_screener_chart(cid, "Price-DMA50-DMA200-Volume", 365, meta.get("consolidated", True))
                 )
                 long = datasets_to_map(
-                    fetch_screener_chart(cid, "Price-DMA50-DMA200-Volume", 10000)
+                    fetch_screener_chart(cid, "Price-DMA50-DMA200-Volume", 10000, meta.get("consolidated", True))
                 )
                 try:
                     daily_pe = datasets_to_map(
-                        fetch_screener_chart(cid, "Price to Earning", 365)
+                        fetch_screener_chart(cid, "Price to Earning", 365, meta.get("consolidated", True))
                     )
+                except HTTPError as e:
+                    if e.code == 429:
+                        raise
+                    daily_pe = {}
                 except Exception:
                     daily_pe = {}
                 try:
                     long_pe = datasets_to_map(
-                        fetch_screener_chart(cid, "Price to Earning", 10000)
+                        fetch_screener_chart(cid, "Price to Earning", 10000, meta.get("consolidated", True))
                     )
+                except HTTPError as e:
+                    if e.code == 429:
+                        raise
+                    long_pe = {}
                 except Exception:
                     long_pe = {}
                 if daily.get("price") or long.get("price"):
+                    out.pop("error", None)
                     break
             except Exception as e:
                 out["error"] = str(e)
+                if isinstance(e, HTTPError) and e.code == 429:
+                    out["rate_limited"] = True
+                    break
                 time.sleep(1.2 * attempt + random.random())
     else:
         yb = yahoo_price_series(ticker, meta["exchange"])
@@ -249,10 +264,43 @@ def build_one(meta: dict, retries: int = 3) -> dict:
     return out
 
 
+def price_as_of(row: dict) -> str | None:
+    dates = [p[0] for pack in (row.get("periods") or {}).values()
+             for p in pack.get("price", []) if len(p) >= 2 and p[1] is not None]
+    return max(dates) if dates else None
+
+
+def retain_last_good(new: dict, previous: dict | None) -> dict:
+    """Never replace useful history with empty/older data or call it freshly sourced."""
+    previous = previous or {}
+    latest, old_latest = price_as_of(new), price_as_of(previous)
+    now = datetime.now(IST)
+    stale = not latest or (now.date() - datetime.fromisoformat(latest).date()).days > 7
+    if old_latest and (not latest or latest < old_latest or new.get("rate_limited")):
+        row = dict(previous)
+        row["refresh_error"] = new.get("error") or "Provider returned empty or older price history"
+        row["refresh_status"] = "cached"
+    else:
+        row = copy.deepcopy(new)
+        row["refresh_status"] = "stale" if stale else "ok"
+        if new.get("error") or not latest:
+            row["refresh_error"] = new.get("error") or "Provider returned no price history"
+        # One failed history endpoint must not erase longer cached periods.
+        for period, old_pack in (previous.get("periods") or {}).items():
+            pack = row.setdefault("periods", {}).get(period) or {}
+            if old_pack.get("price") and not pack.get("price"):
+                row["periods"][period] = copy.deepcopy(old_pack)
+                row["refresh_status"] = "partial"
+                row["refresh_error"] = new.get("error") or "Some periods could not refresh; cached history retained"
+    row["last_attempt_at"] = now.isoformat()
+    row["data_as_of"] = price_as_of(row)
+    return row
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="")
-    ap.add_argument("--sleep", type=float, default=0.55)
+    ap.add_argument("--sleep", type=float, default=3.0)
     args = ap.parse_args()
 
     only = {t.strip().upper() for t in args.only.split(",") if t.strip()}
@@ -269,20 +317,26 @@ def main() -> int:
     for i, m in enumerate(metas, 1):
         row = build_one(m)
         path = OUT_DIR / f"{row['slug']}-chart.json"
+        rate_limited = row.get("rate_limited")
+        previous = json.loads(path.read_text()) if path.exists() else None
+        row = retain_last_good(row, previous)
         path.write_text(json.dumps(row, ensure_ascii=False) + "\n")
         p1 = len((row.get("periods") or {}).get("1Y", {}).get("price") or [])
         pe = len((row.get("periods") or {}).get("1Y", {}).get("pe") or [])
-        status = "ok" if p1 else "empty"
-        if p1:
+        status = row.get("refresh_status", "empty")
+        if p1 and row.get("refresh_status") == "ok":
             ok += 1
         print(
             f"[{i}/{len(metas)}] {row['ticker']:12} {status} "
             f"1Y_price={p1} 1Y_pe={pe} src={row.get('source')}"
         )
+        if rate_limited:
+            print("Provider returned HTTP 429; retained cached data and stopped this batch.")
+            return 1
         time.sleep(args.sleep + random.random() * 0.35)
 
     print(f"Wrote {len(metas)} chart files → {OUT_DIR} ({ok} with price)")
-    return 0
+    return 0 if ok == len(metas) else 1
 
 
 if __name__ == "__main__":
