@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: z47-feed
+  group: z47-feed-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
             echo "No index changes."
           else
             git commit -m "data: refresh Z47 index ($(date -u +'%Y-%m-%dT%H:%MZ'))"
-            git pull --rebase origin main
+            git pull --rebase origin "${{ github.ref_name }}"
             git push
           fi
 
@@ -54,7 +54,13 @@ jobs:
       - name: Build all company pages (Screener + Yahoo)
         env:
           SCREENER_SESSIONID: ${{ secrets.SCREENER_SESSIONID }}
-        run: python3 scripts/build_company_hero.py --sleep 0.55
+        run: python3 scripts/build_company_hero.py --sleep 2
+      - name: Refresh chart history (retain cached data on provider failure)
+        id: charts
+        continue-on-error: true
+        env:
+          SCREENER_SESSIONID: ${{ secrets.SCREENER_SESSIONID }}
+        run: python3 scripts/build_company_chart.py --sleep 3
       - name: Commit companies if changed
         run: |
           git config user.name  "z47-feed-bot"
@@ -64,6 +70,11 @@ jobs:
             echo "No company JSON changes."
           else
             git commit -m "data: refresh all company pages from Screener ($(date -u +'%Y-%m-%dT%H:%MZ'))"
-            git pull --rebase origin main
+            git pull --rebase origin "${{ github.ref_name }}"
             git push
           fi
+      - name: Report incomplete chart refresh
+        if: steps.charts.outcome == 'failure'
+        run: |
+          echo "Some charts could not refresh. Check logs and data_as_of; cached history was retained."
+          exit 1

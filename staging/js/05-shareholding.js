@@ -27,10 +27,42 @@
     paint(data);
   }
   function setGridCols(el, n) {
-    if (!el) return;
-    el.style.gridTemplateColumns = "repeat(" + n + ", minmax(0, 1fr))";
+    if (!el || n < 2) return;
+    el.style.gridTemplateColumns = "minmax(11em, 1.5fr) repeat(" + (n - 1) + ", minmax(4.2em, 1fr))";
+  }
+  function filterFromYear(table, minYear) {
+    if (!table || !table.periods || !table.periods.length) return table;
+    var keep = [];
+    table.periods.forEach(function (p, i) {
+      var m = String(p).match(/(19|20)\d{2}/);
+      var y = m ? parseInt(m[0], 10) : 0;
+      if (y >= minYear) keep.push(i);
+    });
+    if (!keep.length || keep.length === table.periods.length) return table;
+    return {
+      periods: keep.map(function (i) { return table.periods[i]; }),
+      rows: (table.rows || []).map(function (row) {
+        return {
+          key: row.key,
+          label: row.label,
+          values: keep.map(function (i) {
+            return (row.values && row.values[i] != null) ? row.values[i] : "—";
+          })
+        };
+      })
+    };
+  }
+  function alignCell(node, t, isLabel) {
+    var align = isLabel ? "left" : "right";
+    node.style.textAlign = align;
+    if (t && t !== node) t.style.textAlign = align;
+    if (!isLabel) {
+      node.style.fontVariantNumeric = "tabular-nums";
+      if (t && t !== node) t.style.fontVariantNumeric = "tabular-nums";
+    }
   }
   function paintTable(host, table) {
+    table = filterFromYear(table, 2024);
     if (!host || !table || !table.periods || !table.rows) return;
     var wrap = host.querySelector(".constituent-summary-table.main-wrap") || host;
     var grids = $all(":scope > .shareholding-pattern-table", wrap);
@@ -64,6 +96,7 @@
       var t = node.querySelector(".summary-heading, [data-z47-cell], div") || node;
       if (idx === 0) t.textContent = "";
       else t.textContent = table.periods[idx - 1] || "";
+      alignCell(node, t, idx === 0);
       header.appendChild(node);
     });
 
@@ -81,6 +114,7 @@
           if (/^-/.test(v)) t.style.color = NEG_COLOR;
           else t.style.color = "";
         }
+        alignCell(node, t, idx === 0);
         body.appendChild(node);
       });
     });

@@ -19,6 +19,8 @@
       + "text-decoration:underline;text-underline-offset:2px;"
       + "}"
       + ".z47-about-more[hidden]{display:none;}"
+      + ".z47-data-note{font-size:14px;line-height:1.5;color:#666;}"
+      + ".z47-data-note[hidden]{display:none;}"
       + ".screener-hero-mk{display:flex;align-items:baseline;justify-content:space-between;gap:16px;}"
       + ".screener-hero-key{flex:0 1 auto;text-align:left;}"
       + ".screener-hero-value,[data-z47-co].screener-hero-value{flex:1 1 auto;text-align:right;}"
@@ -26,8 +28,9 @@
       + ".pl-cards .pe-card-data .ai-tag-2{flex:1 1 auto;text-align:left;}"
       + ".pl-cards .pe-card-data .ai-tag-3{flex:0 0 auto;text-align:right;min-width:3.5em;}";
 
-  var INDEX_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
-  var COMPANY_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/data/companies/";
+  var FEED_BASE = window.__Z47_FEED_BASE || "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/";
+  var INDEX_URL = FEED_BASE + "z47_index.json";
+  var COMPANY_URL = FEED_BASE + "data/companies/";
   var UP = "ai-color-parrotgreen", DOWN = "ai-color-red";
   var POS_COLOR = "#249200", NEG_COLOR = "#D31F03";
 
@@ -107,7 +110,11 @@
   }
   function setLink(coKey, href, label) {
     co(coKey).forEach(function (a) {
-      if (href) {
+      var valid = /^https?:\/\//i.test(href || "");
+      a.hidden = !valid;
+      a.style.display = valid ? "" : "none";
+      if (!valid) a.removeAttribute("href");
+      if (valid) {
         a.setAttribute("href", href);
         a.setAttribute("target", "_blank");
         a.setAttribute("rel", "noopener noreferrer");
@@ -166,6 +173,9 @@
   }
   function paintHero(h, ccy) {
     if (!h) return;
+    ccy = h.exchange === "NASDAQ" ? "USD" : (ccy || "INR");
+    ["price", "current_price", "mcap_cr", "high_low", "pe", "roce", "roe", "as_of"].forEach(function (key) { setText(co(key), "—"); });
+    paintDaily(co("daily_pct"), h.daily_pct);
     var slug = (h.slug || "").toLowerCase();
     if (slug === "shiprocket" || h.hide_about) {
       $all(".screener-hero-about", root()).forEach(function (el) {
@@ -194,7 +204,7 @@
     );
     if (h.high != null && h.low != null && isFinite(h.high) && isFinite(h.low)) {
       var sym = ccy === "USD" ? "$" : "₹";
-      setMetricByLabel(/^High\s*\/?\s*Low$/i, sym + fmtNum(h.high, 0) + " / " + fmtNum(h.low, 0));
+      setMetricByLabel(/^High\s*\/?\s*Low$/i, sym + fmtNum(h.high, 2) + " / " + fmtNum(h.low, 2));
     }
     if (h.mcap_cr != null && isFinite(h.mcap_cr)) {
       setMetricByLabel(/^Market\s*Cap$/i, "₹" + fmtNum(h.mcap_cr, 0) + " Cr.");
@@ -207,18 +217,75 @@
       paintDaily(co("daily_pct"), h.daily_pct);
     }
     if (h.generated_at_ist) setText(co("as_of"), h.generated_at_ist);
-    if (h.website) {
-      setLink("link-web", h.website, (h.website_label || h.website).toUpperCase());
-    }
-    if (h.bse_code) {
-      setLink("link-bse", h.bse_url || "#", "BSE : " + h.bse_code);
-    }
-    if (h.nse_symbol) {
-      setLink("link-nse", h.nse_url || "#", "NSE : " + h.nse_symbol);
+    setLink("link-web", h.website, (h.website_label || h.website || "Website unavailable").toUpperCase());
+    setLink("link-bse", h.bse_url, h.bse_code ? "BSE : " + h.bse_code : "");
+    if (h.exchange === "NASDAQ") {
+      setLink("link-bse", null, "");
+      setLink("link-nse", h.stockanalysis_url, "NASDAQ : " + h.ticker);
+    } else {
+      setLink("link-nse", h.nse_url, h.nse_symbol ? "NSE : " + h.nse_symbol : "");
     }
     if (h.name) setText(co("name"), h.name);
     paintPL(h.pl);
     paintGrowth(h.growth);
+  }
+  function sectionState(host, available, message) {
+    if (!host) return;
+    var note = host.previousElementSibling;
+    if (!note || !note.classList.contains("z47-data-note")) {
+      note = document.createElement("p");
+      note.className = "z47-data-note";
+      note.setAttribute("role", "status");
+      host.parentNode.insertBefore(note, host);
+    }
+    note.textContent = message;
+    note.hidden = available;
+    host.hidden = !available;
+    host.style.display = available ? "" : "none";
+  }
+  function resetTemplate() {
+    // The saved template has several data attributes attached to the wrong metric row.
+    // Bind by the visible label before any clear/paint operations.
+    var metrics = [
+      [/^Market\s*Cap$/i, "mcap_cr"], [/^Current\s*Price$/i, "current_price"],
+      [/^High\s*\/?\s*Low$/i, "high_low"], [/^(Stock\s*)?P\/?E$/i, "pe"],
+      [/^ROCE$/i, "roce"], [/^ROE$/i, "roe"]
+    ];
+    $all(".screener-hero-mk", root()).forEach(function (row) {
+      var label = row.querySelector(".screener-hero-key");
+      var value = row.querySelector(".screener-hero-value");
+      if (!label || !value) return;
+      metrics.forEach(function (m) {
+        if (m[0].test(label.textContent.trim())) value.setAttribute("data-z47-co", m[1]);
+      });
+    });
+    ["name", "price", "current_price", "mcap_cr", "high_low", "pe", "roce", "roe", "daily_pct", "as_of"].forEach(function (key) { setText(co(key), "—"); });
+    ["link-web", "link-bse", "link-nse"].forEach(function (key) { setLink(key, null, ""); });
+    paintAbout("");
+    co("pl-table").concat(co("shareholding")).forEach(function (el) { sectionState(el, false, "Loading data…"); });
+    $all(".pl-cards", root()).forEach(function (el) { sectionState(el, false, "Loading data…"); });
+    $all("[data-z47-sh]", root()).forEach(function (el) { el.style.display = "none"; });
+    paintBasis(null);
+  }
+  function paintBasis(pl) {
+    // This sentence is static in the existing Webflow template, so bind it by its exact text.
+    $all("[data-z47-pl-basis], .text-size-regular", root()).forEach(function (el) {
+      if (el.hasAttribute("data-z47-pl-basis") || /^(Consolidated|Standalone) Figures in/.test(el.textContent.trim())) {
+        el.setAttribute("data-z47-pl-basis", "");
+        el.textContent = pl ? (pl.consolidated ? "Consolidated" : "Standalone") + " Figures in " + (pl.unit || "Rs. Crores") : "Financial statements unavailable";
+      }
+    });
+  }
+  function paintAvailability(h) {
+    var sh = h && h.shareholding;
+    var hasSH = !!(sh && [sh.quarterly, sh.yearly].some(function(t) { return t && t.rows && t.rows.length && t.periods && t.periods.length; }));
+    co("shareholding").forEach(function (el) { sectionState(el, hasSH, "Shareholding data is not available from the current source."); });
+    $all("[data-z47-sh]", root()).forEach(function (el) { el.style.display = hasSH ? "" : "none"; });
+    if (!h) {
+      paintPL(null);
+      paintGrowth(null);
+      setText(co("as_of"), "Company data unavailable");
+    }
   }
   function fmtGrowthPct(n) {
     if (n == null || !isFinite(n)) return "—";
@@ -228,7 +295,7 @@
     }) + "%";
   }
   function paintGrowth(g) {
-    if (!g || !g.cards || !g.cards.length) return;
+    g = g || { cards: [] };
     var byTitle = {};
     g.cards.forEach(function (c) { byTitle[c.title] = c; });
 
@@ -237,7 +304,9 @@
       if (!titleEl) return;
       var title = (titleEl.textContent || "").trim();
       var data = byTitle[title];
-      if (!data || !data.rows || !data.rows.length) return;
+      var available = !!(data && data.rows && data.rows.length);
+      sectionState(card, available, title + ": data unavailable.");
+      if (!available) return;
 
       var wrap = card.querySelector(".pe-card-data-wrap");
       if (!wrap) return;
@@ -321,7 +390,10 @@
   }
   function paintPL(pl) {
     pl = filterPLFrom2021(pl);
-    if (!pl || !pl.periods || !pl.rows || !pl.rows.length) return;
+    var available = !!(pl && pl.periods && pl.periods.length && pl.rows && pl.rows.length);
+    paintBasis(available ? pl : null);
+    co("pl-table").forEach(function (host) { sectionState(host, available, "Profit & loss data is not available from the current source."); });
+    if (!available) return;
     co("pl-table").forEach(function (host) {
       var wrap = host.querySelector(".constituent-summary-table.main-wrap") || host;
       var header = wrap.querySelector(".live-prices-header");
@@ -332,9 +404,14 @@
       var bCells = $all(":scope > *", body);
       if (hCells.length < 2 || bCells.length < 2) return;
       var cols = pl.periods.length + 1; // label + years
-      var hTpl = hCells.slice(0, cols).map(function (n) { return n.cloneNode(true); });
-      var bTpl = bCells.slice(0, cols).map(function (n) { return n.cloneNode(true); });
-      if (hTpl.length < cols || bTpl.length < cols) return;
+      var hTpl = [], bTpl = [];
+      for (var col = 0; col < cols; col++) {
+        hTpl.push(hCells[col === 0 ? 0 : 1].cloneNode(true));
+        bTpl.push(bCells[col === 0 ? 0 : 1].cloneNode(true));
+      }
+      host.style.overflowX = "auto";
+      host.style.maxWidth = "100%";
+      wrap.style.minWidth = (11 + (cols - 1) * 5.5) + "em";
 
       // Header: Company + periods
       header.innerHTML = "";
@@ -342,7 +419,7 @@
         var node = cell.cloneNode(true);
         var t = node.querySelector(".summary-heading, [data-z47-cell], div");
         if (t) {
-          if (i === 0) t.textContent = "Company";
+          if (i === 0) t.textContent = "Metric";
           else t.textContent = pl.periods[i - 1] || "";
         }
         alignCell(node, t || node, i === 0);
@@ -379,6 +456,7 @@
     });
   }
   function start() {
+    resetTemplate();
     var key = resolveKey();
     if (!key.slug && !key.ticker) return;
     var slug = key.slug || key.ticker.toLowerCase();
@@ -388,12 +466,14 @@
       .catch(function () { return null; });
     Promise.all([indexP, heroP]).then(function (pair) {
       var d = pair[0], h = pair[1];
+      if (h && ((h.slug || "").toLowerCase() !== slug || (key.ticker && h.ticker !== key.ticker))) h = null;
       var c = d ? findConstituent(d, key) : null;
+      paintAvailability(h);
       if (c) paintIndex(c, d.meta || {}, !!h);
       if (h) {
         window.__Z47_COMPANY = h;
         paintHero(h, c && c.ccy);
-        if (typeof window.__Z47_paintShareholding === "function" && h.shareholding) {
+        if (typeof window.__Z47_paintShareholding === "function" ) {
           window.__Z47_paintShareholding(h.shareholding);
         }
       }

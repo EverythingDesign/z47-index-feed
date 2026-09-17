@@ -4,11 +4,11 @@
   "name": "Go Digit Insurance",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/GODIGIT/",
-  "mcap_cr": 23235.0,
-  "price": 251.0,
+  "mcap_cr": 23277.0,
+  "price": 252.0,
   "high": 381.0,
   "low": 244.0,
-  "pe": 47.2,
+  "pe": 47.3,
   "roce": 13.1,
   "roe": 12.2,
   "about": "Incorporated in 2016, Go Digit \nGeneral Insurance Ltd provides\nmotor, health, and other insurances[1]",
@@ -18,7 +18,7 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=GODIGIT",
   "screener_id": "1284784",
   "ratios_ok": 6,
-  "daily_pct": -0.24,
+  "daily_pct": -1.6,
   "screener_consolidated": false,
   "pl": {
     "unit": "Rs. Crores",
@@ -28,7 +28,8 @@
       "Mar 2022",
       "Mar 2023",
       "Mar 2024",
-      "Mar 2025"
+      "Mar 2025",
+      "Mar 2026"
     ],
     "rows": [
       {
@@ -39,7 +40,8 @@
           "3,841",
           "5,885",
           "8,147",
-          "9,370"
+          "9,370",
+          "10,005"
         ]
       },
       {
@@ -50,7 +52,8 @@
           "4,124",
           "5,835",
           "8,416",
-          "9,250"
+          "9,250",
+          "9,825"
         ]
       },
       {
@@ -61,7 +64,8 @@
           "-283",
           "50",
           "-269",
-          "120"
+          "120",
+          "180"
         ]
       },
       {
@@ -72,7 +76,8 @@
           "-7%",
           "0.9%",
           "-3.3%",
-          "1.3%"
+          "1.3%",
+          "1.8%"
         ]
       },
       {
@@ -83,13 +88,15 @@
           "-0",
           "0",
           "468",
-          "325"
+          "325",
+          "472"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "0",
           "0",
           "0",
           "0",
@@ -105,7 +112,8 @@
           "12",
           "15",
           "18",
-          "20"
+          "20",
+          "21"
         ]
       },
       {
@@ -116,7 +124,8 @@
           "-296",
           "36",
           "182",
-          "425"
+          "425",
+          "632"
         ]
       },
       {
@@ -127,7 +136,8 @@
           "0%",
           "0%",
           "0%",
-          "0%"
+          "0%",
+          "14%"
         ]
       },
       {
@@ -138,7 +148,8 @@
           "-296",
           "36",
           "182",
-          "425"
+          "425",
+          "544"
         ]
       },
       {
@@ -149,7 +160,8 @@
           "-3.44",
           "0.41",
           "2.08",
-          "4.60"
+          "4.60",
+          "5.89"
         ]
       },
       {
@@ -160,10 +172,12 @@
           "0%",
           "0%",
           "0%",
+          "0%",
           "0%"
         ]
       }
-    ]
+    ],
+    "source_url": "https://www.screener.in/company/GODIGIT/"
   },
   "growth": {
     "cards": [
@@ -241,7 +255,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -29.0
+            "value": -28.0
           }
         ]
       },
@@ -419,7 +433,14 @@
       ]
     }
   },
-  "generated_at": "2026-09-16T20:41:29.592135+05:30",
-  "generated_at_ist": "16 Sep 2026, 20:41 IST",
-  "source": "screener"
+  "generated_at": "2026-09-15T13:18:14.238533+05:30",
+  "generated_at_ist": "15 Sep 2026, 13:18 IST",
+  "source": "screener",
+  "website": "https://www.godigit.com",
+  "website_label": "godigit.com",
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/GODIGIT/",
+  "ratios_source_url": "https://www.screener.in/company/GODIGIT/",
+  "source_observed_at": "2026-09-15T13:18:14.238533+05:30",
+  "review_snapshot": true
 }

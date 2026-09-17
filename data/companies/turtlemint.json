@@ -4,8 +4,8 @@
   "name": "Turtlemint",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/TURTLEMINT/",
-  "mcap_cr": 3756.0,
-  "price": 128.0,
+  "mcap_cr": 3887.0,
+  "price": 132.0,
   "high": 160.0,
   "low": 110.0,
   "pe": null,
@@ -18,7 +18,7 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=TURTLEMINT",
   "screener_id": "1286019",
   "ratios_ok": 5,
-  "daily_pct": -2.52,
+  "daily_pct": -3.12,
   "screener_consolidated": true,
   "pl": {
     "unit": "Rs. Crores",
@@ -27,7 +27,8 @@
       "Mar 2022",
       "Mar 2023",
       "Mar 2024",
-      "Mar 2025"
+      "Mar 2025",
+      "Mar 2026"
     ],
     "rows": [
       {
@@ -37,7 +38,8 @@
           "294",
           "420",
           "79",
-          "663"
+          "663",
+          "1,098"
         ]
       },
       {
@@ -47,7 +49,8 @@
           "465",
           "734",
           "290",
-          "850"
+          "850",
+          "1,229"
         ]
       },
       {
@@ -57,7 +60,8 @@
           "-171",
           "-314",
           "-211",
-          "-188"
+          "-188",
+          "-130"
         ]
       },
       {
@@ -67,7 +71,8 @@
           "-58%",
           "-75%",
           "-269%",
-          "-28%"
+          "-28%",
+          "-12%"
         ]
       },
       {
@@ -77,13 +82,15 @@
           "11",
           "40",
           "40",
-          "30"
+          "30",
+          "-44"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "2",
           "2",
           "2",
           "2",
@@ -97,7 +104,8 @@
           "5",
           "12",
           "20",
-          "29"
+          "29",
+          "16"
         ]
       },
       {
@@ -107,17 +115,19 @@
           "-168",
           "-288",
           "-193",
-          "-189"
+          "-189",
+          "-193"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
-          "2%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "2%",
+          "-4%"
         ]
       },
       {
@@ -127,7 +137,8 @@
           "-168",
           "-288",
           "-193",
-          "-194"
+          "-194",
+          "-184"
         ]
       },
       {
@@ -137,20 +148,23 @@
           "-16,286.41",
           "-27,603.45",
           "-18,467.05",
-          "-18,628.60"
+          "-18,628.60",
+          "-34.51"
         ]
       },
       {
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       }
-    ]
+    ],
+    "source_url": "https://www.screener.in/company/TURTLEMINT/consolidated/"
   },
   "growth": {
     "cards": [
@@ -361,7 +375,14 @@
     }
   },
   "pe_blank": true,
-  "generated_at": "2026-09-16T20:41:00.483154+05:30",
-  "generated_at_ist": "16 Sep 2026, 20:41 IST",
-  "source": "screener"
+  "generated_at": "2026-09-15T13:17:48.555764+05:30",
+  "generated_at_ist": "15 Sep 2026, 13:17 IST",
+  "source": "screener",
+  "website": "http://www.turtlemint.com",
+  "website_label": "turtlemint.com",
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/TURTLEMINT/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/TURTLEMINT/consolidated/",
+  "source_observed_at": "2026-09-15T13:17:48.555764+05:30",
+  "review_snapshot": true
 }

@@ -1,32 +1,31 @@
-<!--
-  Z47 — Company price / PE performance chart
-  File: staging/embeds/06-price-chart-embed.html
-  Paste near the Price Performance Chart section.
-
-  Expects:
-    [data-z47-period="1M|6M|1Y|3Y|5Y|10Y|Max"]
-    [data-z47-series="price|pe"]
-    [data-z47-co="chart"] > canvas#z47-chart
-    [data-z47="chart-legend"].price-performance-legend
-
-  Feed: data/companies/{slug}-chart.json
--->
+<style>.ai-color-parrotgreen{color:#249200;}.ai-color-red{color:#D31F03;}</style>
 <script>
 (function (global) {
   "use strict";
-  var CHART_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/data/companies/";
+  var CHART_URL = (global.__Z47_FEED_BASE || "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/") + "data/companies/";
   var ACTIVE = "is-active";
-  var PRICE_COLOR = "#5B4FC7";
-  var DMA50_COLOR = "#E67E22";
-  var DMA200_COLOR = "#16A085";
-  var VOLUME_COLOR = "rgba(147, 179, 214, 0.55)";
-  var PE_COLOR = "#5B4FC7";
+  var PRICE_COLOR = "#FF6800";
+  var DMA50_COLOR = "#12295C";
+  var DMA200_COLOR = "#103B33";
+  var VOLUME_COLOR = "rgba(112, 112, 112, 0.35)";
+  var PE_COLOR = "#5E1A50";
 
   var period = "1M";
   var seriesMode = "price"; // price | pe
   var layers = { price: true, dma50: false, dma200: false, volume: true };
   var payload = null;
   var chart = null;
+  // Show a period only when Max history spans at least this many calendar days.
+  // Max is always shown. 10Y only appears for long-history names.
+  var TAB_ORDER = ["1M", "6M", "1Y", "3Y", "5Y", "10Y", "Max"];
+  var PERIOD_MIN_DAYS = {
+    "1M": 14,
+    "6M": 150,
+    "1Y": 300,
+    "3Y": 900,
+    "5Y": 1500,
+    "10Y": 3000
+  };
 
   function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
   function root() { return document.querySelector("[data-z47-company]") || document; }
@@ -40,8 +39,11 @@
   }
   function slugFromPath() {
     var parts = (location.pathname || "").split("/").filter(Boolean);
-    var i = parts.indexOf("companies");
-    if (i >= 0 && parts[i + 1]) return parts[i + 1].toLowerCase();
+    var folders = { "z47-forty-seven": true, companies: true };
+    var i;
+    for (i = 0; i < parts.length; i++) {
+      if (folders[parts[i]] && parts[i + 1]) return parts[i + 1].toLowerCase();
+    }
     return "";
   }
   function resolveSlug() {
@@ -53,6 +55,7 @@
     var s = document.createElement("script");
     s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
     s.onload = cb;
+    s.onerror = function () { chartStatus("Chart could not load. Please refresh later."); };
     (document.head || document.body).appendChild(s);
   }
   function monthLabel(iso) {
@@ -62,14 +65,71 @@
   function ptsToXY(pts) {
     return (pts || []).map(function (p) { return { x: p[0], y: p[1] }; });
   }
+  function periodTabs() {
+    return $all("[data-z47-period], [data-tenure]", root());
+  }
+  function canonPeriod(raw) {
+    var s = String(raw || "").trim();
+    if (!s) return "";
+    var lower = s.toLowerCase();
+    if (lower === "max") return "Max";
+    var map = { "1m": "1M", "6m": "6M", "1y": "1Y", "3y": "3Y", "5y": "5Y", "10y": "10Y" };
+    return map[lower] || s;
+  }
+  function tabPeriod(el) {
+    return canonPeriod(el.getAttribute("data-z47-period") || el.getAttribute("data-tenure") || "");
+  }
+
+  function historySpanDays() {
+    var max = payload && payload.periods && (payload.periods.Max || payload.periods.max);
+    var price = (max && max.price) || [];
+    if (price.length < 2) return price.length ? 1 : 0;
+    var a = new Date(price[0][0] + "T00:00:00").getTime();
+    var b = new Date(price[price.length - 1][0] + "T00:00:00").getTime();
+    if (!isFinite(a) || !isFinite(b) || b < a) return 0;
+    return Math.round((b - a) / 86400000);
+  }
+  function applicablePeriods() {
+    var span = historySpanDays();
+    var out = [];
+    TAB_ORDER.forEach(function (p) {
+      if (p === "Max") {
+        out.push(p);
+        return;
+      }
+      var need = PERIOD_MIN_DAYS[p];
+      if (need != null && span >= need) out.push(p);
+    });
+    return out;
+  }
+  function syncPeriodTabs() {
+    var allowed = applicablePeriods();
+    var allowMap = {};
+    allowed.forEach(function (p) { allowMap[p] = true; });
+    periodTabs().forEach(function (a) {
+      var p = tabPeriod(a);
+      if (!p) return;
+      var show = p === "Max" || !!allowMap[p];
+      a.style.display = show ? "" : "none";
+      if (!show) a.classList.remove(ACTIVE);
+    });
+    period = canonPeriod(period);
+    if (!allowMap[period]) {
+      period = allowMap["1M"] ? "1M" : (allowed[0] || "Max");
+    }
+    periodTabs().forEach(function (a) {
+      a.classList.toggle(ACTIVE, tabPeriod(a) === period && a.style.display !== "none");
+    });
+  }
   function wireTabs() {
-    $all("[data-z47-period]", root()).forEach(function (a) {
+    periodTabs().forEach(function (a) {
       if (a.__z47ChartPeriod) return;
       a.__z47ChartPeriod = true;
       a.addEventListener("click", function (e) {
         e.preventDefault();
-        period = a.getAttribute("data-z47-period") || "1M";
-        $all("[data-z47-period]", root()).forEach(function (b) {
+        if (a.style.display === "none") return;
+        period = tabPeriod(a) || "1M";
+        periodTabs().forEach(function (b) {
           b.classList.toggle(ACTIVE, b === a);
         });
         render();
@@ -88,8 +148,8 @@
         render();
       });
     });
-    var ap = $all("[data-z47-period]." + ACTIVE, root())[0];
-    if (ap) period = ap.getAttribute("data-z47-period") || period;
+    var ap = periodTabs().filter(function (el) { return el.classList.contains(ACTIVE); })[0];
+    if (ap) period = tabPeriod(ap) || period;
     var as = $all("[data-z47-series]." + ACTIVE, root())[0];
     if (as) seriesMode = as.getAttribute("data-z47-series") || seriesMode;
   }
@@ -103,10 +163,10 @@
       return;
     }
     var items = [
-      ["price", "Price on NSE", PRICE_COLOR, layers.price],
+      ["price", priceLabel(), PRICE_COLOR, layers.price],
       ["dma50", "50 DMA", DMA50_COLOR, layers.dma50],
       ["dma200", "200 DMA", DMA200_COLOR, layers.dma200],
-      ["volume", "Volume", "#93B3D6", layers.volume]
+      ["volume", "Volume", "#707070", layers.volume]
     ];
     host.innerHTML = items.map(function (it) {
       return '<label class="z47-chart-lgnd" data-layer="' + it[0] + '">' +
@@ -135,13 +195,38 @@
   }
   function currentPack() {
     if (!payload || !payload.periods) return null;
-    return payload.periods[period] || payload.periods["1Y"] || null;
+    var key = canonPeriod(period);
+    return payload.periods[key] || payload.periods.Max || payload.periods.max || payload.periods["1Y"] || null;
+  }
+  function priceLabel() {
+    return "Price on " + ((payload && payload.exchange) || "exchange");
+  }
+  function chartStatus(message) {
+    var el = canvas();
+    if (!el) return;
+    var host = el.parentNode;
+    var note = host.parentNode.querySelector(".z47-chart-status");
+    if (!note) {
+      note = document.createElement("p");
+      note.className = "z47-chart-status";
+      note.setAttribute("role", "status");
+      host.parentNode.insertBefore(note, host);
+    }
+    note.textContent = message;
+  }
+  function freshness(pack) {
+    var pts = pack[seriesMode === "pe" ? "pe" : "price"] || [];
+    if (!pts.length) return (seriesMode === "pe" ? "P/E" : "Price") + " history unavailable for this period.";
+    var last = pts.map(function (p) { return p[0]; }).sort().pop();
+    var stale = Date.now() - Date.parse(last + "T00:00:00Z") > 7 * 86400000;
+    return "History through " + last + ((stale || payload.refresh_error || payload.error) ? " · Update delayed; showing available history." : "");
   }
   function render() {
     var el = canvas();
     if (!el || !global.Chart) return;
     var pack = currentPack();
-    if (!pack) return;
+    if (!pack) { chartStatus("Chart history unavailable."); return; }
+    chartStatus(freshness(pack));
 
     var datasets = [];
     var scales = {
@@ -234,7 +319,7 @@
       if (layers.price) {
         datasets.push({
           type: "line",
-          label: "Price on NSE",
+          label: priceLabel(),
           data: align(pack.price),
           borderColor: PRICE_COLOR,
           borderWidth: 2,
@@ -300,13 +385,16 @@
     fetch(CHART_URL + encodeURIComponent(slug) + "-chart.json", { cache: "no-store" })
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(function (d) {
+        if (d.slug !== slug) throw new Error("Chart company mismatch");
         payload = d;
         global.__Z47_CHART = d;
+        syncPeriodTabs();
+        wireTabs();
         paintLegend();
         render();
       })
       .catch(function () {
-        console.warn("[z47] company chart feed missing for", slug);
+        chartStatus("Chart history is temporarily unavailable.");
       });
   }
   function boot() {
