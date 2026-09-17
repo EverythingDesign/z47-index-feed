@@ -3,6 +3,7 @@ import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from types import SimpleNamespace
 from datetime import datetime
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -51,7 +52,10 @@ class CompanyFixes(unittest.TestCase):
             i=d['pl']['periods'].index('Mar 2026')
             rows={r['label'].replace('+','').strip():r for r in d['pl']['rows']}
             for r in ex['rows']:
-                self.assertEqual(rows[r['label'].replace('+','').strip()]['values'][i],r['value'],(slug,r['label']))
+                actual=rows[r['label'].replace('+','').strip()]['values'][i]
+                # Screener can alternate the sign of rounded zero percentages.
+                normalize=lambda v: '0%' if v in ('0%','-0%','+0%') else v
+                self.assertEqual(normalize(actual),normalize(r['value']),(slug,r['label']))
 
     def test_failed_refresh_retains_history_and_original_timestamp(self):
         old={'generated_at':'2026-08-07','periods':{'Max':{'price':[['2026-08-07',127.76]]}}}
@@ -75,6 +79,15 @@ class CompanyFixes(unittest.TestCase):
         self.assertEqual(out['periods']['Max'],old['periods']['Max'])
         self.assertEqual(out['refresh_status'],'partial')
         self.assertEqual(new['periods']['Max']['price'],[])
+
+    def test_nasdaq_builder_keeps_unavailable_financial_schema(self):
+        provider=SimpleNamespace(nasdaq_live=lambda *a, **k: {'price':12.73}, usd_inr_rate=lambda:95)
+        with patch.dict(sys.modules, {'stockanalysis_nasdaq':provider}), patch.object(hero,'yahoo_fallback',return_value={}):
+            result=hero.scrape_nasdaq_hero({'ticker':'FRSH'},{'slug':'frsh'})
+        self.assertEqual(result['price'],12.73)
+        for key in ['pl','growth','shareholding']:
+            self.assertIn(key,result)
+            self.assertIsNone(result[key])
 
     def test_nasdaq_does_not_include_indian_financials(self):
         for slug in ['mmyt','frsh']:

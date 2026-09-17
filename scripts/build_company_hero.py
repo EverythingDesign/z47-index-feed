@@ -459,6 +459,8 @@ def scrape_nasdaq_hero(c: dict, row: dict) -> dict:
     """MMYT/FRSH: StockAnalysis live + Yahoo gap-fill. No Screener 404s."""
     ticker = c["ticker"]
     sa_url = f"https://stockanalysis.com/stocks/{ticker.lower()}/"
+    # Financial statements are unavailable from these quote providers.
+    row.update({"pl": None, "growth": None, "shareholding": None})
     row["screener_url"] = sa_url
     row["stockanalysis_url"] = sa_url
     try:
