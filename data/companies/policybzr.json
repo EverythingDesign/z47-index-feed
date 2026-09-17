@@ -4,22 +4,27 @@
   "name": "PolicyBazaar",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/POLICYBZR/",
-  "mcap_cr": 82230.0,
-  "price": 1777.0,
+  "mcap_cr": 81992.0,
+  "price": 1772.0,
   "high": 1964.0,
   "low": 1334.0,
   "pe": 110.0,
   "roce": 10.3,
   "roe": 9.75,
   "about": "PB Fintech Ltd, popularly known as Policy Bazar is  India’s largest online platform for insurance and lending products through its flagship brands - Policybazaar and Paisabazaar platform through which they provide  convenient access to insurance, credit and other financial products[1]",
+  "website": "http://www.pbfintech.in",
+  "website_label": "pbfintech.in",
   "bse_code": "543390",
   "bse_url": "https://www.bseindia.com/stock-share-price/pb-fintech-ltd/POLICYBZR/543390/",
   "nse_symbol": "POLICYBZR",
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=POLICYBZR",
   "screener_id": "1275091",
   "ratios_ok": 6,
-  "daily_pct": -1.03,
+  "daily_pct": -3.16,
   "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
     "consolidated": true,
@@ -268,7 +273,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -1.0
+            "value": 2.0
           }
         ]
       },
@@ -482,14 +487,7 @@
       ]
     }
   },
-  "generated_at": "2026-09-15T13:17:44.030180+05:30",
-  "generated_at_ist": "15 Sep 2026, 13:17 IST",
-  "source": "screener",
-  "website": "http://www.pbfintech.in",
-  "website_label": "pbfintech.in",
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
-  "source_observed_at": "2026-09-15T13:17:44.030180+05:30",
-  "review_snapshot": true
+  "generated_at": "2026-09-17T11:30:49.158418+05:30",
+  "generated_at_ist": "17 Sep 2026, 11:30 IST",
+  "source": "screener"
 }
