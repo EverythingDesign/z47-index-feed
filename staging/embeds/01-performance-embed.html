@@ -6,11 +6,9 @@
   Powers: performance chart · return summary · top movers · period tabs (1M/3M/6M/1Y/YTD/Since)
   Also fills [data-z47="chart-legend"] / .chart-embed-legend (Z47 logo + NIFTY 500)
 
-  Logic lives on GitHub (Webflow HtmlEmbed is 10k-char capped):
-    staging/js/01-performance.js
+  Logic: staging/js/01-performance.js via jsDelivr (raw GitHub scripts are blocked by browsers)
   Feed: https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json
-  NOTE: Do NOT load JS from raw.githubusercontent.com — browsers block it (ORB).
-        Use jsDelivr below. Bump ?v= after pushing JS changes.
+  Bump ?v= after pushing JS changes.
 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
@@ -32,4 +30,4 @@
     .z47-lgnd-txt{font-size:14px;}
   }
 </style>
-<script src="https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/01-performance.js?v=20260820d"></script>
+<script src="https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/01-performance.js?v=20260918-rentomojo"></script>

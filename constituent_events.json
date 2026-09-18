@@ -4,7 +4,7 @@
     "event_type": "swap",
     "removed": null,
     "added": "AWFIS",
-    "reason": "Awfis listing — WeWork India retroactively removed from index entirely (Option B clean erasure). Index ran on 46 constituents from 1 Jan 2024 to 29 May 2024, Awfis enters as the 47th member on its listing date.",
+    "reason": "Awfis listing \u2014 WeWork India retroactively removed from index entirely (Option B clean erasure). Index ran on 46 constituents from 1 Jan 2024 to 29 May 2024, Awfis enters as the 47th member on its listing date.",
     "divisor_before": 1.0,
     "divisor_after": 0.986423
   },
@@ -68,6 +68,18 @@
       "MILKYMIST"
     ],
     "reason": "August 2026 constituent rebalance. OUT: SBI Cards, MobiKwik, Unicommerce. IN: Turtlemint (Fintech), Shiprocket (B2B), Milky Mist (Consumer). Index level held continuous at the 20 Aug 2026 close (value-neutral divisor reset).",
+    "divisor_before": null,
+    "divisor_after": null
+  },
+  {
+    "effective_date": "2026-09-18",
+    "event_type": "swap",
+    "removed": "MEDIASSIST",
+    "added": "RENTOMOJO",
+    "reason": "Rentomojo replaces Medi Assist. Consumer / Consumer Tech. Value-neutral rebalance at the 2026-09-17 close; prior history preserved.",
+    "anchor_date": "2026-09-17",
+    "anchor_z47_float": 141.599965,
+    "anchor_z47_mcap": 139.274314,
     "divisor_before": null,
     "divisor_after": null
   }

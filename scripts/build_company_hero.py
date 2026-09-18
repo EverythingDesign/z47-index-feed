@@ -80,7 +80,7 @@ COMPANIES = [
     {"name": "Aye Finance", "ticker": "AYE", "exchange": "NSE"},
     {"name": "E2E Networks", "ticker": "E2E", "exchange": "NSE"},
     {"name": "Capillary Technologies", "ticker": "CAPILLARY", "exchange": "NSE"},
-    {"name": "Medi Assist", "ticker": "MEDIASSIST", "exchange": "NSE"},
+    {"name": "Rentomojo", "ticker": "RENTOMOJO", "exchange": "NSE"},
     {"name": "Kissht (OnEMI Technology)", "ticker": "KISSHT", "exchange": "NSE"},
     {"name": "Fractal Analytics", "ticker": "FRACTAL", "exchange": "NSE"},
     {"name": "Shiprocket", "ticker": "SHIPROCKET", "exchange": "NSE"},
@@ -625,6 +625,12 @@ def main() -> int:
         )
         time.sleep(args.sleep + random.random() * 0.4)
 
+    index = []
+    for company in COMPANIES:
+        saved = OUT_DIR / f"{company['ticker'].lower()}.json"
+        if saved.exists():
+            row = json.loads(saved.read_text())
+            index.append({key: row.get(key) for key in ("slug", "ticker", "name", "ratios_ok", "source")})
     (OUT_DIR / "_index.json").write_text(
         json.dumps(
             {
@@ -637,7 +643,7 @@ def main() -> int:
         )
         + "\n"
     )
-    print(f"Wrote {len(index)} files → {OUT_DIR} ({ok} with full ratios)")
+    print(f"Updated {len(companies)} company files; indexed {len(index)} active companies → {OUT_DIR} ({ok} with full ratios)")
     return 0
 
 

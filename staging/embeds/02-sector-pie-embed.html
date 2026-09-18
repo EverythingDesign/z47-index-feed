@@ -1,0 +1,39 @@
+<!--
+  Z47 — Tab 3: Sector Composition donut
+  File: staging/embeds/02-sector-pie-embed.html
+  Paste into the .sector-composition-canvas HtmlEmbed.
+
+  - Consumer STARTS at 12 o'clock
+  - Legends auto-placed left/right from each arc mid-angle + pinned to mid-height
+-->
+<style>
+  .z47-sec-wrap{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;font-family:inherit;}
+  .z47-sec-col{flex:1 1 0;display:flex;flex-direction:column;justify-content:space-around;align-self:stretch;min-height:340px;max-width:280px;opacity:0;transition:opacity .3s ease;position:relative;}
+  .z47-sec-wrap.z47-ready .z47-sec-col{opacity:1;}
+  .z47-sec-wrap.z47-legends-pinned .z47-sec-col{justify-content:flex-start;}
+  .z47-sec-donutbox{position:relative;flex:0 0 auto;width:min(55%,516px);}
+  .z47-leg{display:flex;align-items:center;gap:14px;}
+  .z47-leg-line{height:1px;flex:1 1 auto;min-width:26px;opacity:.75;}
+  .z47-leg-count{display:flex;align-items:center;gap:11px;}
+  .z47-sq{width:19px;height:19px;display:inline-block;border-radius:2px;flex:0 0 auto;}
+  .z47-leg-num{font-family:Kodemono,ui-monospace,Menlo,monospace;font-weight:600;font-size:21px;letter-spacing:.04em;white-space:nowrap;line-height:1;}
+  .z47-leg-name{font-size:14px;color:#374151;margin-top:6px;margin-left:30px;}
+  @media(max-width:720px){
+    .z47-sec-wrap{flex-wrap:wrap;gap:10px 34px;}
+    .z47-sec-donutbox{flex:0 0 100%;order:-1;width:min(86%,420px);margin:0 auto 28px;}
+    .z47-sec-col{flex:0 0 auto;align-self:auto;min-height:0;max-width:none;justify-content:flex-start;gap:18px;}
+    .z47-leg-line{display:none;}
+  }
+  @media(max-width:480px){
+    .z47-sec-wrap{gap:14px;}
+    .z47-sec-col{flex:0 0 100%;align-items:center;gap:14px;}
+    .z47-sec-donutbox{width:min(94%,340px);}
+  }
+</style>
+<div class="z47-sec-wrap">
+<div class="z47-sec-col z47-secL"></div>
+<div class="z47-sec-donutbox"><canvas id="z47-sector-donut"></canvas></div>
+<div class="z47-sec-col z47-secR"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/EverythingDesign/z47-index-feed@main/staging/js/02-sector-pie.js?v=20260918-rentomojo"></script>

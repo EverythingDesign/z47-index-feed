@@ -1,98 +1,250 @@
 
+/**
+ * Z47 Tab 3 — One-month price movement bars (all 47 constituents)
+ * Click a company name / bar → /z47-forty-seven/{slug}
+ */
 (function () {
   "use strict";
   var FEED_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
-  var GAIN = "#FF6800", LOSS = "#707070";            // gainers / laggards
-  var GAIN_FADE = "rgba(255,104,0,0.22)", LOSS_FADE = "rgba(112,112,112,0.22)"; // dimmed (focus state)
-  var NAME_FONT = '"NN Swinton", Georgia, serif';    // company-name labels (NN Swinton)
-  var NAME_SIZE = 18, NAME_COLOR = "#000";           // black labels
-  var NAME_DIM  = "rgba(0,0,0,0.30)";                // label dims when another row is focused
-  var ROW_H = 26;                                     // px per company row
-  var FALLBACK = [{"name":"CarTrade","ret_1m":49.65},{"name":"Amagi Media Labs","ret_1m":32.49},{"name":"PhysicsWallah","ret_1m":20.32},{"name":"Aye Finance","ret_1m":18.7},{"name":"TBO Tek","ret_1m":16.94},{"name":"Shadowfax","ret_1m":16.01},{"name":"Ixigo","ret_1m":15.88},{"name":"Nykaa","ret_1m":13.44},{"name":"MakeMyTrip","ret_1m":12.81},{"name":"Nazara Technologies","ret_1m":11.41},{"name":"Pine Labs","ret_1m":10.5},{"name":"Ather Energy","ret_1m":9.93},{"name":"BlackBuck","ret_1m":9.67},{"name":"RateGain","ret_1m":9.34},{"name":"Urban Company","ret_1m":8.79},{"name":"Five-Star Business Finance","ret_1m":8.36},{"name":"Honasa (Mamaearth)","ret_1m":7.58},{"name":"Groww","ret_1m":7.38},{"name":"Delhivery","ret_1m":7.24},{"name":"BlueStone","ret_1m":7.04},{"name":"Meesho","ret_1m":5.6},{"name":"Go Digit Insurance","ret_1m":5.37},{"name":"Eternal (Zomato)","ret_1m":4.49},{"name":"Aptus Value Housing","ret_1m":3.4},{"name":"Kissht (OnEMI Technology)","ret_1m":3.25},{"name":"Ola Electric","ret_1m":3.19},{"name":"MobiKwik","ret_1m":3.02},{"name":"Paytm","ret_1m":2.57},{"name":"Unicommerce","ret_1m":2.56},{"name":"MapmyIndia","ret_1m":-0.3},{"name":"Capillary Technologies","ret_1m":-0.47},{"name":"FirstCry","ret_1m":-0.6},{"name":"Wakefit","ret_1m":-0.79},{"name":"Medi Assist","ret_1m":-0.98},{"name":"Angel One","ret_1m":-1.36},{"name":"SBI Cards","ret_1m":-1.41},{"name":"Info Edge (Naukri)","ret_1m":-1.43},{"name":"PolicyBazaar","ret_1m":-1.88},{"name":"Affle (Affle 3i)","ret_1m":-2.16},{"name":"Lenskart","ret_1m":-2.46},{"name":"IndiaMart","ret_1m":-3.3},{"name":"E2E Networks","ret_1m":-3.82},{"name":"Swiggy","ret_1m":-4.4},{"name":"MedPlus Health","ret_1m":-6.98},{"name":"Awfis Space Solutions","ret_1m":-7.31},{"name":"Freshworks","ret_1m":-7.77},{"name":"Fractal Analytics","ret_1m":-9.42}];
-  function ready(cb){ if (window.Chart) return cb(); var s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"; s.onload=cb; (document.head||document.body).appendChild(s); }
-  function whenFonts(cb){
+  var GAIN = "#FF6800", LOSS = "#707070";
+  var GAIN_FADE = "rgba(255,104,0,0.22)", LOSS_FADE = "rgba(112,112,112,0.22)";
+  var NAME_FONT = '"NN Swinton", Georgia, serif';
+  var NAME_SIZE = 18, NAME_COLOR = "#000";
+  var NAME_DIM  = "rgba(0,0,0,0.30)";
+  var ROW_H = 26;
+
+  function ready(cb) {
+    if (window.Chart) return cb();
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+    s.onload = cb;
+    (document.head || document.body).appendChild(s);
+  }
+  function whenFonts(cb) {
     if (!(document.fonts && document.fonts.ready)) return cb();
-    // canvas text does NOT trigger @font-face loading â request NN Swinton explicitly, then draw
-    var p = document.fonts.load ? document.fonts.load('18px "NN Swinton"').catch(function (){}) : Promise.resolve();
-    p.then(function (){ return document.fonts.ready; }).then(cb);
+    var p = document.fonts.load ? document.fonts.load('18px "NN Swinton"').catch(function () {}) : Promise.resolve();
+    p.then(function () { return document.fonts.ready; }).then(cb);
   }
-  function fromFeed(d){
+  function detailUrl(c) {
+    return c.detail_url || ("/z47-forty-seven/" + (c.slug || (c.ticker || "").toLowerCase()));
+  }
+  function fromFeed(d) {
     return (d.constituents || []).slice()
-      .sort(function (a, b){ return (b.ret_1m || 0) - (a.ret_1m || 0); })
-      .map(function (c){ return { name:c.name, ret_1m:c.ret_1m }; });
+      .sort(function (a, b) {
+        if (a.ret_1m == null) return b.ret_1m == null ? 0 : 1;
+        if (b.ret_1m == null) return -1;
+        return b.ret_1m - a.ret_1m;
+      })
+      .map(function (c) {
+        return {
+          name: c.name,
+          ticker: c.ticker,
+          slug: c.slug,
+          ret_1m: c.ret_1m,
+          detail_url: detailUrl(c)
+        };
+      });
   }
-  // responsive sizing by viewport: { label size, row height, bar thickness, truncate-at (0=off), x-axis tick cap (0=auto) }
-  function metrics(){
+  function metrics() {
     var w = window.innerWidth || 1024;
-    if (w < 480) return { size: 11, rowH: 19, bar: 11, trunc: 16, xTicks: 6 };   // phones
-    if (w < 768) return { size: 13, rowH: 22, bar: 14, trunc: 24, xTicks: 8 };   // small tablets
-    return { size: NAME_SIZE, rowH: ROW_H, bar: 18, trunc: 0, xTicks: 0 };       // desktop (full)
+    if (w < 480) return { size: 11, rowH: 19, bar: 11, trunc: 16, xTicks: 6 };
+    if (w < 768) return { size: 13, rowH: 22, bar: 14, trunc: 24, xTicks: 8 };
+    return { size: NAME_SIZE, rowH: ROW_H, bar: 18, trunc: 0, xTicks: 0 };
   }
-  function draw(ROWS){
+  function draw(ROWS) {
     var cv = document.getElementById("z47-movement-bars");
     if (!cv || !window.Chart || !ROWS.length) return;
+    var prev = window.Chart.getChart ? window.Chart.getChart(cv) : null;
+    if (prev) prev.destroy();
+
     var view = metrics();
-    cv.parentNode.style.height = (ROWS.length * view.rowH + 56) + "px";   // fit all rows
-    var labels = ROWS.map(function (r){ return r.name; });
-    var vals   = ROWS.map(function (r){ return r.ret_1m; });
-    var hoverIndex = null;                              // currently focused row (null = none)
-    function barColors(){
-      return vals.map(function (v, i){
+    cv.parentNode.style.height = (ROWS.length * view.rowH + 56) + "px";
+    var labels = ROWS.map(function (r) { return r.name; });
+    var vals = ROWS.map(function (r) { return r.ret_1m; });
+    var hoverIndex = null;
+
+    function barColors() {
+      return vals.map(function (v, i) {
         var full = v >= 0 ? GAIN : LOSS, fade = v >= 0 ? GAIN_FADE : LOSS_FADE;
         return (hoverIndex == null || i === hoverIndex) ? full : fade;
       });
     }
-    function setFocus(idx){
-      if (idx === hoverIndex) return;                  // nothing changed -> skip redraw
+    function setFocus(idx) {
+      if (idx === hoverIndex) return;
       hoverIndex = idx;
       chart.data.datasets[0].backgroundColor = barColors();
-      chart.update("none");                            // re-tint bars + re-evaluate label font/colour
+      chart.update("none");
     }
+    function openCompany(idx) {
+      if (idx == null || idx < 0 || idx >= ROWS.length) return;
+      var href = ROWS[idx].detail_url;
+      if (!href) return;
+      window.location.href = href;
+    }
+
+    function tickLabel(idx) {
+      var s = labels[idx] || "";
+      return (view.trunc && s.length > view.trunc) ? s.slice(0, view.trunc - 1) + "\u2026" : s;
+    }
+    var underlinePlugin = {
+      id: "z47NameUnderline",
+      afterDraw: function (c) {
+        if (hoverIndex == null || hoverIndex < 0) return;
+        var yScale = c.scales.y;
+        if (!yScale) return;
+        var text = tickLabel(hoverIndex);
+        var ctx = c.ctx;
+        var weight = "700";
+        ctx.save();
+        ctx.font = weight + " " + view.size + "px " + NAME_FONT;
+        var tw = ctx.measureText(text).width;
+        var y = yScale.getPixelForTick(hoverIndex);
+        // y-axis labels sit just left of the plot, right-aligned
+        var xEnd = c.chartArea.left - 8;
+        var xStart = xEnd - tw;
+        ctx.strokeStyle = NAME_COLOR;
+        ctx.lineWidth = 1.25;
+        ctx.beginPath();
+        ctx.moveTo(xStart, y + view.size * 0.45);
+        ctx.lineTo(xEnd, y + view.size * 0.45);
+        ctx.stroke();
+        ctx.restore();
+      }
+    };
+    var unavailablePlugin = {
+        id: "z47-unavailable-returns",
+        afterDatasetsDraw: function (ch) {
+          var ctx = ch.ctx;
+          ctx.save(); ctx.fillStyle = "#707070";
+          ctx.font = view.size + "px sans-serif"; ctx.textBaseline = "middle";
+          ROWS.forEach(function (row, i) {
+            if (row.ret_1m == null) ctx.fillText("N/A", ch.scales.x.getPixelForValue(0) + 6, ch.scales.y.getPixelForValue(i));
+          });
+          ctx.restore();
+        }
+    };
+
     var chart = new Chart(cv, {
-      type:"bar",
-      data:{ labels:labels, datasets:[{ data:vals, backgroundColor:barColors(), borderRadius:2, maxBarThickness:view.bar }] },
-      options:{ indexAxis:"y", responsive:true, maintainAspectRatio:false,
-        // hover anywhere along a row â including the company name on the left â focuses that row
-        interaction:{ mode:"index", axis:"y", intersect:false },
-        onHover:function (e, els){
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: vals,
+          backgroundColor: barColors(),
+          borderRadius: 2,
+          maxBarThickness: view.bar
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", axis: "y", intersect: false },
+        onHover: function (e, els) {
           var idx = els.length ? els[0].index : null;
-          if (e && e.native && e.native.target) e.native.target.style.cursor = idx == null ? "default" : "pointer";
+          if (e && e.native && e.native.target) {
+            e.native.target.style.cursor = idx == null ? "default" : "pointer";
+          }
           setFocus(idx);
         },
-        plugins:{
-          legend:{ display:false },
-          tooltip:{ callbacks:{ title:function (it){ return it[0].label; }, label:function (it){ var v=it.parsed.x; return (v >= 0 ? "+" : "") + v.toFixed(1) + "%"; } } }
+        onClick: function (_e, els) {
+          if (els && els.length) openCompany(els[0].index);
         },
-        scales:{
-          x:{ position:"top", grid:{ color:"rgba(0,0,0,0.06)" }, ticks:{ maxTicksLimit:view.xTicks || undefined, callback:function (v){ return v + "%"; } } },
-          y:{ grid:{ display:false }, ticks:{ autoSkip:false,
-              // #1 hover effect: hovered name goes bold; #3 mobile: smaller font
-              font:function (ctx){ return { family:NAME_FONT, size:view.size, weight: ctx.index === hoverIndex ? "700" : "400" }; },
-              color:function (ctx){ return (hoverIndex == null || ctx.index === hoverIndex) ? NAME_COLOR : NAME_DIM; },
-              // #3 mobile: truncate very long names (full name still shown in the tooltip)
-              callback:function (val, idx){ var s = labels[idx] || ""; return (view.trunc && s.length > view.trunc) ? s.slice(0, view.trunc - 1) + "\u2026" : s; } }
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: function (it) { return it[0].label; },
+              label: function (it) {
+                var v = it.parsed.x;
+                if (v == null || !isFinite(v)) return "N/A — insufficient trading history";
+                return (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            position: "top",
+            grid: { color: "rgba(0,0,0,0.06)" },
+            ticks: {
+              maxTicksLimit: view.xTicks || undefined,
+              callback: function (v) { return v + "%"; }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: {
+              autoSkip: false,
+              font: function (ctx) {
+                return {
+                  family: NAME_FONT,
+                  size: view.size,
+                  weight: ctx.index === hoverIndex ? "700" : "400"
+                };
+              },
+              color: function (ctx) {
+                return (hoverIndex == null || ctx.index === hoverIndex) ? NAME_COLOR : NAME_DIM;
+              },
+              callback: function (val, idx) { return tickLabel(idx); }
+            }
+          }
         }
-      }
-    }
+      },
+      plugins: [underlinePlugin, unavailablePlugin]
     });
-    // #2 hover-out -> everything back to active (Chart.js doesn't always fire the empty hover on exit)
-    cv.addEventListener("mouseleave", function (){ setFocus(null); });
-    // #3 re-apply responsive metrics on resize / when the tab becomes visible
-    function applyResponsive(){
+
+    // Click on y-axis label area (left of bars) — Chart.js onClick often misses labels
+    cv.addEventListener("click", function (e) {
+      var rect = cv.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var area = chart.chartArea;
+      if (!area) return;
+      // Left of plot (name column) OR on a bar
+      var els = chart.getElementsAtEventForMode(e, "index", { axis: "y", intersect: false }, true);
+      if (els && els.length) {
+        openCompany(els[0].index);
+        return;
+      }
+      if (x < area.left) {
+        var scale = chart.scales.y;
+        if (!scale) return;
+        var idx = Math.round(scale.getValueForPixel(y));
+        openCompany(idx);
+      }
+    });
+
+    cv.addEventListener("mouseleave", function () { setFocus(null); });
+
+    function applyResponsive() {
       view = metrics();
       cv.parentNode.style.height = (ROWS.length * view.rowH + 56) + "px";
       chart.data.datasets[0].maxBarThickness = view.bar;
       chart.options.scales.x.ticks.maxTicksLimit = view.xTicks || undefined;
-      chart.resize(); chart.update("none");
+      chart.resize();
+      chart.update("none");
     }
     window.addEventListener("resize", applyResponsive);
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (es){ es.forEach(function (e){ if (e.isIntersecting) applyResponsive(); }); }).observe(cv);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) { if (en.isIntersecting) applyResponsive(); });
+      }).observe(cv);
+    }
   }
-  function start(){ ready(function(){ whenFonts(function(){
-    fetch(FEED_URL).then(function (r){ if (!r.ok) throw 0; return r.json(); })
-      .then(function (d){ draw(fromFeed(d)); })
-      .catch(function (){ draw(FALLBACK); });
-  }); }); }
+
+  function start() {
+    ready(function () {
+      whenFonts(function () {
+        fetch(FEED_URL, { cache: "no-store" })
+          .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+          .then(function (d) { draw(fromFeed(d)); })
+          .catch(function (err) {
+            console.warn("[z47] one-month bars feed failed", err);
+          });
+      });
+    });
+  }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();

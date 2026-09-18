@@ -181,10 +181,14 @@ def yahoo_price_series(ticker: str, exchange: str) -> dict:
 
 def load_company_meta() -> list:
     rows = []
+    from build_company_hero import COMPANIES
+    active_tickers = {c["ticker"] for c in COMPANIES}
     for p in sorted(OUT_DIR.glob("*.json")):
         if p.name.startswith("_") or p.name.endswith("-chart.json"):
             continue
         d = json.loads(p.read_text())
+        if d.get("ticker") not in active_tickers:
+            continue
         rows.append(
             {
                 "slug": d.get("slug") or p.stem,

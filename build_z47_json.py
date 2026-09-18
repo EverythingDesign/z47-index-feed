@@ -86,14 +86,28 @@ N500_BASE = 19418.40            # ^CRSLDX on 2024-01-02 (index = 100)
 N500_YF   = "^CRSLDX"
 BASE_DATE = "2024-01-02"        # rebase date (z47 = 100)
 
-# Divisor anchor — last authoritative point from the repo's z47_history.csv
-# (post-16-Jun-2026 rebalance, 47-name basket). z47_float == z47_mcap there.
-ANCHOR_DATE      = "2026-08-20"
-ANCHOR_Z47_FLOAT = 142.4588
-ANCHOR_Z47_MCAP  = 140.01
+# Value-neutral 2026-09-18 swap, anchored at the saved 2026-09-17 close.
+# Preserve all history before this anchor. See docs/rentomojo-rebalance-2026-09-18.md.
+ANCHOR_DATE      = "2026-09-17"
+ANCHOR_Z47_FLOAT = 141.599965
+ANCHOR_Z47_MCAP = 139.274314
+REBALANCE_PRICE_FILE = os.path.join(ROOT, "data", "rebalances", "2026-09-18.json")
 
-# ── Constituents (20 Aug 2026 rebalance) ─────────────────────────────────────
-# Counts: Consumer 20 | Fintech 12 | SaaS/AI 8 | B2B 7 = 47
+
+def load_rebalance_prices(tickers):
+    """Use frozen, dated closes so later provider revisions cannot move the divisor."""
+    with open(REBALANCE_PRICE_FILE) as source:
+        snapshot = json.load(source)
+    if snapshot["anchor_date"] != ANCHOR_DATE:
+        raise RuntimeError("Rebalance anchor date mismatch")
+    prices = {tk: row["price"] for tk, row in snapshot["prices"].items()}
+    missing = [tk for tk in tickers if not isinstance(prices.get(tk), (int, float)) or not 0 < prices[tk] < float("inf")]
+    if missing:
+        raise RuntimeError(f"Incomplete rebalance anchor/share data: {missing}; retaining last-good feed")
+    return prices
+
+# ── Constituents (18 Sep 2026 rebalance) ─────────────────────────────────────
+# Counts: Consumer 21 | Fintech 11 | SaaS/AI 8 | B2B 7 = 47
 COMPANIES = [
     {"num":1,  "name":"Eternal (Zomato)",            "ticker":"ETERNAL",    "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":74.43},
     {"num":2,  "name":"Groww",                        "ticker":"GROWW",      "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":9.71},
@@ -137,7 +151,7 @@ COMPANIES = [
     {"num":40, "name":"Aye Finance",                  "ticker":"AYE",        "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":30.02},
     {"num":41, "name":"E2E Networks",                 "ticker":"E2E",        "exchange":"NSE",    "sector":"SaaS / AI",                   "float_pct":41.93},
     {"num":42, "name":"Capillary Technologies",       "ticker":"CAPILLARY",  "exchange":"NSE",    "sector":"SaaS / AI",                   "float_pct":18.77},
-    {"num":43, "name":"Medi Assist",                  "ticker":"MEDIASSIST", "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":86.70},
+    {"num":43, "name":"Rentomojo", "ticker":"RENTOMOJO", "exchange":"NSE", "sector":"Consumer / Consumer Tech", "float_pct":11.18},
     {"num":44, "name":"Kissht (OnEMI Technology)",    "ticker":"KISSHT",     "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":28.31},
     {"num":45, "name":"Fractal Analytics",            "ticker":"FRACTAL",    "exchange":"NSE",    "sector":"SaaS / AI",                   "float_pct":20.25},
     {"num":46, "name":"Shiprocket",                   "ticker":"SHIPROCKET", "exchange":"NSE",    "sector":"B2B",                         "float_pct":94.78},
@@ -168,7 +182,7 @@ SHARE_DATA = {
     "BLUESTONE.NS":{"fs":84389676,"ts":233579000},   "SHADOWFAX.NS":{"fs":70147756,"ts":336397000},
     "WAKEFIT.NS":{"fs":112357162,"ts":561574000},    "AYE.NS":{"fs":73407776,"ts":244498877},
     "E2E.NS":{"fs":7615660,"ts":18164000},           "CAPILLARY.NS":{"fs":23272278,"ts":123972000},
-    "MEDIASSIST.NS":{"fs":64953781,"ts":74951000},   "KISSHT.NS":{"fs":47691894,"ts":168483022},
+    "RENTOMOJO.NS":{"fs":11635261,"ts":104115791},   "KISSHT.NS":{"fs":47691894,"ts":168483022},
     "FRACTAL.NS":{"fs":34815148,"ts":171965112},     "SHIPROCKET.NS":{"fs":690741270,"ts":728783784},
     "MILKYMIST.NS":{"fs":157740817,"ts":769842932},
 }
@@ -446,12 +460,15 @@ def close_on_or_after(series, target_iso):
 
 
 def ffill_on_calendar(series, calendar):
-    """Map a ticker's (date,close) series onto a master date calendar, forward-filled."""
-    m = dict(series)
+    """Carry the last available close forward, including closes before the calendar."""
+    ordered = iter(sorted(series))
+    point = next(ordered, None)
     out, last = {}, None
     for d in calendar:
-        if d in m:
-            last = m[d]
+        # Never backfill an IPO from a future price.
+        while point is not None and point[0] <= d:
+            last = point[1]
+            point = next(ordered, None)
         if last is not None:
             out[d] = last
     return out
@@ -735,9 +752,13 @@ def ret_from_series(price, series, today_iso, days=None, ytd=False):
         return None
     if ytd:
         ytd_cut = f"{today_iso[:4]}-01-01"
+        if series[0][0] > ytd_cut and (datetime.fromisoformat(series[0][0]) - datetime.fromisoformat(ytd_cut)).days > 7:
+            return None
         base = close_on_or_after(series, ytd_cut)
     else:
         cut = (datetime.fromisoformat(today_iso).date() - timedelta(days=days)).isoformat()
+        if series[0][0] > cut:
+            return None  # Newly listed: never label since-listing return as a full period.
         base = close_on_or_after(series, cut)
     if not base:
         return None
@@ -837,7 +858,13 @@ def main():
     if calendar and calendar[-1] < today_iso and n500_meta.get("regularMarketPrice"):
         calendar.append(today_iso)
 
-    ff = {tk: ffill_on_calendar(fetched.get(tk, ({}, []))[1], calendar) for tk in tickers}
+    anchor_prices = load_rebalance_prices(tickers)
+    calendar = sorted(set(calendar) | {ANCHOR_DATE})
+    ff = {}
+    for tk in tickers:
+        series = dict(fetched.get(tk, ({}, []))[1])
+        series[ANCHOR_DATE] = anchor_prices[tk]
+        ff[tk] = ffill_on_calendar(sorted(series.items()), calendar)
 
     # USD/INR up front — used to convert the USD names' (MMYT/FRSH) market cap to
     # INR for the table/sector weights, matching the source (which shows all caps in
@@ -902,6 +929,9 @@ def main():
     # ── Divisor from the fixed anchor (only tickers usable on the anchor) ───
     usable_f = [tk for tk in tickers if ff[tk].get(ANCHOR_DATE) and SHARE_DATA.get(tk, {}).get("fs")]
     usable_m = [tk for tk in tickers if ff[tk].get(ANCHOR_DATE) and SHARE_DATA.get(tk, {}).get("ts")]
+    if len(usable_f) != len(tickers) or len(usable_m) != len(tickers):
+        missing = sorted(set(tickers) - (set(usable_f) & set(usable_m)))
+        raise RuntimeError(f"Incomplete rebalance anchor/share data: {missing}; retaining last-good feed")
     DIV_F = sum(ff[tk][ANCHOR_DATE] * SHARE_DATA[tk]["fs"] for tk in usable_f) / ANCHOR_Z47_FLOAT
     DIV_M = sum(ff[tk][ANCHOR_DATE] * SHARE_DATA[tk]["ts"] for tk in usable_m) / ANCHOR_Z47_MCAP
 
@@ -1013,10 +1043,11 @@ def main():
             "market_open": market_open,
             "usdinr": usdinr,
             "base_date": BASE_DATE, "anchor_date": ANCHOR_DATE,
+            "rebalance_effective_date": "2026-09-18",
             "benchmark": "NIFTY 500",
             "constituents_priced": len(usable_f),
             "source": "Yahoo (index/history) + Screener/BSE (NSE live table) + StockAnalysis×FX (MMYT/FRSH)",
-            "data_source_of_truth": "github.com/GirishZ47/z47-dashboard (16 Jun 2026 rebalance)",
+            "data_source_of_truth": "GirishZ47/z47-dashboard methodology; 2026-09-18 Rentomojo/Medi Assist rebalance",
             "methodology_flags": [
                 "MMYT & FRSH summed in USD without FX conversion — existing model quirk.",
                 "NSE table price/day/mcap from Screener (BSE fallback); NASDAQ live = StockAnalysis×USD/INR (Yahoo fallback).",
