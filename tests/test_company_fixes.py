@@ -14,6 +14,10 @@ F=Path(__file__).parent/'fixtures'
 def source(name): return (F/(name+'-source.html')).read_text()
 
 class CompanyFixes(unittest.TestCase):
+    def test_google_search_is_not_a_company_website(self):
+        out=hero.parse_screener_hero('<a href="http://www.google.co.in/search?gfns=1&amp;q=Rentomojo"><i class="icon-link"></i></a>')
+        self.assertFalse(out.get('website'))
+
     def test_current_website_markup(self):
         self.assertEqual(hero.parse_screener_hero(source('wakefit'))['website'],'http://www.wakefit.co')
 

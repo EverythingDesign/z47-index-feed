@@ -179,8 +179,12 @@ def parse_screener_hero(html: str) -> dict:
     links = WebsiteParser()
     links.feed(html)
     if links.website:
-        out["website"] = unescape(links.website)
-        out["website_label"] = urllib.parse.urlparse(out["website"]).netloc.removeprefix("www.")
+        website = unescape(links.website)
+        parsed = urllib.parse.urlparse(website)
+        is_search_placeholder = bool(re.fullmatch(r"(?:www\.)?google\.[a-z.]+", parsed.hostname or "")) and parsed.path.rstrip("/") == "/search"
+        if not is_search_placeholder and parsed.scheme in ("http", "https"):
+            out["website"] = website
+            out["website_label"] = parsed.netloc.removeprefix("www.")
 
     bse_m = re.search(r"BSE:\s*(\d+)", html)
     bse_href = re.search(r'href="(https://www\.bseindia\.com/[^"]+)"', html)

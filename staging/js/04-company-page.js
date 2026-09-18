@@ -37,6 +37,48 @@
   function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
   function root() { return document.querySelector("[data-z47-company]") || document; }
   function co(k) { return $all('[data-z47-co="' + k + '"]', root()); }
+  var cmsFallbacks = { about: "", website: null };
+  function companyWebsite(value) {
+    value = String(value || "").trim();
+    if (!value || value.indexOf("{{wf") !== -1) return null;
+    if (!/^[a-z][a-z0-9+.-]*:/i.test(value)) value = "https://" + value;
+    try {
+      var url = new URL(value);
+      if (url.protocol !== "https:" && url.protocol !== "http:") return null;
+      // Screener's missing-website link is a Google search, not the company site.
+      if (/^(?:www\.)?google\.[a-z.]+$/i.test(url.hostname) && /^\/search\/?$/.test(url.pathname)) return null;
+      return url.href;
+    } catch (_) { return null; }
+  }
+  function websiteLabel(url) {
+    try { return new URL(url).hostname.replace(/^www\./i, ""); }
+    catch (_) { return ""; }
+  }
+  function readCmsFallbacks() {
+    var about = document.querySelector('[data-z47-cms="about"]');
+    var website = document.querySelector('[data-z47-cms="website"]');
+    var paragraphs = about ? $all("p,li,h1,h2,h3,h4,h5,h6", about) : [];
+    var text = paragraphs.length ? paragraphs.map(function (el) { return el.textContent.trim(); }).filter(Boolean).join("\n\n") : (about ? about.textContent.trim() : "");
+    if (text.indexOf("{{wf") !== -1) text = "";
+    return {about: text, website: companyWebsite(website && website.getAttribute("href"))};
+  }
+  function profileValues(h) {
+    h = h || {};
+    return {
+      about: String(h.about || "").trim() || cmsFallbacks.about,
+      website: companyWebsite(h.website) || cmsFallbacks.website
+    };
+  }
+  function paintProfile(h) {
+    h = h || {};
+    var profile = profileValues(h);
+    var sourceHidden = h.slug === "shiprocket" || h.hide_about;
+    var about = sourceHidden ? cmsFallbacks.about : profile.about;
+    $all(".screener-hero-about", root()).forEach(function (el) { el.style.display = about ? "" : "none"; });
+    co("about").forEach(function (el) { el.style.display = about ? "" : "none"; el.style.whiteSpace = "pre-line"; });
+    paintAbout(about);
+    setLink("link-web", profile.website, websiteLabel(profile.website));
+  }
   function setText(els, text) {
     els.forEach(function (el) { el.textContent = text; });
   }
@@ -120,7 +162,10 @@
         a.setAttribute("rel", "noopener noreferrer");
       }
       var tag = a.querySelector(".ai-tag-2, .uppercase, span, div");
-      if (tag) tag.textContent = label;
+      if (tag) {
+        tag.textContent = label;
+        if (coKey === "link-web") tag.style.textTransform = "none";
+      }
       else {
         var kids = a.childNodes;
         var i;
@@ -177,19 +222,7 @@
     ["price", "current_price", "mcap_cr", "high_low", "pe", "roce", "roe", "as_of"].forEach(function (key) { setText(co(key), "—"); });
     paintDaily(co("daily_pct"), h.daily_pct);
     var slug = (h.slug || "").toLowerCase();
-    if (slug === "shiprocket" || h.hide_about) {
-      $all(".screener-hero-about", root()).forEach(function (el) {
-        el.style.display = "none";
-      });
-      co("about").forEach(function (el) {
-        el.textContent = "";
-        el.style.display = "none";
-      });
-    } else if (h.about) {
-      paintAbout(h.about);
-    } else {
-      paintAbout("");
-    }
+    paintProfile(h);
     var peBlank = slug === "shiprocket" || slug === "turtlemint" || h.pe_blank;
     var peText = (!peBlank && h.pe != null && isFinite(h.pe)) ? fmtNum(h.pe, 1) : "—";
     setMetricByLabel(/^(Stock\s*)?P\/?E$/i, peText);
@@ -217,7 +250,6 @@
       paintDaily(co("daily_pct"), h.daily_pct);
     }
     if (h.generated_at_ist) setText(co("as_of"), h.generated_at_ist);
-    setLink("link-web", h.website, (h.website_label || h.website || "Website unavailable").toUpperCase());
     setLink("link-bse", h.bse_url, h.bse_code ? "BSE : " + h.bse_code : "");
     if (h.exchange === "NASDAQ") {
       setLink("link-bse", null, "");
@@ -456,7 +488,9 @@
     });
   }
   function start() {
+    cmsFallbacks = readCmsFallbacks();
     resetTemplate();
+    paintProfile(null);
     var key = resolveKey();
     if (!key.slug && !key.ticker) return;
     var slug = key.slug || key.ticker.toLowerCase();
