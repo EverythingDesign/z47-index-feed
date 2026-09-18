@@ -153,6 +153,7 @@
   function setLink(coKey, href, label) {
     co(coKey).forEach(function (a) {
       var valid = /^https?:\/\//i.test(href || "");
+      a.classList.remove("w-dyn-bind-empty");
       a.hidden = !valid;
       a.style.display = valid ? "" : "none";
       if (!valid) a.removeAttribute("href");
@@ -163,6 +164,7 @@
       }
       var tag = a.querySelector(".ai-tag-2, .uppercase, span, div");
       if (tag) {
+        tag.classList.remove("w-dyn-bind-empty");
         tag.textContent = label;
         if (coKey === "link-web") tag.style.textTransform = "none";
       }
@@ -181,6 +183,7 @@
   }
   function paintAbout(text) {
     co("about").forEach(function (el) {
+      el.classList.remove("w-dyn-bind-empty");
       el.textContent = text || "";
       el.classList.add("z47-about-collapsed");
       el.classList.remove("z47-about-open");
@@ -488,7 +491,8 @@
     });
   }
   function start() {
-    cmsFallbacks = readCmsFallbacks();
+    // Profile data comes from the GitHub company feed.
+    cmsFallbacks = {about: "", website: null};
     resetTemplate();
     paintProfile(null);
     var key = resolveKey();

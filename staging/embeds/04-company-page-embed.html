@@ -1,7 +1,4 @@
-<!-- Screener Companies Template: replace company-page-embed contents.
-The two fields below must remain bound to CMS About and Website Link. -->
-<div data-z47-cms="about" hidden>{{wf {"path":"about","type":"RichText"} }}</div>
-<a data-z47-cms="website" href="{{wf {&quot;path&quot;:&quot;website-link&quot;,&quot;type&quot;:&quot;Link&quot;} }}" hidden aria-hidden="true" tabindex="-1"></a>
+<!-- Screener Companies Template: profile data is stored in the GitHub company feed. -->
 <style>.ai-color-parrotgreen{color:#249200;}.ai-color-red{color:#D31F03;}</style>
 <script>
 window.__Z47_FEED_BASE = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/";
@@ -160,6 +157,7 @@ window.__Z47_FEED_BASE = "https://raw.githubusercontent.com/EverythingDesign/z47
   function setLink(coKey, href, label) {
     co(coKey).forEach(function (a) {
       var valid = /^https?:\/\//i.test(href || "");
+      a.classList.remove("w-dyn-bind-empty");
       a.hidden = !valid;
       a.style.display = valid ? "" : "none";
       if (!valid) a.removeAttribute("href");
@@ -170,6 +168,7 @@ window.__Z47_FEED_BASE = "https://raw.githubusercontent.com/EverythingDesign/z47
       }
       var tag = a.querySelector(".ai-tag-2, .uppercase, span, div");
       if (tag) {
+        tag.classList.remove("w-dyn-bind-empty");
         tag.textContent = label;
         if (coKey === "link-web") tag.style.textTransform = "none";
       }
@@ -188,6 +187,7 @@ window.__Z47_FEED_BASE = "https://raw.githubusercontent.com/EverythingDesign/z47
   }
   function paintAbout(text) {
     co("about").forEach(function (el) {
+      el.classList.remove("w-dyn-bind-empty");
       el.textContent = text || "";
       el.classList.add("z47-about-collapsed");
       el.classList.remove("z47-about-open");
@@ -495,7 +495,8 @@ window.__Z47_FEED_BASE = "https://raw.githubusercontent.com/EverythingDesign/z47
     });
   }
   function start() {
-    cmsFallbacks = readCmsFallbacks();
+    // Profile data comes from the GitHub company feed.
+    cmsFallbacks = {about: "", website: null};
     resetTemplate();
     paintProfile(null);
     var key = resolveKey();

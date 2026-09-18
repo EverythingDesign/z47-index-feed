@@ -590,6 +590,18 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
     return row
 
 
+def apply_profile_fallbacks(row):
+    """Retain approved profile copy when source fields are missing."""
+    profiles = json.loads((ROOT / "data/company_profile_fallbacks.json").read_text())
+    profile = profiles.get(row.get("slug"), {})
+    if not str(row.get("about") or "").strip() and profile.get("about"):
+        row["about"] = profile["about"]
+    if not row.get("website") and profile.get("website"):
+        row["website"] = profile["website"]
+        row["website_label"] = profile["website_label"]
+    return row
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="", help="Comma-separated tickers")
@@ -603,7 +615,7 @@ def main() -> int:
     index = []
     ok = 0
     for i, c in enumerate(companies, 1):
-        row = scrape_company(c)
+        row = apply_profile_fallbacks(scrape_company(c))
         path = OUT_DIR / f"{row['slug']}.json"
         path.write_text(json.dumps(row, indent=2, ensure_ascii=False) + "\n")
         index.append(
