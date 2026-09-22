@@ -4,11 +4,11 @@
   "name": "Rentomojo",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/RENTOMOJO/",
-  "mcap_cr": 5616.0,
-  "price": 540.0,
+  "mcap_cr": 5451.0,
+  "price": 525.0,
   "high": 582.0,
   "low": 480.0,
-  "pe": 51.7,
+  "pe": 50.2,
   "roce": 21.5,
   "roe": 45.4,
   "about": "Incorporated in April 2012, Rentomojo \nLtd is a D2C online rental and subscription platform for furniture and appliances in India[1]",
@@ -18,7 +18,7 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=RENTOMOJO",
   "screener_id": "1286155",
   "ratios_ok": 6,
-  "daily_pct": 5.27,
+  "daily_pct": -2.75,
   "screener_consolidated": false,
   "financial_basis": "standalone",
   "financial_source_url": "https://www.screener.in/company/RENTOMOJO/",
@@ -303,9 +303,122 @@
       }
     ]
   },
-  "shareholding": null,
-  "generated_at": "2026-09-21T22:10:28.961005+05:30",
-  "generated_at_ist": "21 Sep 2026, 22:10 IST",
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Sep 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "19.75%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "3.20%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "32.03%"
+          ]
+        },
+        {
+          "key": "government",
+          "label": "Government",
+          "values": [
+            "0.02%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "40.31%"
+          ]
+        },
+        {
+          "key": "others",
+          "label": "Others",
+          "values": [
+            "4.70%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "3,03,046"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Sep 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "19.75%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "3.20%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "32.03%"
+          ]
+        },
+        {
+          "key": "government",
+          "label": "Government",
+          "values": [
+            "0.02%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "40.31%"
+          ]
+        },
+        {
+          "key": "others",
+          "label": "Others",
+          "values": [
+            "4.70%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "3,03,046"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-09-22T20:44:35.502825+05:30",
+  "generated_at_ist": "22 Sep 2026, 20:44 IST",
   "source": "screener",
   "website": "https://www.rentomojo.com/",
   "website_label": "rentomojo.com"
