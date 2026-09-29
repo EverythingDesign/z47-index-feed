@@ -62,6 +62,32 @@
       .catch(function (e) { console.warn("[z47] live feed unavailable, using inline snapshot:", e.message); return Z47_FALLBACK; });
   }
   /* --------------------------- RENDER: SCALARS ---------------------------- */
+  function paintFreshness(d) {
+    var meta = d.meta || {};
+    var stamp = Date.parse(meta.generated_at || '');
+    var old = !isFinite(stamp) || Date.now() - stamp > 2 * 60 * 60 * 1000;
+    var label = old ? 'OLDER SNAPSHOT' : 'SNAPSHOT';
+    var date = meta.generated_at_ist || 'Time unavailable';
+    $all('.live-badge').forEach(function (badge) {
+      var text = badge.querySelector('.live');
+      if (text) { text.textContent = label; text.style.color = '#555'; }
+      badge.style.backgroundColor = '#eee';
+      badge.parentNode.parentNode.style.flexWrap = 'wrap';
+      badge.title = 'Data fetched ' + date + '. Scheduled updates; not streaming quotes.';
+      var dot = badge.querySelector('.live-badge__dot');
+      if (dot) { dot.style.animation = 'none'; dot.style.backgroundColor = old ? '#8A651A' : '#666'; }
+      var note = badge.parentNode.parentNode.querySelector('.z47-snapshot-note');
+      if (!note) {
+        note = document.createElement('div');
+        note.className = 'z47-snapshot-note';
+        note.style.cssText = 'font-size:12px;line-height:1.5;color:#666;width:100%;flex-basis:100%;margin-top:8px;';
+        badge.parentNode.parentNode.appendChild(note);
+      }
+      note.textContent = 'Data fetched ' + date + ' · Scheduled snapshots, not streaming quotes. Refresh this page for the latest available data.';
+    });
+    setText('status-prices', label + ' — ' + date);
+    setText('card-fx-time', date);
+  }
   function paintScalars(d) {
     // --- 4 value cards ---
     setText("card-z47-value", fmtNum(d.index.value, 1));
@@ -82,7 +108,7 @@
       console.warn("[z47] meta.usdinr missing — FX card & hero FX blank until build_z47_json.py emits it.");
     }
     // --- hero status strip + pill ---
-    setText("status-prices", (d.meta.market_open ? "LIVE — " : "") + (d.meta.generated_at_ist || ""));
+    paintFreshness(d);
     setText("status-fx", fx ? ("₹" + fx.value.toFixed(2)) : "₹—");
     setText("status-takeaway", monthLabel(d.meta.anchor_date).toUpperCase()); // swap to takeaway feed date when available
     if (d.index.returns[HERO_PILL_RANGE] != null)     setPct("hero-z47-pct",   d.index.returns[HERO_PILL_RANGE]);
@@ -451,6 +477,7 @@
     if (typeof Chart === "undefined") { console.error("[z47] Chart.js failed to load."); }
     loadFeed().then(function (d) {
       window.__Z47 = d; // handy for debugging in the console
+      setInterval(function () { paintFreshness(d); }, 60000);
       var lookup = companyLookup(d);
       paintScalars(d);
       paintMovers("gainers-list", d.movers.gainers, lookup);   // Tab 1 Performance: LIVE top-5

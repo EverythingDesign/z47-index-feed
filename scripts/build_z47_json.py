@@ -29,12 +29,9 @@ Methodology (mirrors calc_index_extension.py, the authoritative model):
     MMYT/FRSH from NASDAQ via Yahoo × USD/INR. Always ₹ millions (cr × 10).
     Optional env SCREENER_SESSIONID if Screener rate-limits the runner.
 
-KNOWN METHODOLOGY ITEM (replicated faithfully so the public number matches Z47's
-dashboard — not silently "fixed"):
-  - MMYT & FRSH are priced in USD but summed as if INR (no FX conversion) for the
-    index value; their *table* mcap is FX-converted to INR mn.
-Any constituent change requires re-deriving the divisor — update ANCHOR_* below
-to the last good point under the new basket, and re-sync COMPANIES / SHARE_DATA.
+CURRENCY METHODOLOGY:
+US holdings convert to INR from 29 Sep 2026. A frozen, value-neutral transition
+preserves previously published history; see docs/inr-transition-2026-09-29.md.
 
 Run:  python3 scripts/build_z47_json.py            # writes data/z47_index.json
       python3 scripts/build_z47_json.py --write-history   # also upserts today's row into data/z47_history.csv
@@ -48,6 +45,7 @@ import random
 import re
 import ssl
 import sys
+import math
 import time
 from collections import Counter
 import urllib.error
@@ -793,7 +791,14 @@ def main():
     tickers = [yf_ticker(c) for c in COMPANIES]
 
     # ── Fetch everything ───────────────────────────────────────────────────
-    symbols = tickers + [N500_YF]
+    from inr_transition import EFFECTIVE_DATE, ANCHOR_DATE as INR_ANCHOR, level as inr_level, validate as validate_inr
+    use_inr = today_iso >= EFFECTIVE_DATE
+    transition = None
+    if use_inr:
+        with open(os.path.join(ROOT, 'data', 'rebalances', '2026-09-29-inr.json')) as source:
+            transition = json.load(source)
+        validate_inr(transition, tickers)
+    symbols = tickers + [N500_YF] + (['INR=X'] if use_inr else [])
     fetched: dict[str, tuple] = {}
     errors: list[str] = []
 
@@ -866,12 +871,23 @@ def main():
         series[ANCHOR_DATE] = anchor_prices[tk]
         ff[tk] = ffill_on_calendar(sorted(series.items()), calendar)
 
-    # USD/INR up front — used to convert the USD names' (MMYT/FRSH) market cap to
-    # INR for the table/sector weights, matching the source (which shows all caps in
-    # INR mn). NOTE: this is display only; the index VALUE still sums USD prices as
-    # INR (the documented model quirk), untouched.
+    # Both index valuation and displayed market caps use INR from the transition.
     usdinr = fetch_usdinr()
-    usd_to_inr = (usdinr or {}).get("value") or 90.0   # fallback rate if FX fetch fails
+    usd_to_inr = (usdinr or {}).get("value")
+    if not usd_to_inr or not math.isfinite(usd_to_inr) or usd_to_inr <= 0:
+        raise RuntimeError('USD/INR unavailable; retaining last-good feed')
+    fx_by_day, preserved = {}, {}
+    if use_inr:
+        fx_series = dict(fetched.get('INR=X', ({}, []))[1])
+        if not fx_series:
+            raise RuntimeError('FX history unavailable; retaining last-good feed')
+        fx_series[INR_ANCHOR] = transition['usdinr']
+        fx_series[today_iso] = usd_to_inr
+        fx_by_day = ffill_on_calendar(sorted(fx_series.items()), calendar)
+        with open(HIST_CSV, newline='') as source:
+            preserved = {r['date']: r for r in csv.DictReader(source) if r['date'] <= INR_ANCHOR}
+        if INR_ANCHOR not in preserved:
+            raise RuntimeError('Missing published INR transition history')
 
     # Table live fields (₹ mn mcap + NSE price/day): Screener → BSE → NASDAQ(Yahoo×FX).
     table_live = fetch_table_live(usd_to_inr)
@@ -936,9 +952,17 @@ def main():
     DIV_M = sum(ff[tk][ANCHOR_DATE] * SHARE_DATA[tk]["ts"] for tk in usable_m) / ANCHOR_Z47_MCAP
 
     def z47_float_on(day):
+        if use_inr:
+            if day <= INR_ANCHOR:
+                return float(preserved[day]['z47_float'])
+            return inr_level(transition, {tk: ff[tk].get(day) for tk in tickers}, fx_by_day.get(day), 'fs')
         return sum(ff[tk][day] * SHARE_DATA[tk]["fs"] for tk in usable_f if day in ff[tk]) / DIV_F
 
     def z47_mcap_on(day):
+        if use_inr:
+            if day <= INR_ANCHOR:
+                return float(preserved[day]['z47_mcap'])
+            return inr_level(transition, {tk: ff[tk].get(day) for tk in tickers}, fx_by_day.get(day), 'ts')
         return sum(ff[tk][day] * SHARE_DATA[tk]["ts"] for tk in usable_m if day in ff[tk]) / DIV_M
 
     # ── History: keep published CSV up to anchor, recompute anchor+1..today ──
@@ -946,13 +970,13 @@ def main():
     with open(HIST_CSV, newline="") as f:
         for row in csv.DictReader(f):
             d = row["date"].split(" ")[0].split("T")[0]
-            if d <= ANCHOR_DATE:
+            if d <= (INR_ANCHOR if use_inr else ANCHOR_DATE):
                 hist_rows.append({"date": d,
                                   "z47": float(row["z47_float"]),
                                   "nifty500": float(row["n500_indexed"])})
     n500_map = ffill_on_calendar(n500_series, calendar)
     for day in calendar:
-        if day <= ANCHOR_DATE:
+        if day <= (INR_ANCHOR if use_inr else ANCHOR_DATE):
             continue
         n_abs = (n500_meta.get("regularMarketPrice") if day == today_iso else None) or n500_map.get(day)
         hist_rows.append({"date": day,
@@ -1041,6 +1065,10 @@ def main():
             "generated_at": now_ist.isoformat(timespec="seconds"),
             "generated_at_ist": now_ist.strftime("%d %b %Y, %H:%M IST"),
             "market_open": market_open,
+            "data_as_of": today_iso,
+            "pricing_mode": "scheduled_snapshot",
+            "index_currency": "INR" if use_inr else "legacy_mixed_currency",
+            "currency_methodology_effective_date": EFFECTIVE_DATE if use_inr else None,
             "usdinr": usdinr,
             "base_date": BASE_DATE, "anchor_date": ANCHOR_DATE,
             "rebalance_effective_date": "2026-09-18",
@@ -1049,7 +1077,7 @@ def main():
             "source": "Yahoo (index/history) + Screener/BSE (NSE live table) + StockAnalysis×FX (MMYT/FRSH)",
             "data_source_of_truth": "GirishZ47/z47-dashboard methodology; 2026-09-18 Rentomojo/Medi Assist rebalance",
             "methodology_flags": [
-                "MMYT & FRSH summed in USD without FX conversion — existing model quirk.",
+                "From 29 Sep 2026, US holdings are converted to INR using dated USD/INR; a value-neutral transition preserves earlier published history (legacy mixed-currency basis).",
                 "NSE table price/day/mcap from Screener (BSE fallback); NASDAQ live = StockAnalysis×USD/INR (Yahoo fallback).",
                 "Mkt Cap emitted as mcap_mn (₹ mn), mcap_cr (₹ cr), mcap_usd_mn (USD mn).",
             ],
