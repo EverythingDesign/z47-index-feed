@@ -64,9 +64,7 @@
   /* --------------------------- RENDER: SCALARS ---------------------------- */
   function paintFreshness(d) {
     var meta = d.meta || {};
-    var stamp = Date.parse(meta.generated_at || '');
-    var old = !isFinite(stamp) || Date.now() - stamp > 2 * 60 * 60 * 1000;
-    var label = old ? 'OLDER SNAPSHOT' : 'SNAPSHOT';
+    var label = 'LATEST UPDATE';
     var date = meta.generated_at_ist || 'Time unavailable';
     $all('.live-badge').forEach(function (badge) {
       var text = badge.querySelector('.live');
@@ -75,7 +73,7 @@
       badge.parentNode.parentNode.style.flexWrap = 'wrap';
       badge.title = 'Data fetched ' + date + '. Scheduled updates; not streaming quotes.';
       var dot = badge.querySelector('.live-badge__dot');
-      if (dot) { dot.style.animation = 'none'; dot.style.backgroundColor = old ? '#8A651A' : '#666'; }
+      if (dot) { dot.style.animation = 'none'; dot.style.backgroundColor = '#666'; }
       var note = badge.parentNode.parentNode.querySelector('.z47-snapshot-note');
       if (!note) {
         note = document.createElement('div');
