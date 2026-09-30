@@ -68,12 +68,15 @@
     var date = meta.generated_at_ist || 'Time unavailable';
     $all('.live-badge').forEach(function (badge) {
       var text = badge.querySelector('.live');
-      if (text) { text.textContent = label; text.style.color = '#555'; }
-      badge.style.backgroundColor = '#eee';
+      if (text) { text.textContent = label; text.style.color = '#A62B20'; }
+      badge.style.backgroundColor = '#FFF1EF';
+      badge.style.backgroundImage = 'radial-gradient(circle, rgba(166,43,32,.14) .55px, transparent .75px), radial-gradient(circle, rgba(166,43,32,.08) .55px, transparent .75px)';
+      badge.style.backgroundSize = '4px 4px';
+      badge.style.backgroundPosition = '0 0, 2px 2px';
       badge.parentNode.parentNode.style.flexWrap = 'wrap';
       badge.title = 'Data fetched ' + date + '. Scheduled updates; not streaming quotes.';
       var dot = badge.querySelector('.live-badge__dot');
-      if (dot) { dot.style.animation = 'none'; dot.style.backgroundColor = '#666'; }
+      if (dot) { dot.style.animation = 'none'; dot.style.backgroundColor = '#C8401B'; }
       var note = badge.parentNode.parentNode.querySelector('.z47-snapshot-note');
       if (!note) {
         note = document.createElement('div');
