@@ -21,7 +21,7 @@
     return (d.constituents || []).slice()
       .map(function (c) {
         return {
-          name:c.name, sector:c.sector, price:c.price, ccy:c.ccy,
+          name:c.name, ticker:c.ticker, sector:c.sector, price:c.price, ccy:c.ccy,
           daily_pct:c.daily_pct, ret_1m:c.ret_1m, mcap_mn:c.mcap_mn,
           mcap_cr:c.mcap_cr, mcap_usd_mn:c.mcap_usd_mn,
           slug:c.slug, detail_url:c.detail_url || ("/z47-forty-seven/" + (c.slug || (c.ticker || "").toLowerCase()))
@@ -56,13 +56,59 @@
     if (rowLen === cells.length && Object.keys(seen).length) rowLen = Object.keys(seen).length;
     return cells.slice(0, rowLen).map(function (n) { return n.cloneNode(true); });
   }
+  function searchKey(value) { return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+  function mountSearch(grid, rows) {
+    var section = grid.closest('.constituent-live-prices');
+    var header = section && section.querySelector('.index-header-wrap');
+    if (!header || header.querySelector('.z47-company-search')) return;
+    if (!document.getElementById('z47-search-css')) {
+      var style = document.createElement('style');
+      style.id = 'z47-search-css';
+      style.textContent = '.z47-search-header{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}.z47-search-header .index-heading{flex:1;min-width:0}.z47-company-search{display:flex;align-items:center;gap:12px;width:340px;max-width:100%;min-height:52px;padding:0 16px;background:#eee;border-radius:5px;box-sizing:border-box;flex-shrink:0}.z47-company-search:focus-within{outline:2px solid #ff6400;outline-offset:2px}.z47-company-search svg{width:18px;height:18px;flex-shrink:0;color:#555}.z47-company-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#222;font:inherit;font-size:16px;padding:14px 0;margin:0}.z47-company-search input::placeholder{color:#555;opacity:1}.z47-search-hidden{display:none!important}.z47-search-status{font-size:14px;color:#666;margin:12px 0 0}.z47-search-status:empty{display:none}@media(max-width:767px){.z47-search-header{align-items:stretch;gap:16px}.z47-search-header .index-heading{flex-basis:100%}.z47-company-search{width:100%}}';
+      document.head.appendChild(style);
+    }
+    header.classList.add('z47-search-header');
+    var label = document.createElement('label');
+    label.className = 'z47-company-search';
+    label.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg>';
+    var input = document.createElement('input');
+    input.type = 'search';
+    input.placeholder = 'Search companies';
+    input.setAttribute('aria-label', 'Search companies by name or ticker');
+    input.autocomplete = 'off';
+    label.appendChild(input);
+    header.appendChild(label);
+    var status = document.createElement('p');
+    status.className = 'z47-search-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    header.insertAdjacentElement('afterend', status);
+    function filter() {
+      var query = searchKey(input.value);
+      var count = 0;
+      rows.forEach(function (row) {
+        var match = !query || row.key.indexOf(query) !== -1;
+        if (match) count++;
+        row.cells.forEach(function (cell) { cell.classList.toggle('z47-search-hidden', !match); });
+      });
+      status.textContent = !query ? '' : count ? count + ' of ' + rows.length + ' companies' : 'No companies found. Try another name or ticker.';
+    }
+    input.addEventListener('input', filter);
+    input.addEventListener('search', filter);
+    input.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') { input.value = ''; filter(); }
+      if (event.key === 'Enter') event.preventDefault();
+    });
+  }
   function paint(ROWS) {
     byKey("constituents-body").forEach(function (grid) {
       var tpl = rowTemplate(grid);
       if (!tpl.length) return;
       // Do not touch grid-template-columns — leave Webflow layout alone.
       grid.innerHTML = "";
+      var searchableRows = [];
       ROWS.forEach(function (c) {
+        var row = { key: searchKey(c.name) + ' ' + searchKey(c.ticker) + ' ' + searchKey(c.slug), cells: [] };
         tpl.forEach(function (ct) {
           var cell = ct.cloneNode(true);
           var t = cell.querySelector("[data-z47-cell]");
@@ -94,8 +140,11 @@
             }
           }
           grid.appendChild(cell);
+          row.cells.push(cell);
         });
+        searchableRows.push(row);
       });
+      mountSearch(grid, searchableRows);
     });
   }
   function start() {
