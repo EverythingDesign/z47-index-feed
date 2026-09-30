@@ -60,14 +60,19 @@
   function mountSearch(grid, rows) {
     var section = grid.closest('.constituent-live-prices');
     var header = section && section.querySelector('.index-header-wrap');
-    if (!header || header.querySelector('.z47-company-search')) return;
+    if (!header || section.querySelector('.z47-company-search')) return;
     if (!document.getElementById('z47-search-css')) {
       var style = document.createElement('style');
       style.id = 'z47-search-css';
-      style.textContent = '.z47-search-header{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}.z47-search-header .index-heading{flex:1;min-width:0}.z47-company-search{display:flex;align-items:center;gap:12px;width:340px;max-width:100%;min-height:52px;padding:0 16px;background:#eee;border-radius:5px;box-sizing:border-box;flex-shrink:0}.z47-company-search:focus-within{outline:2px solid #ff6400;outline-offset:2px}.z47-company-search svg{width:18px;height:18px;flex-shrink:0;color:#555}.z47-company-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#222;font:inherit;font-size:16px;padding:14px 0;margin:0}.z47-company-search input::placeholder{color:#555;opacity:1}.z47-search-hidden{display:none!important}.z47-search-status{font-size:14px;color:#666;margin:12px 0 0}.z47-search-status:empty{display:none}@media(max-width:767px){.z47-search-header{align-items:stretch;gap:16px}.z47-search-header .index-heading{flex-basis:100%}.z47-company-search{width:100%}}';
+      style.textContent = '.z47-search-tools{box-sizing:border-box;width:100%;padding:20px 24px 16px;display:flex;justify-content:flex-end}.z47-search-group{width:280px;max-width:100%;min-width:0}.z47-company-search{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:0 14px;background:#eee;border-radius:5px;box-sizing:border-box;margin:0}.z47-company-search:focus-within{box-shadow:inset 0 0 0 1px #888}.z47-company-search svg{width:16px;height:16px;flex-shrink:0;color:#555}.z47-company-search input{width:100%;min-width:0;border:0;outline:none!important;box-shadow:none!important;background:transparent;color:#222;font:inherit;font-size:16px;padding:11px 0;margin:0;line-height:22px}.z47-company-search input::placeholder{color:#555;opacity:1}.z47-search-hidden{display:none!important}.z47-search-status{font-size:14px;line-height:1.5;color:#666;margin:6px 0 0}.z47-search-status:empty{display:none}@media(max-width:767px){.z47-search-tools{padding:16px 0}.z47-search-group{width:100%}}';
       document.head.appendChild(style);
     }
-    header.classList.add('z47-search-header');
+    var tools = document.createElement('div');
+    tools.className = 'z47-search-tools';
+    var group = document.createElement('div');
+    group.className = 'z47-search-group';
+    tools.appendChild(group);
+    header.insertAdjacentElement('afterend', tools);
     var label = document.createElement('label');
     label.className = 'z47-company-search';
     label.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg>';
@@ -77,12 +82,12 @@
     input.setAttribute('aria-label', 'Search companies by name or ticker');
     input.autocomplete = 'off';
     label.appendChild(input);
-    header.appendChild(label);
+    group.appendChild(label);
     var status = document.createElement('p');
     status.className = 'z47-search-status';
     status.setAttribute('role', 'status');
     status.setAttribute('aria-live', 'polite');
-    header.insertAdjacentElement('afterend', status);
+    group.appendChild(status);
     function filter() {
       var query = searchKey(input.value);
       var count = 0;
@@ -91,7 +96,7 @@
         if (match) count++;
         row.cells.forEach(function (cell) { cell.classList.toggle('z47-search-hidden', !match); });
       });
-      status.textContent = !query ? '' : count ? count + ' of ' + rows.length + ' companies' : 'No companies found. Try another name or ticker.';
+      status.textContent = !query ? '' : count ? count + ' out of ' + rows.length + ' companies' : 'No companies found. Try another name or ticker.';
     }
     input.addEventListener('input', filter);
     input.addEventListener('search', filter);
