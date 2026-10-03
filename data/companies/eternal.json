@@ -146,7 +146,7 @@
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%",
+          "-0%",
           "0%",
           "0%",
           "-4%",
@@ -185,13 +185,13 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       }
     ],
@@ -268,12 +268,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 44.0
+            "value": 46.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -5.0
+            "value": -4.0
           }
         ]
       },
@@ -517,7 +517,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-02T21:52:27.018148+05:30",
-  "generated_at_ist": "02 Oct 2026, 21:52 IST",
+  "generated_at": "2026-10-03T06:43:06.085680+05:30",
+  "generated_at_ist": "03 Oct 2026, 06:43 IST",
   "source": "screener"
 }
