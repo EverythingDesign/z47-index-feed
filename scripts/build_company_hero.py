@@ -653,7 +653,7 @@ def main() -> int:
             {
                 "generated_at_ist": datetime.now(IST).strftime("%d %b %Y, %H:%M IST"),
                 "count": len(index),
-                "ok": ok,
+                "ok": sum(1 for item in index if (item.get("ratios_ok") or 0) >= 4),
                 "companies": index,
             },
             indent=2,
