@@ -507,6 +507,8 @@
       wireToggle(d);
       wireTabResize();
       wirePeriodTabs(d);  // Thursday: 1M/3M/6M/YTD/1Y tabs → Z47/Nifty + movers
+      if (!chart) throw new Error("Performance chart unavailable");
+      loadingResult("ready");
     }).catch(function (error) {
       console.error("[z47] Performance unavailable:", error);
       loadingResult("error");
