@@ -84,12 +84,12 @@ N500_BASE = 19418.40            # ^CRSLDX on 2024-01-02 (index = 100)
 N500_YF   = "^CRSLDX"
 BASE_DATE = "2024-01-02"        # rebase date (z47 = 100)
 
-# Value-neutral 2026-09-18 swap, anchored at the saved 2026-09-17 close.
-# Preserve all history before this anchor. See docs/rentomojo-rebalance-2026-09-18.md.
-ANCHOR_DATE      = "2026-09-17"
-ANCHOR_Z47_FLOAT = 141.599965
-ANCHOR_Z47_MCAP = 139.274314
-REBALANCE_PRICE_FILE = os.path.join(ROOT, "data", "rebalances", "2026-09-18.json")
+# Value-neutral Moneyview swap effective 5 October; anchor at last published snapshot.
+# Preserve all history through this anchor. See docs/moneyview-rebalance-2026-10-05.md.
+ANCHOR_DATE      = "2026-10-02"
+ANCHOR_Z47_FLOAT = 132.696481
+ANCHOR_Z47_MCAP = 135.443643
+REBALANCE_PRICE_FILE = os.path.join(ROOT, "data", "rebalances", "2026-10-05.json")
 
 
 def load_rebalance_prices(tickers):
@@ -140,7 +140,7 @@ COMPANIES = [
     {"num":31, "name":"Ixigo",                        "ticker":"IXIGO",      "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":48.82},
     {"num":32, "name":"Honasa (Mamaearth)",           "ticker":"HONASA",     "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":41.66},
     {"num":33, "name":"Amagi Media Labs",             "ticker":"AMAGI",      "exchange":"NSE",    "sector":"SaaS / AI",                   "float_pct":20.99},
-    {"num":34, "name":"Awfis Space Solutions",        "ticker":"AWFIS",      "exchange":"NSE",    "sector":"B2B",                         "float_pct":41.80},
+    {"num":34, "name":"Moneyview",                    "ticker":"MONEYVIEW",  "exchange":"NSE",    "sector":"Fintech / Financial Services", "float_pct":8.10},
     {"num":35, "name":"RateGain",                     "ticker":"RATEGAIN",   "exchange":"NSE",    "sector":"SaaS / AI",                   "float_pct":51.41},
     {"num":36, "name":"MapmyIndia",                   "ticker":"MAPMYINDIA", "exchange":"NSE",    "sector":"SaaS / AI",                   "float_pct":31.56},
     {"num":37, "name":"BlueStone",                    "ticker":"BLUESTONE",  "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":36.14},
@@ -175,7 +175,7 @@ SHARE_DATA = {
     "AFFLE.NS":{"fs":61440869,"ts":140640627},       "BLACKBUCK.NS":{"fs":107199016,"ts":186936000},
     "NAZARA.NS":{"fs":232422504,"ts":380021000},     "MEDPLUS.NS":{"fs":69598668,"ts":116684000},
     "IXIGO.NS":{"fs":200525531,"ts":410784000},      "HONASA.NS":{"fs":147594519,"ts":354383000},
-    "AMAGI.NS":{"fs":45411824,"ts":216338944},       "AWFIS.NS":{"fs":46888435,"ts":68356000},
+    "AMAGI.NS":{"fs":45411824,"ts":216338944},       "MONEYVIEW.NS":{"fs":142535580,"ts":1760231268},
     "RATEGAIN.NS":{"fs":59586146,"ts":115918000},    "MAPMYINDIA.NS":{"fs":16997521,"ts":53879000},
     "BLUESTONE.NS":{"fs":84389676,"ts":233579000},   "SHADOWFAX.NS":{"fs":70147756,"ts":336397000},
     "WAKEFIT.NS":{"fs":112357162,"ts":561574000},    "AYE.NS":{"fs":73407776,"ts":244498877},
@@ -795,7 +795,7 @@ def main():
     use_inr = today_iso >= EFFECTIVE_DATE
     transition = None
     if use_inr:
-        with open(os.path.join(ROOT, 'data', 'rebalances', '2026-09-29-inr.json')) as source:
+        with open(os.path.join(ROOT, 'data', 'rebalances', '2026-10-05-inr.json')) as source:
             transition = json.load(source)
         validate_inr(transition, tickers)
     symbols = tickers + [N500_YF] + (['INR=X'] if use_inr else [])
@@ -1068,14 +1068,14 @@ def main():
             "data_as_of": today_iso,
             "pricing_mode": "scheduled_snapshot",
             "index_currency": "INR" if use_inr else "legacy_mixed_currency",
-            "currency_methodology_effective_date": EFFECTIVE_DATE if use_inr else None,
+            "currency_methodology_effective_date": "2026-09-29" if use_inr else None,
             "usdinr": usdinr,
             "base_date": BASE_DATE, "anchor_date": ANCHOR_DATE,
-            "rebalance_effective_date": "2026-09-18",
+            "rebalance_effective_date": "2026-10-05",
             "benchmark": "NIFTY 500",
             "constituents_priced": len(usable_f),
             "source": "Yahoo (index/history) + Screener/BSE (NSE live table) + StockAnalysis×FX (MMYT/FRSH)",
-            "data_source_of_truth": "GirishZ47/z47-dashboard methodology; 2026-09-18 Rentomojo/Medi Assist rebalance",
+            "data_source_of_truth": "GirishZ47/z47-dashboard methodology; 2026-10-05 Moneyview/Awfis rebalance",
             "methodology_flags": [
                 "From 29 Sep 2026, US holdings are converted to INR using dated USD/INR; a value-neutral transition preserves earlier published history (legacy mixed-currency basis).",
                 "NSE table price/day/mcap from Screener (BSE fallback); NASDAQ live = StockAnalysis×USD/INR (Yahoo fallback).",

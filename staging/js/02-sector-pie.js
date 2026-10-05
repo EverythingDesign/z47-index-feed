@@ -25,7 +25,7 @@
   // Legend sides are computed from each arc mid-angle (not hard-coded),
   // so leader lines always sit next to the matching segment.
   var ORDER = ["Consumer / Consumer Tech", "B2B", "SaaS / AI", "Fintech / Financial Services"];
-  var FALLBACK = [{"name":"Consumer / Consumer Tech","count":21,"weight_pct":63.1,"avg_ret_1m":3.68,"top_mover":{"name":"Milky Mist","ret_1m":39.94}},{"name":"Fintech / Financial Services","count":11,"weight_pct":24.9,"avg_ret_1m":4.3,"top_mover":{"name":"Pine Labs","ret_1m":18.64}},{"name":"SaaS / AI","count":8,"weight_pct":6.4,"avg_ret_1m":-5.97,"top_mover":{"name":"Amagi Media Labs","ret_1m":2.23}},{"name":"B2B","count":7,"weight_pct":5.6,"avg_ret_1m":-3.51,"top_mover":{"name":"TBO Tek","ret_1m":3.77}}];
+  var FALLBACK = [{"name":"Consumer / Consumer Tech","count":21,"weight_pct":64.2,"avg_ret_1m":-4.54,"top_mover":{"name":"Milky Mist","ret_1m":7.97}},{"name":"Fintech / Financial Services","count":12,"weight_pct":23.4,"avg_ret_1m":-10.6,"top_mover":{"name":"Kissht (OnEMI Technology)","ret_1m":17.51}},{"name":"SaaS / AI","count":8,"weight_pct":6.7,"avg_ret_1m":-1.47,"top_mover":{"name":"Capillary Technologies","ret_1m":14.18}},{"name":"B2B","count":6,"weight_pct":5.7,"avg_ret_1m":-1.99,"top_mover":{"name":"Shadowfax","ret_1m":15.11}}];
 
   function ready(cb) {
     if (window.Chart) return cb();

@@ -27,10 +27,13 @@ class RebalanceTests(unittest.TestCase):
         self.assertEqual(len(tickers), 47)
         self.assertEqual(tickers, {c['ticker'] for c in hero.COMPANIES})
         self.assertIn('RENTOMOJO', tickers)
+        self.assertIn('MONEYVIEW', tickers)
+        self.assertNotIn('AWFIS', tickers)
+        self.assertEqual(next(c['sector'] for c in feed.COMPANIES if c['ticker'] == 'MONEYVIEW'), 'Fintech / Financial Services')
         self.assertNotIn('MEDIASSIST', tickers)
         self.assertNotIn('UNIECOM', tickers)
         counts = {s: sum(c['sector'] == s for c in feed.COMPANIES) for s in feed.SECTOR_ORDER}
-        self.assertEqual(sorted(counts.values()), [7, 8, 11, 21])
+        self.assertEqual(sorted(counts.values()), [6, 8, 12, 21])
 
     def test_new_listing_has_no_full_period_return(self):
         series = [('2026-09-17', 500), ('2026-09-18', 525)]
@@ -66,7 +69,7 @@ class RebalanceTests(unittest.TestCase):
             @classmethod
             def now(cls, tz=None):
                 return cls(2026, 9, 18, 16, 15, tzinfo=tz)
-        with patch.multiple(feed, HIST_CSV=str(hist), OUT_JSON=str(out), REBALANCE_PRICE_FILE=str(anchor), USE_YF=True, datetime=Clock), \
+        with patch.multiple(feed, HIST_CSV=str(hist), OUT_JSON=str(out), REBALANCE_PRICE_FILE=str(anchor), ANCHOR_DATE="2026-09-17", ANCHOR_Z47_FLOAT=141.599965, ANCHOR_Z47_MCAP=139.274314, USE_YF=True, datetime=Clock), \
              patch.object(feed, 'fetch_all_yf', return_value=fetched), \
              patch.object(feed, 'fetch_table_live', return_value={}), \
              patch.object(feed, 'fetch_usdinr', return_value={'value': 90}), \

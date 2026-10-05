@@ -1,8 +1,8 @@
 """Value-neutral, prospective INR valuation from a frozen transition snapshot."""
 import math
 
-EFFECTIVE_DATE = '2026-09-29'
-ANCHOR_DATE = '2026-09-28'
+EFFECTIVE_DATE = '2026-10-05'
+ANCHOR_DATE = '2026-10-02'
 
 def positive(value):
     return isinstance(value, (int, float)) and math.isfinite(value) and value > 0

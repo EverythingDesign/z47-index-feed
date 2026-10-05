@@ -7,7 +7,7 @@ from inr_transition import level, validate
 
 class INRTests(unittest.TestCase):
     def setUp(self):
-        self.s = json.loads((ROOT/'data/rebalances/2026-09-29-inr.json').read_text())
+        self.s = json.loads((ROOT/'data/rebalances/2026-10-05-inr.json').read_text())
         self.prices = {k:h['price'] for k,h in self.s['holdings'].items()}
 
     def test_transition_does_not_change_published_level(self):
@@ -37,14 +37,14 @@ class INRTests(unittest.TestCase):
         import build_z47_json as feed
         with tempfile.TemporaryDirectory() as tmp:
             hist=pathlib.Path(tmp)/'history.csv';out=pathlib.Path(tmp)/'out.json'
-            original=''.join(line for line in (ROOT/'z47_history.csv').read_text().splitlines(keepends=True) if line.startswith('date,') or line[:10] <= '2026-09-28');hist.write_text(original)
+            original=''.join(line for line in (ROOT/'z47_history.csv').read_text().splitlines(keepends=True) if line.startswith('date,') or line[:10] <= '2026-10-02');hist.write_text(original)
             fx=self.s['usdinr']*1.1
-            fetched={k:({'regularMarketPrice':p,'_prev':p},[('2026-09-28',p),('2026-09-29',p)]) for k,p in self.prices.items()}
-            fetched[feed.N500_YF]=({'regularMarketPrice':22232.15},[('2026-09-28',22232.15),('2026-09-29',22232.15)])
-            fetched['INR=X']=({},[('2026-09-28',self.s['usdinr']),('2026-09-29',fx)])
+            fetched={k:({'regularMarketPrice':p,'_prev':p},[('2026-10-02',p),('2026-10-05',p)]) for k,p in self.prices.items()}
+            fetched[feed.N500_YF]=({'regularMarketPrice':22232.15},[('2026-10-02',22232.15),('2026-10-05',22232.15)])
+            fetched['INR=X']=({},[('2026-10-02',self.s['usdinr']),('2026-10-05',fx)])
             class Clock(datetime):
                 @classmethod
-                def now(cls,tz=None):return cls(2026,9,29,16,15,tzinfo=tz)
+                def now(cls,tz=None):return cls(2026,10,5,16,15,tzinfo=tz)
             with patch.multiple(feed,HIST_CSV=str(hist),OUT_JSON=str(out),USE_YF=True,datetime=Clock), patch.object(feed,'fetch_all_yf',return_value=fetched), patch.object(feed,'fetch_table_live',return_value={}), patch.object(feed,'fetch_usdinr',return_value={'value':fx}), patch.object(sys,'argv',['build_z47_json.py','--write-history']), contextlib.redirect_stdout(io.StringIO()),contextlib.redirect_stderr(io.StringIO()):
                 feed.main()
                 result=json.loads(out.read_text())

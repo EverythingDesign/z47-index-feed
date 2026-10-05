@@ -72,7 +72,6 @@ COMPANIES = [
     {"name": "Ixigo", "ticker": "IXIGO", "exchange": "NSE"},
     {"name": "Honasa (Mamaearth)", "ticker": "HONASA", "exchange": "NSE"},
     {"name": "Amagi Media Labs", "ticker": "AMAGI", "exchange": "NSE"},
-    {"name": "Awfis Space Solutions", "ticker": "AWFIS", "exchange": "NSE"},
     {"name": "RateGain", "ticker": "RATEGAIN", "exchange": "NSE"},
     {"name": "MapmyIndia", "ticker": "MAPMYINDIA", "exchange": "NSE"},
     {"name": "BlueStone", "ticker": "BLUESTONE", "exchange": "NSE"},
