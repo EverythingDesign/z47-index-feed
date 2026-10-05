@@ -79,18 +79,10 @@
       var text = badge.querySelector('.live');
       if (text) { text.textContent = label; text.style.removeProperty('color'); }
       badge.style.removeProperty('background-color');
-      badge.parentNode.parentNode.style.flexWrap = 'wrap';
       badge.title = 'Data fetched ' + date + '. Scheduled updates; not streaming quotes.';
       var dot = badge.querySelector('.live-badge__dot');
       if (dot) { dot.style.removeProperty('animation'); dot.style.removeProperty('background-color'); }
-      var note = badge.parentNode.parentNode.querySelector('.z47-snapshot-note');
-      if (!note) {
-        note = document.createElement('div');
-        note.className = 'z47-snapshot-note';
-        note.style.cssText = 'font-size:12px;line-height:1.5;color:#666;width:100%;flex-basis:100%;margin-top:8px;';
-        badge.parentNode.parentNode.appendChild(note);
-      }
-      note.textContent = 'Data fetched ' + date + ' · Scheduled snapshots, not streaming quotes. Refresh this page for the latest available data.';
+
     });
     setText('status-prices', label + ' — ' + date);
     setText('card-fx-time', date);
