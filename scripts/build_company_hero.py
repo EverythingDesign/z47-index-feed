@@ -36,8 +36,9 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 OUT_DIR = ROOT / "data" / "companies"
 
-# Keep in sync with build_z47_json.COMPANIES tickers
+# Includes published company pages; index membership is managed separately.
 COMPANIES = [
+    {"name": "Moneyview", "ticker": "MONEYVIEW", "exchange": "NSE"},
     {"name": "Eternal (Zomato)", "ticker": "ETERNAL", "exchange": "NSE"},
     {"name": "Groww", "ticker": "GROWW", "exchange": "NSE"},
     {"name": "Swiggy", "ticker": "SWIGGY", "exchange": "NSE"},
