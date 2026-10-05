@@ -56,11 +56,20 @@
   function returnsKey(range) { return range === "SINCE" ? "since_base" : range; }
   /* ------------------------------ LOADER ---------------------------------- */
   function loadFeed() {
-    if (!FEED_URL) return Promise.resolve(Z47_FALLBACK);
-    return fetch(FEED_URL, { cache: "no-store" })
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 15000);
+    return fetch(FEED_URL, { cache: "no-store", signal: controller.signal })
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-      .catch(function (e) { console.warn("[z47] live feed unavailable, using inline snapshot:", e.message); return Z47_FALLBACK; });
+      .then(function (d) {
+        if (!d || !d.index || !d.benchmark || !d.history || !d.history.length || !d.movers ||
+            !Number.isFinite(d.index.value)) throw new Error("Incomplete index feed");
+        return d;
+      }).finally(function () { clearTimeout(timeout); });
   }
+  function loadingResult(state) {
+    window.dispatchEvent(new CustomEvent("z47:performance-state", {detail: state}));
+  }
+
   /* --------------------------- RENDER: SCALARS ---------------------------- */
   function paintFreshness(d) {
     var meta = d.meta || {};
@@ -474,7 +483,7 @@
   }
 
   function init() {
-    if (typeof Chart === "undefined") { console.error("[z47] Chart.js failed to load."); }
+    if (typeof Chart === "undefined") { loadingResult("error"); return; }
     loadFeed().then(function (d) {
       window.__Z47 = d; // handy for debugging in the console
       setInterval(function () { paintFreshness(d); }, 60000);
@@ -498,6 +507,9 @@
       wireToggle(d);
       wireTabResize();
       wirePeriodTabs(d);  // Thursday: 1M/3M/6M/YTD/1Y tabs → Z47/Nifty + movers
+    }).catch(function (error) {
+      console.error("[z47] Performance unavailable:", error);
+      loadingResult("error");
     });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

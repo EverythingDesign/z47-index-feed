@@ -1,0 +1,47 @@
+<!-- Add to the Index page HEAD custom code, alongside existing code. -->
+<script>document.documentElement.dataset.z47Performance = 'loading';</script>
+<style>
+html:not([data-z47-performance="ready"]) .w-tab-pane[data-w-tab="Tab 1"] [data-z47="chart-z47-pct"],
+html:not([data-z47-performance="ready"]) .w-tab-pane[data-w-tab="Tab 1"] [data-z47="chart-nifty-pct"] { color:transparent!important; background:#f0ece6; border-radius:4px; }
+html:not([data-z47-performance="ready"]) .w-tab-pane[data-w-tab="Tab 1"] #z47-chart { visibility:hidden; }
+html:not([data-z47-performance="ready"]) .w-tab-pane[data-w-tab="Tab 1"] .live-badge { visibility:hidden; }
+.w-tab-pane[data-w-tab="Tab 1"] .chart-embedd { position:relative; min-height:240px; }
+.z47-performance-status { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:12px; background:#faf8f4; color:#554c44; font:14px/1.5 sans-serif; }
+.z47-performance-status[hidden] { display:none; }
+html[data-z47-performance="loading"] .z47-performance-status::before { content:""; width:18px; height:18px; border:2px solid #e8d8c6; border-top-color:#ff6800; border-radius:50%; animation:z47-loading-spin 1s linear infinite; }
+@keyframes z47-loading-spin { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .z47-performance-status::before { animation:none!important; } }
+</style>
+<script>
+(function () {
+  var state = 'loading', timer, host, status, values = [];
+  function paint() {
+    document.documentElement.dataset.z47Performance = state;
+    if (!host) return;
+    host.setAttribute('aria-busy', String(state === 'loading'));
+    status.hidden = state === 'ready';
+    status.textContent = state === 'error' ? 'Data temporarily unavailable. Please refresh to try again.' : 'Loading index performance…';
+    values.forEach(function (el) {
+      if (state === 'ready') el.removeAttribute('aria-hidden');
+      else el.setAttribute('aria-hidden', 'true');
+    });
+  }
+  window.addEventListener('z47:performance-state', function (event) {
+    if (event.detail !== 'ready' && event.detail !== 'error') return;
+    state = event.detail; clearTimeout(timer); paint();
+  });
+  timer = setTimeout(function () { state = 'error'; paint(); }, 20000);
+  function init() {
+    var pane = document.querySelector('.w-tab-pane[data-w-tab="Tab 1"]');
+    if (!pane) return;
+    host = pane.querySelector('.chart-embedd');
+    if (!host) return;
+    values = Array.from(pane.querySelectorAll('[data-z47="chart-z47-pct"], [data-z47="chart-nifty-pct"]'));
+    status = document.createElement('div'); status.className = 'z47-performance-status';
+    status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
+    host.appendChild(status); paint();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
