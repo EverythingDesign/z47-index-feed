@@ -29,3 +29,5 @@ Verified in isolated Chrome with the published four-month markup: switching, ani
 Replace the previous complete Insights snippet in Webflow and publish. The styling update is not installed by a GitHub push.
 
 The newest available month is labeled `September 2026 - Latest` (month/year update automatically). Older options retain their month/year only. The desktop control is widened to fit the label.
+
+Removed the dark offset focus outline from the month selector. Focus uses an orange border; keyboard focus adds a darker orange border and cream highlight.
