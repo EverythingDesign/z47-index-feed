@@ -1,15 +1,59 @@
-<!-- Add once to Index Page Settings > Before </body>, after existing code. -->
+<!-- Replace the existing Insights month-switcher snippet; keep other page scripts. -->
 <style>
 .insights-tab-wrap [data-insights-month][hidden],
 .insights-tab-wrap .tab-pane-wrapper[hidden] { display: none !important; }
+
 .insights-tab-dropdown .z47-insights-month-select {
-  font: inherit; color: inherit; background-color: transparent;
-  border: 1px solid currentColor; border-radius: 4px;
-  padding: 10px 36px 10px 12px; min-height: 44px;
-  max-width: 100%; cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #333333;
+  background-color: #fff7ec;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ff6b00' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 20px;
+  border: 1px solid #e8d6c5;
+  border-left: 3px solid #ff6b00;
+  border-radius: 2px;
+  padding: 13px 52px 13px 17px;
+  width: 248px;
+  max-width: 100%;
+  min-height: 50px;
+  margin: 0;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.insights-tab-dropdown .z47-insights-month-select:hover {
+  background-color: #ffeedc;
+  border-color: #ff6b00;
 }
 .insights-tab-dropdown .z47-insights-month-select:focus-visible {
-  outline: 2px solid currentColor; outline-offset: 3px;
+  outline: 2px solid #333333;
+  outline-offset: 3px;
+  border-color: #ff6b00;
+}
+.insights-tab-dropdown .z47-insights-month-select option {
+  background: #ffffff;
+  color: #333333;
+}
+@media (max-width: 479px) {
+  .insights-tab-dropdown .z47-insights-month-select { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .insights-tab-dropdown .z47-insights-month-select { transition: none; }
+}
+@media (forced-colors: active) {
+  .insights-tab-dropdown .z47-insights-month-select {
+    appearance: auto;
+    -webkit-appearance: auto;
+    background-image: none;
+    border: 1px solid ButtonText;
+  }
 }
 </style>
 <script>
@@ -65,15 +109,29 @@
         option.textContent = months[Number(entry.key.slice(5)) - 1] + ' ' + entry.key.slice(0, 4);
         select.appendChild(option);
       });
-      function show(key) {
+      var currentKey;
+      var transition;
+      function show(key, animate) {
+        if (key === currentKey) return;
+        if (transition) { transition.cancel(); transition = null; }
+        var selected;
         entries.forEach(function (entry) {
           var active = entry.key === key;
           entry.panel.classList.toggle('hide', !active);
           entry.panel.hidden = !active;
           entry.panel.setAttribute('aria-hidden', String(!active));
+          if (active) selected = entry.panel;
         });
+        currentKey = key;
+        var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (animate && selected && selected.animate && !reduced) {
+          transition = selected.animate([
+            { opacity: 0, transform: 'translateY(8px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+        }
       }
-      select.addEventListener('change', function () { show(select.value); });
+      select.addEventListener('change', function () { show(select.value, true); });
       select.value = entries[0].key;
       show(select.value);
       slot.appendChild(select);

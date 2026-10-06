@@ -50,15 +50,29 @@
         option.textContent = months[Number(entry.key.slice(5)) - 1] + ' ' + entry.key.slice(0, 4);
         select.appendChild(option);
       });
-      function show(key) {
+      var currentKey;
+      var transition;
+      function show(key, animate) {
+        if (key === currentKey) return;
+        if (transition) { transition.cancel(); transition = null; }
+        var selected;
         entries.forEach(function (entry) {
           var active = entry.key === key;
           entry.panel.classList.toggle('hide', !active);
           entry.panel.hidden = !active;
           entry.panel.setAttribute('aria-hidden', String(!active));
+          if (active) selected = entry.panel;
         });
+        currentKey = key;
+        var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (animate && selected && selected.animate && !reduced) {
+          transition = selected.animate([
+            { opacity: 0, transform: 'translateY(8px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+        }
       }
-      select.addEventListener('change', function () { show(select.value); });
+      select.addEventListener('change', function () { show(select.value, true); });
       select.value = entries[0].key;
       show(select.value);
       slot.appendChild(select);

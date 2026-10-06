@@ -17,3 +17,13 @@ Webflow installation was not performed: the connector rejected `get_page_script`
 ## Nested sections correction
 
 The later published page includes September, August, July, and June inside one shared `.tab-pane-wrapper`. Explicit `[data-insights-month]` sections now take precedence over the legacy wrapper fallback. Verified switching each of the four months against that published markup. Replace the previously installed snippet; do not append a second copy.
+
+## Dropdown styling and motion
+
+The control uses a cream background, orange left edge and SVG chevron, hover/focus states, and full width on small screens. The options popup remains the native browser/OS picker. CSS source is `staging/css/09-insights-months.css`; both CSS and JS are included in the install embed.
+
+On selection, the newly visible month fades in and moves upward 8px over 260ms. Initial load has no animation. A new selection cancels the previous animation; reduced-motion preferences disable it. No delayed callbacks can restore a stale month.
+
+Verified in isolated Chrome with the published four-month markup: switching, animation, rapid changes, reduced motion, accessible name/focus, and mobile fit. Desktop and mobile screenshots were visually inspected. Native popup keyboard selection could not be automated in headless macOS Chrome; the standard native select behavior is retained. Run `NODE_PATH=/tmp/z47-insights-test/node_modules node tests/test_insights_months_browser.cjs` with Playwright and Chrome installed.
+
+Replace the previous complete Insights snippet in Webflow and publish. The styling update is not installed by a GitHub push.
