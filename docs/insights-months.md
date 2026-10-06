@@ -22,9 +22,9 @@ The later published page includes September, August, July, and June inside one s
 
 The control uses a cream background, orange left edge and SVG chevron, hover/focus states, and full width on small screens. The options popup remains the native browser/OS picker. CSS source is `staging/css/09-insights-months.css`; both CSS and JS are included in the install embed.
 
-On selection, the newly visible month fades in and moves upward 8px over 260ms. Initial load has no animation. A new selection cancels the previous animation; reduced-motion preferences disable it. No delayed callbacks can restore a stale month.
+On selection, the current month fades out and moves upward 6px over 160ms. Then the selected month fades in from 10px below over 380ms, while the shared monthly container smoothly adjusts its height. Initial load has no animation. New selections cancel the prior sequence, and revision checks prevent stale content from returning. Reduced-motion preferences disable the sequence. Temporary height animations and overflow styles are cleaned up after completion or interruption.
 
-Verified in isolated Chrome with the published four-month markup: switching, animation, rapid changes, reduced motion, accessible name/focus, and mobile fit. Desktop and mobile screenshots were visually inspected. Native popup keyboard selection could not be automated in headless macOS Chrome; the standard native select behavior is retained. Run `NODE_PATH=/tmp/z47-insights-test/node_modules node tests/test_insights_months_browser.cjs` with Playwright and Chrome installed.
+Verified in isolated Chrome with the published four-month markup: switching, outgoing/incoming animation, container height animation and cleanup, rapid changes, reduced motion, accessible name/focus, and mobile fit. Desktop and mobile screenshots were visually inspected. Native popup keyboard selection could not be automated in headless macOS Chrome; the standard native select behavior is retained. Run `NODE_PATH=/tmp/z47-insights-test/node_modules node tests/test_insights_months_browser.cjs` with Playwright and Chrome installed.
 
 Replace the previous complete Insights snippet in Webflow and publish. The styling update is not installed by a GitHub push.
 
