@@ -16,6 +16,80 @@
     return match[2] + '-' + String(index + 1).padStart(2, '0');
   }
 
+  function setupToolbar(wrap, slot, entries) {
+    const sourceHeaders = entries.map(entry => entry.panel.querySelector('.index-header-wrap'));
+    if (sourceHeaders.some(header => !header || !header.querySelector('.index-heading'))) return null;
+    const toolbar = sourceHeaders[0].cloneNode(false);
+    toolbar.removeAttribute('id');
+    toolbar.removeAttribute('data-w-id');
+    toolbar.classList.add('insights_toolbar_wrap');
+    const title = sourceHeaders[0].querySelector('.index-heading').cloneNode(true);
+    title.removeAttribute('id');
+    title.classList.add('insights_toolbar_title');
+    toolbar.appendChild(title);
+    wrap.insertBefore(toolbar, slot);
+    toolbar.appendChild(slot);
+    slot.classList.add('insights_toolbar_slot');
+    entries.forEach((entry, index) => {
+      entry.title = sourceHeaders[index].querySelector('.index-heading').textContent;
+      sourceHeaders[index].classList.add('insights_month_header');
+    });
+    const tabs = wrap.closest('.index-tabs');
+    const tabWrap = wrap.closest('.index-tabs-wrap');
+    const content = wrap.closest('.index-tabs-content');
+    const pane = wrap.closest('.w-tab-pane');
+    const menu = tabs && tabs.querySelector('.index-tabs-menu');
+    const mobileTabs = tabWrap && tabWrap.querySelector('.dd_tabs');
+    // Site navigation is outside the Insights component; only its occupied height is read.
+    const nav = document.querySelector('.nav_component');
+    const surface = getComputedStyle(document.body).backgroundColor;
+    wrap.style.setProperty('--insights-surface', surface);
+    if (menu) menu.classList.add('insights_sticky_tabs');
+    if (mobileTabs) mobileTabs.classList.add('insights_sticky_mobile');
+    if (content) content.classList.add('insights_sticky_content');
+    let frame = 0;
+    function measure() {
+      frame = 0;
+      const active = !pane || pane.classList.contains('w--tab-active');
+      if (content) content.classList.toggle('is-active', active);
+      let navHeight = 0;
+      if (nav && ['sticky', 'fixed'].includes(getComputedStyle(nav).position)) {
+        const bounds = nav.getBoundingClientRect();
+        if (bounds.top <= 1) navHeight = Math.max(0, bounds.bottom);
+      }
+      const mobile = mobileTabs && getComputedStyle(mobileTabs).display !== 'none';
+      const tabHeight = mobile ? mobileTabs.getBoundingClientRect().height :
+        (menu ? menu.getBoundingClientRect().height : 0);
+      const rootSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      const rem = value => value / rootSize + 'rem';
+      wrap.style.setProperty('--insights-toolbar-top', rem(navHeight + tabHeight));
+      if (menu) {
+        menu.style.setProperty('--insights-tabs-top', rem(navHeight + (mobile ? tabHeight : 0)));
+      }
+      if (mobileTabs) mobileTabs.style.setProperty('--insights-nav-top', rem(navHeight));
+      // The site's mobile menu is visually collapsed but still occupies layout height.
+      // Recalculate its existing compensation on resize as well as first load.
+      if (content && menu) {
+        content.style.setProperty('--insights-content-offset', mobile ?
+          rem(-menu.getBoundingClientRect().height + 24) : '0rem');
+      }
+    }
+    function schedule() {
+      if (!frame) frame = requestAnimationFrame(measure);
+    }
+    if (window.ResizeObserver) {
+      const observer = new ResizeObserver(schedule);
+      [menu, mobileTabs, nav, toolbar].filter(Boolean).forEach(element => observer.observe(element));
+    }
+    if (pane && window.MutationObserver) {
+      new MutationObserver(schedule).observe(pane, { attributes: true, attributeFilter: ['class'] });
+    }
+    window.addEventListener('resize', schedule, { passive: true });
+    window.addEventListener('scroll', schedule, { passive: true });
+    measure();
+    return function (entry) { title.textContent = entry.title; };
+  }
+
   function init() {
     document.querySelectorAll('.insights-tab-wrap').forEach(function (wrap) {
       if (wrap.dataset.insightsReady) return;
@@ -50,6 +124,8 @@
         option.textContent = months[Number(entry.key.slice(5)) - 1] + ' ' + entry.key.slice(0, 4) + (index === 0 ? ' - Latest' : '');
         select.appendChild(option);
       });
+      const updateToolbar = setupToolbar(wrap, slot, entries);
+      if (updateToolbar) select.classList.add('insights_toolbar_select');
       var currentKey;
       var transitions = [];
       var revision = 0;
@@ -70,6 +146,7 @@
           entry.panel.setAttribute('aria-hidden', String(!active));
         });
         currentKey = key;
+        if (updateToolbar) updateToolbar(entries.find(function (entry) { return entry.key === key; }));
       }
       async function show(key, animate) {
         var request = ++revision;

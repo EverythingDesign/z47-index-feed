@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const code = fs.readFileSync('staging/js/09-insights-months.js', 'utf8');
 const panel = (month, heading = '', cls = '') => `<section class="tab-pane-wrapper ${cls}" ${month === null ? '' : `data-insights-month="${month}"`}><h4>${heading}</h4><p>Fixed monthly data</p></section>`;
 function run(content) {
-  const dom = new JSDOM(content, { runScripts: 'outside-only' });
+  const dom = new JSDOM(content, { runScripts: 'outside-only', pretendToBeVisual: true });
   dom.window.eval(code);
   dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
   return dom;

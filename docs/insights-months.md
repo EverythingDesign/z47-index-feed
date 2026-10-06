@@ -31,3 +31,13 @@ Replace the previous complete Insights snippet in Webflow and publish. The styli
 The newest available month is labeled `September 2026 - Latest` (month/year update automatically). Older options retain their month/year only. The desktop control is widened to fit the label.
 
 Removed the dark offset focus outline from the month selector. Focus uses an orange border; keyboard focus adds a darker orange border and cream highlight.
+
+## Shared sticky heading and month selector
+
+The snippet builds one toolbar from the existing monthly heading markup and moves the existing dropdown slot into it. The current month title appears on the left, with the selector aligned to the right container edge. At narrow widths they stack, with a full-width selector. Original monthly headers remain in the document but are hidden once the shared toolbar is successfully created. Month content and attributes remain unchanged in Webflow.
+
+The toolbar stays outside the animated monthly container. It updates when the selected month becomes visible and sticks immediately beneath the existing desktop tab navigation or mobile tab dropdown. It stops at the end of the Insights wrapper and disappears when another top-level tab is selected. The site's main navigation is not changed; any fixed/sticky occupied navigation height is included in offsets.
+
+ResizeObserver and scroll/resize measurements maintain the offsets. The Webflow tab content's overflow is visible only while Insights is active, allowing native sticky positioning. The existing mobile tab menu's negative layout compensation is recalculated on resize to avoid a blank gap, and both tab controls receive appropriate stacking order. No new attributes or manual Designer restructuring is required.
+
+Browser validation against staging covered desktop right alignment, sticky stacking, switching months while scrolled, outgoing/incoming animations, height cleanup, end-of-section release, responsive fit, a fresh mobile load, the mobile tab menu, and switching to Constituents. Preview screenshots show candidate code in an isolated browser, not published changes. Replace the previous complete snippet in Page Settings > Before </body> and publish staging to install it.
