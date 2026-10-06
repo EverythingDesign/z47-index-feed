@@ -39,11 +39,39 @@ for (const content of [panel('2026-13'), panel('2026-09') + panel('2026-09')]) {
 const years = run(wrap(panel('2026-12') + panel('2027-01', '', 'hide')));
 assert.equal(years.window.document.querySelector('select').value, '2027-01');
 years.window.close();
+const nested = run(wrap('<div class="tab-pane-wrapper">' +
+  ['2026-09', '2026-08', '2026-07', '2026-06'].map((key, i) =>
+    `<div class="tab-pane-wrap monthly-insights ${i ? 'hide' : ''}" data-insights-month="${key}">${key}</div>`).join('') + '</div>'));
+const nd = nested.window.document;
+const ns = nd.querySelector('select');
+assert.equal(ns.options.length, 4);
+for (const option of ns.options) {
+  ns.value = option.value;
+  ns.dispatchEvent(new nested.window.Event('change'));
+  assert.equal(nd.querySelector('.tab-pane-wrapper').hidden, false);
+  const visible = Array.from(nd.querySelectorAll('[data-insights-month]')).filter(x => !x.hidden && !x.classList.contains('hide'));
+  assert.equal(visible.length, 1);
+  assert.equal(visible[0].dataset.insightsMonth, option.value);
+}
+nested.window.close();
 if (process.argv[2]) {
-  const published = run(fs.readFileSync(process.argv[2], 'utf8'));
+  // Exclude installed scripts so the candidate script is exercised in isolation.
+  const published = run(fs.readFileSync(process.argv[2], 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ''));
   const doc = published.window.document;
-  assert.equal(doc.querySelector('.insights-tab-dropdown select').value, '2026-09');
+  const ps = doc.querySelector('.insights-tab-dropdown select');
+  assert.equal(ps.value, '2026-09');
   assert.equal(doc.querySelector('.insights-tab-wrap .tab-pane-wrapper').hidden, false);
+  const monthly = doc.querySelectorAll('.insights-tab-wrap [data-insights-month]');
+  if (monthly.length) {
+    assert.equal(ps.options.length, monthly.length);
+    for (const option of ps.options) {
+      ps.value = option.value;
+      ps.dispatchEvent(new published.window.Event('change'));
+      const visible = Array.from(monthly).filter(x => !x.hidden && !x.classList.contains('hide'));
+      assert.equal(visible.length, 1);
+      assert.equal(visible[0].dataset.insightsMonth, option.value);
+    }
+  }
   published.window.close();
 }
 console.log('PASS: newest month, switching, hide classes, scope, duplicate init, invalid metadata, year rollover, published markup');

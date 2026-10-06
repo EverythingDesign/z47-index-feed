@@ -20,8 +20,11 @@
     document.querySelectorAll('.insights-tab-wrap').forEach(function (wrap) {
       if (wrap.dataset.insightsReady) return;
       var slot = wrap.querySelector('.insights-tab-dropdown');
-      var panels = Array.from(wrap.querySelectorAll('.tab-pane-wrapper')).filter(function (panel) {
-        return panel.closest('.insights-tab-wrap') === wrap;
+      // Explicit monthly sections may sit inside one shared layout wrapper.
+      var selector = '[data-insights-month], .monthly-insights, .tab-pane-wrapper';
+      var candidates = wrap.querySelectorAll(selector);
+      var panels = Array.from(candidates).filter(function (panel) {
+        return panel.closest('.insights-tab-wrap') === wrap && !panel.querySelector(selector);
       });
       if (!slot || !panels.length) return;
       var seen = new Set();
