@@ -30,7 +30,8 @@
   .insights_toolbar_slot { width: 100%; }
 }
 .index-header-wrap.insights_month_header { display: none; }
-.index-tabs-content.insights_sticky_content {
+.index-tabs-content.insights_sticky_content.is-active,
+.index-tabs-content.insights_mobile_content {
   margin-top: var(--insights-content-offset) !important;
 }
 .insights_sticky_content.is-active { overflow: visible; }

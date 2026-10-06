@@ -2,10 +2,33 @@
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
 const path = require('node:path');
+async function excludeInstalledSwitcher(page) {
+  await page.route('https://z47.webflow.io/z47-forty-seven', async route => {
+    const response = await route.fetch();
+    const html = (await response.text()).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,
+      script => script.includes('function monthKey(panel)') ? '' : script);
+    await route.fulfill({ response, body: html });
+  });
+}
+async function assertTabSpacing(page, mobile) {
+  for (const tab of [1, 2, 3, 4, 2, 1]) {
+    await page.evaluate(() => window.scrollTo(0, 0));
+    // Exercise Webflow's tab handler without auto-scroll closing its mobile menu.
+    // Actual pointer interaction with that menu is checked separately below.
+    await page.locator(`.w-tab-link[data-w-tab="Tab ${tab}"]`).evaluate(e => e.click());
+    await page.waitForTimeout(500);
+    const gap = await page.evaluate(isMobile => {
+      const anchor = document.querySelector(isMobile ? '.dd_tabs' : '.index-tabs-menu');
+      return document.querySelector('.index-tabs-content').getBoundingClientRect().top - anchor.getBoundingClientRect().bottom;
+    }, mobile);
+    assert(Math.abs(gap - (mobile || tab !== 2 ? 24 : 0)) < 1, `tab ${tab} spacing (${mobile ? 'mobile' : 'desktop'}): ${gap}`);
+  }
+}
 (async () => {
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
+    await excludeInstalledSwitcher(page);
     await page.goto('https://z47.webflow.io/z47-forty-seven', { waitUntil: 'domcontentloaded' });
     await page.locator('.w-tab-link[data-w-tab="Tab 2"]').click();
     await page.locator('.insights-tab-wrap').waitFor({ state: 'visible' });
@@ -19,6 +42,9 @@ const path = require('node:path');
     });
     await page.addStyleTag({ path: path.resolve('staging/css/09-insights-months.css') });
     await page.addScriptTag({ path: path.resolve('staging/js/09-insights-months.js') });
+    await assertTabSpacing(page, false);
+    await page.locator('.w-tab-link[data-w-tab="Tab 2"]').click();
+    await page.waitForTimeout(500);
     const select = page.locator('.z47-insights-month-select');
     assert.equal(await select.inputValue(), '2026-09');
     assert.equal(await select.locator('option').count(), 4);
@@ -84,6 +110,7 @@ const path = require('node:path');
     await page.screenshot({ path: '/tmp/z47-insights-dropdown-mobile.png' });
     // Fresh mobile load exercises the site's separate mobile tab navigation script.
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await excludeInstalledSwitcher(mobile);
     await mobile.goto('https://z47.webflow.io/z47-forty-seven', { waitUntil: 'domcontentloaded' });
     await mobile.locator('.dd_tabs').click();
     await mobile.locator('.w-tab-link[data-w-tab="Tab 2"]').click();
@@ -110,6 +137,10 @@ const path = require('node:path');
     await mobile.locator('.w-tab-link[data-w-tab="Tab 3"]').click({timeout:5000});
     await mobile.waitForTimeout(500);
     assert(!(await mobileToolbar.isVisible()), 'toolbar only appears in Insights');
+    await assertTabSpacing(mobile, true);
+    await mobile.setViewportSize({ width: 1440, height: 1050 });
+    await mobile.waitForTimeout(150);
+    await assertTabSpacing(mobile, false);
     await mobile.close();
     console.log('PASS: live markup, four months, animation, rapid switching, reduced motion, focus, mobile fit');
   } finally { await browser.close(); }

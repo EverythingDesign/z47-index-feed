@@ -41,3 +41,7 @@ The toolbar stays outside the animated monthly container. It updates when the se
 ResizeObserver and scroll/resize measurements maintain the offsets. The Webflow tab content's overflow is visible only while Insights is active, allowing native sticky positioning. The existing mobile tab menu's negative layout compensation is recalculated on resize to avoid a blank gap, and both tab controls receive appropriate stacking order. No new attributes or manual Designer restructuring is required.
 
 Browser validation against staging covered desktop right alignment, sticky stacking, switching months while scrolled, outgoing/incoming animations, height cleanup, end-of-section release, responsive fit, a fresh mobile load, the mobile tab menu, and switching to Constituents. Preview screenshots show candidate code in an isolated browser, not published changes. Replace the previous complete snippet in Page Settings > Before </body> and publish staging to install it.
+
+## Preserve spacing in other tabs
+
+The initial sticky version overrode the shared desktop content margin to zero across all tabs, removing Webflow's authored 24px gap above Performance, Constituents, and Methodology. The desktop override now applies only while Insights is active. Mobile retains the existing collapsed-menu compensation across tabs. On a mobile-to-desktop resize, the legacy mobile script's negative inline margin is removed so the authored desktop spacing can apply. Regression checks cover all four tabs, returning from Insights, and viewport changes.

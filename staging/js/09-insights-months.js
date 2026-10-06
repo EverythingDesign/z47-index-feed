@@ -58,6 +58,12 @@
         if (bounds.top <= 1) navHeight = Math.max(0, bounds.bottom);
       }
       const mobile = mobileTabs && getComputedStyle(mobileTabs).display !== 'none';
+      if (content) {
+        content.classList.toggle('insights_mobile_content', Boolean(mobile));
+        // The legacy mobile script writes a negative inline margin only at page load.
+        // Remove it when returning to desktop so Webflow's authored spacing applies.
+        if (!mobile && parseFloat(content.style.marginTop) < 0) content.style.removeProperty('margin-top');
+      }
       const tabHeight = mobile ? mobileTabs.getBoundingClientRect().height :
         (menu ? menu.getBoundingClientRect().height : 0);
       const rootSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
