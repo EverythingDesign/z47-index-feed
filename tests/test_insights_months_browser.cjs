@@ -39,7 +39,7 @@ const path = require('node:path');
     await select.focus();
     assert(await select.evaluate(e => document.activeElement === e));
     assert.equal(await select.getAttribute('aria-label'), 'Insights month');
-    assert.equal(await select.evaluate(e => getComputedStyle(e).backgroundColor), 'rgb(255, 247, 236)');
+    assert.equal(await select.evaluate(e => getComputedStyle(e).outlineStyle), 'none');
     await page.setViewportSize({ width: 390, height: 844 });
     await select.scrollIntoViewIfNeeded();
     const box = await select.boundingBox();
