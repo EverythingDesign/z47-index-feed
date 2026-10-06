@@ -27,3 +27,5 @@ On selection, the newly visible month fades in and moves upward 8px over 260ms. 
 Verified in isolated Chrome with the published four-month markup: switching, animation, rapid changes, reduced motion, accessible name/focus, and mobile fit. Desktop and mobile screenshots were visually inspected. Native popup keyboard selection could not be automated in headless macOS Chrome; the standard native select behavior is retained. Run `NODE_PATH=/tmp/z47-insights-test/node_modules node tests/test_insights_months_browser.cjs` with Playwright and Chrome installed.
 
 Replace the previous complete Insights snippet in Webflow and publish. The styling update is not installed by a GitHub push.
+
+The newest available month is labeled `September 2026 - Latest` (month/year update automatically). Older options retain their month/year only. The desktop control is widened to fit the label.

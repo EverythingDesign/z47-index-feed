@@ -44,10 +44,10 @@
       var select = document.createElement('select');
       select.className = 'z47-insights-month-select';
       select.setAttribute('aria-label', 'Insights month');
-      entries.forEach(function (entry) {
+      entries.forEach(function (entry, index) {
         var option = document.createElement('option');
         option.value = entry.key;
-        option.textContent = months[Number(entry.key.slice(5)) - 1] + ' ' + entry.key.slice(0, 4);
+        option.textContent = months[Number(entry.key.slice(5)) - 1] + ' ' + entry.key.slice(0, 4) + (index === 0 ? ' - Latest' : '');
         select.appendChild(option);
       });
       var currentKey;
