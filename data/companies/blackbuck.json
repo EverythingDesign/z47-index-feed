@@ -4,24 +4,12 @@
   "name": "BlackBuck",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/BLACKBUCK/",
-  "mcap_cr": 10924.0,
-  "price": 599.0,
-  "high": 748.0,
-  "low": 495.0,
-  "pe": 63.6,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 63.3,
   "roce": 12.8,
   "roe": 12.2,
-  "about": "Incorporated in 2015, Zinka Logistics Solutions Ltd provides a digital trucking platform for payments, telematics, loads marketplace, and vehicle financing services[1]",
-  "website": "http://www.blackbuck.com",
-  "website_label": "blackbuck.com",
-  "bse_code": "544288",
-  "bse_url": "https://www.bseindia.com/stock-share-price/blackbuck-ltd/BLACKBUCK/544288/",
-  "nse_symbol": "BLACKBUCK",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=BLACKBUCK",
-  "screener_id": "1285151",
-  "ratios_ok": 6,
-  "daily_pct": -1.11,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/",
@@ -260,7 +248,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 0.0
+            "value": -1.0
           }
         ]
       },
@@ -426,7 +414,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-06T07:51:30.477964+05:30",
-  "generated_at_ist": "06 Oct 2026, 07:51 IST",
+  "generated_at": "2026-10-06T22:32:41.612212+05:30",
+  "generated_at_ist": "06 Oct 2026, 22:32 IST",
   "source": "screener"
 }

@@ -4,24 +4,12 @@
   "name": "Ola Electric",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/OLAELEC/",
-  "mcap_cr": 16977.0,
-  "price": 36.7,
-  "high": 58.0,
-  "low": 21.2,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
   "pe": null,
   "roce": -19.9,
   "roe": -43.2,
-  "about": "Founded in 2017, Ola Electric Mobility Limited is an electric vehicle company that primarily manufactures electric vehicles and core components for electric vehicles. These components include battery packs, motors, and vehicle frames, all produced at the Ola Futurefactory.[1]",
-  "website": "http://www.olaelectric.com",
-  "website_label": "olaelectric.com",
-  "bse_code": "544225",
-  "bse_url": "https://www.bseindia.com/stock-share-price/ola-electric-mobility-ltd/OLAELEC/544225/",
-  "nse_symbol": "OLAELEC",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=OLAELEC",
-  "screener_id": "1284881",
-  "ratios_ok": 5,
-  "daily_pct": -1.08,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
@@ -260,7 +248,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -30.0
+            "value": -32.0
           }
         ]
       },
@@ -455,7 +443,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-06T07:51:04.326163+05:30",
-  "generated_at_ist": "06 Oct 2026, 07:51 IST",
+  "generated_at": "2026-10-06T22:31:22.041427+05:30",
+  "generated_at_ist": "06 Oct 2026, 22:31 IST",
   "source": "screener"
 }
