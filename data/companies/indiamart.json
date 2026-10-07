@@ -4,13 +4,13 @@
   "name": "IndiaMart",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/INDIAMART/",
-  "mcap_cr": 9580.0,
-  "price": 1593.0,
+  "mcap_cr": 9650.0,
+  "price": 1605.0,
   "high": 2526.0,
   "low": 1565.0,
-  "pe": 19.4,
-  "roce": 28.0,
-  "roe": 20.7,
+  "pe": 18.0,
+  "roce": 28.6,
+  "roe": 21.8,
   "about": "IndiaMART, the first and largest B2B digital marketplace in the country, today stands out as a game-changer on the B2B landscape. It focuses on integrating the Small and Medium Businesses (SMEs) into the new paradigm with speed and ease, we are constantly pushing the frontiers of innovation to make the online marketplace more accessible, visible and engaging to them. [1]",
   "website": "http://www.indiamart.com",
   "website_label": "indiamart.com",
@@ -20,14 +20,14 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=INDIAMART",
   "screener_id": "1274674",
   "ratios_ok": 6,
-  "daily_pct": 0.09,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/INDIAMART/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/INDIAMART/consolidated/",
+  "daily_pct": 0.78,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/INDIAMART/",
+  "ratios_source_url": "https://www.screener.in/company/INDIAMART/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,65 +42,65 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "639",
-          "670",
-          "753",
-          "985",
-          "1,197",
-          "1,388",
-          "1,569"
+          "624",
+          "665",
+          "751",
+          "939",
+          "1,139",
+          "1,320",
+          "1,443"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "472",
-          "344",
-          "458",
-          "755",
-          "906",
-          "915",
-          "1,094"
+          "451",
+          "332",
+          "439",
+          "677",
+          "805",
+          "807",
+          "923"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "167",
-          "326",
-          "296",
-          "230",
-          "291",
-          "474",
-          "475"
+          "173",
+          "333",
+          "312",
+          "262",
+          "334",
+          "513",
+          "520"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "26%",
-          "49%",
+          "28%",
+          "50%",
+          "42%",
+          "28%",
+          "29%",
           "39%",
-          "23%",
-          "24%",
-          "34%",
-          "30%"
+          "36%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "69",
-          "87",
-          "112",
-          "181",
-          "209",
-          "272",
-          "204"
+          "62",
+          "85",
+          "108",
+          "108",
+          "170",
+          "284",
+          "191"
         ]
       },
       {
@@ -110,9 +110,9 @@
           "3",
           "7",
           "5",
-          "8",
-          "9",
-          "7",
+          "5",
+          "4",
+          "4",
           "3"
         ]
       },
@@ -123,23 +123,23 @@
           "21",
           "16",
           "12",
-          "31",
-          "36",
-          "33",
-          "28"
+          "19",
+          "25",
+          "21",
+          "14"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "211",
-          "389",
-          "390",
-          "371",
-          "454",
-          "706",
-          "648"
+          "210",
+          "396",
+          "403",
+          "345",
+          "475",
+          "773",
+          "694"
         ]
       },
       {
@@ -148,37 +148,37 @@
         "values": [
           "30%",
           "28%",
+          "23%",
+          "21%",
           "24%",
-          "24%",
-          "26%",
-          "22%",
-          "27%"
+          "21%",
+          "24%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "147",
-          "280",
-          "298",
-          "284",
-          "334",
-          "551",
-          "475"
+          "146",
+          "287",
+          "310",
+          "272",
+          "362",
+          "607",
+          "525"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "25.50",
-          "46.09",
-          "48.71",
-          "46.38",
-          "55.68",
-          "91.73",
-          "79.00"
+          "25.30",
+          "47.23",
+          "50.71",
+          "44.48",
+          "60.39",
+          "101.15",
+          "87.40"
         ]
       },
       {
@@ -189,13 +189,13 @@
           "16%",
           "2%",
           "22%",
-          "36%",
-          "54%",
-          "76%"
+          "33%",
+          "49%",
+          "69%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/INDIAMART/consolidated/"
+    "source_url": "https://www.screener.in/company/INDIAMART/"
   },
   "growth": {
     "cards": [
@@ -206,22 +206,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 20.0
+            "value": 19.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 19.0
+            "value": 17.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 17.0
+            "value": 15.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 13.0
+            "value": 9.0
           }
         ]
       },
@@ -232,22 +232,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 20.0
+            "value": 30.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 11.0
+            "value": 13.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 19.0
+            "value": 24.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -16.0
+            "value": -18.0
           }
         ]
       },
@@ -289,17 +289,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 19.0
+            "value": 21.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 22.0
+            "value": 23.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 21.0
+            "value": 22.0
           }
         ]
       }
@@ -531,7 +531,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-07T07:09:38.639400+05:30",
-  "generated_at_ist": "07 Oct 2026, 07:09 IST",
+  "generated_at": "2026-10-07T23:08:31.219602+05:30",
+  "generated_at_ist": "07 Oct 2026, 23:08 IST",
   "source": "screener"
 }

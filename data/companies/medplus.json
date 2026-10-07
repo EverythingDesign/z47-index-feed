@@ -4,23 +4,12 @@
   "name": "MedPlus Health",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/MEDPLUS/",
-  "mcap_cr": 7826.0,
-  "price": 651.0,
-  "high": 1022.0,
-  "low": 640.0,
-  "pe": 37.2,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 37.0,
   "roce": 12.6,
   "roe": 11.6,
-  "website": "http://www.medplusindia.com",
-  "website_label": "medplusindia.com",
-  "bse_code": "543427",
-  "bse_url": "https://www.bseindia.com/stock-share-price/medplus-health-services-ltd/MEDPLUS/543427/",
-  "nse_symbol": "MEDPLUS",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=MEDPLUS",
-  "screener_id": "1275123",
-  "ratios_ok": 6,
-  "daily_pct": 1.09,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/MEDPLUS/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/MEDPLUS/consolidated/",
@@ -272,7 +261,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -13.0
+            "value": -14.0
           }
         ]
       },
@@ -516,7 +505,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-07T07:11:18.549037+05:30",
-  "generated_at_ist": "07 Oct 2026, 07:11 IST",
+  "generated_at": "2026-10-07T23:10:06.214769+05:30",
+  "generated_at_ist": "07 Oct 2026, 23:10 IST",
   "source": "screener"
 }
