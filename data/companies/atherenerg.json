@@ -4,13 +4,13 @@
   "name": "Ather Energy",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/ATHERENERG/",
-  "mcap_cr": 57199.0,
+  "mcap_cr": 57365.0,
   "price": 1446.0,
   "high": 1744.0,
   "low": 582.0,
   "pe": null,
-  "roce": null,
-  "roe": null,
+  "roce": -19.8,
+  "roe": -33.4,
   "about": "Incorporated in 2013, Ather Energy ltd is an Indian electric two-wheeler (E2W) company engaged in the design, development, and in-house assembly of electric scooters, battery packs, charging infrastructure, and supporting software systems[1]",
   "website": "http://www.atherenergy.com",
   "website_label": "atherenergy.com",
@@ -21,14 +21,20 @@
   "screener_id": "1285444",
   "ratios_ok": 5,
   "daily_pct": 2.56,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/ATHERENERG/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/ATHERENERG/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/ATHERENERG/",
+  "ratios_source_url": "https://www.screener.in/company/ATHERENERG/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2020",
+      "Mar 2021",
+      "Mar 2022",
+      "Mar 2023",
+      "Mar 2024",
+      "Mar 2025",
       "Mar 2026"
     ],
     "rows": [
@@ -36,6 +42,12 @@
         "key": "sales",
         "label": "Sales",
         "values": [
+          "35",
+          "80",
+          "408",
+          "1,781",
+          "1,754",
+          "2,255",
           "3,672"
         ]
       },
@@ -43,6 +55,12 @@
         "key": "expenses",
         "label": "Expenses",
         "values": [
+          "220",
+          "257",
+          "668",
+          "2,488",
+          "2,438",
+          "2,836",
           "4,080"
         ]
       },
@@ -50,6 +68,12 @@
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
+          "-185",
+          "-177",
+          "-260",
+          "-708",
+          "-685",
+          "-581",
           "-408"
         ]
       },
@@ -57,6 +81,12 @@
         "key": "opm",
         "label": "OPM %",
         "values": [
+          "-523%",
+          "-222%",
+          "-64%",
+          "-40%",
+          "-39%",
+          "-26%",
           "-11%"
         ]
       },
@@ -64,6 +94,12 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
+          "14",
+          "7",
+          "4",
+          "21",
+          "-139",
+          "50",
           "146"
         ]
       },
@@ -71,6 +107,12 @@
         "key": "interest",
         "label": "Interest",
         "values": [
+          "24",
+          "28",
+          "40",
+          "65",
+          "89",
+          "111",
           "82"
         ]
       },
@@ -78,6 +120,12 @@
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
+          "25",
+          "35",
+          "48",
+          "113",
+          "147",
+          "171",
           "173"
         ]
       },
@@ -85,6 +133,12 @@
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
+          "-220",
+          "-233",
+          "-344",
+          "-864",
+          "-1,060",
+          "-812",
           "-517"
         ]
       },
@@ -92,13 +146,25 @@
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
+          "-220",
+          "-233",
+          "-344",
+          "-864",
+          "-1,060",
+          "-812",
           "-517"
         ]
       },
@@ -106,6 +172,12 @@
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
+          "-20,118.94",
+          "-21,344.92",
+          "-30,078.67",
+          "-75,436.30",
+          "-92,469.46",
+          "-27.95",
           "-13.51"
         ]
       },
@@ -113,11 +185,17 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/ATHERENERG/consolidated/"
+    "source_url": "https://www.screener.in/company/ATHERENERG/"
   },
   "growth": {
     "cards": [
@@ -133,17 +211,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 115.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": 27.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": null
+            "value": 67.0
           }
         ]
       },
@@ -164,12 +242,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": 12.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": null
+            "value": 52.0
           }
         ]
       },
@@ -195,7 +273,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 133.0
+            "value": 130.0
           }
         ]
       },
@@ -211,17 +289,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": -102.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": -84.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": null
+            "value": -33.0
           }
         ]
       }
@@ -349,7 +427,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-06T22:29:50.909238+05:30",
-  "generated_at_ist": "06 Oct 2026, 22:29 IST",
+  "generated_at": "2026-10-07T07:07:45.989868+05:30",
+  "generated_at_ist": "07 Oct 2026, 07:07 IST",
   "source": "screener"
 }

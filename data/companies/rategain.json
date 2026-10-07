@@ -4,30 +4,18 @@
   "name": "RateGain",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/RATEGAIN/",
-  "mcap_cr": 10128.0,
-  "price": 854.0,
-  "high": 1053.0,
-  "low": 437.0,
-  "pe": 256.0,
-  "roce": 5.06,
-  "roe": 3.7,
-  "about": "RateGain Travel Technologies Ltd is the leading distribution technology company globally and the largest Software as a Service (SaaS) provider in the travel and hospitality industry in India. The firm offers travel and hospitality services across different verticals like hotels, airlines, online travel agents, meta-search companies, package providers, car rentals, cruises, and ferries.[1]",
-  "website": "http://www.rategain.com",
-  "website_label": "rategain.com",
-  "bse_code": "543417",
-  "bse_url": "https://www.bseindia.com/stock-share-price/rategain-travel-technologies-ltd/RATEGAIN/543417/",
-  "nse_symbol": "RATEGAIN",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=RATEGAIN",
-  "screener_id": "1275119",
-  "ratios_ok": 6,
-  "daily_pct": 0.59,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/RATEGAIN/",
-  "ratios_source_url": "https://www.screener.in/company/RATEGAIN/",
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 38.8,
+  "roce": 13.9,
+  "roe": 11.9,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/RATEGAIN/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/RATEGAIN/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,143 +30,143 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "90",
-          "68",
-          "73",
-          "113",
-          "173",
-          "210",
-          "249"
+          "399",
+          "251",
+          "367",
+          "565",
+          "957",
+          "1,077",
+          "1,824"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "93",
-          "73",
-          "95",
-          "122",
-          "157",
-          "176",
-          "214"
+          "423",
+          "244",
+          "334",
+          "479",
+          "766",
+          "843",
+          "1,478"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-3",
-          "-5",
-          "-22",
-          "-8",
-          "16",
-          "34",
-          "34"
+          "-24",
+          "7",
+          "32",
+          "87",
+          "191",
+          "234",
+          "345"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-3.1%",
-          "-8%",
-          "-30%",
-          "-7%",
+          "-6%",
+          "2.9%",
           "9%",
-          "16%",
-          "14%"
+          "15%",
+          "20%",
+          "22%",
+          "19%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "15",
-          "17",
-          "30",
-          "22",
-          "48",
-          "69",
-          "40"
+          "59",
+          "13",
+          "16",
+          "20",
+          "42",
+          "76",
+          "27"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "1",
-          "1",
-          "1",
-          "2",
-          "1",
-          "1",
-          "1"
+          "10",
+          "9",
+          "7",
+          "3",
+          "3",
+          "3",
+          "39"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "5",
-          "5",
-          "4",
-          "3",
-          "3",
-          "4",
-          "5"
+          "43",
+          "36",
+          "30",
+          "36",
+          "41",
+          "35",
+          "81"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "7",
-          "6",
-          "3",
-          "8",
-          "59",
-          "98",
-          "68"
+          "-18",
+          "-25",
+          "11",
+          "67",
+          "189",
+          "272",
+          "252"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "5%",
-          "35%",
-          "37%",
-          "31%",
-          "26%",
-          "26%",
-          "26%"
+          "13%",
+          "16%",
+          "22%",
+          "-2%",
+          "23%",
+          "23%",
+          "23%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "6",
-          "4",
-          "2",
-          "6",
-          "44",
-          "72",
-          "50"
+          "-20",
+          "-29",
+          "8",
+          "68",
+          "145",
+          "209",
+          "194"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "96.79",
-          "62.58",
-          "0.17",
-          "0.53",
-          "3.72",
-          "6.11",
-          "4.26"
+          "-306.87",
+          "-436.20",
+          "0.78",
+          "6.31",
+          "12.34",
+          "17.70",
+          "16.45"
         ]
       },
       {
@@ -195,7 +183,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/RATEGAIN/"
+    "source_url": "https://www.screener.in/company/RATEGAIN/consolidated/"
   },
   "growth": {
     "cards": [
@@ -211,17 +199,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 30.0
+            "value": 49.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 30.0
+            "value": 48.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 17.0
+            "value": 114.0
           }
         ]
       },
@@ -237,17 +225,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 90.0
+            "value": 55.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 118.0
+            "value": 48.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -48.0
+            "value": 24.0
           }
         ]
       },
@@ -273,7 +261,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 20.0
+            "value": 19.0
           }
         ]
       },
@@ -289,17 +277,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 4.0
+            "value": 12.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 4.0
+            "value": 13.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 4.0
+            "value": 12.0
           }
         ]
       }
@@ -517,7 +505,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-06T22:34:18.288608+05:30",
-  "generated_at_ist": "06 Oct 2026, 22:34 IST",
+  "generated_at": "2026-10-07T07:12:21.253311+05:30",
+  "generated_at_ist": "07 Oct 2026, 07:12 IST",
   "source": "screener"
 }

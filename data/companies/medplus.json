@@ -4,13 +4,13 @@
   "name": "MedPlus Health",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/MEDPLUS/",
-  "mcap_cr": 7832.0,
+  "mcap_cr": 7826.0,
   "price": 651.0,
   "high": 1022.0,
   "low": 640.0,
-  "pe": 118.0,
-  "roce": 6.7,
-  "roe": 4.9,
+  "pe": 37.2,
+  "roce": 12.6,
+  "roe": 11.6,
   "website": "http://www.medplusindia.com",
   "website_label": "medplusindia.com",
   "bse_code": "543427",
@@ -20,13 +20,13 @@
   "screener_id": "1275123",
   "ratios_ok": 6,
   "daily_pct": 1.09,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/MEDPLUS/",
-  "ratios_source_url": "https://www.screener.in/company/MEDPLUS/",
+  "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/MEDPLUS/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/MEDPLUS/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -41,143 +41,143 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "61",
-          "68",
-          "146",
-          "214",
-          "467",
-          "713",
-          "861"
+          "2,871",
+          "3,069",
+          "3,779",
+          "4,558",
+          "5,625",
+          "6,136",
+          "6,892"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "86",
-          "77",
-          "142",
-          "208",
-          "435",
-          "635",
-          "753"
+          "2,737",
+          "2,852",
+          "3,507",
+          "4,292",
+          "5,270",
+          "5,648",
+          "6,284"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-25",
-          "-9",
-          "3",
-          "6",
-          "32",
-          "78",
-          "107"
+          "134",
+          "217",
+          "273",
+          "266",
+          "355",
+          "488",
+          "608"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-41%",
-          "-13%",
-          "2.3%",
-          "2.9%",
+          "4.7%",
           "7%",
-          "11%",
-          "12%"
+          "7%",
+          "6%",
+          "6%",
+          "8%",
+          "9%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "2",
-          "2",
-          "10",
-          "23",
-          "7",
-          "9",
-          "10"
+          "17",
+          "21",
+          "31",
+          "46",
+          "40",
+          "48",
+          "71"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "0",
-          "1",
-          "3",
-          "7",
-          "8",
-          "9",
-          "8"
+          "47",
+          "55",
+          "66",
+          "83",
+          "96",
+          "103",
+          "120"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "1",
-          "1",
-          "5",
-          "15",
-          "24",
-          "27",
-          "26"
+          "75",
+          "88",
+          "119",
+          "182",
+          "224",
+          "250",
+          "283"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-24",
-          "-9",
-          "6",
-          "8",
-          "7",
-          "51",
-          "83"
+          "29",
+          "95",
+          "118",
+          "47",
+          "73",
+          "183",
+          "275"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "2%",
-          "0%",
-          "0%",
-          "27%",
-          "-36%",
-          "21%",
-          "25%"
+          "94%",
+          "34%",
+          "20%",
+          "-6%",
+          "11%",
+          "18%",
+          "20%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-25",
-          "-9",
-          "6",
-          "6",
-          "9",
-          "40",
-          "62"
+          "2",
+          "63",
+          "95",
+          "50",
+          "66",
+          "150",
+          "220"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-1,220.91",
-          "-186.95",
-          "0.47",
-          "0.46",
-          "0.79",
-          "3.37",
-          "5.20"
+          "107.02",
+          "1,393.11",
+          "8.03",
+          "4.17",
+          "5.48",
+          "12.56",
+          "18.30"
         ]
       },
       {
@@ -194,7 +194,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/MEDPLUS/"
+    "source_url": "https://www.screener.in/company/MEDPLUS/consolidated/"
   },
   "growth": {
     "cards": [
@@ -205,22 +205,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 81.0
+            "value": 15.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 66.0
+            "value": 18.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 59.0
+            "value": 15.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 25.0
+            "value": 17.0
           }
         ]
       },
@@ -231,22 +231,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 32.0
+            "value": 37.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 56.0
+            "value": 28.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 127.0
+            "value": 66.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 49.0
+            "value": 18.0
           }
         ]
       },
@@ -272,7 +272,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -14.0
+            "value": -13.0
           }
         ]
       },
@@ -283,22 +283,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 1.0
+            "value": 8.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 2.0
+            "value": 7.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 3.0
+            "value": 8.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 5.0
+            "value": 12.0
           }
         ]
       }
@@ -516,7 +516,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-06T22:33:18.341881+05:30",
-  "generated_at_ist": "06 Oct 2026, 22:33 IST",
+  "generated_at": "2026-10-07T07:11:18.549037+05:30",
+  "generated_at_ist": "07 Oct 2026, 07:11 IST",
   "source": "screener"
 }
