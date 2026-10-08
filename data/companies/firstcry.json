@@ -4,13 +4,13 @@
   "name": "FirstCry",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/FIRSTCRY/",
-  "mcap_cr": 8991.0,
+  "mcap_cr": 8990.0,
   "price": 172.0,
   "high": 380.0,
   "low": 162.0,
-  "pe": null,
-  "roce": 0.57,
-  "roe": -2.37,
+  "pe": 92.5,
+  "roce": 2.02,
+  "roe": 1.06,
   "about": "Founded in 2010, Brainbees Solutions Limited offers products for mothers, babies, and kids through its online platform 'FirstCry'.[1]",
   "website": "http://www.firstcry.com",
   "website_label": "firstcry.com",
@@ -21,13 +21,13 @@
   "screener_id": "1284885",
   "ratios_ok": 6,
   "daily_pct": -3.02,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/FIRSTCRY/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/FIRSTCRY/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/FIRSTCRY/",
+  "ratios_source_url": "https://www.screener.in/company/FIRSTCRY/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,104 +42,104 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "814",
-          "1,603",
-          "2,401",
-          "5,633",
-          "6,481",
-          "7,660",
-          "8,548"
+          "806",
+          "1,309",
+          "1,752",
+          "2,542",
+          "2,163",
+          "2,471",
+          "2,732"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "1,047",
-          "1,561",
-          "2,420",
-          "5,950",
-          "6,410",
-          "7,430",
-          "8,286"
+          "1,013",
+          "1,214",
+          "1,699",
+          "2,652",
+          "2,148",
+          "2,368",
+          "2,634"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-233",
-          "42",
-          "-18",
-          "-317",
-          "70",
-          "230",
-          "262"
+          "-208",
+          "95",
+          "54",
+          "-110",
+          "15",
+          "103",
+          "98"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-29%",
-          "2.6%",
-          "-0.8%",
-          "-6%",
-          "1.1%",
-          "3.0%",
-          "3.1%"
+          "-26%",
+          "7%",
+          "3.1%",
+          "-4.3%",
+          "0.7%",
+          "4.2%",
+          "3.6%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "83",
-          "141",
-          "116",
-          "153",
-          "94",
-          "101",
-          "134"
+          "82",
+          "135",
+          "90",
+          "99",
+          "103",
+          "166",
+          "211"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "4",
-          "14",
-          "38",
-          "72",
-          "115",
-          "158",
-          "156"
+          "3",
+          "12",
+          "23",
+          "40",
+          "52",
+          "51",
+          "51"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "38",
-          "70",
-          "111",
-          "294",
-          "371",
-          "405",
-          "407"
+          "34",
+          "60",
+          "87",
+          "129",
+          "150",
+          "138",
+          "135"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-191",
-          "98",
-          "-51",
-          "-530",
-          "-322",
-          "-232",
-          "-166"
+          "-163",
+          "158",
+          "34",
+          "-181",
+          "-83",
+          "80",
+          "122"
         ]
       },
       {
@@ -147,25 +147,25 @@
         "label": "Tax %",
         "values": [
           "-0%",
-          "-120%",
-          "54%",
-          "-8%",
-          "-0%",
-          "14%",
-          "23%"
+          "-80%",
+          "44%",
+          "-14%",
+          "-25%",
+          "25%",
+          "11%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-191",
-          "216",
-          "-79",
-          "-486",
-          "-322",
-          "-265",
-          "-204"
+          "-163",
+          "284",
+          "19",
+          "-156",
+          "-62",
+          "60",
+          "109"
         ]
       },
       {
@@ -177,8 +177,8 @@
           "",
           "",
           "",
-          "-3.67",
-          "-2.69"
+          "1.15",
+          "2.09"
         ]
       },
       {
@@ -195,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/FIRSTCRY/consolidated/"
+    "source_url": "https://www.screener.in/company/FIRSTCRY/"
   },
   "growth": {
     "cards": [
@@ -211,12 +211,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 40.0
+            "value": 16.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 15.0
+            "value": 2.0
           },
           {
             "key": "ttm",
@@ -237,17 +237,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": -25.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 21.0
+            "value": 34.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 25.0
+            "value": 54.0
           }
         ]
       },
@@ -289,17 +289,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": -6.0
+            "value": 0.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -5.0
+            "value": 0.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": -2.0
+            "value": 1.0
           }
         ]
       }
@@ -445,7 +445,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-07T23:07:35.046960+05:30",
-  "generated_at_ist": "07 Oct 2026, 23:07 IST",
+  "generated_at": "2026-10-08T07:32:22.074478+05:30",
+  "generated_at_ist": "08 Oct 2026, 07:32 IST",
   "source": "screener"
 }

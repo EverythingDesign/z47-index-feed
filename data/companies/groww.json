@@ -4,11 +4,11 @@
   "name": "Groww",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/GROWW/",
-  "mcap_cr": 124086.0,
+  "mcap_cr": 124060.0,
   "price": 198.0,
   "high": 227.0,
   "low": 112.0,
-  "pe": 50.9,
+  "pe": 50.8,
   "roce": 37.3,
   "roe": 28.8,
   "about": "Incorporated in 2017, Groww is a Bengaluru-based fintech company that provides retail investors direct-to-customer digital investment platform, providing multiple financial products and services.[1]",
@@ -84,7 +84,7 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "-0",
+          "0",
           "119",
           "-1,337",
           "0",
@@ -161,11 +161,11 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%"
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
         ]
       }
     ],
@@ -284,7 +284,8 @@
       "periods": [
         "Dec 2025",
         "Mar 2026",
-        "Jun 2026"
+        "Jun 2026",
+        "Sep 2026"
       ],
       "rows": [
         {
@@ -293,6 +294,7 @@
           "values": [
             "27.81%",
             "27.38%",
+            "27.14%",
             "27.14%"
           ]
         },
@@ -302,7 +304,8 @@
           "values": [
             "3.13%",
             "2.51%",
-            "6.89%"
+            "6.89%",
+            "10.90%"
           ]
         },
         {
@@ -311,7 +314,8 @@
           "values": [
             "4.92%",
             "5.92%",
-            "10.08%"
+            "10.08%",
+            "12.73%"
           ]
         },
         {
@@ -320,7 +324,8 @@
           "values": [
             "64.13%",
             "62.88%",
-            "54.78%"
+            "54.78%",
+            "48.23%"
           ]
         },
         {
@@ -329,7 +334,8 @@
           "values": [
             "0.00%",
             "1.31%",
-            "1.11%"
+            "1.11%",
+            "1.00%"
           ]
         },
         {
@@ -338,7 +344,8 @@
           "values": [
             "7,71,434",
             "7,06,903",
-            "7,67,929"
+            "7,67,929",
+            "8,61,003"
           ]
         }
       ]
@@ -346,7 +353,7 @@
     "yearly": {
       "periods": [
         "Mar 2026",
-        "Jun 2026"
+        "Sep 2026"
       ],
       "rows": [
         {
@@ -362,7 +369,7 @@
           "label": "FIIs",
           "values": [
             "2.51%",
-            "6.89%"
+            "10.90%"
           ]
         },
         {
@@ -370,7 +377,7 @@
           "label": "DIIs",
           "values": [
             "5.92%",
-            "10.08%"
+            "12.73%"
           ]
         },
         {
@@ -378,7 +385,7 @@
           "label": "Public",
           "values": [
             "62.88%",
-            "54.78%"
+            "48.23%"
           ]
         },
         {
@@ -386,7 +393,7 @@
           "label": "Others",
           "values": [
             "1.31%",
-            "1.11%"
+            "1.00%"
           ]
         },
         {
@@ -394,13 +401,13 @@
           "label": "No. of Shareholders",
           "values": [
             "7,06,903",
-            "7,67,929"
+            "8,61,003"
           ]
         }
       ]
     }
   },
-  "generated_at": "2026-10-07T23:03:03.215296+05:30",
-  "generated_at_ist": "07 Oct 2026, 23:03 IST",
+  "generated_at": "2026-10-08T07:27:35.318964+05:30",
+  "generated_at_ist": "08 Oct 2026, 07:27 IST",
   "source": "screener"
 }

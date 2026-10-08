@@ -4,30 +4,18 @@
   "name": "Amagi Media Labs",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/AMAGI/",
-  "mcap_cr": 12356.0,
-  "price": 561.0,
-  "high": 727.0,
-  "low": 310.0,
-  "pe": 225.0,
-  "roce": 2.82,
-  "roe": 4.46,
-  "about": "Founded in 2008, Amagi Media Labs Ltd. is engaged in cloud-based broadcast and connected TV technology. [1]",
-  "website": "http://www.amagi.com",
-  "website_label": "amagi.com",
-  "bse_code": "544679",
-  "bse_url": "https://www.bseindia.com/stock-share-price/amagi-media-labs-ltd/AMAGI/544679/",
-  "nse_symbol": "AMAGI",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=AMAGI",
-  "screener_id": "1285861",
-  "ratios_ok": 6,
-  "daily_pct": -0.48,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/AMAGI/",
-  "ratios_source_url": "https://www.screener.in/company/AMAGI/",
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 122.0,
+  "roce": 8.02,
+  "roe": 10.3,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/AMAGI/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/AMAGI/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2021",
       "Mar 2022",
@@ -41,58 +29,58 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "182",
-          "332",
-          "315",
-          "446",
-          "667",
-          "949"
+          "219",
+          "431",
+          "681",
+          "879",
+          "1,163",
+          "1,506"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "168",
-          "1,407",
-          "698",
-          "707",
-          "836",
-          "969"
+          "193",
+          "1,489",
+          "1,027",
+          "1,158",
+          "1,253",
+          "1,455"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "14",
-          "-1,075",
-          "-383",
-          "-261",
-          "-169",
-          "-20"
+          "26",
+          "-1,058",
+          "-347",
+          "-278",
+          "-91",
+          "51"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "8%",
-          "-324%",
-          "-121%",
-          "-59%",
-          "-25%",
-          "-2.1%"
+          "12%",
+          "-246%",
+          "-51%",
+          "-32%",
+          "-8%",
+          "3.4%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "1",
+          "2",
           "3",
-          "45",
-          "62",
+          "44",
+          "63",
           "61",
           "64"
         ]
@@ -103,70 +91,70 @@
         "values": [
           "0",
           "1",
-          "2",
           "3",
-          "2",
-          "3"
+          "5",
+          "5",
+          "6"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "3",
-          "5",
-          "8",
-          "11",
-          "11",
-          "15"
+          "4",
+          "6",
+          "9",
+          "16",
+          "17",
+          "22"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "12",
-          "-1,078",
-          "-347",
-          "-214",
-          "-122",
-          "26"
+          "23",
+          "-1,063",
+          "-315",
+          "-237",
+          "-52",
+          "87"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%",
-          "1%",
-          "0%",
-          "0%",
-          "0%",
-          "0%"
+          "11%",
+          "2%",
+          "2%",
+          "3%",
+          "33%",
+          "18%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "12",
-          "-1,086",
-          "-347",
-          "-214",
-          "-122",
-          "26"
+          "21",
+          "-1,078",
+          "-321",
+          "-245",
+          "-69",
+          "72"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "228.59",
-          "-10,593.33",
-          "-3,660.45",
-          "-2,253.45",
-          "-35.73",
-          "1.22"
+          "404.13",
+          "-10,517.65",
+          "-3,385.71",
+          "-2,581.94",
+          "-20.11",
+          "3.31"
         ]
       },
       {
@@ -182,7 +170,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/AMAGI/"
+    "source_url": "https://www.screener.in/company/AMAGI/consolidated/"
   },
   "growth": {
     "cards": [
@@ -198,17 +186,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 39.0
+            "value": 47.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 44.0
+            "value": 30.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 42.0
+            "value": 30.0
           }
         ]
       },
@@ -224,17 +212,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 18.0
+            "value": 28.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 28.0
+            "value": 30.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 122.0
+            "value": 205.0
           }
         ]
       },
@@ -286,7 +274,7 @@
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 4.0
+            "value": 10.0
           }
         ]
       }
@@ -390,7 +378,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-07T23:10:50.969745+05:30",
-  "generated_at_ist": "07 Oct 2026, 23:10 IST",
+  "generated_at": "2026-10-08T07:35:57.236776+05:30",
+  "generated_at_ist": "08 Oct 2026, 07:35 IST",
   "source": "screener"
 }

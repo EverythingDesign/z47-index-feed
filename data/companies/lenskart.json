@@ -8,9 +8,9 @@
   "price": 681.0,
   "high": 725.0,
   "low": 356.0,
-  "pe": 180.0,
-  "roce": 8.08,
-  "roe": 6.33,
+  "pe": 225.0,
+  "roce": 7.69,
+  "roe": 5.77,
   "about": "Incorporated in 2008,Lenskart Solutions is a technology-focused eyewear company involved in the design, manufacturing, branding, and retail of prescription eyeglasses, sunglasses, contact lenses, and accessories.[1]",
   "website": "http://www.lenskart.com",
   "website_label": "lenskart.com",
@@ -21,15 +21,14 @@
   "screener_id": "1285752",
   "ratios_ok": 6,
   "daily_pct": -0.52,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/LENSKART/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/LENSKART/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/LENSKART/",
+  "ratios_source_url": "https://www.screener.in/company/LENSKART/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
-      "Mar 2020",
       "Mar 2021",
       "Mar 2022",
       "Mar 2023",
@@ -42,104 +41,96 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "900",
-          "905",
-          "1,503",
-          "3,788",
-          "5,428",
-          "6,653",
-          "8,814"
+          "880",
+          "1,439",
+          "2,375",
+          "3,187",
+          "4,039",
+          "5,248"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "932",
-          "952",
-          "1,617",
-          "3,524",
-          "4,748",
-          "5,676",
-          "7,060"
+          "920",
+          "1,475",
+          "2,271",
+          "2,890",
+          "3,584",
+          "4,265"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-32",
-          "-47",
-          "-115",
-          "264",
-          "680",
-          "977",
-          "1,754"
+          "-40",
+          "-36",
+          "104",
+          "297",
+          "455",
+          "983"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-3.6%",
-          "-5%",
-          "-8%",
-          "7%",
-          "13%",
-          "15%",
-          "20%"
+          "-4.5%",
+          "-2.5%",
+          "4.4%",
+          "9%",
+          "11%",
+          "19%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "69",
-          "127",
-          "116",
-          "140",
-          "175",
-          "351",
-          "153"
+          "126",
+          "118",
+          "156",
+          "190",
+          "185",
+          "181"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "4",
-          "7",
-          "23",
-          "83",
-          "124",
-          "146",
-          "178"
+          "5",
+          "19",
+          "62",
+          "91",
+          "97",
+          "129"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "27",
-          "39",
-          "85",
-          "418",
-          "672",
-          "797",
-          "1,048"
+          "26",
+          "58",
+          "114",
+          "204",
+          "292",
+          "419"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
+          "55",
           "6",
-          "33",
-          "-108",
-          "-97",
-          "59",
-          "385",
-          "680"
+          "84",
+          "192",
+          "252",
+          "616"
         ]
       },
       {
@@ -148,37 +139,34 @@
         "values": [
           "0%",
           "0%",
-          "0%",
-          "-39%",
-          "117%",
-          "23%",
-          "26%"
+          "-64%",
+          "25%",
+          "25%",
+          "23%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
+          "55",
           "6",
-          "29",
-          "-102",
-          "-64",
-          "-10",
-          "297",
-          "501"
+          "138",
+          "144",
+          "188",
+          "476"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "0.83",
-          "3.79",
-          "-13.39",
-          "-8.34",
-          "-2.26",
-          "3.83",
-          "2.84"
+          "7.24",
+          "0.73",
+          "18.03",
+          "18.68",
+          "2.44",
+          "2.74"
         ]
       },
       {
@@ -190,12 +178,11 @@
           "0%",
           "0%",
           "0%",
-          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/LENSKART/consolidated/"
+    "source_url": "https://www.screener.in/company/LENSKART/"
   },
   "growth": {
     "cards": [
@@ -211,17 +198,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 58.0
+            "value": 43.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 33.0
+            "value": 30.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 37.0
+            "value": 31.0
           }
         ]
       },
@@ -237,17 +224,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 74.0
+            "value": 52.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 110.0
+            "value": 48.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 77.0
+            "value": 89.0
           }
         ]
       },
@@ -289,12 +276,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 2.0
+            "value": 3.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 4.0
+            "value": 3.0
           },
           {
             "key": "last",
@@ -426,7 +413,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-07T23:03:51.992613+05:30",
-  "generated_at_ist": "07 Oct 2026, 23:03 IST",
+  "generated_at": "2026-10-08T07:28:22.715396+05:30",
+  "generated_at_ist": "08 Oct 2026, 07:28 IST",
   "source": "screener"
 }

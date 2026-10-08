@@ -4,13 +4,13 @@
   "name": "TBO Tek",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/TBOTEK/",
-  "mcap_cr": 18515.0,
+  "mcap_cr": 18509.0,
   "price": 1704.0,
   "high": 1772.0,
   "low": 1004.0,
-  "pe": 304.0,
-  "roce": 9.49,
-  "roe": 6.86,
+  "pe": 68.8,
+  "roce": 18.3,
+  "roe": 17.4,
   "about": "Incorporated in 2006, TBO Tek Ltd is in the business of operating multiple online technology platforms and providing access to book global travel inventory aggregated through travel suppliers like airlines, hotels, etc.[1]",
   "website": "https://www.tbo.com/",
   "website_label": "tbo.com",
@@ -21,13 +21,13 @@
   "screener_id": "1284773",
   "ratios_ok": 6,
   "daily_pct": 0.67,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/TBOTEK/",
-  "ratios_source_url": "https://www.screener.in/company/TBOTEK/",
+  "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/TBOTEK/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/TBOTEK/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,78 +42,78 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "379",
-          "102",
-          "264",
-          "476",
-          "539",
-          "576",
-          "584"
+          "571",
+          "142",
+          "483",
+          "1,065",
+          "1,393",
+          "1,737",
+          "2,677"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "325",
-          "104",
-          "232",
-          "390",
-          "450",
-          "511",
-          "537"
+          "484",
+          "163",
+          "451",
+          "876",
+          "1,132",
+          "1,453",
+          "2,299"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "54",
-          "-2",
+          "87",
+          "-21",
           "32",
-          "86",
-          "89",
-          "65",
-          "47"
+          "189",
+          "261",
+          "285",
+          "378"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "14%",
-          "-1.7%",
-          "12%",
+          "15%",
+          "-15%",
+          "7%",
           "18%",
+          "19%",
           "16%",
-          "11%",
-          "8%"
+          "14%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "13",
-          "27",
-          "29",
-          "11",
-          "6",
-          "41",
-          "59"
+          "18",
+          "5",
+          "37",
+          "24",
+          "21",
+          "75",
+          "54"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "3",
+          "5",
           "2",
-          "4",
-          "11",
-          "13",
-          "12",
-          "10"
+          "7",
+          "14",
+          "19",
+          "33",
+          "52"
         ]
       },
       {
@@ -122,63 +122,63 @@
         "values": [
           "12",
           "11",
-          "14",
           "16",
-          "19",
-          "17",
-          "20"
+          "25",
+          "36",
+          "52",
+          "86"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "53",
-          "14",
-          "42",
-          "70",
-          "63",
-          "78",
-          "76"
+          "88",
+          "-30",
+          "46",
+          "174",
+          "227",
+          "275",
+          "293"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
+          "17%",
+          "16%",
           "27%",
-          "31%",
-          "26%",
-          "26%",
-          "25%",
-          "27%",
-          "25%"
+          "15%",
+          "12%",
+          "16%",
+          "17%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "39",
-          "9",
-          "31",
-          "52",
-          "47",
-          "57",
-          "56"
+          "73",
+          "-34",
+          "34",
+          "148",
+          "201",
+          "230",
+          "244"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "204.77",
-          "49.07",
-          "3.01",
-          "4.96",
-          "4.53",
-          "5.23",
-          "5.20"
+          "384.79",
+          "-180.13",
+          "3.23",
+          "13.84",
+          "19.39",
+          "21.17",
+          "22.50"
         ]
       },
       {
@@ -195,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/TBOTEK/"
+    "source_url": "https://www.screener.in/company/TBOTEK/consolidated/"
   },
   "growth": {
     "cards": [
@@ -211,17 +211,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 42.0
+            "value": 80.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 7.0
+            "value": 36.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 4.0
+            "value": 69.0
           }
         ]
       },
@@ -237,17 +237,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 44.0
+            "value": 90.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 3.0
+            "value": 19.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 19.0
+            "value": 25.0
           }
         ]
       },
@@ -273,7 +273,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 11.0
+            "value": 10.0
           }
         ]
       },
@@ -284,22 +284,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 14.0
+            "value": null
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 12.0
+            "value": 26.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 10.0
+            "value": 24.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 7.0
+            "value": 17.0
           }
         ]
       }
@@ -475,7 +475,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-07T23:07:21.241699+05:30",
-  "generated_at_ist": "07 Oct 2026, 23:07 IST",
+  "generated_at": "2026-10-08T07:32:04.784685+05:30",
+  "generated_at_ist": "08 Oct 2026, 07:32 IST",
   "source": "screener"
 }
