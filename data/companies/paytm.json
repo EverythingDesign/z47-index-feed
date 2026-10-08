@@ -4,13 +4,13 @@
   "name": "Paytm",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/PAYTM/",
-  "mcap_cr": 111213.0,
-  "price": 1732.0,
+  "mcap_cr": 105280.0,
+  "price": 1642.0,
   "high": 1856.0,
   "low": 931.0,
-  "pe": 137.0,
-  "roce": 4.96,
-  "roe": 4.64,
+  "pe": 188.0,
+  "roce": 3.75,
+  "roe": 3.66,
   "about": "Incorporated in 2000, One 97 Communications Ltd is India's leading digital ecosystem for consumers as well as merchants. As of March 31, 2021, the company has a 333 million+ client base and 21 million+ registered merchants to whom it offers payment services, financial services, and commerce and cloud services.[1]",
   "website": "http://www.paytm.com",
   "website_label": "paytm.com",
@@ -20,14 +20,14 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=PAYTM",
   "screener_id": "1275094",
   "ratios_ok": 6,
-  "daily_pct": 2.24,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/PAYTM/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/PAYTM/consolidated/",
+  "daily_pct": -5.23,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/PAYTM/",
+  "ratios_source_url": "https://www.screener.in/company/PAYTM/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,143 +42,143 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "3,279",
-          "2,801",
-          "4,974",
-          "7,990",
-          "9,978",
-          "6,900",
-          "8,437"
+          "3,115",
+          "2,667",
+          "3,892",
+          "6,028",
+          "7,661",
+          "5,505",
+          "5,825"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "5,964",
-          "4,640",
-          "7,358",
-          "9,634",
-          "10,921",
-          "8,406",
-          "7,936"
+          "5,580",
+          "4,344",
+          "6,188",
+          "7,729",
+          "8,698",
+          "6,986",
+          "5,590"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-2,685",
-          "-1,838",
-          "-2,384",
-          "-1,644",
-          "-943",
-          "-1,506",
-          "501"
+          "-2,465",
+          "-1,677",
+          "-2,296",
+          "-1,701",
+          "-1,038",
+          "-1,481",
+          "235"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-82%",
-          "-66%",
-          "-48%",
-          "-21%",
-          "-9%",
-          "-22%",
-          "6%"
+          "-79%",
+          "-63%",
+          "-59%",
+          "-28%",
+          "-14%",
+          "-27%",
+          "4.0%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "-45",
-          "356",
-          "288",
-          "410",
-          "314",
-          "1,551",
-          "668"
+          "-175",
+          "310",
+          "239",
+          "336",
+          "307",
+          "1,365",
+          "253"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "54",
-          "38",
-          "42",
+          "50",
+          "36",
+          "40",
+          "22",
           "24",
-          "26",
-          "17",
-          "19"
+          "16",
+          "17"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "174",
-          "178",
-          "247",
-          "485",
-          "736",
-          "673",
-          "568"
+          "143",
+          "157",
+          "228",
+          "470",
+          "721",
+          "657",
+          "404"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-2,958",
-          "-1,698",
-          "-2,385",
-          "-1,743",
-          "-1,390",
-          "-645",
-          "582"
+          "-2,833",
+          "-1,560",
+          "-2,325",
+          "-1,856",
+          "-1,476",
+          "-789",
+          "67"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "-1%",
           "0%",
           "0%",
-          "2%",
-          "2%",
-          "3%",
-          "5%"
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-2,942",
-          "-1,701",
-          "-2,396",
-          "-1,776",
-          "-1,422",
-          "-663",
-          "552"
+          "-2,833",
+          "-1,560",
+          "-2,325",
+          "-1,856",
+          "-1,476",
+          "-789",
+          "67"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-470.27",
-          "-280.42",
-          "-36.90",
-          "-28.02",
-          "-22.30",
-          "-10.33",
-          "8.64"
+          "-468.78",
+          "-257.93",
+          "-35.85",
+          "-29.28",
+          "-23.23",
+          "-12.37",
+          "1.05"
         ]
       },
       {
@@ -195,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/PAYTM/consolidated/"
+    "source_url": "https://www.screener.in/company/PAYTM/"
   },
   "growth": {
     "cards": [
@@ -206,22 +206,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 26.0
+            "value": 29.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 25.0
+            "value": 17.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 2.0
+            "value": -1.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 23.0
+            "value": -11.0
           }
         ]
       },
@@ -237,17 +237,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 19.0
+            "value": 18.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 34.0
+            "value": 31.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 263.0
+            "value": 195.0
           }
         ]
       },
@@ -268,12 +268,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 24.0
+            "value": 22.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 41.0
+            "value": 34.0
           }
         ]
       },
@@ -284,22 +284,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": null
+            "value": -19.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": -9.0
+            "value": -10.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -5.0
+            "value": -6.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 5.0
+            "value": 4.0
           }
         ]
       }
@@ -457,7 +457,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-08T07:28:36.269898+05:30",
-  "generated_at_ist": "08 Oct 2026, 07:28 IST",
+  "generated_at": "2026-10-08T23:07:27.203853+05:30",
+  "generated_at_ist": "08 Oct 2026, 23:07 IST",
   "source": "screener"
 }

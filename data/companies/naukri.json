@@ -4,13 +4,13 @@
   "name": "Info Edge (Naukri)",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/NAUKRI/",
-  "mcap_cr": 79451.0,
-  "price": 1225.0,
+  "mcap_cr": 77314.0,
+  "price": 1183.0,
   "high": 1420.0,
   "low": 908.0,
-  "pe": 53.9,
-  "roce": 3.45,
-  "roe": 1.81,
+  "pe": 66.0,
+  "roce": 4.79,
+  "roe": -1.58,
   "about": "Info Edge is India’s premier online classified company with a portfolio of brands. It owns various brands in different fields like naukri.com (online recruitment), 99acres.com (online real estate), jeevansathi.com (online matrimonial) as well as shiksha.com (online education information services). It also acts as an investor and has invested in many start-ups in the online space and is actively growing its investment portfolio. [1]",
   "website": "http://www.infoedge.in",
   "website_label": "infoedge.in",
@@ -20,14 +20,14 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=NAUKRI",
   "screener_id": "1485",
   "ratios_ok": 6,
-  "daily_pct": -1.27,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/NAUKRI/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/NAUKRI/consolidated/",
+  "daily_pct": -3.47,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/NAUKRI/",
+  "ratios_source_url": "https://www.screener.in/company/NAUKRI/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,116 +42,116 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "1,312",
+          "1,273",
           "1,128",
-          "1,589",
-          "2,346",
-          "2,536",
-          "2,850",
-          "3,285"
+          "1,562",
+          "2,159",
+          "2,381",
+          "2,654",
+          "3,052"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "1,662",
-          "1,054",
-          "1,143",
-          "1,997",
-          "1,825",
-          "1,976",
-          "2,098"
+          "864",
+          "835",
+          "1,092",
+          "1,366",
+          "1,413",
+          "1,569",
+          "1,791"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-350",
-          "74",
-          "446",
-          "348",
-          "711",
-          "874",
-          "1,186"
+          "408",
+          "293",
+          "470",
+          "792",
+          "968",
+          "1,084",
+          "1,261"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-27%",
-          "7%",
-          "28%",
-          "15%",
-          "28%",
-          "31%",
-          "36%"
+          "32%",
+          "26%",
+          "30%",
+          "37%",
+          "41%",
+          "41%",
+          "41%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "286",
-          "1,584",
-          "13,810",
-          "-116",
-          "303",
-          "1,220",
-          "1,099"
+          "-36",
+          "116",
+          "9,682",
+          "-120",
+          "242",
+          "370",
+          "5,503"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "14",
+          "12",
           "11",
           "11",
-          "18",
-          "35",
-          "36",
-          "42"
+          "12",
+          "29",
+          "31",
+          "34"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "48",
+          "41",
+          "44",
+          "40",
           "45",
-          "45",
-          "73",
-          "101",
-          "113",
-          "123"
+          "68",
+          "80",
+          "89"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-126",
-          "1,602",
-          "14,200",
-          "141",
-          "878",
-          "1,945",
-          "2,121"
+          "319",
+          "354",
+          "10,101",
+          "616",
+          "1,113",
+          "1,344",
+          "6,641"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "95%",
+          "36%",
+          "21%",
           "12%",
-          "9%",
-          "150%",
-          "32%",
           "33%",
+          "25%",
+          "42%",
           "17%"
         ]
       },
@@ -159,43 +159,43 @@
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-246",
-          "1,418",
-          "12,882",
-          "-70",
-          "595",
-          "1,310",
-          "1,763"
+          "206",
+          "278",
+          "8,923",
+          "411",
+          "833",
+          "773",
+          "5,536"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-3.88",
-          "22.00",
-          "198.16",
-          "-1.66",
-          "8.89",
-          "14.85",
-          "22.36"
+          "3.36",
+          "4.32",
+          "138.57",
+          "6.37",
+          "12.88",
+          "11.94",
+          "85.37"
         ]
       },
       {
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "-31%",
-          "7%",
-          "1%",
-          "-228%",
-          "49%",
-          "40%",
-          "38%"
+          "36%",
+          "37%",
+          "2%",
+          "60%",
+          "34%",
+          "50%",
+          "10%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/NAUKRI/consolidated/"
+    "source_url": "https://www.screener.in/company/NAUKRI/"
   },
   "growth": {
     "cards": [
@@ -211,7 +211,7 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 24.0
+            "value": 22.0
           },
           {
             "key": "3y",
@@ -232,22 +232,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 16.0
+            "value": null
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 39.0
+            "value": null
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 62.0
+            "value": null
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 43.0
+            "value": 44.0
           }
         ]
       },
@@ -268,12 +268,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 13.0
+            "value": 12.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -10.0
+            "value": -14.0
           }
         ]
       },
@@ -289,7 +289,7 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 3.0
+            "value": 2.0
           },
           {
             "key": "3y",
@@ -299,7 +299,7 @@
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 2.0
+            "value": -2.0
           }
         ]
       }
@@ -587,7 +587,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-08T07:28:04.925582+05:30",
-  "generated_at_ist": "08 Oct 2026, 07:28 IST",
+  "generated_at": "2026-10-08T23:06:56.624339+05:30",
+  "generated_at_ist": "08 Oct 2026, 23:06 IST",
   "source": "screener"
 }
