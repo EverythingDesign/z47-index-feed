@@ -4,24 +4,12 @@
   "name": "IndiaMart",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/INDIAMART/",
-  "mcap_cr": 9639.0,
-  "price": 1603.0,
-  "high": 2526.0,
-  "low": 1565.0,
-  "pe": 19.5,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 19.6,
   "roce": 28.0,
   "roe": 20.7,
-  "about": "IndiaMART, the first and largest B2B digital marketplace in the country, today stands out as a game-changer on the B2B landscape. It focuses on integrating the Small and Medium Businesses (SMEs) into the new paradigm with speed and ease, we are constantly pushing the frontiers of innovation to make the online marketplace more accessible, visible and engaging to them. [1]",
-  "website": "http://www.indiamart.com",
-  "website_label": "indiamart.com",
-  "bse_code": "542726",
-  "bse_url": "https://www.bseindia.com/stock-share-price/indiamart-intermesh-ltd/INDIAMART/542726/",
-  "nse_symbol": "INDIAMART",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=INDIAMART",
-  "screener_id": "1274674",
-  "ratios_ok": 6,
-  "daily_pct": -0.16,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/INDIAMART/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/INDIAMART/consolidated/",
@@ -273,7 +261,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -34.0
+            "value": -33.0
           }
         ]
       },
@@ -531,7 +519,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-09T07:47:49.234213+05:30",
-  "generated_at_ist": "09 Oct 2026, 07:47 IST",
+  "generated_at": "2026-10-09T22:47:52.335493+05:30",
+  "generated_at_ist": "09 Oct 2026, 22:47 IST",
   "source": "screener"
 }
