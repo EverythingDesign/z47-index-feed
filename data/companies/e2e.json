@@ -4,24 +4,12 @@
   "name": "E2E Networks",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/E2E/",
-  "mcap_cr": 14471.0,
-  "price": 705.0,
-  "high": 755.0,
-  "low": 183.0,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
   "pe": 465.0,
   "roce": null,
   "roe": null,
-  "about": "E2E Networks is an Nse-listed AI-focused hyper scale cloud platform, offering advanced cloud GPUs and a comprehensive ecosystem of cloud technologies designed for the development and deployment of AI/ML applications.[1]",
-  "website": "https://www.e2enetworks.com",
-  "website_label": "e2enetworks.com",
-  "bse_code": "544783",
-  "bse_url": "https://www.bseindia.com/stock-share-price/e2e-networks-ltd/E2E/544783/",
-  "nse_symbol": "E2E",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=E2E",
-  "screener_id": "1274346",
-  "ratios_ok": 6,
-  "daily_pct": -1.34,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/E2E/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/E2E/consolidated/",
@@ -185,17 +173,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 172.0
+            "value": 169.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 146.0
+            "value": 145.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 103.0
+            "value": 107.0
           }
         ]
       },
@@ -460,7 +448,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-09T22:52:39.020426+05:30",
-  "generated_at_ist": "09 Oct 2026, 22:52 IST",
+  "generated_at": "2026-10-10T07:27:00.535477+05:30",
+  "generated_at_ist": "10 Oct 2026, 07:27 IST",
   "source": "screener"
 }

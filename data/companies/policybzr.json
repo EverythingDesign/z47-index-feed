@@ -4,30 +4,18 @@
   "name": "PolicyBazaar",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/POLICYBZR/",
-  "mcap_cr": 46784.0,
-  "price": 1012.0,
-  "high": 1964.0,
-  "low": 945.0,
-  "pe": 108.0,
-  "roce": 0.42,
-  "roe": 0.3,
-  "about": "PB Fintech Ltd, popularly known as Policy Bazar is  India’s largest online platform for insurance and lending products through its flagship brands - Policybazaar and Paisabazaar platform through which they provide  convenient access to insurance, credit and other financial products[1]",
-  "website": "http://www.pbfintech.in",
-  "website_label": "pbfintech.in",
-  "bse_code": "543390",
-  "bse_url": "https://www.bseindia.com/stock-share-price/pb-fintech-ltd/POLICYBZR/543390/",
-  "nse_symbol": "POLICYBZR",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=POLICYBZR",
-  "screener_id": "1275091",
-  "ratios_ok": 6,
-  "daily_pct": 1.61,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/POLICYBZR/",
-  "ratios_source_url": "https://www.screener.in/company/POLICYBZR/",
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 62.6,
+  "roce": 10.3,
+  "roe": 9.75,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,143 +30,143 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "61",
-          "123",
-          "103",
-          "134",
-          "110",
-          "153",
-          "208"
+          "771",
+          "887",
+          "1,425",
+          "2,558",
+          "3,438",
+          "4,977",
+          "6,794"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "89",
-          "144",
-          "513",
-          "398",
-          "314",
-          "409",
-          "378"
+          "1,091",
+          "1,046",
+          "2,325",
+          "3,219",
+          "3,626",
+          "4,884",
+          "6,286"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-28",
-          "-20",
-          "-409",
-          "-264",
-          "-204",
-          "-255",
-          "-170"
+          "-320",
+          "-160",
+          "-901",
+          "-662",
+          "-188",
+          "93",
+          "508"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-46%",
-          "-16%",
-          "-397%",
-          "-197%",
-          "-185%",
-          "-166%",
-          "-81%"
+          "-41%",
+          "-18%",
+          "-63%",
+          "-26%",
+          "-5%",
+          "1.9%",
+          "7%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "58",
-          "54",
-          "114",
-          "195",
-          "252",
-          "273",
-          "223"
+          "84",
+          "71",
+          "124",
+          "259",
+          "381",
+          "449",
+          "372"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "1",
-          "2",
-          "1",
-          "1",
-          "1",
-          "0",
-          "3"
+          "12",
+          "12",
+          "14",
+          "22",
+          "27",
+          "34",
+          "38"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "9",
-          "4",
-          "4",
-          "4",
-          "3",
-          "3",
-          "4"
+          "47",
+          "41",
+          "43",
+          "64",
+          "89",
+          "121",
+          "136"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "19",
-          "27",
-          "-300",
-          "-74",
-          "44",
-          "14",
-          "47"
+          "-295",
+          "-142",
+          "-833",
+          "-488",
+          "77",
+          "387",
+          "707"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "49%",
-          "30%",
+          "3%",
+          "6%",
           "-0%",
-          "0%",
-          "18%",
-          "11%",
-          "11%"
+          "-0%",
+          "16%",
+          "9%",
+          "5%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "10",
-          "19",
-          "-300",
-          "-74",
-          "36",
-          "13",
-          "41"
+          "-304",
+          "-150",
+          "-833",
+          "-488",
+          "64",
+          "352",
+          "670"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "2,563.16",
-          "833.04",
-          "-6.67",
-          "-1.65",
-          "0.80",
-          "0.27",
-          "0.90"
+          "-80,007.89",
+          "-6,583.70",
+          "-18.53",
+          "-10.82",
+          "1.48",
+          "7.67",
+          "14.48"
         ]
       },
       {
@@ -195,7 +183,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/POLICYBZR/"
+    "source_url": "https://www.screener.in/company/POLICYBZR/consolidated/"
   },
   "growth": {
     "cards": [
@@ -206,22 +194,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 15.0
+            "value": 54.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 11.0
+            "value": 50.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 16.0
+            "value": 38.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 246.0
+            "value": 38.0
           }
         ]
       },
@@ -232,22 +220,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 8.0
+            "value": 22.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 65.0
+            "value": 42.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 32.0
+            "value": 50.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 32643.0
+            "value": 99.0
           }
         ]
       },
@@ -268,7 +256,7 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 10.0
+            "value": 11.0
           },
           {
             "key": "1y",
@@ -284,7 +272,7 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": -1.0
+            "value": null
           },
           {
             "key": "5y",
@@ -294,12 +282,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 0.0
+            "value": 6.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 0.0
+            "value": 10.0
           }
         ]
       }
@@ -487,7 +475,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-09T22:44:17.370408+05:30",
-  "generated_at_ist": "09 Oct 2026, 22:44 IST",
+  "generated_at": "2026-10-10T07:18:11.612079+05:30",
+  "generated_at_ist": "10 Oct 2026, 07:18 IST",
   "source": "screener"
 }

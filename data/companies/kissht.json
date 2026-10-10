@@ -4,13 +4,13 @@
   "name": "Kissht (OnEMI Technology)",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/KISSHT/",
-  "mcap_cr": 6534.0,
+  "mcap_cr": 6574.0,
   "price": 369.0,
   "high": 388.0,
   "low": 190.0,
-  "pe": 38.8,
-  "roce": 22.1,
-  "roe": 16.7,
+  "pe": 20.8,
+  "roce": 22.7,
+  "roe": 24.0,
   "about": "Incorporated in 2016, OnEMI Technology Solutions Limited is a technology-enabled lender in India, primarily offering digital loans through its mobile application for various consumption and business needs.[1]",
   "website": "https://www.onemi.in/",
   "website_label": "onemi.in",
@@ -21,13 +21,13 @@
   "screener_id": "1285971",
   "ratios_ok": 6,
   "daily_pct": -0.82,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/KISSHT/",
-  "ratios_source_url": "https://www.screener.in/company/KISSHT/",
+  "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/KISSHT/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/KISSHT/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2021",
       "Mar 2022",
@@ -41,57 +41,57 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "32",
-          "156",
-          "264",
-          "429",
-          "321",
-          "734"
+          "175",
+          "517",
+          "1,000",
+          "1,700",
+          "1,352",
+          "2,209"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "84",
-          "108",
-          "227",
-          "300",
-          "237",
-          "526"
+          "198",
+          "430",
+          "876",
+          "1,307",
+          "914",
+          "1,470"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-52",
-          "48",
-          "37",
-          "129",
-          "84",
-          "209"
+          "-23",
+          "86",
+          "124",
+          "393",
+          "438",
+          "739"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-163%",
-          "31%",
-          "14%",
-          "30%",
-          "26%",
-          "28%"
+          "-13%",
+          "17%",
+          "12%",
+          "23%",
+          "32%",
+          "33%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
+          "1",
           "0",
-          "0",
-          "7",
+          "1",
           "0",
           "0",
           "0"
@@ -101,12 +101,12 @@
         "key": "interest",
         "label": "Interest",
         "values": [
-          "0",
-          "0",
-          "4",
-          "4",
-          "4",
-          "4"
+          "26",
+          "26",
+          "83",
+          "103",
+          "199",
+          "341"
         ]
       },
       {
@@ -114,34 +114,34 @@
         "label": "Depreciation",
         "values": [
           "6",
-          "6",
-          "15",
-          "15",
-          "14",
-          "13"
+          "7",
+          "18",
+          "23",
+          "23",
+          "22"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-58",
-          "41",
-          "26",
-          "111",
-          "67",
-          "192"
+          "-55",
+          "54",
+          "24",
+          "267",
+          "216",
+          "377"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%",
-          "-28%",
-          "7%",
+          "6%",
+          "-16%",
+          "-15%",
           "26%",
-          "24%",
+          "26%",
           "25%"
         ]
       },
@@ -150,23 +150,23 @@
         "label": "Net Profit",
         "values": [
           "-58",
-          "53",
-          "25",
-          "82",
-          "51",
-          "144"
+          "63",
+          "28",
+          "197",
+          "161",
+          "281"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-237.97",
-          "217.21",
-          "50.57",
-          "172.52",
-          "94.91",
-          "12.13"
+          "-240.36",
+          "257.50",
+          "56.70",
+          "412.72",
+          "299.49",
+          "23.70"
         ]
       },
       {
@@ -182,7 +182,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/KISSHT/"
+    "source_url": "https://www.screener.in/company/KISSHT/consolidated/"
   },
   "growth": {
     "cards": [
@@ -198,17 +198,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 87.0
+            "value": 66.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 41.0
+            "value": 30.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 129.0
+            "value": 63.0
           }
         ]
       },
@@ -224,17 +224,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 35.0
+            "value": 47.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 80.0
+            "value": 117.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 184.0
+            "value": 75.0
           }
         ]
       },
@@ -276,17 +276,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 13.0
+            "value": 22.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 13.0
+            "value": 23.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 17.0
+            "value": 24.0
           }
         ]
       }
@@ -384,7 +384,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-09T22:53:27.482464+05:30",
-  "generated_at_ist": "09 Oct 2026, 22:53 IST",
+  "generated_at": "2026-10-10T07:27:58.545252+05:30",
+  "generated_at_ist": "10 Oct 2026, 07:27 IST",
   "source": "screener"
 }

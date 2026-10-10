@@ -4,7 +4,7 @@
   "name": "Urban Company",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/URBANCO/",
-  "mcap_cr": 24646.0,
+  "mcap_cr": 24638.0,
   "price": 160.0,
   "high": 184.0,
   "low": 96.4,
@@ -146,9 +146,9 @@
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
+          "-0%",
+          "-0%",
+          "-0%",
           "0%",
           "0%",
           "-740%",
@@ -185,13 +185,13 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       }
     ],
@@ -273,7 +273,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -1.0
+            "value": 2.0
           }
         ]
       },
@@ -433,7 +433,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-09T22:46:29.563863+05:30",
-  "generated_at_ist": "09 Oct 2026, 22:46 IST",
+  "generated_at": "2026-10-10T07:20:49.745072+05:30",
+  "generated_at_ist": "10 Oct 2026, 07:20 IST",
   "source": "screener"
 }

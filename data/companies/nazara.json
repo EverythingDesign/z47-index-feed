@@ -4,13 +4,13 @@
   "name": "Nazara Technologies",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/NAZARA/",
-  "mcap_cr": 14482.0,
+  "mcap_cr": 14494.0,
   "price": 378.0,
   "high": 402.0,
   "low": 216.0,
   "pe": null,
-  "roce": 1.83,
-  "roe": 1.9,
+  "roce": 27.1,
+  "roe": 30.6,
   "about": "Nazara Technologies is the leading India based diversified gaming and sports media platform with presence in India and across emerging and developed global markets such as Africa and North America, and offerings across the interactive gaming, eSports and gamified early learning ecosystems.",
   "website": "http://www.nazara.com",
   "website_label": "nazara.com",
@@ -21,13 +21,13 @@
   "screener_id": "1274852",
   "ratios_ok": 5,
   "daily_pct": 0.44,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/NAZARA/",
-  "ratios_source_url": "https://www.screener.in/company/NAZARA/",
+  "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/NAZARA/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/NAZARA/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,65 +42,65 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "46",
-          "33",
-          "20",
-          "23",
-          "23",
-          "34",
-          "74"
+          "247",
+          "454",
+          "622",
+          "1,091",
+          "1,138",
+          "1,624",
+          "1,829"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "37",
-          "37",
-          "64",
-          "68",
-          "156",
-          "63",
-          "111"
+          "255",
+          "415",
+          "536",
+          "989",
+          "1,040",
+          "1,509",
+          "1,857"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "9",
-          "-4",
-          "-43",
-          "-45",
-          "-133",
-          "-29",
-          "-37"
+          "-7",
+          "39",
+          "86",
+          "102",
+          "99",
+          "115",
+          "-28"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "21%",
-          "-13%",
-          "-211%",
-          "-196%",
-          "-569%",
-          "-84%",
-          "-50%"
+          "-3.0%",
+          "9%",
+          "14%",
+          "9%",
+          "9%",
+          "7%",
+          "-1.5%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "7",
-          "9",
-          "13",
-          "27",
-          "45",
-          "66",
-          "-881"
+          "15",
+          "14",
+          "24",
+          "47",
+          "65",
+          "80",
+          "343"
         ]
       },
       {
@@ -108,77 +108,77 @@
         "label": "Interest",
         "values": [
           "1",
-          "0",
-          "0",
-          "0",
-          "2",
           "1",
-          "4"
+          "1",
+          "6",
+          "8",
+          "11",
+          "24"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "5",
-          "5",
-          "4",
-          "3",
-          "2",
-          "5",
-          "21"
+          "27",
+          "35",
+          "39",
+          "57",
+          "67",
+          "118",
+          "231"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "10",
-          "-1",
-          "-35",
           "-21",
-          "-92",
-          "32",
-          "-943"
+          "17",
+          "70",
+          "87",
+          "89",
+          "66",
+          "60"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "34%",
-          "-196%",
-          "-2%",
-          "13%",
-          "6%",
-          "12%",
-          "-1%"
+          "28%",
+          "18%",
+          "27%",
+          "29%",
+          "16%",
+          "23%",
+          "-36%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "7",
-          "1",
-          "-34",
-          "-24",
-          "-98",
-          "28",
-          "-935"
+          "-27",
+          "14",
+          "51",
+          "61",
+          "75",
+          "51",
+          "82"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "0.31",
-          "0.03",
-          "-1.30",
-          "-0.91",
-          "-3.18",
-          "0.80",
-          "-25.24"
+          "-0.10",
+          "0.38",
+          "1.09",
+          "1.49",
+          "1.85",
+          "2.16",
+          "2.59"
         ]
       },
       {
@@ -195,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/NAZARA/"
+    "source_url": "https://www.screener.in/company/NAZARA/consolidated/"
   },
   "growth": {
     "cards": [
@@ -206,22 +206,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": -5.0
+            "value": 24.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 18.0
+            "value": 32.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 48.0
+            "value": 19.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 52.0
+            "value": -6.0
           }
         ]
       },
@@ -232,22 +232,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 4.0
+            "value": 31.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 117.0
+            "value": 155.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 55.0
+            "value": 194.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -200.0
+            "value": -267.0
           }
         ]
       },
@@ -268,12 +268,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 20.0
+            "value": 21.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 41.0
+            "value": 43.0
           }
         ]
       },
@@ -284,22 +284,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": -1.0
+            "value": 11.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": -1.0
+            "value": 13.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -1.0
+            "value": 15.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 2.0
+            "value": 31.0
           }
         ]
       }
@@ -493,7 +493,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-09T22:49:27.281275+05:30",
-  "generated_at_ist": "09 Oct 2026, 22:49 IST",
+  "generated_at": "2026-10-10T07:23:39.599787+05:30",
+  "generated_at_ist": "10 Oct 2026, 07:23 IST",
   "source": "screener"
 }
