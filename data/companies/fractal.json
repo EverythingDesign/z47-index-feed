@@ -4,13 +4,13 @@
   "name": "Fractal Analytics",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/FRACTAL/",
-  "mcap_cr": 12151.0,
+  "mcap_cr": 12158.0,
   "price": 700.0,
   "high": 1120.0,
   "low": 696.0,
-  "pe": 36.6,
-  "roce": 12.6,
-  "roe": 12.0,
+  "pe": 51.3,
+  "roce": 11.0,
+  "roe": 8.11,
   "about": "Incorporated in 2000, Fractal Analytics Ltd is in the business of offering Analytics and AI based solutions[1]",
   "website": "http://www.fractal.ai",
   "website_label": "fractal.ai",
@@ -21,15 +21,14 @@
   "screener_id": "1285886",
   "ratios_ok": 6,
   "daily_pct": -1.04,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/FRACTAL/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/FRACTAL/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/FRACTAL/",
+  "ratios_source_url": "https://www.screener.in/company/FRACTAL/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
-      "Mar 2020",
       "Mar 2021",
       "Mar 2022",
       "Mar 2023",
@@ -42,52 +41,48 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "768",
-          "873",
-          "1,295",
-          "1,985",
-          "2,196",
-          "2,765",
-          "3,300"
+          "385",
+          "639",
+          "994",
+          "1,159",
+          "1,437",
+          "1,866"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "782",
-          "772",
-          "1,379",
-          "2,102",
-          "2,139",
-          "2,445",
-          "2,862"
+          "308",
+          "633",
+          "982",
+          "1,068",
+          "1,241",
+          "1,561"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-14",
-          "101",
-          "-84",
-          "-116",
-          "57",
-          "320",
-          "438"
+          "77",
+          "5",
+          "12",
+          "91",
+          "196",
+          "306"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-1.9%",
-          "12%",
-          "-6%",
-          "-6%",
-          "2.6%",
-          "12%",
-          "13%"
+          "20%",
+          "0.8%",
+          "1.3%",
+          "8%",
+          "14%",
+          "16%"
         ]
       },
       {
@@ -95,90 +90,83 @@
         "label": "Other Income",
         "values": [
           "22",
-          "19",
-          "19",
-          "553",
-          "40",
-          "78",
-          "52"
+          "32",
+          "22",
+          "86",
+          "44",
+          "29"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "20",
-          "17",
-          "14",
-          "45",
-          "44",
-          "58",
-          "47"
+          "8",
+          "6",
+          "4",
+          "2",
+          "12",
+          "19"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "47",
+          "32",
+          "37",
+          "45",
+          "46",
           "52",
-          "69",
-          "78",
-          "83",
-          "102",
-          "136"
+          "68"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-60",
-          "51",
-          "-148",
-          "313",
-          "-30",
-          "238",
-          "307"
+          "60",
+          "-6",
+          "-15",
+          "129",
+          "176",
+          "247"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "29%",
-          "29%",
-          "1%",
-          "38%",
-          "79%",
-          "7%",
-          "6%"
+          "19%",
+          "-54%",
+          "105%",
+          "6%",
+          "25%",
+          "25%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-77",
-          "36",
-          "-148",
-          "194",
-          "-55",
-          "221",
-          "287"
+          "48",
+          "-3",
+          "-31",
+          "122",
+          "132",
+          "186"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-6.36",
-          "3.09",
-          "-11.44",
-          "14.85",
-          "-4.16",
-          "16.45",
-          "16.68"
+          "4.06",
+          "-0.20",
+          "-2.38",
+          "9.26",
+          "9.85",
+          "10.85"
         ]
       },
       {
@@ -190,12 +178,11 @@
           "0%",
           "0%",
           "0%",
-          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/FRACTAL/consolidated/"
+    "source_url": "https://www.screener.in/company/FRACTAL/"
   },
   "growth": {
     "cards": [
@@ -211,17 +198,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 30.0
+            "value": 37.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 18.0
+            "value": 23.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 19.0
+            "value": 30.0
           }
         ]
       },
@@ -237,17 +224,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 52.0
+            "value": 35.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 54.0
+            "value": 230.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 58.0
+            "value": 78.0
           }
         ]
       },
@@ -289,17 +276,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 1.0
+            "value": 5.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 8.0
+            "value": 7.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 12.0
+            "value": 8.0
           }
         ]
       }
@@ -403,7 +390,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-13T01:42:00.141021+05:30",
-  "generated_at_ist": "13 Oct 2026, 01:42 IST",
+  "generated_at": "2026-10-13T08:45:12.354491+05:30",
+  "generated_at_ist": "13 Oct 2026, 08:45 IST",
   "source": "screener"
 }

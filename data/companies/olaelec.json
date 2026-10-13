@@ -4,12 +4,24 @@
   "name": "Ola Electric",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/OLAELEC/",
-  "error": "HTTP Error 429: Too Many Requests",
-  "ratios_ok": 0,
-  "screener_consolidated": true,
+  "mcap_cr": 16514.0,
+  "price": 35.0,
+  "high": 56.9,
+  "low": 20.8,
   "pe": null,
   "roce": -19.9,
   "roe": -43.2,
+  "about": "Founded in 2017, Ola Electric Mobility Limited is an electric vehicle company that primarily manufactures electric vehicles and core components for electric vehicles. These components include battery packs, motors, and vehicle frames, all produced at the Ola Futurefactory.[1]",
+  "website": "http://www.olaelectric.com",
+  "website_label": "olaelectric.com",
+  "bse_code": "544225",
+  "bse_url": "https://www.bseindia.com/stock-share-price/ola-electric-mobility-ltd/OLAELEC/544225/",
+  "nse_symbol": "OLAELEC",
+  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=OLAELEC",
+  "screener_id": "1284881",
+  "ratios_ok": 5,
+  "daily_pct": 1.57,
+  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
@@ -149,12 +161,12 @@
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-199,230.00",
-          "-4.01",
-          "-7.53",
-          "-8.10",
-          "-5.16",
-          "-4.16"
+          "",
+          "-3.71",
+          "-6.97",
+          "-7.50",
+          "-4.78",
+          "-3.85"
         ]
       },
       {
@@ -248,7 +260,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -28.0
+            "value": -29.0
           }
         ]
       },
@@ -443,7 +455,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-13T01:35:51.016688+05:30",
-  "generated_at_ist": "13 Oct 2026, 01:35 IST",
+  "generated_at": "2026-10-13T08:39:15.416741+05:30",
+  "generated_at_ist": "13 Oct 2026, 08:39 IST",
   "source": "screener"
 }
