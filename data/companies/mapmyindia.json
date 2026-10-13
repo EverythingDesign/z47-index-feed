@@ -4,18 +4,30 @@
   "name": "MapmyIndia",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/MAPMYINDIA/",
-  "error": "HTTP Error 429: Too Many Requests",
-  "ratios_ok": 0,
-  "screener_consolidated": true,
-  "pe": 36.1,
-  "roce": 19.1,
-  "roe": 12.0,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/MAPMYINDIA/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/MAPMYINDIA/consolidated/",
+  "mcap_cr": 5022.0,
+  "price": 917.0,
+  "high": 2000.0,
+  "low": 795.0,
+  "pe": 35.1,
+  "roce": 19.4,
+  "roe": 12.5,
+  "about": "C E Info Systems Limited (“MapmyIndia”) was incorporated on February 17, 1995. The company is a data and technology products and platforms company, offering proprietary digital maps as a service (“MaaS”), software as a service (“SaaS”), and platform as a service (“PaaS”). They are India’s leading provider of advanced digital maps, geospatial software, and location-based IoT technologies.[1]",
+  "website": "http://www.mapmyindia.com",
+  "website_label": "mapmyindia.com",
+  "bse_code": "543425",
+  "bse_url": "https://www.bseindia.com/stock-share-price/ce-info-systems-ltd/MAPMYINDIA/543425/",
+  "nse_symbol": "MAPMYINDIA",
+  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=MAPMYINDIA",
+  "screener_id": "1275122",
+  "ratios_ok": 6,
+  "daily_pct": 1.08,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/MAPMYINDIA/",
+  "ratios_source_url": "https://www.screener.in/company/MAPMYINDIA/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -32,37 +44,37 @@
         "values": [
           "149",
           "152",
-          "200",
-          "281",
-          "379",
-          "463",
-          "474"
+          "198",
+          "254",
+          "316",
+          "384",
+          "401"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "119",
+          "118",
           "101",
-          "114",
-          "164",
-          "225",
-          "287",
-          "305"
+          "112",
+          "138",
+          "169",
+          "218",
+          "248"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "29",
+          "30",
           "51",
           "86",
-          "118",
-          "155",
-          "176",
-          "169"
+          "116",
+          "147",
+          "166",
+          "153"
         ]
       },
       {
@@ -71,11 +83,11 @@
         "values": [
           "20%",
           "34%",
+          "44%",
+          "46%",
+          "46%",
           "43%",
-          "42%",
-          "41%",
-          "38%",
-          "36%"
+          "38%"
         ]
       },
       {
@@ -84,11 +96,11 @@
         "values": [
           "15",
           "40",
-          "42",
-          "34",
-          "38",
+          "39",
+          "35",
+          "40",
           "52",
-          "52"
+          "57"
         ]
       },
       {
@@ -98,75 +110,75 @@
           "3",
           "3",
           "2",
-          "3",
-          "3",
-          "3",
-          "2"
+          "2",
+          "1",
+          "1",
+          "1"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "10",
-          "10",
+          "9",
+          "9",
           "8",
+          "6",
+          "9",
           "10",
-          "15",
-          "20",
-          "30"
+          "17"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "32",
+          "34",
           "79",
-          "117",
-          "139",
-          "175",
+          "115",
+          "143",
+          "177",
           "206",
-          "189"
+          "191"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "27%",
+          "25%",
           "24%",
           "26%",
-          "23%",
-          "23%",
-          "28%",
-          "29%"
+          "24%",
+          "22%",
+          "27%",
+          "28%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "23",
+          "25",
           "60",
-          "87",
-          "108",
-          "134",
-          "148",
-          "134"
+          "86",
+          "109",
+          "137",
+          "150",
+          "138"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "60.53",
-          "156.07",
-          "16.34",
-          "19.99",
-          "24.77",
-          "27.05",
-          "24.50"
+          "66.11",
+          "157.01",
+          "16.07",
+          "20.27",
+          "25.42",
+          "27.57",
+          "25.19"
         ]
       },
       {
@@ -183,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/MAPMYINDIA/consolidated/"
+    "source_url": "https://www.screener.in/company/MAPMYINDIA/"
   },
   "growth": {
     "cards": [
@@ -199,17 +211,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 25.0
+            "value": 21.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 19.0
+            "value": 16.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 2.0
+            "value": 6.0
           }
         ]
       },
@@ -225,7 +237,7 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 16.0
+            "value": 20.0
           },
           {
             "key": "3y",
@@ -282,7 +294,7 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 15.0
+            "value": 16.0
           },
           {
             "key": "last",
@@ -475,7 +487,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-13T08:42:37.223350+05:30",
-  "generated_at_ist": "13 Oct 2026, 08:42 IST",
+  "generated_at": "2026-10-13T23:27:06.051961+05:30",
+  "generated_at_ist": "13 Oct 2026, 23:27 IST",
   "source": "screener"
 }
