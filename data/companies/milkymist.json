@@ -9,8 +9,8 @@
   "high": 345.0,
   "low": 165.0,
   "pe": 131.0,
-  "roce": 13.7,
-  "roe": 31.9,
+  "roce": 13.6,
+  "roe": 31.6,
   "about": "Incorporated in 2014, Milky Mist Dairy Food \nLtd is in the business of processing of milk \nand manufacturing of milk related products.[1]",
   "bse_code": "544868",
   "bse_url": "https://www.bseindia.com/stock-share-price/milky-mist-dairy-food-ltd/MILKYMIST/544868/",
@@ -19,14 +19,16 @@
   "screener_id": "1286094",
   "ratios_ok": 6,
   "daily_pct": 0.21,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/MILKYMIST/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/MILKYMIST/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/MILKYMIST/",
+  "ratios_source_url": "https://www.screener.in/company/MILKYMIST/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2021",
+      "Mar 2022",
       "Mar 2023",
       "Mar 2024",
       "Mar 2025",
@@ -37,36 +39,44 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "1,394",
-          "1,822",
-          "2,350",
-          "3,138"
+          "928",
+          "1,012",
+          "1,432",
+          "1,803",
+          "2,328",
+          "3,137"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "1,198",
-          "1,605",
-          "2,044",
-          "2,710"
+          "785",
+          "857",
+          "1,235",
+          "1,589",
+          "2,027",
+          "2,713"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "197",
-          "217",
-          "305",
-          "429"
+          "143",
+          "154",
+          "196",
+          "214",
+          "301",
+          "424"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
+          "15%",
+          "15%",
           "14%",
           "12%",
           "13%",
@@ -77,17 +87,21 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
+          "-3",
+          "-2",
           "5",
           "5",
           "5",
-          "7"
+          "6"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "57",
+          "47",
+          "41",
+          "58",
           "72",
           "86",
           "106"
@@ -97,29 +111,35 @@
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "80",
+          "54",
+          "61",
+          "79",
           "107",
           "136",
-          "170"
+          "169"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "63",
-          "43",
-          "88",
-          "158"
+          "39",
+          "50",
+          "64",
+          "41",
+          "84",
+          "156"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "57%",
-          "54%",
-          "47%",
+          "40%",
+          "37%",
+          "56%",
+          "56%",
+          "48%",
           "20%"
         ]
       },
@@ -127,20 +147,24 @@
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "27",
-          "19",
-          "46",
-          "127"
+          "23",
+          "32",
+          "28",
+          "18",
+          "44",
+          "125"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "77.80",
-          "55.54",
-          "0.73",
-          "1.98"
+          "0.37",
+          "0.50",
+          "0.44",
+          "0.29",
+          "0.69",
+          "1.95"
         ]
       },
       {
@@ -150,11 +174,13 @@
           "0%",
           "0%",
           "0%",
+          "0%",
+          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/MILKYMIST/consolidated/"
+    "source_url": "https://www.screener.in/company/MILKYMIST/"
   },
   "growth": {
     "cards": [
@@ -170,17 +196,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 28.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 31.0
+            "value": 30.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 34.0
+            "value": 35.0
           }
         ]
       },
@@ -196,17 +222,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 37.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 67.0
+            "value": 64.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 173.0
+            "value": 185.0
           }
         ]
       },
@@ -248,7 +274,7 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 20.0
           },
           {
             "key": "3y",
@@ -366,7 +392,7 @@
   },
   "website": "https://www.milkymist.com/",
   "website_label": "milkymist.com",
-  "generated_at": "2026-10-13T23:30:18.188704+05:30",
-  "generated_at_ist": "13 Oct 2026, 23:30 IST",
+  "generated_at": "2026-10-14T06:56:30.846336+05:30",
+  "generated_at_ist": "14 Oct 2026, 06:56 IST",
   "source": "screener"
 }
