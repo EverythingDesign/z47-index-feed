@@ -4,19 +4,484 @@
   "name": "Five-Star Business Finance",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/FIVESTAR/",
-  "error": "HTTP Error 429: Too Many Requests",
-  "ratios_ok": 0,
+  "mcap_cr": 15151.0,
+  "price": 513.0,
+  "high": 666.0,
+  "low": 338.0,
+  "pe": 13.7,
+  "roce": 14.8,
+  "roe": 16.1,
+  "about": "Incorporated in 1984, Five Star Business Finance Limited is an NBFC-ND-SI providing secured business loans to micro-entrepreneurs and self-employed individuals across South India.[1]",
+  "website": "http://www.fivestargroup.in",
+  "website_label": "fivestargroup.in",
+  "bse_code": "543663",
+  "bse_url": "https://www.bseindia.com/stock-share-price/five-star-business-finance-ltd/FIVESTAR/543663/",
+  "nse_symbol": "FIVESTAR",
+  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=FIVESTAR",
+  "screener_id": "1275356",
+  "ratios_ok": 6,
+  "daily_pct": 0.19,
   "screener_consolidated": false,
-  "pe": null,
-  "roce": null,
-  "roe": null,
   "financial_basis": "standalone",
   "financial_source_url": "https://www.screener.in/company/FIVESTAR/",
   "ratios_source_url": "https://www.screener.in/company/FIVESTAR/",
-  "pl": null,
-  "growth": null,
-  "shareholding": null,
-  "generated_at": "2026-10-15T20:56:01.517889+05:30",
-  "generated_at_ist": "15 Oct 2026, 20:56 IST",
+  "pl": {
+    "unit": "Rs. Crores",
+    "consolidated": false,
+    "periods": [
+      "Mar 2020",
+      "Mar 2021",
+      "Mar 2022",
+      "Mar 2023",
+      "Mar 2024",
+      "Mar 2025",
+      "Mar 2026"
+    ],
+    "rows": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          "787",
+          "1,050",
+          "1,254",
+          "1,521",
+          "2,183",
+          "2,848",
+          "3,218"
+        ]
+      },
+      {
+        "key": "interest",
+        "label": "Interest",
+        "values": [
+          "218",
+          "327",
+          "302",
+          "268",
+          "472",
+          "672",
+          "742"
+        ]
+      },
+      {
+        "key": "expenses",
+        "label": "Expenses",
+        "values": [
+          "210",
+          "237",
+          "337",
+          "439",
+          "582",
+          "733",
+          "1,004"
+        ]
+      },
+      {
+        "key": "financing_profit",
+        "label": "Financing Profit",
+        "values": [
+          "359",
+          "486",
+          "614",
+          "814",
+          "1,128",
+          "1,443",
+          "1,472"
+        ]
+      },
+      {
+        "key": "financing_margin",
+        "label": "Financing Margin %",
+        "values": [
+          "46%",
+          "46%",
+          "49%",
+          "54%",
+          "52%",
+          "51%",
+          "46%"
+        ]
+      },
+      {
+        "key": "other_income",
+        "label": "Other Income",
+        "values": [
+          "1",
+          "1",
+          "2",
+          "8",
+          "12",
+          "18",
+          "28"
+        ]
+      },
+      {
+        "key": "depreciation",
+        "label": "Depreciation",
+        "values": [
+          "10",
+          "11",
+          "12",
+          "17",
+          "25",
+          "30",
+          "37"
+        ]
+      },
+      {
+        "key": "profit_before_tax",
+        "label": "Profit before tax",
+        "values": [
+          "349",
+          "476",
+          "604",
+          "805",
+          "1,116",
+          "1,431",
+          "1,463"
+        ]
+      },
+      {
+        "key": "tax",
+        "label": "Tax %",
+        "values": [
+          "25%",
+          "25%",
+          "25%",
+          "25%",
+          "25%",
+          "25%",
+          "25%"
+        ]
+      },
+      {
+        "key": "net_profit",
+        "label": "Net Profit",
+        "values": [
+          "262",
+          "359",
+          "454",
+          "604",
+          "836",
+          "1,072",
+          "1,099"
+        ]
+      },
+      {
+        "key": "eps_in_rs",
+        "label": "EPS in Rs",
+        "values": [
+          "10.38",
+          "14.22",
+          "15.57",
+          "20.71",
+          "28.58",
+          "36.43",
+          "37.22"
+        ]
+      },
+      {
+        "key": "dividend_payout",
+        "label": "Dividend Payout %",
+        "values": [
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "5%",
+          "5%"
+        ]
+      }
+    ],
+    "source_url": "https://www.screener.in/company/FIVESTAR/"
+  },
+  "growth": {
+    "cards": [
+      {
+        "key": "sales",
+        "title": "Compounded Sales Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 25.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 28.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 10.0
+          }
+        ]
+      },
+      {
+        "key": "profit",
+        "title": "Compounded Profit Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 25.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 22.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 2.0
+          }
+        ]
+      },
+      {
+        "key": "stock",
+        "title": "Stock Price CAGR",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": -13.0
+          },
+          {
+            "key": "1y",
+            "label": "1 Year:",
+            "value": -4.0
+          }
+        ]
+      },
+      {
+        "key": "roe",
+        "title": "Return on Equity",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": 17.0
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 17.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 17.0
+          },
+          {
+            "key": "last",
+            "label": "Last Year:",
+            "value": 16.0
+          }
+        ]
+      }
+    ]
+  },
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Sep 2023",
+        "Dec 2023",
+        "Mar 2024",
+        "Jun 2024",
+        "Sep 2024",
+        "Dec 2024",
+        "Mar 2025",
+        "Jun 2025",
+        "Sep 2025",
+        "Dec 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "31.30%",
+            "26.54%",
+            "26.51%",
+            "26.51%",
+            "21.59%",
+            "21.55%",
+            "21.47%",
+            "21.47%",
+            "18.57%",
+            "18.56%",
+            "18.61%",
+            "18.61%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "50.22%",
+            "54.28%",
+            "56.06%",
+            "57.45%",
+            "56.70%",
+            "57.76%",
+            "58.75%",
+            "58.13%",
+            "55.80%",
+            "52.95%",
+            "48.48%",
+            "43.97%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "7.52%",
+            "7.82%",
+            "6.97%",
+            "6.07%",
+            "8.99%",
+            "10.10%",
+            "9.09%",
+            "9.48%",
+            "12.16%",
+            "14.74%",
+            "17.58%",
+            "22.35%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "10.97%",
+            "11.36%",
+            "10.44%",
+            "9.96%",
+            "12.71%",
+            "10.60%",
+            "10.69%",
+            "10.93%",
+            "13.46%",
+            "13.77%",
+            "15.34%",
+            "15.07%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "40,121",
+            "51,906",
+            "50,442",
+            "48,897",
+            "58,902",
+            "71,229",
+            "76,899",
+            "69,039",
+            "94,108",
+            "91,561",
+            "97,128",
+            "1,02,270"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Mar 2023",
+        "Mar 2024",
+        "Mar 2025",
+        "Mar 2026",
+        "Jun 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "34.87%",
+            "26.51%",
+            "21.47%",
+            "18.61%",
+            "18.61%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "6.98%",
+            "56.06%",
+            "58.75%",
+            "48.48%",
+            "43.97%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "5.05%",
+            "6.97%",
+            "9.09%",
+            "17.58%",
+            "22.35%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "53.10%",
+            "10.44%",
+            "10.69%",
+            "15.34%",
+            "15.07%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "26,481",
+            "50,442",
+            "76,899",
+            "97,128",
+            "1,02,270"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-10-16T06:01:42.785902+05:30",
+  "generated_at_ist": "16 Oct 2026, 06:01 IST",
   "source": "screener"
 }
