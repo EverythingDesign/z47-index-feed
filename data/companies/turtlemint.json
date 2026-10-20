@@ -4,7 +4,7 @@
   "name": "Turtlemint",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/TURTLEMINT/",
-  "mcap_cr": 1940.0,
+  "mcap_cr": 1942.0,
   "price": 66.0,
   "high": 160.0,
   "low": 65.0,
@@ -282,13 +282,15 @@
   "shareholding": {
     "quarterly": {
       "periods": [
-        "Jun 2026"
+        "Jun 2026",
+        "Sep 2026"
       ],
       "rows": [
         {
           "key": "promoters",
           "label": "Promoters",
           "values": [
+            "13.21%",
             "13.21%"
           ]
         },
@@ -296,42 +298,47 @@
           "key": "fiis",
           "label": "FIIs",
           "values": [
-            "6.34%"
+            "6.34%",
+            "4.05%"
           ]
         },
         {
           "key": "diis",
           "label": "DIIs",
           "values": [
-            "13.33%"
+            "13.33%",
+            "13.76%"
           ]
         },
         {
           "key": "government",
           "label": "Government",
           "values": [
-            "0.11%"
+            "0.11%",
+            "0.00%"
           ]
         },
         {
           "key": "public",
           "label": "Public",
           "values": [
-            "67.02%"
+            "67.02%",
+            "68.98%"
           ]
         },
         {
           "key": "no_of_shareholders",
           "label": "No. of Shareholders",
           "values": [
-            "52,588"
+            "52,588",
+            "47,059"
           ]
         }
       ]
     },
     "yearly": {
       "periods": [
-        "Jun 2026"
+        "Sep 2026"
       ],
       "rows": [
         {
@@ -345,42 +352,35 @@
           "key": "fiis",
           "label": "FIIs",
           "values": [
-            "6.34%"
+            "4.05%"
           ]
         },
         {
           "key": "diis",
           "label": "DIIs",
           "values": [
-            "13.33%"
-          ]
-        },
-        {
-          "key": "government",
-          "label": "Government",
-          "values": [
-            "0.11%"
+            "13.76%"
           ]
         },
         {
           "key": "public",
           "label": "Public",
           "values": [
-            "67.02%"
+            "68.98%"
           ]
         },
         {
           "key": "no_of_shareholders",
           "label": "No. of Shareholders",
           "values": [
-            "52,588"
+            "47,059"
           ]
         }
       ]
     }
   },
   "pe_blank": true,
-  "generated_at": "2026-10-19T22:41:35.683775+05:30",
-  "generated_at_ist": "19 Oct 2026, 22:41 IST",
+  "generated_at": "2026-10-20T06:37:43.131259+05:30",
+  "generated_at_ist": "20 Oct 2026, 06:37 IST",
   "source": "screener"
 }
