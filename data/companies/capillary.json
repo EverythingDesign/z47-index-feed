@@ -8,9 +8,9 @@
   "price": 529.0,
   "high": 799.0,
   "low": 438.0,
-  "pe": 82.2,
-  "roce": 3.42,
-  "roe": 2.95,
+  "pe": 267.0,
+  "roce": 0.93,
+  "roe": 0.44,
   "about": "Incorporated in 2012, Capillary Technologies India Ltd is a leading Indian software-as-a-service (SaaS) company that specializes in customer loyalty and engagement solutions.[1]",
   "bse_code": "544614",
   "bse_url": "https://www.bseindia.com/stock-share-price/capillary-technologies-india-ltd/CAPILLARY/544614/",
@@ -19,14 +19,15 @@
   "screener_id": "1285767",
   "ratios_ok": 6,
   "daily_pct": -3.04,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/CAPILLARY/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/CAPILLARY/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/CAPILLARY/",
+  "ratios_source_url": "https://www.screener.in/company/CAPILLARY/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2020",
       "Mar 2021",
       "Mar 2022",
       "Mar 2023",
@@ -39,132 +40,143 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "171",
-          "223",
-          "323",
-          "525",
-          "598",
-          "735"
+          "166",
+          "115",
+          "163",
+          "150",
+          "143",
+          "174",
+          "212"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "184",
-          "274",
-          "387",
-          "537",
-          "533",
-          "642"
+          "159",
+          "101",
+          "162",
+          "213",
+          "162",
+          "141",
+          "172"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-13",
-          "-51",
-          "-64",
-          "-12",
-          "65",
-          "93"
+          "7",
+          "14",
+          "1",
+          "-63",
+          "-19",
+          "33",
+          "39"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-7%",
-          "-23%",
-          "-20%",
-          "-2.2%",
-          "11%",
-          "13%"
+          "4.2%",
+          "12%",
+          "0.7%",
+          "-42%",
+          "-14%",
+          "19%",
+          "19%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "10",
+          "1",
+          "8",
           "-15",
-          "22",
-          "22",
-          "13",
-          "39"
+          "6",
+          "8",
+          "12",
+          "11"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "3",
           "2",
+          "5",
           "9",
-          "11",
-          "18",
-          "8",
-          "5"
+          "16",
+          "7",
+          "4"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "18",
-          "29",
-          "40",
-          "56",
-          "60",
-          "75"
+          "5",
+          "4",
+          "3",
+          "24",
+          "25",
+          "35",
+          "43"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-23",
-          "-103",
-          "-93",
-          "-64",
-          "10",
-          "51"
+          "0",
+          "17",
+          "-22",
+          "-90",
+          "-52",
+          "4",
+          "3"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "1%",
-          "-2%",
-          "-5%",
-          "-11%",
-          "-35%",
-          "-2%"
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-23",
-          "-101",
-          "-88",
-          "-57",
-          "13",
-          "52"
+          "0",
+          "17",
+          "-22",
+          "-90",
+          "-52",
+          "4",
+          "3"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-4.76",
-          "-20.09",
-          "-16.58",
-          "-7.78",
-          "1.81",
-          "6.60"
+          "0.04",
+          "3.48",
+          "-4.41",
+          "-17.01",
+          "-7.15",
+          "0.48",
+          "0.36"
         ]
       },
       {
@@ -176,11 +188,12 @@
           "0%",
           "0%",
           "0%",
+          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/CAPILLARY/consolidated/"
+    "source_url": "https://www.screener.in/company/CAPILLARY/"
   },
   "growth": {
     "cards": [
@@ -196,17 +209,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 34.0
+            "value": 13.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 32.0
+            "value": 12.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 23.0
+            "value": 22.0
           }
         ]
       },
@@ -222,17 +235,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 25.0
+            "value": -30.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 31.0
+            "value": 27.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 322.0
+            "value": 284.0
           }
         ]
       },
@@ -274,17 +287,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": -12.0
+            "value": -9.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -2.0
+            "value": -4.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 3.0
+            "value": 0.0
           }
         ]
       }
@@ -400,7 +413,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-20T21:03:57.178072+05:30",
-  "generated_at_ist": "20 Oct 2026, 21:03 IST",
+  "generated_at": "2026-10-21T06:18:59.511080+05:30",
+  "generated_at_ist": "21 Oct 2026, 06:18 IST",
   "source": "screener"
 }
