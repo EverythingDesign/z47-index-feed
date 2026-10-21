@@ -4,19 +4,32 @@
   "name": "BlackBuck",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/BLACKBUCK/",
-  "error": "HTTP Error 429: Too Many Requests",
-  "ratios_ok": 0,
-  "screener_consolidated": true,
-  "pe": 62.0,
-  "roce": 12.8,
-  "roe": 12.2,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/",
+  "mcap_cr": 10084.0,
+  "price": 554.0,
+  "high": 735.0,
+  "low": 495.0,
+  "pe": 58.1,
+  "roce": 13.1,
+  "roe": 12.5,
+  "about": "Incorporated in 2015, Zinka Logistics Solutions Ltd provides a digital trucking platform for payments, telematics, loads marketplace, and vehicle financing services[1]",
+  "website": "http://www.blackbuck.com",
+  "website_label": "blackbuck.com",
+  "bse_code": "544288",
+  "bse_url": "https://www.bseindia.com/stock-share-price/blackbuck-ltd/BLACKBUCK/544288/",
+  "nse_symbol": "BLACKBUCK",
+  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=BLACKBUCK",
+  "screener_id": "1285151",
+  "ratios_ok": 6,
+  "daily_pct": -5.24,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/BLACKBUCK/",
+  "ratios_source_url": "https://www.screener.in/company/BLACKBUCK/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2020",
       "Mar 2021",
       "Mar 2022",
       "Mar 2023",
@@ -29,45 +42,49 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "867",
-          "119",
-          "176",
-          "297",
-          "427",
-          "652"
+          "2,230",
+          "853",
+          "767",
+          "668",
+          "296",
+          "422",
+          "641"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "1,066",
-          "350",
-          "407",
-          "455",
-          "333",
-          "485"
+          "2,644",
+          "1,046",
+          "1,050",
+          "953",
+          "454",
+          "331",
+          "472"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-200",
-          "-231",
-          "-232",
+          "-414",
+          "-192",
+          "-283",
+          "-285",
           "-158",
-          "93",
-          "167"
+          "91",
+          "169"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
+          "-19%",
           "-23%",
-          "-194%",
-          "-132%",
+          "-37%",
+          "-43%",
           "-53%",
           "22%",
           "26%"
@@ -77,48 +94,52 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "26",
-          "-17",
-          "-34",
-          "-7",
-          "-308",
-          "59"
+          "54",
+          "27",
+          "36",
+          "20",
+          "-8",
+          "-309",
+          "57"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "76",
           "57",
-          "21",
-          "4",
+          "31",
+          "12",
           "3",
-          "4",
-          "6"
+          "3",
+          "3"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
+          "9",
           "11",
           "15",
           "20",
           "25",
           "34",
-          "53"
+          "52"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-241",
-          "-284",
-          "-290",
+          "-446",
+          "-234",
+          "-293",
+          "-297",
           "-194",
-          "-253",
-          "167"
+          "-254",
+          "171"
         ]
       },
       {
@@ -129,7 +150,8 @@
           "0%",
           "0%",
           "0%",
-          "-97%",
+          "0%",
+          "-96%",
           "4%"
         ]
       },
@@ -137,24 +159,26 @@
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-241",
-          "-285",
-          "-290",
+          "-446",
+          "-234",
+          "-293",
+          "-297",
           "-194",
           "-9",
-          "160"
+          "164"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-23,904.95",
-          "-28,174.26",
-          "-28,762.38",
-          "-19,202.97",
-          "-0.49",
-          "8.82"
+          "-44,109.90",
+          "-23,136.63",
+          "-29,051.49",
+          "-29,420.79",
+          "-19,257.43",
+          "-0.51",
+          "9.01"
         ]
       },
       {
@@ -166,11 +190,12 @@
           "0%",
           "0%",
           "0%",
+          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/"
+    "source_url": "https://www.screener.in/company/BLACKBUCK/"
   },
   "growth": {
     "cards": [
@@ -191,7 +216,7 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 55.0
+            "value": -1.0
           },
           {
             "key": "ttm",
@@ -222,7 +247,7 @@
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -53.0
+            "value": -52.0
           }
         ]
       },
@@ -248,7 +273,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -20.0
+            "value": -25.0
           }
         ]
       },
@@ -269,12 +294,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 13.0
+            "value": 14.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 12.0
+            "value": 13.0
           }
         ]
       }
@@ -420,7 +445,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-21T06:15:23.786437+05:30",
-  "generated_at_ist": "21 Oct 2026, 06:15 IST",
+  "generated_at": "2026-10-21T21:15:38.250569+05:30",
+  "generated_at_ist": "21 Oct 2026, 21:15 IST",
   "source": "screener"
 }

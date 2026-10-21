@@ -4,24 +4,12 @@
   "name": "PolicyBazaar",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/POLICYBZR/",
-  "mcap_cr": 47895.0,
-  "price": 1035.0,
-  "high": 1964.0,
-  "low": 945.0,
-  "pe": 64.0,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 62.5,
   "roce": 10.3,
   "roe": 9.75,
-  "about": "PB Fintech Ltd, popularly known as Policy Bazar is  India’s largest online platform for insurance and lending products through its flagship brands - Policybazaar and Paisabazaar platform through which they provide  convenient access to insurance, credit and other financial products[1]",
-  "website": "http://www.pbfintech.in",
-  "website_label": "pbfintech.in",
-  "bse_code": "543390",
-  "bse_url": "https://www.bseindia.com/stock-share-price/pb-fintech-ltd/POLICYBZR/543390/",
-  "nse_symbol": "POLICYBZR",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=POLICYBZR",
-  "screener_id": "1275091",
-  "ratios_ok": 6,
-  "daily_pct": -3.27,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
@@ -268,12 +256,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 13.0
+            "value": 12.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -37.0
+            "value": -38.0
           }
         ]
       },
@@ -487,7 +475,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-21T06:10:32.185656+05:30",
-  "generated_at_ist": "21 Oct 2026, 06:10 IST",
+  "generated_at": "2026-10-21T21:10:43.078208+05:30",
+  "generated_at_ist": "21 Oct 2026, 21:10 IST",
   "source": "screener"
 }
