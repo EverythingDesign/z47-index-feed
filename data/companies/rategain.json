@@ -4,24 +4,12 @@
   "name": "RateGain",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/RATEGAIN/",
-  "mcap_cr": 9227.0,
-  "price": 780.0,
-  "high": 1053.0,
-  "low": 437.0,
-  "pe": 35.3,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 35.4,
   "roce": 13.9,
   "roe": 11.9,
-  "about": "RateGain Travel Technologies Ltd is the leading distribution technology company globally and the largest Software as a Service (SaaS) provider in the travel and hospitality industry in India. The firm offers travel and hospitality services across different verticals like hotels, airlines, online travel agents, meta-search companies, package providers, car rentals, cruises, and ferries.[1]",
-  "website": "http://www.rategain.com",
-  "website_label": "rategain.com",
-  "bse_code": "543417",
-  "bse_url": "https://www.bseindia.com/stock-share-price/rategain-travel-technologies-ltd/RATEGAIN/543417/",
-  "nse_symbol": "RATEGAIN",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=RATEGAIN",
-  "screener_id": "1275119",
-  "ratios_ok": 6,
-  "daily_pct": -2.48,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/RATEGAIN/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/RATEGAIN/consolidated/",
@@ -185,13 +173,13 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       }
     ],
@@ -268,7 +256,7 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 8.0
+            "value": 10.0
           },
           {
             "key": "1y",
@@ -308,7 +296,6 @@
   "shareholding": {
     "quarterly": {
       "periods": [
-        "Sep 2023",
         "Dec 2023",
         "Mar 2024",
         "Jun 2024",
@@ -319,14 +306,14 @@
         "Sep 2025",
         "Dec 2025",
         "Mar 2026",
-        "Jun 2026"
+        "Jun 2026",
+        "Sep 2026"
       ],
       "rows": [
         {
           "key": "promoters",
           "label": "Promoters",
           "values": [
-            "55.72%",
             "51.27%",
             "51.25%",
             "48.25%",
@@ -337,14 +324,14 @@
             "48.16%",
             "48.55%",
             "48.77%",
-            "48.78%"
+            "48.78%",
+            "48.86%"
           ]
         },
         {
           "key": "fiis",
           "label": "FIIs",
           "values": [
-            "5.42%",
             "8.67%",
             "10.49%",
             "9.54%",
@@ -355,14 +342,14 @@
             "5.49%",
             "4.97%",
             "5.35%",
-            "5.75%"
+            "5.75%",
+            "6.89%"
           ]
         },
         {
           "key": "diis",
           "label": "DIIs",
           "values": [
-            "17.81%",
             "18.77%",
             "17.31%",
             "21.66%",
@@ -373,14 +360,14 @@
             "21.58%",
             "20.62%",
             "20.86%",
-            "20.86%"
+            "20.86%",
+            "20.61%"
           ]
         },
         {
           "key": "public",
           "label": "Public",
           "values": [
-            "21.06%",
             "21.27%",
             "20.89%",
             "20.49%",
@@ -391,15 +378,16 @@
             "24.71%",
             "25.80%",
             "24.96%",
-            "24.53%"
+            "24.53%",
+            "23.58%"
           ]
         },
         {
           "key": "others",
           "label": "Others",
           "values": [
-            "0.00%",
             "0.03%",
+            "0.06%",
             "0.06%",
             "0.06%",
             "0.06%",
@@ -416,7 +404,6 @@
           "key": "no_of_shareholders",
           "label": "No. of Shareholders",
           "values": [
-            "59,795",
             "69,427",
             "71,332",
             "86,940",
@@ -427,7 +414,8 @@
             "90,199",
             "92,599",
             "92,900",
-            "90,004"
+            "90,004",
+            "94,157"
           ]
         }
       ]
@@ -439,7 +427,7 @@
         "Mar 2024",
         "Mar 2025",
         "Mar 2026",
-        "Jun 2026"
+        "Sep 2026"
       ],
       "rows": [
         {
@@ -451,7 +439,7 @@
             "51.25%",
             "48.17%",
             "48.77%",
-            "48.78%"
+            "48.86%"
           ]
         },
         {
@@ -463,7 +451,7 @@
             "10.49%",
             "7.60%",
             "5.35%",
-            "5.75%"
+            "6.89%"
           ]
         },
         {
@@ -475,7 +463,7 @@
             "17.31%",
             "23.00%",
             "20.86%",
-            "20.86%"
+            "20.61%"
           ]
         },
         {
@@ -487,7 +475,7 @@
             "20.89%",
             "21.16%",
             "24.96%",
-            "24.53%"
+            "23.58%"
           ]
         },
         {
@@ -511,13 +499,13 @@
             "71,332",
             "90,468",
             "92,900",
-            "90,004"
+            "94,157"
           ]
         }
       ]
     }
   },
-  "generated_at": "2026-10-21T21:17:22.307724+05:30",
-  "generated_at_ist": "21 Oct 2026, 21:17 IST",
+  "generated_at": "2026-10-22T06:20:26.889066+05:30",
+  "generated_at_ist": "22 Oct 2026, 06:20 IST",
   "source": "screener"
 }

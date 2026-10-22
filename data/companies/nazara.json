@@ -4,24 +4,12 @@
   "name": "Nazara Technologies",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/NAZARA/",
-  "mcap_cr": 16272.0,
-  "price": 399.0,
-  "high": 420.0,
-  "low": 216.0,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
   "pe": null,
   "roce": 27.1,
   "roe": 30.6,
-  "about": "Nazara Technologies is the leading India based diversified gaming and sports media platform with presence in India and across emerging and developed global markets such as Africa and North America, and offerings across the interactive gaming, eSports and gamified early learning ecosystems.",
-  "website": "http://www.nazara.com",
-  "website_label": "nazara.com",
-  "bse_code": "543280",
-  "bse_url": "https://www.bseindia.com/stock-share-price/nazara-technologies-ltd/NAZARA/543280/",
-  "nse_symbol": "NAZARA",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=NAZARA",
-  "screener_id": "1274852",
-  "ratios_ok": 5,
-  "daily_pct": -1.31,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/NAZARA/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/NAZARA/consolidated/",
@@ -268,7 +256,7 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 25.0
+            "value": 27.0
           },
           {
             "key": "1y",
@@ -308,7 +296,6 @@
   "shareholding": {
     "quarterly": {
       "periods": [
-        "Dec 2023",
         "Mar 2024",
         "Jun 2024",
         "Sep 2024",
@@ -319,14 +306,14 @@
         "Dec 2025",
         "Mar 2026",
         "Jun 2026",
-        "Aug 2026"
+        "Sep 2026",
+        "Oct 2026"
       ],
       "rows": [
         {
           "key": "promoters",
           "label": "Promoters",
           "values": [
-            "17.16%",
             "16.43%",
             "10.05%",
             "10.05%",
@@ -337,14 +324,14 @@
             "35.45%",
             "35.45%",
             "34.25%",
-            "33.98%"
+            "33.98%",
+            "31.99%"
           ]
         },
         {
           "key": "fiis",
           "label": "FIIs",
           "values": [
-            "10.46%",
             "9.44%",
             "6.05%",
             "9.71%",
@@ -355,14 +342,14 @@
             "11.98%",
             "13.30%",
             "13.23%",
-            "15.51%"
+            "15.15%",
+            "15.42%"
           ]
         },
         {
           "key": "diis",
           "label": "DIIs",
           "values": [
-            "15.90%",
             "16.80%",
             "16.76%",
             "12.21%",
@@ -373,14 +360,14 @@
             "3.62%",
             "2.16%",
             "2.39%",
-            "2.47%"
+            "3.05%",
+            "2.75%"
           ]
         },
         {
           "key": "public",
           "label": "Public",
           "values": [
-            "56.48%",
             "57.34%",
             "67.13%",
             "68.03%",
@@ -391,14 +378,14 @@
             "48.95%",
             "49.08%",
             "50.13%",
-            "48.04%"
+            "47.82%",
+            "49.83%"
           ]
         },
         {
           "key": "no_of_shareholders",
           "label": "No. of Shareholders",
           "values": [
-            "1,71,497",
             "1,69,481",
             "1,60,164",
             "1,44,688",
@@ -409,7 +396,8 @@
             "1,04,879",
             "1,00,165",
             "1,01,367",
-            "1,00,544"
+            "95,828",
+            "96,939"
           ]
         }
       ]
@@ -422,7 +410,7 @@
         "Mar 2024",
         "Mar 2025",
         "Mar 2026",
-        "Aug 2026"
+        "Oct 2026"
       ],
       "rows": [
         {
@@ -435,7 +423,7 @@
             "16.43%",
             "8.78%",
             "35.45%",
-            "33.98%"
+            "31.99%"
           ]
         },
         {
@@ -448,7 +436,7 @@
             "9.44%",
             "13.04%",
             "13.30%",
-            "15.51%"
+            "15.42%"
           ]
         },
         {
@@ -461,7 +449,7 @@
             "16.80%",
             "12.44%",
             "2.16%",
-            "2.47%"
+            "2.75%"
           ]
         },
         {
@@ -474,7 +462,7 @@
             "57.34%",
             "65.74%",
             "49.08%",
-            "48.04%"
+            "49.83%"
           ]
         },
         {
@@ -487,13 +475,13 @@
             "1,69,481",
             "1,30,672",
             "1,00,165",
-            "1,00,544"
+            "96,939"
           ]
         }
       ]
     }
   },
-  "generated_at": "2026-10-21T21:15:52.521322+05:30",
-  "generated_at_ist": "21 Oct 2026, 21:15 IST",
+  "generated_at": "2026-10-22T06:19:06.568035+05:30",
+  "generated_at_ist": "22 Oct 2026, 06:19 IST",
   "source": "screener"
 }

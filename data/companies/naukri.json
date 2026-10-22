@@ -4,12 +4,24 @@
   "name": "Info Edge (Naukri)",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/NAUKRI/",
-  "error": "HTTP Error 429: Too Many Requests",
-  "ratios_ok": 0,
-  "screener_consolidated": true,
-  "pe": 53.9,
+  "mcap_cr": 80093.0,
+  "price": 1235.0,
+  "high": 1420.0,
+  "low": 908.0,
+  "pe": 54.3,
   "roce": 3.45,
   "roe": 1.81,
+  "about": "Info Edge is India’s premier online classified company with a portfolio of brands. It owns various brands in different fields like naukri.com (online recruitment), 99acres.com (online real estate), jeevansathi.com (online matrimonial) as well as shiksha.com (online education information services). It also acts as an investor and has invested in many start-ups in the online space and is actively growing its investment portfolio. [1]",
+  "website": "http://www.infoedge.in",
+  "website_label": "infoedge.in",
+  "bse_code": "532777",
+  "bse_url": "https://www.bseindia.com/stock-share-price/info-edge-india-ltd/NAUKRI/532777/",
+  "nse_symbol": "NAUKRI",
+  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=NAUKRI",
+  "screener_id": "1485",
+  "ratios_ok": 6,
+  "daily_pct": 1.25,
+  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/NAUKRI/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/NAUKRI/consolidated/",
@@ -246,7 +258,7 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 21.0
+            "value": 22.0
           },
           {
             "key": "5y",
@@ -256,7 +268,7 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 14.0
+            "value": 15.0
           },
           {
             "key": "1y",
@@ -296,7 +308,6 @@
   "shareholding": {
     "quarterly": {
       "periods": [
-        "Sep 2023",
         "Dec 2023",
         "Mar 2024",
         "Jun 2024",
@@ -307,14 +318,14 @@
         "Sep 2025",
         "Dec 2025",
         "Mar 2026",
-        "Jun 2026"
+        "Jun 2026",
+        "Sep 2026"
       ],
       "rows": [
         {
           "key": "promoters",
           "label": "Promoters",
           "values": [
-            "37.97%",
             "37.90%",
             "37.88%",
             "37.88%",
@@ -325,14 +336,14 @@
             "37.59%",
             "37.59%",
             "37.50%",
-            "37.48%"
+            "37.48%",
+            "37.19%"
           ]
         },
         {
           "key": "fiis",
           "label": "FIIs",
           "values": [
-            "31.21%",
             "30.47%",
             "30.91%",
             "32.14%",
@@ -343,14 +354,14 @@
             "30.33%",
             "29.66%",
             "27.97%",
-            "23.72%"
+            "23.72%",
+            "25.46%"
           ]
         },
         {
           "key": "diis",
           "label": "DIIs",
           "values": [
-            "18.24%",
             "19.46%",
             "19.40%",
             "18.68%",
@@ -361,14 +372,14 @@
             "21.01%",
             "21.83%",
             "23.43%",
-            "27.83%"
+            "27.83%",
+            "26.81%"
           ]
         },
         {
           "key": "government",
           "label": "Government",
           "values": [
-            "0.51%",
             "0.58%",
             "0.66%",
             "0.68%",
@@ -379,6 +390,7 @@
             "0.66%",
             "0.66%",
             "0.66%",
+            "0.00%",
             "0.00%"
           ]
         },
@@ -386,7 +398,6 @@
           "key": "public",
           "label": "Public",
           "values": [
-            "11.98%",
             "11.38%",
             "10.95%",
             "10.46%",
@@ -397,14 +408,14 @@
             "10.26%",
             "10.12%",
             "10.34%",
-            "10.90%"
+            "10.90%",
+            "10.47%"
           ]
         },
         {
           "key": "others",
           "label": "Others",
           "values": [
-            "0.08%",
             "0.21%",
             "0.20%",
             "0.16%",
@@ -415,14 +426,14 @@
             "0.15%",
             "0.14%",
             "0.11%",
-            "0.08%"
+            "0.08%",
+            "0.06%"
           ]
         },
         {
           "key": "no_of_shareholders",
           "label": "No. of Shareholders",
           "values": [
-            "2,66,640",
             "2,38,149",
             "2,09,451",
             "1,86,720",
@@ -433,7 +444,8 @@
             "2,21,099",
             "2,23,018",
             "2,36,961",
-            "2,57,916"
+            "2,57,916",
+            "2,36,551"
           ]
         }
       ]
@@ -450,7 +462,7 @@
         "Mar 2024",
         "Mar 2025",
         "Mar 2026",
-        "Jun 2026"
+        "Sep 2026"
       ],
       "rows": [
         {
@@ -467,7 +479,7 @@
             "37.88%",
             "37.63%",
             "37.50%",
-            "37.48%"
+            "37.19%"
           ]
         },
         {
@@ -484,7 +496,7 @@
             "30.91%",
             "33.25%",
             "27.97%",
-            "23.72%"
+            "25.46%"
           ]
         },
         {
@@ -501,7 +513,7 @@
             "19.40%",
             "18.18%",
             "23.43%",
-            "27.83%"
+            "26.81%"
           ]
         },
         {
@@ -535,7 +547,7 @@
             "10.95%",
             "10.17%",
             "10.34%",
-            "10.90%"
+            "10.47%"
           ]
         },
         {
@@ -552,7 +564,7 @@
             "0.20%",
             "0.12%",
             "0.11%",
-            "0.08%"
+            "0.06%"
           ]
         },
         {
@@ -569,13 +581,13 @@
             "2,09,451",
             "1,93,534",
             "2,36,961",
-            "2,57,916"
+            "2,36,551"
           ]
         }
       ]
     }
   },
-  "generated_at": "2026-10-21T21:09:12.262380+05:30",
-  "generated_at_ist": "21 Oct 2026, 21:09 IST",
+  "generated_at": "2026-10-22T06:12:45.787059+05:30",
+  "generated_at_ist": "22 Oct 2026, 06:12 IST",
   "source": "screener"
 }

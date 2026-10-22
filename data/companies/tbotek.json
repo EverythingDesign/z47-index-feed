@@ -4,24 +4,12 @@
   "name": "TBO Tek",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/TBOTEK/",
-  "mcap_cr": 17060.0,
-  "price": 1572.0,
-  "high": 1772.0,
-  "low": 1004.0,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
   "pe": 63.4,
   "roce": 18.3,
   "roe": 17.4,
-  "about": "Incorporated in 2006, TBO Tek Ltd is in the business of operating multiple online technology platforms and providing access to book global travel inventory aggregated through travel suppliers like airlines, hotels, etc.[1]",
-  "website": "https://www.tbo.com/",
-  "website_label": "tbo.com",
-  "bse_code": "544174",
-  "bse_url": "https://www.bseindia.com/stock-share-price/tbo-tek-ltd/TBOTEK/544174/",
-  "nse_symbol": "TBOTEK",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=TBOTEK",
-  "screener_id": "1284773",
-  "ratios_ok": 6,
-  "daily_pct": -2.61,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/TBOTEK/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/TBOTEK/consolidated/",
@@ -316,13 +304,15 @@
         "Sep 2025",
         "Dec 2025",
         "Mar 2026",
-        "Jun 2026"
+        "Jun 2026",
+        "Sep 2026"
       ],
       "rows": [
         {
           "key": "promoters",
           "label": "Promoters",
           "values": [
+            "44.40%",
             "44.40%",
             "44.40%",
             "44.40%",
@@ -346,7 +336,8 @@
             "30.73%",
             "30.85%",
             "29.71%",
-            "28.93%"
+            "28.93%",
+            "22.52%"
           ]
         },
         {
@@ -361,7 +352,8 @@
             "18.90%",
             "19.01%",
             "20.34%",
-            "21.09%"
+            "21.09%",
+            "27.21%"
           ]
         },
         {
@@ -376,7 +368,8 @@
             "3.96%",
             "3.83%",
             "3.87%",
-            "4.02%"
+            "4.02%",
+            "4.43%"
           ]
         },
         {
@@ -391,7 +384,8 @@
             "1.99%",
             "1.89%",
             "1.66%",
-            "1.53%"
+            "1.53%",
+            "1.44%"
           ]
         },
         {
@@ -406,7 +400,8 @@
             "36,262",
             "38,109",
             "37,625",
-            "37,774"
+            "37,774",
+            "43,736"
           ]
         }
       ]
@@ -415,7 +410,7 @@
       "periods": [
         "Mar 2025",
         "Mar 2026",
-        "Jun 2026"
+        "Sep 2026"
       ],
       "rows": [
         {
@@ -433,7 +428,7 @@
           "values": [
             "31.61%",
             "29.71%",
-            "28.93%"
+            "22.52%"
           ]
         },
         {
@@ -442,7 +437,7 @@
           "values": [
             "17.88%",
             "20.34%",
-            "21.09%"
+            "27.21%"
           ]
         },
         {
@@ -451,7 +446,7 @@
           "values": [
             "3.99%",
             "3.87%",
-            "4.02%"
+            "4.43%"
           ]
         },
         {
@@ -460,7 +455,7 @@
           "values": [
             "2.11%",
             "1.66%",
-            "1.53%"
+            "1.44%"
           ]
         },
         {
@@ -469,13 +464,13 @@
           "values": [
             "33,572",
             "37,625",
-            "37,774"
+            "43,736"
           ]
         }
       ]
     }
   },
-  "generated_at": "2026-10-21T21:13:21.332636+05:30",
-  "generated_at_ist": "21 Oct 2026, 21:13 IST",
+  "generated_at": "2026-10-22T06:16:35.736009+05:30",
+  "generated_at_ist": "22 Oct 2026, 06:16 IST",
   "source": "screener"
 }
