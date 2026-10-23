@@ -4,13 +4,13 @@
   "name": "Shadowfax",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/SHADOWFAX/",
-  "mcap_cr": 16223.0,
+  "mcap_cr": 16214.0,
   "price": 276.0,
   "high": 302.0,
   "low": 98.6,
-  "pe": 95.9,
-  "roce": 10.0,
-  "roe": 10.4,
+  "pe": 94.1,
+  "roce": 10.3,
+  "roe": 10.7,
   "about": "Incorporated in June 2016, Shadowfax Technologies Ltd is a logistics solution provider company in India.[1]",
   "website": "http://www.shadowfax.in",
   "website_label": "shadowfax.in",
@@ -21,14 +21,17 @@
   "screener_id": "1285868",
   "ratios_ok": 6,
   "daily_pct": 1.38,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/SHADOWFAX/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/SHADOWFAX/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/SHADOWFAX/",
+  "ratios_source_url": "https://www.screener.in/company/SHADOWFAX/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2020",
+      "Mar 2021",
+      "Mar 2022",
       "Mar 2023",
       "Mar 2024",
       "Mar 2025",
@@ -39,36 +42,48 @@
         "key": "sales",
         "label": "Sales",
         "values": [
+          "323",
+          "464",
+          "991",
           "1,415",
           "1,885",
-          "2,485",
-          "4,202"
+          "2,467",
+          "4,080"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
+          "413",
+          "609",
+          "1,143",
           "1,523",
           "1,866",
-          "2,422",
-          "3,982"
+          "2,405",
+          "3,866"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
+          "-90",
+          "-145",
+          "-152",
           "-107",
           "19",
-          "63",
-          "221"
+          "62",
+          "214"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
+          "-28%",
+          "-31%",
+          "-15%",
           "-8%",
           "1.0%",
           "2.5%",
@@ -79,40 +94,52 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
+          "10",
+          "24",
+          "7",
           "8",
           "12",
           "30",
-          "36"
+          "37"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "2",
+          "2",
+          "9",
           "19",
           "14",
           "21",
-          "29"
+          "27"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
+          "5",
+          "10",
+          "21",
           "24",
           "28",
-          "65",
-          "117"
+          "64",
+          "108"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
+          "-87",
+          "-133",
+          "-176",
           "-143",
           "-12",
           "6",
-          "111"
+          "115"
         ]
       },
       {
@@ -121,28 +148,37 @@
         "values": [
           "0%",
           "0%",
-          "-6%",
-          "-1%"
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
+          "-87",
+          "-133",
+          "-176",
           "-143",
           "-12",
           "6",
-          "112"
+          "115"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
+          "-7.53",
+          "-11.55",
+          "-15.25",
           "-12.35",
           "-0.99",
-          "0.42",
-          "1.92"
+          "0.41",
+          "1.98"
         ]
       },
       {
@@ -152,11 +188,14 @@
           "0%",
           "0%",
           "0%",
+          "0%",
+          "0%",
+          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/SHADOWFAX/consolidated/"
+    "source_url": "https://www.screener.in/company/SHADOWFAX/"
   },
   "growth": {
     "cards": [
@@ -172,17 +211,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 54.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 44.0
+            "value": 42.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 69.0
+            "value": 65.0
           }
         ]
       },
@@ -198,7 +237,7 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 22.0
           },
           {
             "key": "3y",
@@ -208,7 +247,7 @@
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 1637.0
+            "value": 1755.0
           }
         ]
       },
@@ -250,7 +289,7 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": -11.0
           },
           {
             "key": "3y",
@@ -260,7 +299,7 @@
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 10.0
+            "value": 11.0
           }
         ]
       }
@@ -370,7 +409,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-22T21:19:55.867971+05:30",
-  "generated_at_ist": "22 Oct 2026, 21:19 IST",
+  "generated_at": "2026-10-23T06:20:52.129925+05:30",
+  "generated_at_ist": "23 Oct 2026, 06:20 IST",
   "source": "screener"
 }
