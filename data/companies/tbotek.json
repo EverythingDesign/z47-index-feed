@@ -4,24 +4,12 @@
   "name": "TBO Tek",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/TBOTEK/",
-  "mcap_cr": 16579.0,
-  "price": 1524.0,
-  "high": 1772.0,
-  "low": 1004.0,
-  "pe": 61.6,
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": 61.5,
   "roce": 18.3,
   "roe": 17.4,
-  "about": "Incorporated in 2006, TBO Tek Ltd is in the business of operating multiple online technology platforms and providing access to book global travel inventory aggregated through travel suppliers like airlines, hotels, etc.[1]",
-  "website": "https://www.tbo.com/",
-  "website_label": "tbo.com",
-  "bse_code": "544174",
-  "bse_url": "https://www.bseindia.com/stock-share-price/tbo-tek-ltd/TBOTEK/544174/",
-  "nse_symbol": "TBOTEK",
-  "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=TBOTEK",
-  "screener_id": "1284773",
-  "ratios_ok": 6,
-  "daily_pct": -1.42,
-  "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/TBOTEK/consolidated/",
   "ratios_source_url": "https://www.screener.in/company/TBOTEK/consolidated/",
@@ -185,13 +173,13 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%"
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
         ]
       }
     ],
@@ -273,7 +261,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -4.0
+            "value": -5.0
           }
         ]
       },
@@ -482,7 +470,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-23T21:03:59.816952+05:30",
-  "generated_at_ist": "23 Oct 2026, 21:03 IST",
+  "generated_at": "2026-10-24T06:18:36.888879+05:30",
+  "generated_at_ist": "24 Oct 2026, 06:18 IST",
   "source": "screener"
 }
