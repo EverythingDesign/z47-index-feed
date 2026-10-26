@@ -30,6 +30,12 @@ class OutputTests(unittest.TestCase):
             self.assertEqual(row['count'],47)
             self.assertAlmostEqual(row['weights_sum'],1)
             self.assertLessEqual(row['max_weight'],.1000000001)
+    def test_monthly_and_constituent_resets(self):
+        ledger=json.loads((ROOT/'data/cap-review/rebalance-weights.json').read_text())
+        days=[r['effective_date'] for r in ledger]
+        for day in ['2026-07-01','2026-08-03','2026-09-01','2026-10-01']:self.assertIn(day,days)
+        for day in ['2026-08-20','2026-09-18','2026-10-05','2026-10-26']:self.assertIn(day,days)
+        self.assertIn('each month',self.feed['meta']['cap_applies'])
     def test_uncapped_control_matches_saved_history(self):
         comparisons=json.loads((ROOT/'data/cap-review/uncapped-replay-validation.json').read_text())
         self.assertLess(max(abs(r['difference']) for r in comparisons),.1)

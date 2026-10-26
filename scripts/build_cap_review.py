@@ -49,7 +49,11 @@ def main():
                     'fs':zetwerk['floatShares'],'ts':zetwerk['sharesOutstanding'],'currency':'INR',
                     'float_pct':100*zetwerk['floatShares']/zetwerk['sharesOutstanding']}
     regimes['2026-10-26']=new
-    reset_dates={'2026-07-01','2026-10-01'}|set(regimes)
+    # Index owner (23 Oct): reset to the cap on the first trading day of every
+    # month and at every constituent change.
+    monthly_resets={min(d for d in days if d[:7]==m) for m in {d[:7] for d in days if d>ANCHOR}}
+    monthly_resets={d for d in monthly_resets if d[:7]>ANCHOR[:7]}
+    reset_dates=monthly_resets|set(regimes)
     holdings=regimes[ANCHOR]
     level=float(original[ANCHOR]['z47'])
     units,weights=rebalance(level,holdings,quotes(holdings,ANCHOR),cap=cap)
@@ -76,7 +80,7 @@ def main():
             level=portfolio_value(units,holdings,quotes(holdings,previous),fx(previous) if use_fx else 1)
             holdings=regimes.get(day,holdings)
             units,weights=rebalance(level,holdings,quotes(holdings,previous),fx(previous) if use_fx else 1,cap=cap)
-            log_reset(day,previous,level,weights,'Previous available NSE session close; versioned shares')
+            log_reset(day,previous,level,weights,('Monthly reset' if day in monthly_resets else 'Constituent change')+'; previous available NSE session close; versioned shares')
         level=portfolio_value(units,holdings,quotes(holdings,day),fx(day) if use_fx else 1)
         if day=='2026-08-20':
             # Three IPO entrants have no Aug 19 traded close. The saved August
@@ -128,12 +132,13 @@ def main():
     feed['benchmark'].update(returns=benchmark_returns,indexed=end['nifty500'])
     feed['index']['value_mcap']=None  # No approval to redefine the second index.
     feed['meta'].update(data_as_of=cutoff,cap_review_status='provisional',weight_cap_pct=10,
-        cap_applies='quarterly and constituent changes; weights drift between resets',
+        cap_applies='first trading day of each month and every constituent change; weights drift between resets',
         cap_share_basis=data['assumption'],price_inputs_fetched_at=data['fetched_at'],
         cap_restatement_start='2026-06-17',cap_review_not_for_publication=True)
     feed['meta']['methodology_flags'] += [data['assumption'],
         'Review only: capped continuation from June 16; no fitted residual adjustment.',
         'Existing mixed-currency basis retained through Sep 28, prospective INR transition Sep 29.',
+        'Cap resets on the first trading day of each month and at every constituent change.',
         'August IPO swap is after Aug 20 close; other resets use previous available NSE close.',
         'Secondary total-market-cap series is intentionally unavailable pending methodology decision.']
     if cutoff>='2026-10-26':
@@ -178,7 +183,8 @@ def main():
         'difference_pct':round((level/source['index']['value']-1)*100,6),
         'top_weights':sorted(weight_now.items(),key=lambda x:x[1],reverse=True)[:8],
         'sector_counts':{s['name']:s['count'] for s in feed['sectors']},
-        'assumptions':feed['meta']['methodology_flags'][-5:]}
+        'reset_dates':[r['effective_date'] for r in ledger],
+        'assumptions':feed['meta']['methodology_flags'][-6:]}
     dump('summary.json',summary)
     print(json.dumps(summary,indent=2))
 

@@ -12,10 +12,10 @@ quarterly inputs before these figures become official.
 
 ## Numbers supplied
 
-- Staged index snapshot, 26 October: **126.674606** (display: **126.7**).
+- Staged index snapshot, 26 October: **126.621265** (display: **126.6**).
 - Observed uncapped feed at the comparison snapshot: **131.25**.
 - The review document's approximately 130.0 for 21 October was illustrative.
-  This reconstruction gives **129.221751** for that date under the assumptions below.
+  This reconstruction gives **129.167337** for that date under the assumptions below.
 - `data/cap-review/monthly-takeaways.csv` contains June–September completed
   monthly results and October month-to-date results, with explicit start/end dates.
 - `data/cap-review/corrected-history.csv` contains the restated series.
@@ -33,10 +33,11 @@ quarterly inputs before these figures become official.
 
 1. History through 16 June is preserved exactly. The June close initializes
    capped portfolio units. Every later daily level values those fixed units.
-2. Iterative 10% caps apply at quarterly and constituent-change resets. Excess
+2. Iterative 10% caps apply at monthly and constituent-change resets. Excess
    weight is redistributed proportionally and any newly over-limit name is capped
    in turn. Between resets, weights drift; a weight above 10% is not automatically an error.
-3. Quarterly resets: 1 July and 1 October, using previous available NSE closes.
+3. Monthly resets (index owner's answer, 23 October): the first trading day of each
+   month, so 1 July, 3 August, 1 September and 1 October, using previous available NSE closes.
 4. The 20 August IPO swap uses the 20 August close, consistent with its saved
    event record. The new stocks have no traded 19 August close. This differs from
    the review text's generalisation that all swaps use the previous close.

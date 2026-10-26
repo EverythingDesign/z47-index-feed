@@ -251,7 +251,7 @@
     "effective_date": "2026-07-01",
     "price_date": "2026-06-30",
     "index_level_before_and_after": 124.07317816593428,
-    "convention": "Previous available NSE session close; versioned shares",
+    "convention": "Monthly reset; previous available NSE session close; versioned shares",
     "count": 47,
     "weights_sum": 1.0,
     "max_weight": 0.1,
@@ -496,9 +496,257 @@
     }
   },
   {
+    "effective_date": "2026-08-03",
+    "price_date": "2026-07-31",
+    "index_level_before_and_after": 131.64693198814518,
+    "convention": "Monthly reset; previous available NSE session close; versioned shares",
+    "count": 47,
+    "weights_sum": 1.0,
+    "max_weight": 0.1,
+    "weights": {
+      "ETERNAL": 0.1,
+      "GROWW": 0.050387965007673625,
+      "SWIGGY": 0.05871016660221933,
+      "NAUKRI": 0.06061093358089071,
+      "LENSKART": 0.05078710795025031,
+      "PAYTM": 0.08755677920915651,
+      "SBICARD": 0.031567860048675456,
+      "NYKAA": 0.08105676516784933,
+      "POLICYBZR": 0.08796998247135866,
+      "MEESHO": 0.046584889501516395,
+      "MMYT": 0.0002523898842870958,
+      "ANGELONE": 0.023297810077270314,
+      "PWL": 0.011704120410808502,
+      "DELHIVERY": 0.04703509051411897,
+      "GODIGIT": 0.010071643246912745,
+      "ATHERENERG": 0.0304939198875115,
+      "PINELABS": 0.01265344352498233,
+      "FRSH": 0.00039507367589802273,
+      "URBANCO": 0.007470576341029648,
+      "TBOTEK": 0.008155038491063683,
+      "FIRSTCRY": 0.007957615837398065,
+      "APTUS": 0.014695570460076787,
+      "OLAELEC": 0.012183143842931165,
+      "INDIAMART": 0.007491498391046014,
+      "FIVESTAR": 0.018069171210051027,
+      "CARTRADE": 0.018344755297970673,
+      "AFFLE": 0.01557927039322995,
+      "BLACKBUCK": 0.009297734141113932,
+      "NAZARA": 0.01259692246791224,
+      "MEDPLUS": 0.007844148969552028,
+      "IXIGO": 0.006335591123702567,
+      "HONASA": 0.010608031548162125,
+      "AMAGI": 0.004724287763768324,
+      "AWFIS": 0.002084746811563163,
+      "RATEGAIN": 0.008749107755443214,
+      "MAPMYINDIA": 0.0032111532842829453,
+      "BLUESTONE": 0.011012159645657844,
+      "SHADOWFAX": 0.002724130250800654,
+      "WAKEFIT": 0.0022479336676878153,
+      "AYE": 0.0019543172366556596,
+      "E2E": 0.0006296666311822085,
+      "CAPILLARY": 0.001850493679928956,
+      "MEDIASSIST": 0.003717697468845794,
+      "KISSHT": 0.0024231763887836476,
+      "FRACTAL": 0.0045199912312068585,
+      "MOBIKWIK": 0.0018417436777021005,
+      "UNIECOM": 0.0005443852298710725
+    },
+    "shares": {
+      "ETERNAL": {
+        "fs": 6734074736,
+        "ts": 9045099862
+      },
+      "GROWW": {
+        "fs": 1621477822,
+        "ts": 16702420288
+      },
+      "SWIGGY": {
+        "fs": 1289125748,
+        "ts": 2600046000
+      },
+      "NAUKRI": {
+        "fs": 309161475,
+        "ts": 526023000
+      },
+      "LENSKART": {
+        "fs": 565841079,
+        "ts": 3366560768
+      },
+      "PAYTM": {
+        "fs": 407781184,
+        "ts": 622175000
+      },
+      "SBICARD": {
+        "fs": 299099658,
+        "ts": 951792000
+      },
+      "NYKAA": {
+        "fs": 1520677422,
+        "ts": 3192618752
+      },
+      "POLICYBZR": {
+        "fs": 343574545,
+        "ts": 467903000
+      },
+      "MEESHO": {
+        "fs": 1599314761,
+        "ts": 25706899456
+      },
+      "MMYT": {
+        "fs": 27719898,
+        "ts": 107730000
+      },
+      "ANGELONE": {
+        "fs": 489085864,
+        "ts": 913349399
+      },
+      "PWL": {
+        "fs": 586171279,
+        "ts": 3635070720
+      },
+      "DELHIVERY": {
+        "fs": 610426538,
+        "ts": 820788000
+      },
+      "GODIGIT": {
+        "fs": 247723602,
+        "ts": 954673000
+      },
+      "ATHERENERG": {
+        "fs": 151339648,
+        "ts": 303794000
+      },
+      "PINELABS": {
+        "fs": 569509650,
+        "ts": 3704099840
+      },
+      "FRSH": {
+        "fs": 217622798,
+        "ts": 274859000
+      },
+      "URBANCO": {
+        "fs": 361132700,
+        "ts": 1656122368
+      },
+      "TBOTEK": {
+        "fs": 33312523,
+        "ts": 106214000
+      },
+      "FIRSTCRY": {
+        "fs": 234492112,
+        "ts": 554638000
+      },
+      "APTUS": {
+        "fs": 351906002,
+        "ts": 499079000
+      },
+      "OLAELEC": {
+        "fs": 1971110364,
+        "ts": 4337649152
+      },
+      "INDIAMART": {
+        "fs": 26035016,
+        "ts": 51283000
+      },
+      "FIVESTAR": {
+        "fs": 206257956,
+        "ts": 314279000
+      },
+      "CARTRADE": {
+        "fs": 42191046,
+        "ts": 47944000
+      },
+      "AFFLE": {
+        "fs": 61440869,
+        "ts": 140640627
+      },
+      "BLACKBUCK": {
+        "fs": 107199016,
+        "ts": 186936000
+      },
+      "NAZARA": {
+        "fs": 232422504,
+        "ts": 380021000
+      },
+      "MEDPLUS": {
+        "fs": 69598668,
+        "ts": 116684000
+      },
+      "IXIGO": {
+        "fs": 200525531,
+        "ts": 410784000
+      },
+      "HONASA": {
+        "fs": 147594519,
+        "ts": 354383000
+      },
+      "AMAGI": {
+        "fs": 45411824,
+        "ts": 216338944
+      },
+      "AWFIS": {
+        "fs": 46888435,
+        "ts": 68356000
+      },
+      "RATEGAIN": {
+        "fs": 59586146,
+        "ts": 115918000
+      },
+      "MAPMYINDIA": {
+        "fs": 16997521,
+        "ts": 53879000
+      },
+      "BLUESTONE": {
+        "fs": 84389676,
+        "ts": 233579000
+      },
+      "SHADOWFAX": {
+        "fs": 70147756,
+        "ts": 336397000
+      },
+      "WAKEFIT": {
+        "fs": 112357162,
+        "ts": 561574000
+      },
+      "AYE": {
+        "fs": 73407776,
+        "ts": 244498877
+      },
+      "E2E": {
+        "fs": 7615660,
+        "ts": 18164000
+      },
+      "CAPILLARY": {
+        "fs": 23272278,
+        "ts": 123972000
+      },
+      "MEDIASSIST": {
+        "fs": 64953781,
+        "ts": 74951000
+      },
+      "KISSHT": {
+        "fs": 47691894,
+        "ts": 168483022
+      },
+      "FRACTAL": {
+        "fs": 34815148,
+        "ts": 171965112
+      },
+      "MOBIKWIK": {
+        "fs": 56136337,
+        "ts": 106126000
+      },
+      "UNIECOM": {
+        "fs": 40196207,
+        "ts": 100490000
+      }
+    }
+  },
+  {
     "effective_date": "2026-08-20",
     "price_date": "2026-08-20",
-    "index_level_before_and_after": 139.91591373944593,
+    "index_level_before_and_after": 139.89139802436495,
     "convention": "After Aug 20 close, matching the saved IPO-swap event",
     "count": 47,
     "weights_sum": 1.0,
@@ -744,10 +992,258 @@
     }
   },
   {
+    "effective_date": "2026-09-01",
+    "price_date": "2026-08-31",
+    "index_level_before_and_after": 142.7012223706859,
+    "convention": "Monthly reset; previous available NSE session close; versioned shares",
+    "count": 47,
+    "weights_sum": 1.0,
+    "max_weight": 0.1,
+    "weights": {
+      "ETERNAL": 0.1,
+      "PAYTM": 0.1,
+      "GROWW": 0.04670111876788553,
+      "SWIGGY": 0.05449663690086472,
+      "NAUKRI": 0.06087366492243538,
+      "LENSKART": 0.05620748661032051,
+      "TURTLEMINT": 0.002426390318291861,
+      "NYKAA": 0.07971237369577287,
+      "POLICYBZR": 0.09660544486719247,
+      "MEESHO": 0.04925979406661336,
+      "MMYT": 0.00024218176966885033,
+      "ANGELONE": 0.021042386935861496,
+      "PWL": 0.010223123658401096,
+      "DELHIVERY": 0.0417607270750274,
+      "GODIGIT": 0.009562143813573742,
+      "ATHERENERG": 0.038983369603842126,
+      "PINELABS": 0.014008889888029941,
+      "FRSH": 0.00045427933368123225,
+      "URBANCO": 0.009050000607731114,
+      "TBOTEK": 0.008717805820191908,
+      "FIRSTCRY": 0.006414403013766364,
+      "APTUS": 0.013132387301705023,
+      "OLAELEC": 0.012154676062395394,
+      "INDIAMART": 0.006853513958740066,
+      "FIVESTAR": 0.016549482605972124,
+      "CARTRADE": 0.01892729941592382,
+      "AFFLE": 0.01472266077629071,
+      "BLACKBUCK": 0.009545756149202523,
+      "NAZARA": 0.012990232835791314,
+      "MEDPLUS": 0.007016347521513289,
+      "IXIGO": 0.004902187609246626,
+      "HONASA": 0.01064398746124438,
+      "AMAGI": 0.0038646855608910026,
+      "AWFIS": 0.0018204431890678529,
+      "RATEGAIN": 0.008378930164506587,
+      "MAPMYINDIA": 0.0025831275390156326,
+      "BLUESTONE": 0.01034435266973916,
+      "SHADOWFAX": 0.0027190681879133327,
+      "WAKEFIT": 0.0024731302718220896,
+      "AYE": 0.0019762153543422135,
+      "E2E": 0.0007066463359353452,
+      "CAPILLARY": 0.0017236824890185189,
+      "MEDIASSIST": 0.003206591463160555,
+      "KISSHT": 0.0021967186325493842,
+      "FRACTAL": 0.0044490128402989125,
+      "SHIPROCKET": 0.014386850591014714,
+      "MILKYMIST": 0.004989791343547548
+    },
+    "shares": {
+      "ETERNAL": {
+        "fs": 6734074736,
+        "ts": 9045099862
+      },
+      "GROWW": {
+        "fs": 1621477822,
+        "ts": 16702420288
+      },
+      "SWIGGY": {
+        "fs": 1289125748,
+        "ts": 2600046000
+      },
+      "NAUKRI": {
+        "fs": 309161475,
+        "ts": 526023000
+      },
+      "LENSKART": {
+        "fs": 565841079,
+        "ts": 3366560768
+      },
+      "PAYTM": {
+        "fs": 407781184,
+        "ts": 622175000
+      },
+      "TURTLEMINT": {
+        "fs": 112268281,
+        "ts": 295384615
+      },
+      "NYKAA": {
+        "fs": 1520677422,
+        "ts": 3192618752
+      },
+      "POLICYBZR": {
+        "fs": 343574545,
+        "ts": 467903000
+      },
+      "MEESHO": {
+        "fs": 1599314761,
+        "ts": 25706899456
+      },
+      "MMYT": {
+        "fs": 27719898,
+        "ts": 107730000
+      },
+      "ANGELONE": {
+        "fs": 489085864,
+        "ts": 913349399
+      },
+      "PWL": {
+        "fs": 586171279,
+        "ts": 3635070720
+      },
+      "DELHIVERY": {
+        "fs": 610426538,
+        "ts": 820788000
+      },
+      "GODIGIT": {
+        "fs": 247723602,
+        "ts": 954673000
+      },
+      "ATHERENERG": {
+        "fs": 151339648,
+        "ts": 303794000
+      },
+      "PINELABS": {
+        "fs": 569509650,
+        "ts": 3704099840
+      },
+      "FRSH": {
+        "fs": 217622798,
+        "ts": 274859000
+      },
+      "URBANCO": {
+        "fs": 361132700,
+        "ts": 1656122368
+      },
+      "TBOTEK": {
+        "fs": 33312523,
+        "ts": 106214000
+      },
+      "FIRSTCRY": {
+        "fs": 234492112,
+        "ts": 554638000
+      },
+      "APTUS": {
+        "fs": 351906002,
+        "ts": 499079000
+      },
+      "OLAELEC": {
+        "fs": 1971110364,
+        "ts": 4337649152
+      },
+      "INDIAMART": {
+        "fs": 26035016,
+        "ts": 51283000
+      },
+      "FIVESTAR": {
+        "fs": 206257956,
+        "ts": 314279000
+      },
+      "CARTRADE": {
+        "fs": 42191046,
+        "ts": 47944000
+      },
+      "AFFLE": {
+        "fs": 61440869,
+        "ts": 140640627
+      },
+      "BLACKBUCK": {
+        "fs": 107199016,
+        "ts": 186936000
+      },
+      "NAZARA": {
+        "fs": 232422504,
+        "ts": 380021000
+      },
+      "MEDPLUS": {
+        "fs": 69598668,
+        "ts": 116684000
+      },
+      "IXIGO": {
+        "fs": 200525531,
+        "ts": 410784000
+      },
+      "HONASA": {
+        "fs": 147594519,
+        "ts": 354383000
+      },
+      "AMAGI": {
+        "fs": 45411824,
+        "ts": 216338944
+      },
+      "AWFIS": {
+        "fs": 46888435,
+        "ts": 68356000
+      },
+      "RATEGAIN": {
+        "fs": 59586146,
+        "ts": 115918000
+      },
+      "MAPMYINDIA": {
+        "fs": 16997521,
+        "ts": 53879000
+      },
+      "BLUESTONE": {
+        "fs": 84389676,
+        "ts": 233579000
+      },
+      "SHADOWFAX": {
+        "fs": 70147756,
+        "ts": 336397000
+      },
+      "WAKEFIT": {
+        "fs": 112357162,
+        "ts": 561574000
+      },
+      "AYE": {
+        "fs": 73407776,
+        "ts": 244498877
+      },
+      "E2E": {
+        "fs": 7615660,
+        "ts": 18164000
+      },
+      "CAPILLARY": {
+        "fs": 23272278,
+        "ts": 123972000
+      },
+      "MEDIASSIST": {
+        "fs": 64953781,
+        "ts": 74951000
+      },
+      "KISSHT": {
+        "fs": 47691894,
+        "ts": 168483022
+      },
+      "FRACTAL": {
+        "fs": 34815148,
+        "ts": 171965112
+      },
+      "SHIPROCKET": {
+        "fs": 690741270,
+        "ts": 728783784
+      },
+      "MILKYMIST": {
+        "fs": 157740817,
+        "ts": 769842932
+      }
+    }
+  },
+  {
     "effective_date": "2026-09-18",
     "price_date": "2026-09-17",
-    "index_level_before_and_after": 139.43787741049644,
-    "convention": "Previous available NSE session close; versioned shares",
+    "index_level_before_and_after": 139.37916245135355,
+    "convention": "Constituent change; previous available NSE session close; versioned shares",
     "count": 47,
     "weights_sum": 1.0,
     "max_weight": 0.1,
@@ -994,8 +1490,8 @@
   {
     "effective_date": "2026-10-01",
     "price_date": "2026-09-30",
-    "index_level_before_and_after": 131.8920760520027,
-    "convention": "Previous available NSE session close; versioned shares",
+    "index_level_before_and_after": 131.83653850366593,
+    "convention": "Monthly reset; previous available NSE session close; versioned shares",
     "count": 47,
     "weights_sum": 1.0,
     "max_weight": 0.1,
@@ -1242,8 +1738,8 @@
   {
     "effective_date": "2026-10-05",
     "price_date": "2026-10-01",
-    "index_level_before_and_after": 129.73675838506415,
-    "convention": "Previous available NSE session close; versioned shares",
+    "index_level_before_and_after": 129.68212840496568,
+    "convention": "Constituent change; previous available NSE session close; versioned shares",
     "count": 47,
     "weights_sum": 1.0,
     "max_weight": 0.1,
@@ -1490,8 +1986,8 @@
   {
     "effective_date": "2026-10-26",
     "price_date": "2026-10-23",
-    "index_level_before_and_after": 125.26467415984865,
-    "convention": "Previous available NSE session close; versioned shares",
+    "index_level_before_and_after": 125.21192729965593,
+    "convention": "Constituent change; previous available NSE session close; versioned shares",
     "count": 47,
     "weights_sum": 1.0,
     "max_weight": 0.1,

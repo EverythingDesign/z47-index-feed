@@ -2,8 +2,8 @@
   "status": "PROVISIONAL \u2014 quarterly share refresh decision outstanding",
   "as_of": "2026-10-26",
   "source_feed_level": 131.25,
-  "capped_staging_level": 126.674606,
-  "difference_pct": -3.486015,
+  "capped_staging_level": 126.621265,
+  "difference_pct": -3.526655,
   "top_weights": [
     [
       "ETERNAL",
@@ -15,15 +15,15 @@
     ],
     [
       "NYKAA",
-      0.07937759874788688
+      0.07937759874788687
     ],
     [
       "NAUKRI",
-      0.05931918087138244
+      0.05931918087138243
     ],
     [
       "LENSKART",
-      0.05851024604185238
+      0.058510246041852385
     ],
     [
       "POLICYBZR",
@@ -31,11 +31,11 @@
     ],
     [
       "MEESHO",
-      0.054669803183187114
+      0.05466980318318712
     ],
     [
       "FRSH",
-      0.05142688547350514
+      0.05142688547350516
     ]
   ],
   "sector_counts": {
@@ -44,10 +44,22 @@
     "SaaS / AI": 8,
     "B2B": 7
   },
+  "reset_dates": [
+    "2026-06-16",
+    "2026-07-01",
+    "2026-08-03",
+    "2026-08-20",
+    "2026-09-01",
+    "2026-09-18",
+    "2026-10-01",
+    "2026-10-05",
+    "2026-10-26"
+  ],
   "assumptions": [
     "Use versioned share counts from each historical constituent swap; dated quarterly float refreshes are not supplied.",
     "Review only: capped continuation from June 16; no fitted residual adjustment.",
     "Existing mixed-currency basis retained through Sep 28, prospective INR transition Sep 29.",
+    "Cap resets on the first trading day of each month and at every constituent change.",
     "August IPO swap is after Aug 20 close; other resets use previous available NSE close.",
     "Secondary total-market-cap series is intentionally unavailable pending methodology decision."
   ]

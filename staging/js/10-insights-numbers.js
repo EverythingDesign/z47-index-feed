@@ -26,12 +26,15 @@
       });
       var cards=panel.querySelectorAll('.index-performance-wrapper .index-performance-cards');
       if (cards.length!==2) throw new Error('Monthly card structure changed');
-      var dateLabel=new Date(row.end_price_date+'T00:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
+      // Fixed month names: en-GB renders September as "Sept"; the page uses "Sep".
+      var ymd=row.end_price_date.split('-');
+      var dateLabel=Number(ymd[2])+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(ymd[1])-1]+' '+ymd[0];
       [row.z47_since_base_pct,row.nifty_since_base_pct].forEach(function (v,i) {
         var number=cards[i].querySelector('.heading-style-h5.is-48');
         if (!number) throw new Error('Missing monthly value binding');
         write(number,pct(v));number.style.color=v>=0?'#249200':'#D31F03';
-        write(cards[i].querySelector('.text-size-small'),'Since Jan 2024 · As of '+dateLabel);
+        // The NIFTY card also has a bold "NIFTY 500" label; only rewrite the date line.
+        write(cards[i].querySelector('.text-size-small:not(.text-weight-bold)'),'Since Jan 2024 · As of '+dateLabel);
       });
       var spread=row.z47_since_base_pct-row.nifty_since_base_pct;
       var cumulative='Z47^fortyseven returned '+pct(row.z47_since_base_pct)+' since its January 2024 base date, versus Nifty 500\'s '+pct(row.nifty_since_base_pct)+', '+(spread>=0?'ahead':'behind')+' by '+Math.round(Math.abs(spread)*100).toLocaleString('en-IN')+' bps.';
