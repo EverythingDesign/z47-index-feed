@@ -46,6 +46,7 @@ COMPANIES = [
     {"name": "Lenskart", "ticker": "LENSKART", "exchange": "NSE"},
     {"name": "Paytm", "ticker": "PAYTM", "exchange": "NSE"},
     {"name": "Turtlemint", "ticker": "TURTLEMINT", "exchange": "NSE"},
+    {"name": "Zetwerk", "ticker": "ZETWERK", "exchange": "NSE"},
     {"name": "Nykaa", "ticker": "NYKAA", "exchange": "NSE"},
     {"name": "PolicyBazaar", "ticker": "POLICYBZR", "exchange": "NSE"},
     {"name": "Meesho", "ticker": "MEESHO", "exchange": "NSE"},

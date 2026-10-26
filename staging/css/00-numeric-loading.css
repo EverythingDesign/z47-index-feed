@@ -1,0 +1,23 @@
+/* Install in the page HEAD, before the body can paint placeholder numbers. */
+:is([data-z47^="card-"], [data-z47^="ret-z47-"], [data-z47^="ret-nifty-"],
+    [data-z47="hero-z47-pct"], [data-z47="hero-nifty-pct"],
+    [data-z47="chart-z47-pct"], [data-z47="chart-nifty-pct"]):not([data-z47-value-state]) {
+  position: relative;
+  visibility: hidden !important;
+  min-width: 3ch;
+}
+:is([data-z47^="card-"], [data-z47^="ret-z47-"], [data-z47^="ret-nifty-"],
+    [data-z47="hero-z47-pct"], [data-z47="hero-nifty-pct"],
+    [data-z47="chart-z47-pct"], [data-z47="chart-nifty-pct"]):not([data-z47-value-state])::after {
+  content: "";
+  visibility: visible;
+  position: absolute;
+  left: 0;
+  top: 20%;
+  width: min(100%, 6ch);
+  height: 65%;
+  border-radius: 4px;
+  background: #e9dfd2;
+  pointer-events: none;
+}
+[data-z47-value-state="unavailable"] { color: #777 !important; }

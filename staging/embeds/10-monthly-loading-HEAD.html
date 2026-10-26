@@ -1,0 +1,26 @@
+<style>
+html[data-z47-monthly-review]:not([data-z47-monthly-state]) [data-insights-month] .index-performance-wrapper .heading-style-h5.is-48,
+html[data-z47-monthly-review]:not([data-z47-monthly-state]) [data-insights-month] .index-performance-pointers > .disclaimer-pointer:nth-child(-n+2) .pointer-text,
+html[data-z47-monthly-review]:not([data-z47-monthly-state]) [data-insights-month="2026-08"] .index-performance-pointers > .disclaimer-pointer:nth-child(3) .pointer-text {
+  visibility: hidden;
+}
+</style>
+<script>
+(function () {
+  if (!window.Z47_MONTHLY_URL) return;
+  document.documentElement.setAttribute('data-z47-monthly-review', '');
+  function start() {
+    setTimeout(function () {
+      if (document.documentElement.hasAttribute('data-z47-monthly-state')) return;
+      document.querySelectorAll('[data-insights-month] .index-performance-wrapper .heading-style-h5.is-48').forEach(function (node) { node.textContent = '—'; });
+      document.querySelectorAll('[data-insights-month] .index-performance-pointers .pointer-text').forEach(function (node) {
+        if (/^Z47\^fortyseven (is|returned)|^The cohort (moved|gained|fell|returned)/i.test(node.textContent.trim())) {
+          (node.querySelector('p') || node).textContent = 'Reviewed index figures are temporarily unavailable.';
+        }
+      });
+      document.documentElement.setAttribute('data-z47-monthly-state', 'error');
+    }, 20000);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>

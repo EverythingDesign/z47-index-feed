@@ -1,12 +1,15 @@
 """Refresh the page's offline snapshots from an already validated index feed."""
 import json
+import argparse
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def main():
-    data = json.loads((ROOT / 'z47_index.json').read_text())
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--feed', type=Path, default=ROOT / 'z47_index.json')
+    data = json.loads(parser.parse_args().feed.read_text())
     if len(data['constituents']) != 47 or data['meta']['constituents_priced'] != 47:
         raise ValueError('Refusing to snapshot an incomplete index')
     snapshots = [

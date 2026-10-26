@@ -5,7 +5,7 @@
  */
 (function () {
   "use strict";
-  var FEED_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
+  var FEED_URL = window.Z47_FEED_URL || "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
   var GAIN = "#FF6800", LOSS = "#707070";
   var GAIN_FADE = "rgba(255,104,0,0.22)", LOSS_FADE = "rgba(112,112,112,0.22)";
   var NAME_FONT = '"NN Swinton", Georgia, serif';

@@ -1,0 +1,54 @@
+{
+  "status": "PROVISIONAL \u2014 quarterly share refresh decision outstanding",
+  "as_of": "2026-10-26",
+  "source_feed_level": 131.25,
+  "capped_staging_level": 126.674606,
+  "difference_pct": -3.486015,
+  "top_weights": [
+    [
+      "ETERNAL",
+      0.10125477168277466
+    ],
+    [
+      "PAYTM",
+      0.10058801317729102
+    ],
+    [
+      "NYKAA",
+      0.07937759874788688
+    ],
+    [
+      "NAUKRI",
+      0.05931918087138244
+    ],
+    [
+      "LENSKART",
+      0.05851024604185238
+    ],
+    [
+      "POLICYBZR",
+      0.055696762471656835
+    ],
+    [
+      "MEESHO",
+      0.054669803183187114
+    ],
+    [
+      "FRSH",
+      0.05142688547350514
+    ]
+  ],
+  "sector_counts": {
+    "Consumer / Consumer Tech": 21,
+    "Fintech / Financial Services": 11,
+    "SaaS / AI": 8,
+    "B2B": 7
+  },
+  "assumptions": [
+    "Use versioned share counts from each historical constituent swap; dated quarterly float refreshes are not supplied.",
+    "Review only: capped continuation from June 16; no fitted residual adjustment.",
+    "Existing mixed-currency basis retained through Sep 28, prospective INR transition Sep 29.",
+    "August IPO swap is after Aug 20 close; other resets use previous available NSE close.",
+    "Secondary total-market-cap series is intentionally unavailable pending methodology decision."
+  ]
+}
