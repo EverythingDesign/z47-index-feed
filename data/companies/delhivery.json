@@ -8,9 +8,9 @@
   "price": 375.0,
   "high": 524.0,
   "low": 365.0,
-  "pe": 236.0,
-  "roce": 1.01,
-  "roe": -0.21,
+  "pe": 88.2,
+  "roce": 2.51,
+  "roe": 1.57,
   "about": "Delhivery provides a full range of Logistics services, including delivery of express parcels and heavy goods, PTL freight, TL freight, warehousing, supply chain solutions, cross-border Express, freight services, and supply chain software. The company also offers value-added services such as e-commerce return services, payment collection and processing, installation &amp; assembly services, and fraud detection.[1]",
   "website": "http://www.delhivery.com",
   "website_label": "delhivery.com",
@@ -21,13 +21,13 @@
   "screener_id": "1275225",
   "ratios_ok": 6,
   "daily_pct": 1.35,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/DELHIVERY/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/DELHIVERY/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/DELHIVERY/",
+  "ratios_source_url": "https://www.screener.in/company/DELHIVERY/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,39 +42,39 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "2,781",
-          "3,647",
-          "6,882",
-          "7,225",
-          "8,142",
-          "8,932",
-          "10,508"
+          "2,777",
+          "3,500",
+          "5,911",
+          "6,659",
+          "7,454",
+          "8,325",
+          "9,847"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "2,952",
-          "3,769",
-          "7,357",
-          "7,677",
-          "8,015",
-          "8,556",
-          "9,868"
+          "2,946",
+          "3,548",
+          "6,370",
+          "7,048",
+          "7,277",
+          "7,929",
+          "9,056"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-171",
-          "-123",
-          "-475",
-          "-452",
-          "127",
-          "376",
-          "640"
+          "-169",
+          "-48",
+          "-459",
+          "-389",
+          "178",
+          "396",
+          "792"
         ]
       },
       {
@@ -82,25 +82,25 @@
         "label": "OPM %",
         "values": [
           "-6%",
-          "-3.4%",
-          "-7%",
+          "-1.4%",
+          "-8%",
           "-6%",
-          "1.6%",
-          "4.2%",
-          "6%"
+          "2.4%",
+          "4.8%",
+          "8%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "207",
-          "150",
-          "156",
-          "319",
-          "439",
-          "442",
-          "340"
+          "188",
+          "134",
+          "167",
+          "320",
+          "401",
+          "365",
+          "329"
         ]
       },
       {
@@ -109,37 +109,37 @@
         "values": [
           "49",
           "89",
-          "100",
-          "89",
-          "89",
-          "126",
-          "144"
+          "94",
+          "86",
+          "88",
+          "125",
+          "136"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "256",
-          "355",
-          "611",
-          "831",
-          "722",
-          "535",
-          "695"
+          "254",
+          "353",
+          "478",
+          "657",
+          "659",
+          "543",
+          "668"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-269",
-          "-416",
-          "-1,029",
-          "-1,053",
-          "-244",
-          "157",
-          "140"
+          "-284",
+          "-356",
+          "-864",
+          "-812",
+          "-168",
+          "92",
+          "318"
         ]
       },
       {
@@ -148,37 +148,37 @@
         "values": [
           "0%",
           "0%",
-          "-2%",
-          "-4%",
-          "2%",
-          "-3%",
-          "-9%"
+          "0%",
+          "0%",
+          "0%",
+          "-6%",
+          "-2%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-269",
-          "-416",
-          "-1,011",
-          "-1,008",
-          "-249",
-          "162",
-          "153"
+          "-284",
+          "-356",
+          "-864",
+          "-812",
+          "-168",
+          "98",
+          "325"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-27.44",
-          "-24.89",
-          "-15.75",
-          "-13.83",
-          "-3.38",
-          "2.17",
-          "2.04"
+          "-28.99",
+          "-21.34",
+          "-13.45",
+          "-11.15",
+          "-2.28",
+          "1.31",
+          "4.35"
         ]
       },
       {
@@ -195,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/DELHIVERY/consolidated/"
+    "source_url": "https://www.screener.in/company/DELHIVERY/"
   },
   "growth": {
     "cards": [
@@ -206,22 +206,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": null
+            "value": 35.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 24.0
+            "value": 23.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 13.0
+            "value": 14.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 23.0
+            "value": 24.0
           }
         ]
       },
@@ -232,22 +232,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": null
+            "value": 10.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 14.0
+            "value": 20.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 26.0
+            "value": 30.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -40.0
+            "value": 37.0
           }
         ]
       },
@@ -273,7 +273,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -20.0
+            "value": -21.0
           }
         ]
       },
@@ -289,17 +289,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": -6.0
+            "value": -4.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -1.0
+            "value": 1.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 0.0
+            "value": 2.0
           }
         ]
       }
@@ -481,7 +481,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-26T22:33:40.095150+05:30",
-  "generated_at_ist": "26 Oct 2026, 22:33 IST",
+  "generated_at": "2026-10-27T07:02:38.732135+05:30",
+  "generated_at_ist": "27 Oct 2026, 07:02 IST",
   "source": "screener"
 }

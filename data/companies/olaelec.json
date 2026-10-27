@@ -4,13 +4,13 @@
   "name": "Ola Electric",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/OLAELEC/",
-  "mcap_cr": 14981.0,
+  "mcap_cr": 14966.0,
   "price": 29.9,
   "high": 52.0,
   "low": 20.8,
   "pe": null,
-  "roce": -19.9,
-  "roe": -43.2,
+  "roce": -0.21,
+  "roe": -1.03,
   "about": "Founded in 2017, Ola Electric Mobility Limited is an electric vehicle company that primarily manufactures electric vehicles and core components for electric vehicles. These components include battery packs, motors, and vehicle frames, all produced at the Ola Futurefactory.[1]",
   "website": "http://www.olaelectric.com",
   "website_label": "olaelectric.com",
@@ -21,14 +21,15 @@
   "screener_id": "1284881",
   "ratios_ok": 5,
   "daily_pct": 0.03,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/OLAELEC/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/OLAELEC/",
+  "ratios_source_url": "https://www.screener.in/company/OLAELEC/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2020",
       "Mar 2021",
       "Mar 2022",
       "Mar 2023",
@@ -41,60 +42,65 @@
         "key": "sales",
         "label": "Sales",
         "values": [
+          "2",
           "1",
-          "373",
-          "2,631",
-          "5,010",
-          "4,514",
-          "2,253"
+          "28",
+          "170",
+          "82",
+          "3",
+          "2"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "278",
-          "1,174",
-          "3,883",
-          "6,276",
-          "6,249",
-          "3,231"
+          "129",
+          "194",
+          "328",
+          "327",
+          "221",
+          "140",
+          "102"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-277",
-          "-800",
-          "-1,252",
-          "-1,266",
-          "-1,735",
-          "-978"
+          "-127",
+          "-193",
+          "-300",
+          "-157",
+          "-139",
+          "-137",
+          "-100"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-32,228%",
-          "-214%",
-          "-48%",
-          "-25%",
-          "-38%",
-          "-43%"
+          "-7,083%",
+          "-22,193%",
+          "-1,068%",
+          "-92%",
+          "-170%",
+          "-3,987%",
+          "-4,008%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "98",
-          "83",
-          "55",
-          "226",
-          "391",
-          "193"
+          "129",
+          "99",
+          "85",
+          "126",
+          "120",
+          "192",
+          "79"
         ]
       },
       {
@@ -102,35 +108,38 @@
         "label": "Interest",
         "values": [
           "1",
-          "18",
-          "108",
-          "187",
-          "366",
-          "360"
+          "0",
+          "0",
+          "0",
+          "2",
+          "92",
+          "85"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "20",
-          "49",
-          "167",
-          "358",
-          "566",
-          "684"
+          "6",
+          "9",
+          "7",
+          "7",
+          "6",
+          "3",
+          "3"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-199",
-          "-784",
-          "-1,472",
-          "-1,584",
-          "-2,276",
-          "-1,829"
+          "-4",
+          "-104",
+          "-223",
+          "-39",
+          "-27",
+          "-40",
+          "-109"
         ]
       },
       {
@@ -142,19 +151,21 @@
           "0%",
           "0%",
           "0%",
-          "0%"
+          "0%",
+          "4%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-199",
-          "-784",
-          "-1,472",
-          "-1,584",
-          "-2,276",
-          "-1,833"
+          "-5",
+          "-104",
+          "-223",
+          "-39",
+          "-27",
+          "-40",
+          "-113"
         ]
       },
       {
@@ -162,11 +173,12 @@
         "label": "EPS in Rs",
         "values": [
           "",
-          "-3.71",
-          "-6.97",
-          "-7.50",
-          "-4.78",
-          "-3.85"
+          "",
+          "-1.06",
+          "-0.18",
+          "-0.13",
+          "-0.08",
+          "-0.24"
         ]
       },
       {
@@ -178,11 +190,12 @@
           "0%",
           "0%",
           "0%",
+          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/OLAELEC/consolidated/"
+    "source_url": "https://www.screener.in/company/OLAELEC/"
   },
   "growth": {
     "cards": [
@@ -198,17 +211,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 383.0
+            "value": 23.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -5.0
+            "value": -76.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -49.0
+            "value": -38.0
           }
         ]
       },
@@ -224,17 +237,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": -4.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -12.0
+            "value": null
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 26.0
+            "value": -142.0
           }
         ]
       },
@@ -260,7 +273,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -42.0
+            "value": -41.0
           }
         ]
       },
@@ -276,17 +289,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": -2.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": -1.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": -43.0
+            "value": -1.0
           }
         ]
       }
@@ -462,7 +475,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-26T22:36:01.359366+05:30",
-  "generated_at_ist": "26 Oct 2026, 22:36 IST",
+  "generated_at": "2026-10-27T07:04:48.411846+05:30",
+  "generated_at_ist": "27 Oct 2026, 07:04 IST",
   "source": "screener"
 }
