@@ -4,7 +4,7 @@
   "name": "Go Digit Insurance",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/GODIGIT/",
-  "mcap_cr": 23887.0,
+  "mcap_cr": 23883.0,
   "price": 258.0,
   "high": 374.0,
   "low": 232.0,
@@ -89,7 +89,7 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "0",
+          "-0",
           "-0",
           "0",
           "468",
@@ -101,12 +101,12 @@
         "key": "interest",
         "label": "Interest",
         "values": [
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0"
+          "-0",
+          "-0",
+          "-0",
+          "-0",
+          "-0",
+          "-0"
         ]
       },
       {
@@ -137,11 +137,11 @@
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
           "14%"
         ]
       },
@@ -173,12 +173,12 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%",
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       }
     ],
@@ -260,7 +260,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": -27.0
+            "value": -28.0
           }
         ]
       },
@@ -444,7 +444,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-27T21:35:15.785058+05:30",
-  "generated_at_ist": "27 Oct 2026, 21:35 IST",
+  "generated_at": "2026-10-28T06:58:26.519181+05:30",
+  "generated_at_ist": "28 Oct 2026, 06:58 IST",
   "source": "screener"
 }
