@@ -4,13 +4,13 @@
   "name": "Angel One",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/ANGELONE/",
-  "mcap_cr": 26450.0,
-  "price": 289.0,
+  "mcap_cr": 26692.0,
+  "price": 292.0,
   "high": 360.0,
   "low": 209.0,
-  "pe": 22.9,
-  "roce": 14.8,
-  "roe": 15.6,
+  "pe": 20.7,
+  "roce": 15.6,
+  "roe": 17.3,
   "about": "Angel One Ltd is a diversified financial services company and is primarily engaged in the business  of stock, commodity and currency broking, institutional broking, providing margin trading facility, depository services and distribution of mutual funds, lending as a NBFC and corporate agents of insurance companies.[1]",
   "website": "http://www.angelbroking.com",
   "website_label": "angelbroking.com",
@@ -20,14 +20,14 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=ANGELONE",
   "screener_id": "1274790",
   "ratios_ok": 6,
-  "daily_pct": 2.34,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/ANGELONE/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/ANGELONE/consolidated/",
+  "daily_pct": 1.12,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/ANGELONE/",
+  "ratios_source_url": "https://www.screener.in/company/ANGELONE/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,39 +42,39 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "748",
-          "1,289",
-          "2,292",
-          "3,002",
-          "4,272",
-          "5,239",
-          "5,138"
+          "735",
+          "1,280",
+          "2,272",
+          "2,985",
+          "4,248",
+          "5,175",
+          "5,057"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "570",
-          "828",
-          "1,366",
-          "1,708",
-          "2,579",
-          "3,256",
-          "3,318"
+          "555",
+          "830",
+          "1,359",
+          "1,700",
+          "2,550",
+          "3,157",
+          "3,144"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "178",
-          "460",
-          "926",
-          "1,294",
-          "1,693",
-          "1,983",
-          "1,820"
+          "180",
+          "450",
+          "913",
+          "1,285",
+          "1,699",
+          "2,019",
+          "1,913"
         ]
       },
       {
@@ -82,12 +82,12 @@
         "label": "OPM %",
         "values": [
           "24%",
-          "36%",
+          "35%",
           "40%",
           "43%",
           "40%",
-          "38%",
-          "35%"
+          "39%",
+          "38%"
         ]
       },
       {
@@ -95,12 +95,12 @@
         "label": "Other Income",
         "values": [
           "7",
-          "10",
-          "5",
-          "18",
-          "7",
           "8",
-          "15"
+          "2",
+          "16",
+          "6",
+          "8",
+          "14"
         ]
       },
       {
@@ -108,94 +108,94 @@
         "label": "Interest",
         "values": [
           "50",
-          "42",
-          "76",
+          "43",
+          "74",
           "91",
           "137",
-          "296",
-          "438"
+          "293",
+          "437"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "21",
+          "20",
+          "17",
           "18",
-          "19",
-          "30",
-          "50",
-          "103",
-          "125"
+          "29",
+          "49",
+          "100",
+          "117"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "114",
-          "410",
-          "836",
-          "1,192",
-          "1,514",
-          "1,592",
-          "1,272"
+          "117",
+          "398",
+          "823",
+          "1,181",
+          "1,519",
+          "1,634",
+          "1,373"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "28%",
-          "28%",
+          "26%",
+          "27%",
+          "25%",
           "25%",
           "25%",
           "26%",
-          "26%",
-          "28%"
+          "26%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "82",
-          "297",
-          "625",
-          "890",
-          "1,126",
-          "1,172",
-          "915"
+          "87",
+          "290",
+          "615",
+          "882",
+          "1,133",
+          "1,216",
+          "1,023"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "1.14",
-          "3.63",
-          "7.54",
-          "10.67",
-          "13.40",
-          "12.98",
-          "10.05"
+          "1.20",
+          "3.55",
+          "7.42",
+          "10.57",
+          "13.49",
+          "13.47",
+          "11.23"
         ]
       },
       {
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "24%",
-          "35%",
+          "22%",
           "36%",
           "37%",
+          "38%",
           "26%",
-          "37%",
-          "246%"
+          "36%",
+          "220%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/ANGELONE/consolidated/"
+    "source_url": "https://www.screener.in/company/ANGELONE/"
   },
   "growth": {
     "cards": [
@@ -206,7 +206,7 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 28.0
+            "value": 30.0
           },
           {
             "key": "5y",
@@ -216,12 +216,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 20.0
+            "value": 19.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 21.0
+            "value": 22.0
           }
         ]
       },
@@ -232,22 +232,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 40.0
+            "value": 45.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 25.0
+            "value": 29.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 1.0
+            "value": 5.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 48.0
+            "value": 51.0
           }
         ]
       },
@@ -263,17 +263,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 18.0
+            "value": 19.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 4.0
+            "value": 5.0
           },
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 14.0
+            "value": 15.0
           }
         ]
       },
@@ -284,22 +284,22 @@
           {
             "key": "10y",
             "label": "10 Years:",
-            "value": 28.0
+            "value": 29.0
           },
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 29.0
+            "value": 31.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 25.0
+            "value": 26.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 16.0
+            "value": 17.0
           }
         ]
       }
@@ -511,7 +511,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-28T06:57:27.659678+05:30",
-  "generated_at_ist": "28 Oct 2026, 06:57 IST",
+  "generated_at": "2026-10-28T22:22:41.045414+05:30",
+  "generated_at_ist": "28 Oct 2026, 22:22 IST",
   "source": "screener"
 }
