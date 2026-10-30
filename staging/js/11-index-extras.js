@@ -3,9 +3,8 @@
 
    Adds, without touching 01-performance.js or the Designer layout:
      1. Hero top bar — latest value, change vs previous close, prev. close, as-of
-     2. 3D / 1W buttons on the performance chart (day-level date labels)
-     3. Download — PNG / PDF snapshot of the chart for the selected range
-     4. Constituent change log above the Constituents-tab disclaimer
+     2. Download — PNG / PDF snapshot of the chart for the selected range
+     3. Constituent change log above the Constituents-tab disclaimer
 
    Reads the feed 01-performance.js already loaded (window.__Z47) and waits for its
    "z47:performance-state" event. If the feed never arrives, nothing new is shown. */
@@ -25,10 +24,8 @@
   var PAGE_URL_LABEL = "z47.com/z47-forty-seven";
 
   // Short periods, counted in NSE sessions back from the latest close.
-  var SHORT_SESSIONS = { "3D": 3, "1W": 5 };
-  var SHORT_RANGES   = ["3D", "1W"];             // chart buttons (1D needs intraday data)
   var RANGE_LABELS = {
-    "3D": "Last 3 sessions", "1W": "Last 1 week", "1M": "Last 1 month", "3M": "Last 3 months",
+    "1M": "Last 1 month", "3M": "Last 3 months",
     "6M": "Last 6 months", "1Y": "Last 1 year", "YTD": "Year to date", "SINCE": "Since Jan 2024"
   };
 
@@ -83,17 +80,8 @@
   }
 
   // Return over the last n sessions, from the daily closes in history[].
-  function sessionReturn(hist, key, n) {
-    if (!hist || hist.length <= n) return null;
-    var a = hist[hist.length - 1 - n][key], b = hist[hist.length - 1][key];
-    return fin(a) && fin(b) && a > 0 ? (b / a - 1) * 100 : null;
-  }
-  // Return for any chart range: feed returns for the long ones, sessions for the short ones.
+  // Return for the selected chart range, straight from the feed.
   function rangeReturns(d, range) {
-    if (SHORT_SESSIONS[range]) {
-      return { z47: sessionReturn(d.history, "z47", SHORT_SESSIONS[range]),
-               nifty: sessionReturn(d.history, "nifty500", SHORT_SESSIONS[range]) };
-    }
     var k = range === "SINCE" ? "since_base" : range;
     return { z47: d.index.returns[k], nifty: d.benchmark.returns[k] };
   }
@@ -160,60 +148,11 @@
     bar.classList.remove("is-loading");
   }
 
-  /* ------------------------ 2. SHORT CHART RANGES ------------------------- */
+  /* --------------------------- 2. DOWNLOAD -------------------------------- */
   function chartInstance() {
     var canvas = document.getElementById("z47-chart");
     return canvas && window.Chart && Chart.getChart ? Chart.getChart(canvas) : null;
   }
-  function setPill(key, n) {
-    $all('[data-z47="' + key + '"]').forEach(function (el) {
-      el.textContent = fmtPct1(n);
-      el.classList.remove("ai-color-parrotgreen", "ai-color-red");
-      el.style.color = colorFor(n);
-      el.setAttribute("data-z47-value-state", fin(n) ? "ready" : "unavailable");
-    });
-  }
-  function renderShortRange(d, range) {
-    var chart = chartInstance();
-    if (!chart) return;
-    var slice = d.history.slice(-(SHORT_SESSIONS[range] + 1));
-    var z0 = slice[0].z47, n0 = slice[0].nifty500;
-    chart.data.labels = slice.map(function (p) { return p.date; });
-    chart.data.datasets[0].data = slice.map(function (p) { return p.z47 / z0 * 100; });
-    chart.data.datasets[1].data = slice.map(function (p) { return p.nifty500 / n0 * 100; });
-    chart.data.datasets.forEach(function (ds) { ds.pointRadius = 3; ds.pointHoverRadius = 5; });
-    var o = chart.options;
-    o.scales.x.ticks.callback = function (v) { return dayLabel(this.getLabelForValue(v), false); };
-    o.scales.x.ticks.maxTicksLimit = slice.length;
-    o.plugins.tooltip.callbacks.title = function (items) { return dayLabel(items[0].label, true); };
-    chart.update();
-    var rr = rangeReturns(d, range);
-    setPill("chart-z47-pct", rr.z47);
-    setPill("chart-nifty-pct", rr.nifty);
-  }
-  function addRangeButtons(d) {
-    var b1M = document.querySelector('[data-z47-range="1M"]');
-    if (!b1M || document.querySelector('[data-z47-range="1W"]')) return;
-    SHORT_RANGES.forEach(function (range) {
-      var b = b1M.cloneNode(true);
-      b.removeAttribute("id");
-      b.removeAttribute("data-w-id");
-      b.setAttribute("data-z47-range", range);
-      b.setAttribute("data-tenure", range === "3D" ? "three-days" : "one-week");
-      b.classList.remove("is-active", "w--current");
-      var label = b.querySelector(".chart-tenure-text span") || b.querySelector(".chart-tenure-text");
-      if (label) label.textContent = range;
-      b.addEventListener("click", function (e) {
-        e.preventDefault();
-        $all("[data-z47-range]").forEach(function (x) { x.classList.remove("is-active"); });
-        b.classList.add("is-active");
-        renderShortRange(d, range);
-      });
-      b1M.parentNode.insertBefore(b, b1M);
-    });
-  }
-
-  /* --------------------------- 3. DOWNLOAD -------------------------------- */
   addStyle("z47x-dl-css",
     ".z47x-dl{position:relative;display:flex;}"
   + ".z47x-dl > .chart-tabs{height:100%;cursor:pointer;background:#fff;box-shadow:inset 0 0 0 1px #cfcfcf;}"
@@ -240,7 +179,6 @@
   // Fixed-size offscreen chart, so the export looks the same from any device.
   function exportChartCanvas(d, range) {
     var live = chartInstance();
-    var short = !!SHORT_SESSIONS[range];
     var c = document.createElement("canvas");
     c.width = 2800; c.height = 1160;
     var font = getComputedStyle(document.body).fontFamily;
@@ -250,16 +188,16 @@
         labels: live.data.labels.slice(),
         datasets: live.data.datasets.map(function (ds) {
           return { label: ds.label, data: ds.data.slice(), borderColor: ds.borderColor, borderWidth: 3,
-                   pointRadius: short ? 4 : 0, pointBackgroundColor: ds.borderColor, tension: 0.15 };
+                   pointRadius: 0, pointBackgroundColor: ds.borderColor, tension: 0.15 };
         })
       },
       options: {
         responsive: false, animation: false, devicePixelRatio: 1,
         plugins: { legend: { display: false }, tooltip: { enabled: false } },
         scales: {
-          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: short ? 8 : 9,
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 9,
                font: { family: font, size: 24 }, color: "#555",
-               callback: function (v) { var l = this.getLabelForValue(v); return short ? dayLabel(l, false) : monthLabel(l); } } },
+               callback: function (v) { return monthLabel(this.getLabelForValue(v)); } } },
           y: { grid: { color: "rgba(0,0,0,0.07)" }, ticks: { precision: 0, maxTicksLimit: 7, font: { family: font, size: 24 }, color: "#555" } }
         }
       }
@@ -406,7 +344,7 @@
     links.appendChild(wrap);
   }
 
-  /* ------------------------- 4. CHANGE LOG -------------------------------- */
+  /* ------------------------- 3. CHANGE LOG -------------------------------- */
   addStyle("z47x-log-css",
     ".z47x-log{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem;}"
   + ".z47x-log__intro{margin:0;color:#555;}"
@@ -491,7 +429,6 @@
     if (started || !d || !d.index || !Array.isArray(d.history) || d.history.length < 7) return;
     started = true;
     guard("top bar", function () { paintBar(d); });
-    guard("chart ranges", function () { addRangeButtons(d); });
     guard("download", function () { addDownload(d); });
     guard("change log", function () { addChangeLog(d); });
   }
