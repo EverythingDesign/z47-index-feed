@@ -4,13 +4,13 @@
   "name": "Ixigo",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/IXIGO/",
-  "mcap_cr": 6268.0,
+  "mcap_cr": 6281.0,
   "price": 142.0,
   "high": 285.0,
   "low": 136.0,
-  "pe": 49.7,
-  "roce": 8.25,
-  "roe": 6.63,
+  "pe": 52.9,
+  "roce": 6.14,
+  "roe": 4.79,
   "about": "Incorporated in 2007, Le Travenues  Technology Ltd is running online platforms to provide information and booking services for the travel industry. It also provides software development &amp; maintenance  services to its customer[1][2]",
   "website": "http://www.ixigo.com",
   "website_label": "ixigo.com",
@@ -20,14 +20,14 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=IXIGO",
   "screener_id": "1284805",
   "ratios_ok": 6,
-  "daily_pct": 1.55,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/IXIGO/",
-  "ratios_source_url": "https://www.screener.in/company/IXIGO/",
+  "daily_pct": 0.25,
+  "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/IXIGO/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/IXIGO/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,52 +42,52 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "152",
-          "121",
-          "253",
-          "330",
-          "653",
-          "911",
-          "1,208"
+          "112",
+          "136",
+          "380",
+          "501",
+          "656",
+          "914",
+          "1,228"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "159",
-          "118",
-          "285",
-          "330",
-          "607",
-          "830",
-          "1,118"
+          "136",
+          "132",
+          "392",
+          "473",
+          "618",
+          "842",
+          "1,166"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-7",
+          "-24",
           "3",
-          "-31",
-          "0",
-          "45",
-          "81",
-          "89"
+          "-12",
+          "29",
+          "38",
+          "72",
+          "62"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-4.5%",
-          "2.1%",
-          "-12%",
-          "0.1%",
-          "7%",
-          "9%",
-          "7%"
+          "-22%",
+          "2.4%",
+          "-3.2%",
+          "6%",
+          "6%",
+          "8%",
+          "5%"
         ]
       },
       {
@@ -96,22 +96,22 @@
         "values": [
           "1",
           "3",
-          "6",
-          "3",
-          "9",
-          "17",
-          "44"
+          "5",
+          "4",
+          "39",
+          "23",
+          "45"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "0",
+          "1",
           "2",
           "3",
           "1",
-          "2",
+          "3",
           "2",
           "3"
         ]
@@ -120,26 +120,26 @@
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "1",
-          "1",
-          "5",
-          "7",
+          "2",
+          "2",
+          "8",
           "11",
+          "13",
           "10",
-          "13"
+          "15"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-8",
-          "2",
-          "-33",
-          "-5",
-          "42",
-          "85",
-          "117"
+          "-27",
+          "3",
+          "-18",
+          "21",
+          "61",
+          "82",
+          "89"
         ]
       },
       {
@@ -147,38 +147,38 @@
         "label": "Tax %",
         "values": [
           "0%",
-          "-233%",
-          "-2%",
-          "-192%",
-          "-29%",
+          "-179%",
+          "20%",
+          "-13%",
+          "-20%",
           "26%",
-          "18%"
+          "19%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-8",
+          "-27",
           "8",
-          "-32",
-          "5",
-          "54",
-          "63",
-          "96"
+          "-21",
+          "23",
+          "73",
+          "60",
+          "71"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-0.44",
+          "-1.54",
           "0.44",
-          "-0.87",
-          "0.12",
-          "1.45",
-          "1.63",
-          "2.20"
+          "-0.57",
+          "0.58",
+          "2.03",
+          "1.54",
+          "1.65"
         ]
       },
       {
@@ -195,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/IXIGO/"
+    "source_url": "https://www.screener.in/company/IXIGO/consolidated/"
   },
   "growth": {
     "cards": [
@@ -211,17 +211,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 58.0
+            "value": 55.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 54.0
+            "value": 35.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 11.0
+            "value": 16.0
           }
         ]
       },
@@ -237,17 +237,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 65.0
+            "value": 55.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 83.0
+            "value": 33.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 83.0
+            "value": 147.0
           }
         ]
       },
@@ -294,12 +294,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 9.0
+            "value": 7.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 7.0
+            "value": 5.0
           }
         ]
       }
@@ -432,7 +432,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-30T07:36:03.583608+05:30",
-  "generated_at_ist": "30 Oct 2026, 07:36 IST",
+  "generated_at": "2026-10-30T10:36:21.065044+05:30",
+  "generated_at_ist": "30 Oct 2026, 10:36 IST",
   "source": "screener"
 }
