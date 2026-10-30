@@ -4,13 +4,13 @@
   "name": "Zetwerk",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/ZETWERK/",
-  "mcap_cr": 27650.0,
+  "mcap_cr": 27593.0,
   "price": 163.0,
   "high": 169.0,
   "low": 127.0,
   "pe": null,
-  "roce": 4.05,
-  "roe": -38.5,
+  "roce": 3.63,
+  "roe": -19.7,
   "about": "Zetwerk Manufacturing Businesses Limited is \na technology-led B2B manufacturing platform. \nIt combines third-party suppliers with owned manufacturing plants to produce industrial \nand consumer products, while Terra91 supplies industrial raw materials. The group serves energy, electronics, capital goods, aerospace and defence customers in India and overseas. [1]",
   "bse_code": "545000",
   "bse_url": "https://www.bseindia.com/stock-share-price/zetwerk-manufacturing-businesses-ltd/ZETWERK/545000/",
@@ -18,14 +18,14 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=ZETWERK",
   "screener_id": "1286259",
   "ratios_ok": 5,
-  "daily_pct": -0.58,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/ZETWERK/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/ZETWERK/consolidated/",
+  "daily_pct": -0.57,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/ZETWERK/",
+  "ratios_source_url": "https://www.screener.in/company/ZETWERK/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2021",
       "Mar 2022",
@@ -39,24 +39,24 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "835",
-          "4,964",
-          "11,449",
-          "14,444",
-          "11,332",
-          "15,913"
+          "829",
+          "4,308",
+          "9,604",
+          "11,672",
+          "7,130",
+          "6,052"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "878",
-          "5,002",
-          "11,373",
-          "14,360",
-          "11,115",
-          "15,618"
+          "872",
+          "4,378",
+          "9,584",
+          "11,648",
+          "7,003",
+          "6,065"
         ]
       },
       {
@@ -64,11 +64,11 @@
         "label": "Operating Profit",
         "values": [
           "-43",
-          "-38",
-          "76",
-          "84",
-          "217",
-          "295"
+          "-70",
+          "20",
+          "24",
+          "127",
+          "-14"
         ]
       },
       {
@@ -76,23 +76,23 @@
         "label": "OPM %",
         "values": [
           "-5%",
-          "-0.8%",
-          "0.7%",
-          "0.6%",
-          "1.9%",
-          "1.9%"
+          "-1.6%",
+          "0.2%",
+          "0.2%",
+          "1.8%",
+          "-0.2%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "33",
-          "97",
-          "147",
-          "-204",
-          "-79",
-          "-1,290"
+          "32",
+          "110",
+          "179",
+          "-160",
+          "15",
+          "-1,187"
         ]
       },
       {
@@ -100,11 +100,11 @@
         "label": "Interest",
         "values": [
           "28",
-          "133",
-          "297",
-          "449",
-          "337",
-          "366"
+          "117",
+          "243",
+          "378",
+          "192",
+          "189"
         ]
       },
       {
@@ -112,11 +112,11 @@
         "label": "Depreciation",
         "values": [
           "3",
-          "10",
-          "36",
-          "192",
-          "161",
-          "197"
+          "9",
+          "24",
+          "113",
+          "32",
+          "34"
         ]
       },
       {
@@ -124,11 +124,11 @@
         "label": "Profit before tax",
         "values": [
           "-41",
-          "-84",
-          "-110",
-          "-761",
-          "-360",
-          "-1,558"
+          "-87",
+          "-68",
+          "-627",
+          "-83",
+          "-1,423"
         ]
       },
       {
@@ -136,11 +136,11 @@
         "label": "Tax %",
         "values": [
           "0%",
-          "-29%",
-          "-8%",
-          "7%",
-          "3%",
-          "3%"
+          "-33%",
+          "-28%",
+          "8%",
+          "0%",
+          "0%"
         ]
       },
       {
@@ -148,11 +148,11 @@
         "label": "Net Profit",
         "values": [
           "-41",
-          "-60",
-          "-102",
-          "-918",
-          "-371",
-          "-1,606"
+          "-58",
+          "-49",
+          "-674",
+          "-83",
+          "-1,423"
         ]
       },
       {
@@ -160,11 +160,11 @@
         "label": "EPS in Rs",
         "values": [
           "-4.06",
-          "-5.59",
-          "-9.49",
-          "-85.76",
-          "-32.38",
-          "-143.39"
+          "-5.44",
+          "-4.59",
+          "-63.00",
+          "-7.31",
+          "-125.04"
         ]
       },
       {
@@ -180,7 +180,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/ZETWERK/consolidated/"
+    "source_url": "https://www.screener.in/company/ZETWERK/"
   },
   "growth": {
     "cards": [
@@ -196,17 +196,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 80.0
+            "value": 49.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 12.0
+            "value": -14.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 40.0
+            "value": -15.0
           }
         ]
       },
@@ -232,7 +232,7 @@
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -185.0
+            "value": -512.0
           }
         ]
       },
@@ -274,17 +274,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": -11.0
+            "value": -7.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -17.0
+            "value": -9.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": -38.0
+            "value": -20.0
           }
         ]
       }
@@ -376,8 +376,8 @@
       ]
     }
   },
-  "generated_at": "2026-10-30T16:08:56.137334+05:30",
-  "generated_at_ist": "30 Oct 2026, 16:08 IST",
+  "generated_at": "2026-10-30T22:21:24.563473+05:30",
+  "generated_at_ist": "30 Oct 2026, 22:21 IST",
   "source": "screener",
   "website": "https://www.zetwerk.com/",
   "website_label": "zetwerk.com"

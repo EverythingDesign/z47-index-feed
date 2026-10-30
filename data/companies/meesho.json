@@ -4,13 +4,13 @@
   "name": "Meesho",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/MEESHO/",
-  "mcap_cr": 103031.0,
+  "mcap_cr": 103280.0,
   "price": 223.0,
   "high": 255.0,
   "low": 126.0,
-  "pe": null,
-  "roce": -40.0,
-  "roe": -46.2,
+  "pe": 64.6,
+  "roce": 5.82,
+  "roe": 4.5,
   "about": "The Company is an app-based marketplace that is operated under the brand of Meesho that connects sellers and end consumers. Its offerings span categories including fashion, accessories, electronics, home and kitchen items, health, and fitness equipment, and office supplies.[1]",
   "website": "http://www.meesho.com",
   "website_label": "meesho.com",
@@ -20,15 +20,17 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=MEESHO",
   "screener_id": "1285799",
   "ratios_ok": 6,
-  "daily_pct": -0.91,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/MEESHO/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/MEESHO/consolidated/",
+  "daily_pct": -0.79,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/MEESHO/",
+  "ratios_source_url": "https://www.screener.in/company/MEESHO/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2021",
+      "Mar 2022",
       "Mar 2023",
       "Mar 2024",
       "Mar 2025",
@@ -39,56 +41,68 @@
         "key": "sales",
         "label": "Sales",
         "values": [
+          "793",
+          "3,232",
           "5,735",
           "7,615",
-          "9,390",
-          "12,626"
+          "9,388",
+          "6,381"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
+          "1,328",
+          "6,598",
           "7,533",
-          "8,109",
-          "9,968",
-          "14,111"
+          "8,100",
+          "9,943",
+          "6,650"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
+          "-536",
+          "-3,366",
           "-1,799",
-          "-494",
-          "-578",
-          "-1,485"
+          "-485",
+          "-555",
+          "-269"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
+          "-68%",
+          "-104%",
           "-31%",
           "-6%",
           "-6%",
-          "-12%"
+          "-4.2%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
+          "46",
+          "127",
           "155",
           "231",
-          "-835",
-          "332"
+          "-801",
+          "27,801"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "0",
+          "0",
           "1",
           "6",
           "7",
@@ -99,20 +113,24 @@
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
+          "9",
+          "9",
           "30",
           "58",
           "34",
-          "47"
+          "44"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
+          "-499",
+          "-3,248",
           "-1,675",
-          "-328",
-          "-1,455",
-          "-1,209"
+          "-318",
+          "-1,397",
+          "27,480"
         ]
       },
       {
@@ -121,28 +139,34 @@
         "values": [
           "0%",
           "0%",
-          "171%",
-          "12%"
+          "0%",
+          "0%",
+          "178%",
+          "1%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
+          "-499",
+          "-3,248",
           "-1,675",
-          "-328",
-          "-3,942",
-          "-1,358"
+          "-318",
+          "-3,883",
+          "27,331"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
+          "-127.92",
+          "-519.82",
           "-213.79",
-          "-41.82",
-          "-452.68",
-          "-2.97"
+          "-40.64",
+          "-445.98",
+          "59.88"
         ]
       },
       {
@@ -152,11 +176,13 @@
           "0%",
           "0%",
           "0%",
+          "0%",
+          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/MEESHO/consolidated/"
+    "source_url": "https://www.screener.in/company/MEESHO/"
   },
   "growth": {
     "cards": [
@@ -172,17 +198,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 52.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 30.0
+            "value": 4.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 40.0
+            "value": -16.0
           }
         ]
       },
@@ -198,17 +224,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 29.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 6.0
+            "value": 35.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -20.0
+            "value": 575.0
           }
         ]
       },
@@ -250,17 +276,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": -31.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -63.0
+            "value": -10.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": -46.0
+            "value": 5.0
           }
         ]
       }
@@ -394,7 +420,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-30T16:09:45.206619+05:30",
-  "generated_at_ist": "30 Oct 2026, 16:09 IST",
+  "generated_at": "2026-10-30T22:22:14.440406+05:30",
+  "generated_at_ist": "30 Oct 2026, 22:22 IST",
   "source": "screener"
 }
