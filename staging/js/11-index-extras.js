@@ -3,10 +3,9 @@
 
    Adds, without touching 01-performance.js or the Designer layout:
      1. Hero top bar — latest value, change vs previous close, prev. close, as-of
-     2. 1D / 3D / 1W columns in the Return Summary table
-     3. 3D / 1W buttons on the performance chart (day-level date labels)
-     4. Download — PNG / PDF snapshot of the chart for the selected range
-     5. Constituent change log above the Constituents-tab disclaimer
+     2. 3D / 1W buttons on the performance chart (day-level date labels)
+     3. Download — PNG / PDF snapshot of the chart for the selected range
+     4. Constituent change log above the Constituents-tab disclaimer
 
    Reads the feed 01-performance.js already loaded (window.__Z47) and waits for its
    "z47:performance-state" event. If the feed never arrives, nothing new is shown. */
@@ -26,8 +25,7 @@
   var PAGE_URL_LABEL = "z47.com/z47-forty-seven";
 
   // Short periods, counted in NSE sessions back from the latest close.
-  var SHORT_SESSIONS = { "1D": 1, "3D": 3, "1W": 5 };
-  var SHORT_COLUMNS  = ["1D", "3D", "1W"];       // Return Summary, inserted before 1M
+  var SHORT_SESSIONS = { "3D": 3, "1W": 5 };
   var SHORT_RANGES   = ["3D", "1W"];             // chart buttons (1D needs intraday data)
   var RANGE_LABELS = {
     "3D": "Last 3 sessions", "1W": "Last 1 week", "1M": "Last 1 month", "3M": "Last 3 months",
@@ -89,14 +87,6 @@
     if (!hist || hist.length <= n) return null;
     var a = hist[hist.length - 1 - n][key], b = hist[hist.length - 1][key];
     return fin(a) && fin(b) && a > 0 ? (b / a - 1) * 100 : null;
-  }
-  function shortReturns(d) {
-    var out = { z47: {}, nifty: {} };
-    Object.keys(SHORT_SESSIONS).forEach(function (k) {
-      out.z47[k]   = sessionReturn(d.history, "z47", SHORT_SESSIONS[k]);
-      out.nifty[k] = sessionReturn(d.history, "nifty500", SHORT_SESSIONS[k]);
-    });
-    return out;
   }
   // Return for any chart range: feed returns for the long ones, sessions for the short ones.
   function rangeReturns(d, range) {
@@ -170,51 +160,7 @@
     bar.classList.remove("is-loading");
   }
 
-  /* ---------------------- 2. RETURN SUMMARY COLUMNS ----------------------- */
-  function addReturnColumns(d) {
-    var table = document.querySelector(".summary-table.is-column-2");
-    if (!table || table.querySelector("[data-z47x-col]")) return;
-    var head = table.querySelector(".summary-table-header");
-    var h1M = $all(".summary-th", head).filter(function (th) {
-      return !th.classList.contains("opacity-0") && th.textContent.trim().toUpperCase() === "1M";
-    })[0];
-    if (!h1M) return;
-    var r = shortReturns(d);
-    SHORT_COLUMNS.forEach(function (k) {
-      var th = h1M.cloneNode(true);
-      th.removeAttribute("id");
-      th.setAttribute("data-z47x-col", k);
-      var label = th.querySelector(".summary-heading") || th;
-      label.textContent = k;
-      head.insertBefore(th, h1M);
-    });
-    [["z47", "ret-z47-"], ["nifty", "ret-nifty-"]].forEach(function (pair) {
-      var cell1M = table.querySelector('[data-z47="' + pair[1] + '1M"]');
-      var td1M = cell1M && cell1M.closest(".summary-th");
-      if (!td1M) return;
-      SHORT_COLUMNS.forEach(function (k) {
-        var td = td1M.cloneNode(true);
-        td.removeAttribute("id");
-        td.setAttribute("data-z47x-col", k);
-        var v = td.querySelector("[data-z47]");
-        var n = r[pair[0]][k];
-        v.setAttribute("data-z47", pair[1] + k);
-        v.textContent = fmtPct1(n);
-        v.style.color = colorFor(n);
-        v.classList.remove("ai-color-parrotgreen", "ai-color-red");
-        v.setAttribute("data-z47-value-state", fin(n) ? "ready" : "unavailable");
-        td1M.parentNode.insertBefore(td, td1M);
-      });
-    });
-    var cols = 6 + SHORT_COLUMNS.length;
-    addStyle("z47x-cols-css",
-      ".summary-table.is-column-2 .summary-table-header,.summary-table.is-column-2 .summary-table-content"
-    + "{grid-template-columns:repeat(" + cols + ",minmax(0,1fr));}"
-    + ".summary-table.is-column-2 [data-z47x-col]{place-self:center;}"
-    + "@media(max-width:991px){.summary-table.is-column-2{min-width:" + (cols * 84) + "px;}}");
-  }
-
-  /* ------------------------ 3. SHORT CHART RANGES ------------------------- */
+  /* ------------------------ 2. SHORT CHART RANGES ------------------------- */
   function chartInstance() {
     var canvas = document.getElementById("z47-chart");
     return canvas && window.Chart && Chart.getChart ? Chart.getChart(canvas) : null;
@@ -267,7 +213,7 @@
     });
   }
 
-  /* --------------------------- 4. DOWNLOAD -------------------------------- */
+  /* --------------------------- 3. DOWNLOAD -------------------------------- */
   addStyle("z47x-dl-css",
     ".z47x-dl{position:relative;display:flex;}"
   + ".z47x-dl > .chart-tabs{height:100%;cursor:pointer;background:#fff;box-shadow:inset 0 0 0 1px #cfcfcf;}"
@@ -460,7 +406,7 @@
     links.appendChild(wrap);
   }
 
-  /* ------------------------- 5. CHANGE LOG -------------------------------- */
+  /* ------------------------- 4. CHANGE LOG -------------------------------- */
   addStyle("z47x-log-css",
     ".z47x-log{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem;}"
   + ".z47x-log__intro{margin:0;color:#555;}"
@@ -545,7 +491,6 @@
     if (started || !d || !d.index || !Array.isArray(d.history) || d.history.length < 7) return;
     started = true;
     guard("top bar", function () { paintBar(d); });
-    guard("return columns", function () { addReturnColumns(d); });
     guard("chart ranges", function () { addRangeButtons(d); });
     guard("download", function () { addDownload(d); });
     guard("change log", function () { addChangeLog(d); });
