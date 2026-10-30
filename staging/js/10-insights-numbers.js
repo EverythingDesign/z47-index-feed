@@ -1,4 +1,4 @@
-/* Review-only monthly index figures. Editorial company/fundamental claims are separate. */
+/* Monthly Insights index figures from monthly-takeaways.json. Editorial company/fundamental claims are separate. */
 (function () {
   'use strict';
   var url = window.Z47_MONTHLY_URL;
@@ -13,14 +13,14 @@
   function fail() {
     document.querySelectorAll('[data-insights-month]').forEach(function (panel) {
       panel.querySelectorAll('.index-performance-wrapper .heading-style-h5.is-48').forEach(function (node) { write(node,'—'); });
-      resetTexts(panel).forEach(function (node) { paragraph(node,'Reviewed index figures are temporarily unavailable.'); });
+      resetTexts(panel).forEach(function (node) { paragraph(node,'Index figures are temporarily unavailable.'); });
     });
     document.documentElement.setAttribute('data-z47-monthly-state','error');
   }
   function apply(rows) {
     document.querySelectorAll('[data-insights-month]').forEach(function (panel) {
       var row = rows.find(function (r) { return r.month === panel.getAttribute('data-insights-month'); });
-      if (!row) throw new Error('Missing reviewed month '+panel.getAttribute('data-insights-month'));
+      if (!row) throw new Error('Missing monthly figures for '+panel.getAttribute('data-insights-month'));
       ['z47_since_base_pct','nifty_since_base_pct','z47_month_return_pct','nifty_month_return_pct','excess_return_pp'].forEach(function (key) {
         if (!Number.isFinite(row[key])) throw new Error('Invalid monthly value '+key);
       });

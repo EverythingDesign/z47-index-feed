@@ -15,6 +15,7 @@ sys.path.insert(0, str(ROOT))
 import build_z47_json as feed
 import build_company_hero as hero
 import build_company_chart as chart
+import cap_ledger
 
 
 class RebalanceTests(unittest.TestCase):
@@ -25,15 +26,19 @@ class RebalanceTests(unittest.TestCase):
     def test_rosters_agree_and_keep_47(self):
         tickers = {c['ticker'] for c in feed.COMPANIES}
         self.assertEqual(len(tickers), 47)
-        self.assertEqual(tickers, {c['ticker'] for c in hero.COMPANIES})
+        # Company pages outlive index membership (Turtlemint keeps its page).
+        self.assertLessEqual(tickers, {c['ticker'] for c in hero.COMPANIES})
         self.assertIn('RENTOMOJO', tickers)
+        self.assertIn('ZETWERK', tickers)
+        self.assertNotIn('TURTLEMINT', tickers)
+        self.assertEqual(next(c['sector'] for c in feed.COMPANIES if c['ticker'] == 'ZETWERK'), 'B2B')
         self.assertIn('MONEYVIEW', tickers)
         self.assertNotIn('AWFIS', tickers)
         self.assertEqual(next(c['sector'] for c in feed.COMPANIES if c['ticker'] == 'MONEYVIEW'), 'Fintech / Financial Services')
         self.assertNotIn('MEDIASSIST', tickers)
         self.assertNotIn('UNIECOM', tickers)
         counts = {s: sum(c['sector'] == s for c in feed.COMPANIES) for s in feed.SECTOR_ORDER}
-        self.assertEqual(sorted(counts.values()), [6, 8, 12, 21])
+        self.assertEqual(sorted(counts.values()), [7, 8, 11, 21])
 
     def test_new_listing_has_no_full_period_return(self):
         series = [('2026-09-17', 500), ('2026-09-18', 525)]
@@ -48,7 +53,7 @@ class RebalanceTests(unittest.TestCase):
                 (Path(tmp) / f'{ticker.lower()}.json').write_text(json.dumps({'ticker': ticker}))
             self.assertEqual([x['ticker'] for x in chart.load_company_meta()], ['RENTOMOJO'])
 
-    def run_build(self, missing_anchor=False):
+    def run_build(self, missing_holding=False):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         out, hist = Path(tmp.name) / 'out.json', Path(tmp.name) / 'history.csv'
@@ -58,25 +63,29 @@ class RebalanceTests(unittest.TestCase):
         series = [('2026-01-01', 90), ('2026-09-17', 100), ('2026-09-18', 110)]
         fetched = {feed.yf_ticker(c): ({'regularMarketPrice': 110, '_prev': 100}, series) for c in feed.COMPANIES}
         fetched[feed.N500_YF] = ({'regularMarketPrice': 23000}, [('2026-09-17', 22654.65), ('2026-09-18', 23000)])
-        anchor = Path(tmp.name) / 'anchor.json'
-        prices = {tk: {'price': 100} for tk in fetched if tk != feed.N500_YF}
-        if missing_anchor:
-            prices.pop('RENTOMOJO.NS')
-        anchor.write_text(json.dumps({'anchor_date': '2026-09-17', 'prices': prices}))
-        if missing_anchor:
-            fetched['RENTOMOJO.NS'] = ({'regularMarketPrice': 110}, [('2026-09-18', 110)])
+        fetched['INR=X'] = ({}, [('2026-09-17', 90), ('2026-09-18', 90)])
+        holdings = {feed.yf_ticker(c): {'currency': 'INR' if c['exchange'] == 'NSE' else 'USD', **feed.SHARE_DATA[feed.yf_ticker(c)]}
+                    for c in feed.COMPANIES}
+        if missing_holding:
+            holdings.pop('RENTOMOJO.NS')
+        base = cap_ledger.make_reset('2026-09-18', '2026-09-17', 'test', 141.599965, 139.274314, holdings,
+                                     {tk: 100 for tk in holdings}, 90)
+        ledger = Path(tmp.name) / 'ledger.json'
+        cap_ledger.save(ledger, [base])
         class Clock(datetime):
             @classmethod
             def now(cls, tz=None):
                 return cls(2026, 9, 18, 16, 15, tzinfo=tz)
-        with patch.multiple(feed, HIST_CSV=str(hist), OUT_JSON=str(out), REBALANCE_PRICE_FILE=str(anchor), ANCHOR_DATE="2026-09-17", ANCHOR_Z47_FLOAT=141.599965, ANCHOR_Z47_MCAP=139.274314, USE_YF=True, datetime=Clock), \
+        with patch.multiple(feed, HIST_CSV=str(hist), OUT_JSON=str(out), CAP_LEDGER=str(ledger),
+                            MONTHLY_JSON=str(Path(tmp.name) / 'monthly.json'),
+                            EVENTS_JSON=str(Path(tmp.name) / 'events.json'), USE_YF=True, datetime=Clock), \
              patch.object(feed, 'fetch_all_yf', return_value=fetched), \
              patch.object(feed, 'fetch_table_live', return_value={}), \
              patch.object(feed, 'fetch_usdinr', return_value={'value': 90}), \
              patch.object(sys, 'argv', ['build_z47_json.py', '--write-history']), \
              contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-            if missing_anchor:
-                with self.assertRaisesRegex(RuntimeError, 'Incomplete rebalance'):
+            if missing_holding:
+                with self.assertRaisesRegex(RuntimeError, 'differs from the cap ledger'):
                     feed.main()
                 self.assertEqual(json.loads(out.read_text()), {'last_good': True})
                 self.assertEqual(hist.read_text(), original)
@@ -87,14 +96,15 @@ class RebalanceTests(unittest.TestCase):
         self.assertEqual(result['index']['value'], round(141.599965 * 1.1, 2))
         self.assertEqual(result['index']['value_mcap'], round(139.274314 * 1.1, 2))
         self.assertEqual(result['index']['daily_pct'], 10)
+        self.assertAlmostEqual(sum(c['index_weight_pct'] for c in result['constituents']), 100, places=3)
         # The saved pre-swap close survives byte-for-byte, including its precision.
         self.assertTrue(hist.read_text().startswith(original))
 
     def test_value_neutral_anchor_and_preserved_history(self):
         self.run_build()
 
-    def test_missing_ipo_anchor_never_publishes_46_name_index(self):
-        self.run_build(missing_anchor=True)
+    def test_roster_missing_from_ledger_never_publishes(self):
+        self.run_build(missing_holding=True)
 
 
 if __name__ == '__main__':

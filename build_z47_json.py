@@ -17,11 +17,15 @@ calc_index_extension.py, constituent_events.json, z47_history.csv). The constant
 below are mirrored from that repo as of the **16 Jun 2026 rebalance**. Re-sync them
 whenever the repo changes (especially after a constituent rebalance).
 
-Methodology (mirrors calc_index_extension.py, the authoritative model):
-  - index_value(t) = ( Σ price_i(t) × free_float_shares_i ) / DIVISOR
-  - DIVISOR derived from a fixed ANCHOR (last published value) so the live series
-    stays continuous with z47_history.csv.
-  - z47_mcap uses total shares instead of free-float shares.
+Methodology (index owner approval, 26 Oct 2026; restated from 17 Jun 2026):
+  - Free-float weighted, each constituent capped at 10% (iterative redistribution).
+  - The cap resets on the first NSE session of every month and at every constituent
+    change, priced at the previous session's close; weights drift between resets.
+  - index_value(t) = Σ units_i × price_i(t), units frozen at the last reset in
+    data/rebalances/cap-ledger.json (scripts/cap_ledger.py). New resets are added
+    to the ledger automatically and history up to each reset is never recomputed.
+  - z47_mcap uses total shares, uncapped; its units reset only to keep constituent
+    changes value-neutral.
   - Benchmark = NIFTY 500 (^CRSLDX), rebased to 100 on 2024-01-02 (base 19418.40).
   - Prices from Yahoo Finance via yfinance (history) + fast_info (live price /
     previous close), mirroring the source dashboard's fetching.
@@ -77,6 +81,8 @@ else:
 if SCRIPTS_DIR not in sys.path:
     sys.path.insert(0, SCRIPTS_DIR)
 
+import cap_ledger  # noqa: E402  (lives in scripts/)
+
 IST = timezone(timedelta(hours=5, minutes=30))
 
 # ── Methodology constants (NIFTY 500 benchmark) ─────────────────────────────
@@ -84,28 +90,15 @@ N500_BASE = 19418.40            # ^CRSLDX on 2024-01-02 (index = 100)
 N500_YF   = "^CRSLDX"
 BASE_DATE = "2024-01-02"        # rebase date (z47 = 100)
 
-# Value-neutral Moneyview swap effective 5 October; anchor at last published snapshot.
-# Preserve all history through this anchor. See docs/moneyview-rebalance-2026-10-05.md.
-ANCHOR_DATE      = "2026-10-02"
-ANCHOR_Z47_FLOAT = 132.696481
-ANCHOR_Z47_MCAP = 135.443643
-REBALANCE_PRICE_FILE = os.path.join(ROOT, "data", "rebalances", "2026-10-05.json")
+# Capped-index resets (frozen prices, shares and units). History through the last
+# reset's price date is preserved; later sessions are valued from its units.
+CAP_LEDGER = os.path.join(ROOT, "data", "rebalances", "cap-ledger.json")
+MONTHLY_JSON = os.path.join(DATA_DIR, "monthly-takeaways.json")
 
-
-def load_rebalance_prices(tickers):
-    """Use frozen, dated closes so later provider revisions cannot move the divisor."""
-    with open(REBALANCE_PRICE_FILE) as source:
-        snapshot = json.load(source)
-    if snapshot["anchor_date"] != ANCHOR_DATE:
-        raise RuntimeError("Rebalance anchor date mismatch")
-    prices = {tk: row["price"] for tk, row in snapshot["prices"].items()}
-    missing = [tk for tk in tickers if not isinstance(prices.get(tk), (int, float)) or not 0 < prices[tk] < float("inf")]
-    if missing:
-        raise RuntimeError(f"Incomplete rebalance anchor/share data: {missing}; retaining last-good feed")
-    return prices
-
-# ── Constituents (18 Sep 2026 rebalance) ─────────────────────────────────────
+# ── Constituents (26 Oct 2026 rebalance: Zetwerk replaces Turtlemint) ────────
 # Counts: Consumer 21 | Fintech 11 | SaaS/AI 8 | B2B 7 = 47
+# A constituent change also needs its event in constituent_events.json: the
+# builder resets the cap at the first session on/after its effective_date.
 COMPANIES = [
     {"num":1,  "name":"Eternal (Zomato)",            "ticker":"ETERNAL",    "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":74.43},
     {"num":2,  "name":"Groww",                        "ticker":"GROWW",      "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":9.71},
@@ -113,7 +106,7 @@ COMPANIES = [
     {"num":4,  "name":"Info Edge (Naukri)",           "ticker":"NAUKRI",     "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":58.77},
     {"num":5,  "name":"Lenskart",                     "ticker":"LENSKART",   "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":16.81},
     {"num":6,  "name":"Paytm",                        "ticker":"PAYTM",      "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":65.52},
-    {"num":7,  "name":"Turtlemint",                   "ticker":"TURTLEMINT", "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":38.01},
+    {"num":7,  "name":"Zetwerk",                      "ticker":"ZETWERK",    "exchange":"NSE",    "sector":"B2B",                         "float_pct":7.79},
     {"num":8,  "name":"Nykaa",                        "ticker":"NYKAA",      "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":47.63},
     {"num":9,  "name":"PolicyBazaar",                 "ticker":"POLICYBZR",  "exchange":"NSE",    "sector":"Fintech / Financial Services","float_pct":73.43},
     {"num":10, "name":"Meesho",                       "ticker":"MEESHO",     "exchange":"NSE",    "sector":"Consumer / Consumer Tech",    "float_pct":6.22},
@@ -157,12 +150,14 @@ COMPANIES = [
 ]
 
 # Free-float (fs) and total (ts) share counts — mirrored from repo
-# calc_index_extension.py (16 Jun 2026 rebalance). All 47 current names present.
+# calc_index_extension.py (16 Jun 2026 rebalance) plus each swap's saved counts.
+# All 47 current names present. Each cap reset freezes the counts in force, so an
+# update here (e.g. a quarterly float refresh) applies from the next reset.
 SHARE_DATA = {
     "ETERNAL.NS":{"fs":6734074736,"ts":9045099862}, "GROWW.NS":{"fs":1621477822,"ts":16702420288},
     "SWIGGY.NS":{"fs":1289125748,"ts":2600046000},   "NAUKRI.NS":{"fs":309161475,"ts":526023000},
     "LENSKART.NS":{"fs":565841079,"ts":3366560768},  "PAYTM.NS":{"fs":407781184,"ts":622175000},
-    "TURTLEMINT.NS":{"fs":112268281,"ts":295384615}, "NYKAA.NS":{"fs":1520677422,"ts":3192618752},
+    "ZETWERK.NS":{"fs":132050134,"ts":1694254778},   "NYKAA.NS":{"fs":1520677422,"ts":3192618752},
     "POLICYBZR.NS":{"fs":343574545,"ts":467903000},  "MEESHO.NS":{"fs":1599314761,"ts":25706899456},
     "MMYT":{"fs":27719898,"ts":107730000},           "ANGELONE.NS":{"fs":489085864,"ts":913349399},
     "PWL.NS":{"fs":586171279,"ts":3635070720},       "DELHIVERY.NS":{"fs":610426538,"ts":820788000},
@@ -776,6 +771,32 @@ def ret_over(pairs, days, today_iso):
     return round((pairs[-1][1] / base - 1) * 100, 2) if base else None
 
 
+def monthly_takeaways(rows, today_iso):
+    """Insights-tab figures: each month from the previous month-end close, plus
+    cumulative returns since the January 2024 base (z47 = nifty500 = 100)."""
+    out, start = [], None
+    by_month = {}
+    for r in rows:
+        by_month.setdefault(r["date"][:7], []).append(r)
+    for month in sorted(by_month):
+        end = by_month[month][-1]
+        if start and start["nifty500"] and end["nifty500"]:
+            zr = (end["z47"] / start["z47"] - 1) * 100
+            nr = (end["nifty500"] / start["nifty500"] - 1) * 100
+            out.append({
+                "month": month,
+                "status": "complete" if month < today_iso[:7] else "month_to_date",
+                "start_price_date": start["date"], "end_price_date": end["date"],
+                "z47_level": round(end["z47"], 6),
+                "z47_month_return_pct": round(zr, 4), "nifty_month_return_pct": round(nr, 4),
+                "excess_return_pp": round(zr - nr, 4),
+                "z47_since_base_pct": round(end["z47"] - 100, 4),
+                "nifty_since_base_pct": round(end["nifty500"] - 100, 4),
+            })
+        start = end
+    return out
+
+
 def main():
     write_history = "--write-history" in sys.argv
     now_ist = datetime.now(IST)
@@ -790,15 +811,20 @@ def main():
 
     tickers = [yf_ticker(c) for c in COMPANIES]
 
+    # ── Cap ledger: the last reset is the valuation basis for later sessions ─
+    ledger = cap_ledger.load(CAP_LEDGER)
+    base = ledger[-1]
+    ANCHOR_DATE = base["price_date"]
+    # Holdings leaving at a constituent change that has not reset yet.
+    held = sorted(set(base["holdings"]) - set(tickers))
+    try:
+        with open(EVENTS_JSON) as f:
+            events = json.load(f)
+    except Exception:
+        events = []
+
     # ── Fetch everything ───────────────────────────────────────────────────
-    from inr_transition import EFFECTIVE_DATE, ANCHOR_DATE as INR_ANCHOR, level as inr_level, validate as validate_inr
-    use_inr = today_iso >= EFFECTIVE_DATE
-    transition = None
-    if use_inr:
-        with open(os.path.join(ROOT, 'data', 'rebalances', '2026-10-05-inr.json')) as source:
-            transition = json.load(source)
-        validate_inr(transition, tickers)
-    symbols = tickers + [N500_YF] + (['INR=X'] if use_inr else [])
+    symbols = tickers + held + [N500_YF, "INR=X"]
     fetched: dict[str, tuple] = {}
     errors: list[str] = []
 
@@ -836,10 +862,10 @@ def main():
     def _priced(tk):
         meta, series = fetched.get(tk, ({}, []))
         return bool(series) or meta.get("regularMarketPrice") is not None
-    priced_ok = sum(1 for tk in tickers if _priced(tk))
+    priced_ok = sum(1 for tk in tickers + held if _priced(tk))
     bench_ok = bool(n500_series) or n500_meta.get("regularMarketPrice") is not None
-    if priced_ok < len(tickers) or not bench_ok:
-        print(f"ABORT: incomplete fetch — priced {priced_ok}/{len(tickers)} "
+    if priced_ok < len(tickers) + len(held) or not bench_ok:
+        print(f"ABORT: incomplete fetch — priced {priced_ok}/{len(tickers) + len(held)} "
               f"constituents, benchmark={'ok' if bench_ok else 'MISSING'}. "
               f"Keeping last-good feed (not overwriting z47_index.json).",
               file=sys.stderr)
@@ -863,31 +889,30 @@ def main():
     if calendar and calendar[-1] < today_iso and n500_meta.get("regularMarketPrice"):
         calendar.append(today_iso)
 
-    anchor_prices = load_rebalance_prices(tickers)
     calendar = sorted(set(calendar) | {ANCHOR_DATE})
     ff = {}
-    for tk in tickers:
+    for tk in tickers + held:
         series = dict(fetched.get(tk, ({}, []))[1])
-        series[ANCHOR_DATE] = anchor_prices[tk]
+        if tk in base["holdings"]:
+            series[ANCHOR_DATE] = base["holdings"][tk]["price"]
         ff[tk] = ffill_on_calendar(sorted(series.items()), calendar)
 
-    # Both index valuation and displayed market caps use INR from the transition.
+    # Both index valuation and displayed market caps use INR.
     usdinr = fetch_usdinr()
     usd_to_inr = (usdinr or {}).get("value")
     if not usd_to_inr or not math.isfinite(usd_to_inr) or usd_to_inr <= 0:
         raise RuntimeError('USD/INR unavailable; retaining last-good feed')
-    fx_by_day, preserved = {}, {}
-    if use_inr:
-        fx_series = dict(fetched.get('INR=X', ({}, []))[1])
-        if not fx_series:
-            raise RuntimeError('FX history unavailable; retaining last-good feed')
-        fx_series[INR_ANCHOR] = transition['usdinr']
-        fx_series[today_iso] = usd_to_inr
-        fx_by_day = ffill_on_calendar(sorted(fx_series.items()), calendar)
-        with open(HIST_CSV, newline='') as source:
-            preserved = {r['date']: r for r in csv.DictReader(source) if r['date'] <= INR_ANCHOR}
-        if INR_ANCHOR not in preserved:
-            raise RuntimeError('Missing published INR transition history')
+    fx_series = dict(fetched.get('INR=X', ({}, []))[1])
+    if not fx_series:
+        raise RuntimeError('FX history unavailable; retaining last-good feed')
+    fx_series[ANCHOR_DATE] = base['usdinr']
+    fx_series[today_iso] = usd_to_inr
+    fx_by_day = ffill_on_calendar(sorted(fx_series.items()), calendar)
+    with open(HIST_CSV, newline='') as source:
+        preserved = [r for r in csv.DictReader(source) if r['date'] <= ANCHOR_DATE]
+    if not preserved or preserved[-1]['date'] != ANCHOR_DATE or \
+            abs(float(preserved[-1]['z47_float']) - base['level_fs']) > 1e-5:
+        raise RuntimeError('History does not end at the last cap reset; retaining last-good feed')
 
     # Table live fields (₹ mn mcap + NSE price/day): Screener → BSE → NASDAQ(Yahoo×FX).
     table_live = fetch_table_live(usd_to_inr)
@@ -942,52 +967,57 @@ def main():
             "detail_url": f"/z47-forty-seven/{company_slug(c)}",
         })
 
-    # ── Divisor from the fixed anchor (only tickers usable on the anchor) ───
-    usable_f = [tk for tk in tickers if ff[tk].get(ANCHOR_DATE) and SHARE_DATA.get(tk, {}).get("fs")]
-    usable_m = [tk for tk in tickers if ff[tk].get(ANCHOR_DATE) and SHARE_DATA.get(tk, {}).get("ts")]
-    if len(usable_f) != len(tickers) or len(usable_m) != len(tickers):
-        missing = sorted(set(tickers) - (set(usable_f) & set(usable_m)))
-        raise RuntimeError(f"Incomplete rebalance anchor/share data: {missing}; retaining last-good feed")
-    DIV_F = sum(ff[tk][ANCHOR_DATE] * SHARE_DATA[tk]["fs"] for tk in usable_f) / ANCHOR_Z47_FLOAT
-    DIV_M = sum(ff[tk][ANCHOR_DATE] * SHARE_DATA[tk]["ts"] for tk in usable_m) / ANCHOR_Z47_MCAP
+    # ── Value sessions after the last reset; add any resets now due ────────
+    # A reset on today's date waits for a real session: on an NSE holiday the
+    # benchmark's live price equals its previous close.
+    n500_live, n500_prev = n500_meta.get("regularMarketPrice"), n500_meta.get("_prev")
+    traded_today = n500_prev is None or n500_live != n500_prev
+    due = dict(cap_ledger.due_resets(base["effective_date"], calendar,
+                                     [e["effective_date"] for e in events if e.get("effective_date")]))
 
-    def z47_float_on(day):
-        if use_inr:
-            if day <= INR_ANCHOR:
-                return float(preserved[day]['z47_float'])
-            return inr_level(transition, {tk: ff[tk].get(day) for tk in tickers}, fx_by_day.get(day), 'fs')
-        return sum(ff[tk][day] * SHARE_DATA[tk]["fs"] for tk in usable_f if day in ff[tk]) / DIV_F
+    def holdings_for(entry, convention):
+        # Monthly resets before a pending constituent change keep the old roster.
+        members = tickers if ("Constituent change" in convention or set(entry["holdings"]) == set(tickers)) \
+            else sorted(entry["holdings"])
+        out = {}
+        for tk in members:
+            kept = entry["holdings"].get(tk, {})
+            shares = SHARE_DATA.get(tk) or kept
+            out[tk] = {"currency": kept.get("currency") or ("INR" if tk.endswith(".NS") else "USD"),
+                       "fs": shares.get("fs"), "ts": shares.get("ts")}
+        return out
 
-    def z47_mcap_on(day):
-        if use_inr:
-            if day <= INR_ANCHOR:
-                return float(preserved[day]['z47_mcap'])
-            return inr_level(transition, {tk: ff[tk].get(day) for tk in tickers}, fx_by_day.get(day), 'ts')
-        return sum(ff[tk][day] * SHARE_DATA[tk]["ts"] for tk in usable_m if day in ff[tk]) / DIV_M
+    entry, new_resets, values = cap_ledger.walk(
+        base, calendar, due,
+        lambda day: {tk: ff[tk].get(day) for tk in tickers + held},
+        fx_by_day.get, holdings_for,
+        deferred=() if traded_today else (today_iso,))
+    sessions = [d for d in calendar if d > ANCHOR_DATE]
+    if set(entry["holdings"]) != set(tickers):
+        raise RuntimeError("COMPANIES differs from the cap ledger: add the constituent event "
+                           "(effective_date) to constituent_events.json; retaining last-good feed")
 
-    # ── History: keep published CSV up to anchor, recompute anchor+1..today ──
-    hist_rows = []
-    with open(HIST_CSV, newline="") as f:
-        for row in csv.DictReader(f):
-            d = row["date"].split(" ")[0].split("T")[0]
-            if d <= (INR_ANCHOR if use_inr else ANCHOR_DATE):
-                hist_rows.append({"date": d,
-                                  "z47": float(row["z47_float"]),
-                                  "nifty500": float(row["n500_indexed"])})
+    # ── History: published CSV up to the last reset, recomputed after it ───
+    hist_rows = [{"date": r["date"], "z47": float(r["z47_float"]), "nifty500": float(r["n500_indexed"])}
+                 for r in preserved]
     n500_map = ffill_on_calendar(n500_series, calendar)
-    for day in calendar:
-        if day <= (INR_ANCHOR if use_inr else ANCHOR_DATE):
-            continue
-        n_abs = (n500_meta.get("regularMarketPrice") if day == today_iso else None) or n500_map.get(day)
+    n500_abs_by_day = {}
+    for day in sessions:
+        n_abs = (n500_live if day == today_iso else None) or n500_map.get(day)
+        n500_abs_by_day[day] = n_abs
         hist_rows.append({"date": day,
-                          "z47": round(z47_float_on(day), 4),
+                          "z47": round(values[day][0], 4),
                           "nifty500": round(n_abs / N500_BASE * 100, 4) if n_abs else None})
 
     # ── Headline values + return summary ───────────────────────────────────
-    z47_now      = z47_float_on(today_iso) if today_iso in calendar else hist_rows[-1]["z47"]
-    z47_mcap_now = z47_mcap_on(today_iso)  if today_iso in calendar else None
-    z47_prev     = z47_float_on(calendar[-2]) if len(calendar) >= 2 else None
+    last_day     = sessions[-1] if sessions else ANCHOR_DATE
+    z47_now      = values[last_day][0] if sessions else base["level_fs"]
+    z47_mcap_now = values[today_iso][1] if today_iso in values else None
+    z47_prev     = (values[sessions[-2]][0] if len(sessions) >= 2 else base["level_fs"]) if sessions else None
     daily_pct    = (z47_now / z47_prev - 1) * 100 if z47_prev else None
+    weights_now  = cap_ledger.weights(entry, {tk: ff[tk].get(last_day) for tk in tickers}, fx_by_day.get(last_day))
+    for c in constituents:
+        c["index_weight_pct"] = r2(weights_now[yf_ticker(c)] * 100, 6)
 
     z47_pairs   = [(r["date"], r["z47"]) for r in hist_rows]
     n500_pairs  = [(r["date"], r["nifty500"]) for r in hist_rows]
@@ -1050,13 +1080,8 @@ def main():
             "weight_pct": r2(wt / total_mcap * 100, 1),
             "avg_ret_1m": r2(sum(rets) / len(rets)) if rets else None,
             "top_mover": {"name": top["name"], "ret_1m": top["ret_1m"]} if top else None,
+            "index_weight_pct": r2(sum(c["index_weight_pct"] for c in members), 6),
         })
-
-    try:
-        with open(EVENTS_JSON) as f:
-            events = json.load(f)
-    except Exception:
-        events = []
 
     market_open = (now_ist.weekday() < 5 and _time(9, 15) <= now_ist.time() <= _time(15, 35))
 
@@ -1067,16 +1092,22 @@ def main():
             "market_open": market_open,
             "data_as_of": today_iso,
             "pricing_mode": "scheduled_snapshot",
-            "index_currency": "INR" if use_inr else "legacy_mixed_currency",
-            "currency_methodology_effective_date": "2026-09-29" if use_inr else None,
+            "index_currency": "INR",
+            "currency_methodology_effective_date": "2026-09-29",
             "usdinr": usdinr,
-            "base_date": BASE_DATE, "anchor_date": ANCHOR_DATE,
-            "rebalance_effective_date": "2026-10-05",
+            "base_date": BASE_DATE, "anchor_date": entry["price_date"],
+            "rebalance_effective_date": max((e["effective_date"] for e in events
+                                             if e.get("effective_date") and e["effective_date"] <= today_iso), default=None),
+            "weight_cap_pct": round(cap_ledger.CAP * 100),
+            "cap_resets": "First NSE session of each month and every constituent change, priced at the previous session's close; weights drift between resets.",
+            "last_cap_reset": {k: entry[k] for k in ("effective_date", "price_date", "convention")},
             "benchmark": "NIFTY 500",
-            "constituents_priced": len(usable_f),
+            "constituents_priced": len(tickers),
             "source": "Yahoo (index/history) + Screener/BSE (NSE live table) + StockAnalysis×FX (MMYT/FRSH)",
-            "data_source_of_truth": "GirishZ47/z47-dashboard methodology; 2026-10-05 Moneyview/Awfis rebalance",
+            "data_source_of_truth": "GirishZ47/z47-dashboard methodology; 10% cap restated from 2026-06-17; 2026-10-26 Zetwerk/Turtlemint rebalance",
             "methodology_flags": [
+                "Each constituent is capped at 10% of the index on the first NSE session of every month and at every constituent change, priced at the previous session's close; weights drift between resets. History from 17 Jun 2026 is restated on this basis.",
+                "value_mcap is the uncapped total-market-cap series.",
                 "From 29 Sep 2026, US holdings are converted to INR using dated USD/INR; a value-neutral transition preserves earlier published history (legacy mixed-currency basis).",
                 "NSE table price/day/mcap from Screener (BSE fallback); NASDAQ live = StockAnalysis×USD/INR (Yahoo fallback).",
                 "Mkt Cap emitted as mcap_mn (₹ mn), mcap_cr (₹ cr), mcap_usd_mn (USD mn).",
@@ -1100,29 +1131,29 @@ def main():
 
     with open(OUT_JSON, "w") as f:
         json.dump(out, f, indent=2)
+    with open(MONTHLY_JSON, "w") as f:
+        json.dump(monthly_takeaways(hist_rows, today_iso), f, indent=2)
 
-    # ── Optionally persist today's row into the CSV (upsert by date) ────────
-    if write_history and today_iso in calendar:
-        rows = []
+    # ── Optionally persist: CSV = preserved rows + every session since the
+    # last reset; new resets join the ledger in the same commit. ────────────
+    if write_history:
         fieldnames = ["date", "z47_float", "z47_mcap", "n500_indexed", "n500_abs"]
-        with open(HIST_CSV, newline="") as f:
-            for row in csv.DictReader(f):
-                d = row["date"].split(" ")[0].split("T")[0]
-                if d != today_iso:
-                    rows.append(row)
-        rows.append({
-            "date": today_iso,
-            "z47_float": round(z47_now, 6),
-            "z47_mcap": round(z47_mcap_now, 6) if z47_mcap_now else "",
-            "n500_indexed": round(n500_indexed_now, 4) if n500_indexed_now else "",
-            "n500_abs": round(n500_now, 2) if n500_now else "",
-        })
+        rows = preserved + [{
+            "date": day,
+            "z47_float": round(values[day][0], 6),
+            "z47_mcap": round(values[day][1], 6),
+            "n500_indexed": round(n500_abs_by_day[day] / N500_BASE * 100, 4) if n500_abs_by_day[day] else "",
+            "n500_abs": round(n500_abs_by_day[day], 2) if n500_abs_by_day[day] else "",
+        } for day in sessions]
         with open(HIST_CSV, "w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=fieldnames)
             w.writeheader()
             for row in rows:
                 w.writerow({k: row.get(k, "") for k in fieldnames})
-        print(f"  upserted {today_iso} into z47_history.csv")
+        print(f"  wrote {len(sessions)} sessions after {ANCHOR_DATE} into z47_history.csv")
+        if new_resets:
+            cap_ledger.save(CAP_LEDGER, ledger + new_resets)
+            print("  cap reset: " + ", ".join(e["effective_date"] for e in new_resets))
 
     # ── Console summary ─────────────────────────────────────────────────────
     _dp = out['index']['daily_pct']
@@ -1131,7 +1162,8 @@ def main():
           f"returns 1M/YTD/1Y/base = {z47_returns['1M']}/{z47_returns['YTD']}/{z47_returns['1Y']}/{z47_returns['since_base']}%")
     print(f"  NIFTY 500 indexed {out['benchmark']['indexed']}  "
           f"(1M/YTD/1Y/base = {n500_returns['1M']}/{n500_returns['YTD']}/{n500_returns['1Y']}/{n500_returns['since_base']}%)")
-    print(f"  priced {len(usable_f)}/47 constituents  |  history points: {len(hist_rows)}")
+    print(f"  priced {len(tickers)}/47 constituents  |  history points: {len(hist_rows)}  |  "
+          f"max weight {max(weights_now.values()) * 100:.2f}% (last reset {entry['effective_date']})")
     print(f"  sectors: " + ", ".join(f"{s['name'].split(' / ')[0]} {s['count']}" for s in sectors))
     if errors:
         print(f"  fetch warnings: {len(errors)} (see stderr)")
