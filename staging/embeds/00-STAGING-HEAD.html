@@ -1,0 +1,86 @@
+<script>
+window.Z47_FEED_URL = 'https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/codex-z47-cap-zetwerk-review-20261026/data/cap-review/staging-feed.json';
+window.__Z47_FEED_BASE = 'https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/codex-z47-cap-zetwerk-review-20261026/';
+window.Z47_MONTHLY_URL = 'https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/codex-z47-cap-zetwerk-review-20261026/data/cap-review/monthly-takeaways.json';
+</script>
+<style>
+/* Install in the page HEAD, before the body can paint placeholder numbers. */
+:is([data-z47^="card-"], [data-z47^="ret-z47-"], [data-z47^="ret-nifty-"],
+    [data-z47="hero-z47-pct"], [data-z47="hero-nifty-pct"],
+    [data-z47="chart-z47-pct"], [data-z47="chart-nifty-pct"]):not([data-z47-value-state]) {
+  position: relative;
+  visibility: hidden !important;
+  min-width: 3ch;
+}
+:is([data-z47^="card-"], [data-z47^="ret-z47-"], [data-z47^="ret-nifty-"],
+    [data-z47="hero-z47-pct"], [data-z47="hero-nifty-pct"],
+    [data-z47="chart-z47-pct"], [data-z47="chart-nifty-pct"]):not([data-z47-value-state])::after {
+  content: "";
+  visibility: visible;
+  position: absolute;
+  left: 0;
+  top: 20%;
+  width: min(100%, 6ch);
+  height: 65%;
+  border-radius: 4px;
+  background: #e9dfd2;
+  pointer-events: none;
+}
+[data-z47-value-state="unavailable"] { color: #777 !important; }
+
+</style>
+<script>
+/* Head companion: an unavailable feed must never reveal Designer placeholders. */
+(function () {
+  "use strict";
+  var selector = '[data-z47^="card-"], [data-z47^="ret-z47-"], [data-z47^="ret-nifty-"], ' +
+    '[data-z47="hero-z47-pct"], [data-z47="hero-nifty-pct"], ' +
+    '[data-z47="chart-z47-pct"], [data-z47="chart-nifty-pct"]';
+  function failPending() {
+    document.querySelectorAll(selector).forEach(function (el) {
+      if (el.hasAttribute("data-z47-value-state")) return;
+      el.textContent = "—";
+      el.setAttribute("data-z47-value-state", "unavailable");
+      el.setAttribute("aria-label", "Data unavailable");
+    });
+  }
+  var timer;
+  window.addEventListener("z47:performance-state", function (event) {
+    if (event.detail === "ready" || event.detail === "error") {
+      clearTimeout(timer);
+      failPending();
+    }
+  });
+  function start() { timer = setTimeout(failPending, 20000); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
+
+</script>
+
+<style>
+html[data-z47-monthly-review]:not([data-z47-monthly-state]) [data-insights-month] .index-performance-wrapper .heading-style-h5.is-48,
+html[data-z47-monthly-review]:not([data-z47-monthly-state]) [data-insights-month] .index-performance-pointers > .disclaimer-pointer:nth-child(-n+2) .pointer-text,
+html[data-z47-monthly-review]:not([data-z47-monthly-state]) [data-insights-month="2026-08"] .index-performance-pointers > .disclaimer-pointer:nth-child(3) .pointer-text {
+  visibility: hidden;
+}
+</style>
+<script>
+(function () {
+  if (!window.Z47_MONTHLY_URL) return;
+  document.documentElement.setAttribute('data-z47-monthly-review', '');
+  function start() {
+    setTimeout(function () {
+      if (document.documentElement.hasAttribute('data-z47-monthly-state')) return;
+      document.querySelectorAll('[data-insights-month] .index-performance-wrapper .heading-style-h5.is-48').forEach(function (node) { node.textContent = '—'; });
+      document.querySelectorAll('[data-insights-month] .index-performance-pointers .pointer-text').forEach(function (node) {
+        if (/^Z47\^fortyseven (is|returned)|^The cohort (moved|gained|fell|returned)/i.test(node.textContent.trim())) {
+          (node.querySelector('p') || node).textContent = 'Reviewed index figures are temporarily unavailable.';
+        }
+      });
+      document.documentElement.setAttribute('data-z47-monthly-state', 'error');
+    }, 20000);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>

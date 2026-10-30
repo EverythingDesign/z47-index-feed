@@ -5,7 +5,7 @@
  */
 (function () {
   "use strict";
-  var FEED_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
+  var FEED_URL = window.Z47_FEED_URL || "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
   var DEEP = {
     "Consumer / Consumer Tech": "#6B3410",
     "Fintech / Financial Services": "#103B33",
@@ -25,7 +25,7 @@
   // Legend sides are computed from each arc mid-angle (not hard-coded),
   // so leader lines always sit next to the matching segment.
   var ORDER = ["Consumer / Consumer Tech", "B2B", "SaaS / AI", "Fintech / Financial Services"];
-  var FALLBACK = [{"name":"Consumer / Consumer Tech","count":21,"weight_pct":64.2,"avg_ret_1m":-4.54,"top_mover":{"name":"Milky Mist","ret_1m":7.97}},{"name":"Fintech / Financial Services","count":12,"weight_pct":23.4,"avg_ret_1m":-10.6,"top_mover":{"name":"Kissht (OnEMI Technology)","ret_1m":17.51}},{"name":"SaaS / AI","count":8,"weight_pct":6.7,"avg_ret_1m":-1.47,"top_mover":{"name":"Capillary Technologies","ret_1m":14.18}},{"name":"B2B","count":6,"weight_pct":5.7,"avg_ret_1m":-1.99,"top_mover":{"name":"Shadowfax","ret_1m":15.11}}];
+  var FALLBACK = [{"name":"Consumer / Consumer Tech","count":21,"weight_pct":62.9,"avg_ret_1m":-6.33,"top_mover":{"name":"Rentomojo","ret_1m":7.25},"index_weight_pct":55.451375},{"name":"Fintech / Financial Services","count":11,"weight_pct":23.2,"avg_ret_1m":-8.78,"top_mover":{"name":"Go Digit Insurance","ret_1m":1.6},"index_weight_pct":28.071376},{"name":"SaaS / AI","count":8,"weight_pct":6.9,"avg_ret_1m":-3.04,"top_mover":{"name":"Freshworks","ret_1m":23.62},"index_weight_pct":8.478134},{"name":"B2B","count":7,"weight_pct":7.0,"avg_ret_1m":-5.03,"top_mover":{"name":"Shadowfax","ret_1m":2.19},"index_weight_pct":7.999112}];
 
   function ready(cb) {
     if (window.Chart) return cb();

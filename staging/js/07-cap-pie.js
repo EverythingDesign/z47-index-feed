@@ -4,7 +4,7 @@
  */
 (function () {
   "use strict";
-  var FEED_URL = "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
+  var FEED_URL = window.Z47_FEED_URL || "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/z47_index.json";
   // Girish: bands by mcap; slice/legend % = company COUNT / N (not mcap share)
   var LARGE_MIN_CR = 100000;
   var MID_MIN_CR = 30000;

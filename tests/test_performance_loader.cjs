@@ -14,7 +14,7 @@ async function run(failFeed,failChart) {
    setTimeout,clearTimeout,setInterval(){},CustomEvent:function(type,init){this.type=type;this.detail=init.detail},
    document:{getElementById(){return {}},readyState:'complete'},
    window:{failChart,dispatchEvent(e){events.push(e.detail)}},
-   fetch(){return failFeed?Promise.reject(new Error('offline')):Promise.resolve({ok:true,json(){return Promise.resolve({index:{value:134.23},benchmark:{},history:[{}],movers:{gainers:[],losers:[]},constituents:[]})}})}
+   fetch(){return failFeed?Promise.reject(new Error('offline')):Promise.resolve({ok:true,json(){return Promise.resolve({meta:{},index:{value:134.23,returns:{}},benchmark:{value:22000,returns:{}},history:[{}],movers:{gainers:[],losers:[]},constituents:[]})}})}
  };
  vm.runInNewContext(code,ctx);assert.deepEqual(events,[]);
  await new Promise(r=>setTimeout(r,10));

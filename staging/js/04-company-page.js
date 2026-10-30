@@ -29,7 +29,7 @@
       + ".pl-cards .pe-card-data .ai-tag-3{flex:0 0 auto;text-align:right;min-width:3.5em;}";
 
   var FEED_BASE = window.__Z47_FEED_BASE || "https://raw.githubusercontent.com/EverythingDesign/z47-index-feed/main/";
-  var INDEX_URL = FEED_BASE + "z47_index.json";
+  var INDEX_URL = window.Z47_FEED_URL || FEED_BASE + "z47_index.json";
   var COMPANY_URL = FEED_BASE + "data/companies/";
   var UP = "ai-color-parrotgreen", DOWN = "ai-color-red";
   var POS_COLOR = "#249200", NEG_COLOR = "#D31F03";
