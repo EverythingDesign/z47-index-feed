@@ -603,6 +603,28 @@ def apply_profile_fallbacks(row):
     return row
 
 
+def refresh_failed(row: dict) -> bool:
+    """Screener refused the request (usually HTTP 429) or returned no figures."""
+    return bool(row.get("error")) or (not row.get("ratios_ok") and row.get("price") is None)
+
+
+def retain_last_good(new: dict, path: Path) -> dict:
+    """Never replace a company's last good figures with a failed refresh.
+
+    The kept record keeps its own generated_at, so the page's "as of" date stays true.
+    """
+    if not refresh_failed(new) or not path.exists():
+        return new
+    previous = json.loads(path.read_text())
+    if refresh_failed(previous):
+        return new
+    row = dict(previous)
+    row["refresh_status"] = "cached"
+    row["refresh_error"] = new.get("error") or "Screener returned no figures"
+    row["last_attempt_at"] = new.get("generated_at")
+    return row
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="", help="Comma-separated tickers")
@@ -618,6 +640,7 @@ def main() -> int:
     for i, c in enumerate(companies, 1):
         row = apply_profile_fallbacks(scrape_company(c))
         path = OUT_DIR / f"{row['slug']}.json"
+        row = retain_last_good(row, path)
         path.write_text(json.dumps(row, indent=2, ensure_ascii=False) + "\n")
         index.append(
             {
@@ -629,7 +652,9 @@ def main() -> int:
             }
         )
         status = "ok" if row.get("ratios_ok", 0) >= 4 else "thin"
-        if status == "ok":
+        if row.get("refresh_status") == "cached":
+            status = f"kept {row.get('generated_at_ist')} figures ({row['refresh_error']})"
+        elif status == "ok":
             ok += 1
         pl_n = len((row.get("pl") or {}).get("rows") or [])
         g_n = len((row.get("growth") or {}).get("cards") or [])
@@ -647,7 +672,7 @@ def main() -> int:
         saved = OUT_DIR / f"{company['ticker'].lower()}.json"
         if saved.exists():
             row = json.loads(saved.read_text())
-            index.append({key: row.get(key) for key in ("slug", "ticker", "name", "ratios_ok", "source")})
+            index.append({key: row.get(key) for key in ("slug", "ticker", "name", "ratios_ok", "source", "generated_at_ist", "refresh_error")})
     (OUT_DIR / "_index.json").write_text(
         json.dumps(
             {

@@ -1,0 +1,374 @@
+{
+  "slug": "zetwerk",
+  "ticker": "ZETWERK",
+  "name": "Zetwerk",
+  "exchange": "NSE",
+  "screener_url": "https://www.screener.in/company/ZETWERK/",
+  "error": "HTTP Error 429: Too Many Requests",
+  "ratios_ok": 0,
+  "screener_consolidated": true,
+  "pe": null,
+  "roce": 4.05,
+  "roe": -38.5,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/ZETWERK/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/ZETWERK/consolidated/",
+  "pl": {
+    "unit": "Rs. Crores",
+    "consolidated": true,
+    "periods": [
+      "Mar 2021",
+      "Mar 2022",
+      "Mar 2023",
+      "Mar 2024",
+      "Mar 2025",
+      "Mar 2026"
+    ],
+    "rows": [
+      {
+        "key": "sales",
+        "label": "Sales",
+        "values": [
+          "835",
+          "4,964",
+          "11,449",
+          "14,444",
+          "11,332",
+          "15,913"
+        ]
+      },
+      {
+        "key": "expenses",
+        "label": "Expenses",
+        "values": [
+          "878",
+          "5,002",
+          "11,373",
+          "14,360",
+          "11,115",
+          "15,618"
+        ]
+      },
+      {
+        "key": "operating_profit",
+        "label": "Operating Profit",
+        "values": [
+          "-43",
+          "-38",
+          "76",
+          "84",
+          "217",
+          "295"
+        ]
+      },
+      {
+        "key": "opm",
+        "label": "OPM %",
+        "values": [
+          "-5%",
+          "-0.8%",
+          "0.7%",
+          "0.6%",
+          "1.9%",
+          "1.9%"
+        ]
+      },
+      {
+        "key": "other_income",
+        "label": "Other Income",
+        "values": [
+          "33",
+          "97",
+          "147",
+          "-204",
+          "-79",
+          "-1,290"
+        ]
+      },
+      {
+        "key": "interest",
+        "label": "Interest",
+        "values": [
+          "28",
+          "133",
+          "297",
+          "449",
+          "337",
+          "366"
+        ]
+      },
+      {
+        "key": "depreciation",
+        "label": "Depreciation",
+        "values": [
+          "3",
+          "10",
+          "36",
+          "192",
+          "161",
+          "197"
+        ]
+      },
+      {
+        "key": "profit_before_tax",
+        "label": "Profit before tax",
+        "values": [
+          "-41",
+          "-84",
+          "-110",
+          "-761",
+          "-360",
+          "-1,558"
+        ]
+      },
+      {
+        "key": "tax",
+        "label": "Tax %",
+        "values": [
+          "0%",
+          "-29%",
+          "-8%",
+          "7%",
+          "3%",
+          "3%"
+        ]
+      },
+      {
+        "key": "net_profit",
+        "label": "Net Profit",
+        "values": [
+          "-41",
+          "-60",
+          "-102",
+          "-918",
+          "-371",
+          "-1,606"
+        ]
+      },
+      {
+        "key": "eps_in_rs",
+        "label": "EPS in Rs",
+        "values": [
+          "-4.06",
+          "-5.59",
+          "-9.49",
+          "-85.76",
+          "-32.38",
+          "-143.39"
+        ]
+      },
+      {
+        "key": "dividend_payout",
+        "label": "Dividend Payout %",
+        "values": [
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
+        ]
+      }
+    ],
+    "source_url": "https://www.screener.in/company/ZETWERK/consolidated/"
+  },
+  "growth": {
+    "cards": [
+      {
+        "key": "sales",
+        "title": "Compounded Sales Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": 80.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": 12.0
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": 40.0
+          }
+        ]
+      },
+      {
+        "key": "profit",
+        "title": "Compounded Profit Growth",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": null
+          },
+          {
+            "key": "ttm",
+            "label": "TTM:",
+            "value": -185.0
+          }
+        ]
+      },
+      {
+        "key": "stock",
+        "title": "Stock Price CAGR",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": null
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": null
+          },
+          {
+            "key": "1y",
+            "label": "1 Year:",
+            "value": null
+          }
+        ]
+      },
+      {
+        "key": "roe",
+        "title": "Return on Equity",
+        "rows": [
+          {
+            "key": "10y",
+            "label": "10 Years:",
+            "value": null
+          },
+          {
+            "key": "5y",
+            "label": "5 Years:",
+            "value": -11.0
+          },
+          {
+            "key": "3y",
+            "label": "3 Years:",
+            "value": -17.0
+          },
+          {
+            "key": "last",
+            "label": "Last Year:",
+            "value": -38.0
+          }
+        ]
+      }
+    ]
+  },
+  "shareholding": {
+    "quarterly": {
+      "periods": [
+        "Oct 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "15.71%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "7.56%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "12.53%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "64.20%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "1,89,135"
+          ]
+        }
+      ]
+    },
+    "yearly": {
+      "periods": [
+        "Oct 2026"
+      ],
+      "rows": [
+        {
+          "key": "promoters",
+          "label": "Promoters",
+          "values": [
+            "15.71%"
+          ]
+        },
+        {
+          "key": "fiis",
+          "label": "FIIs",
+          "values": [
+            "7.56%"
+          ]
+        },
+        {
+          "key": "diis",
+          "label": "DIIs",
+          "values": [
+            "12.53%"
+          ]
+        },
+        {
+          "key": "public",
+          "label": "Public",
+          "values": [
+            "64.20%"
+          ]
+        },
+        {
+          "key": "no_of_shareholders",
+          "label": "No. of Shareholders",
+          "values": [
+            "1,89,135"
+          ]
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-10-30T10:29:44.375979+05:30",
+  "generated_at_ist": "30 Oct 2026, 10:29 IST",
+  "source": "screener",
+  "website": "https://www.zetwerk.com/",
+  "website_label": "zetwerk.com"
+}
