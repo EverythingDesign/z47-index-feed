@@ -4,13 +4,13 @@
   "name": "Nykaa",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/NYKAA/",
-  "mcap_cr": 100536.0,
+  "mcap_cr": 100465.0,
   "price": 351.0,
   "high": 354.0,
   "low": 219.0,
-  "pe": 378.0,
-  "roce": 17.2,
-  "roe": 15.3,
+  "pe": 1167.0,
+  "roce": 6.78,
+  "roe": 5.17,
   "about": "FSN E-commerce Ventures Ltd. (FSNEV) popularly known as \"Nykaa\" is a digitally native consumer technology platform, delivering a content-led, lifestyle retail experience to consumers. The company has a diverse portfolio of beauty, personal care, and fashion products, including owned brand products manufactured by it.[1]",
   "website": "http://www.nykaa.com",
   "website_label": "nykaa.com",
@@ -20,14 +20,14 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=NYKAA",
   "screener_id": "1274992",
   "ratios_ok": 6,
-  "daily_pct": -0.06,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/NYKAA/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/NYKAA/consolidated/",
+  "daily_pct": -0.13,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/NYKAA/",
+  "ratios_source_url": "https://www.screener.in/company/NYKAA/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,104 +42,104 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "1,768",
-          "2,441",
-          "3,774",
-          "5,144",
-          "6,386",
-          "7,950",
-          "10,022"
+          "204",
+          "146",
+          "188",
+          "275",
+          "313",
+          "420",
+          "357"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "1,685",
-          "2,283",
-          "3,610",
-          "4,887",
-          "6,039",
-          "7,475",
-          "9,269"
+          "201",
+          "149",
+          "171",
+          "313",
+          "388",
+          "460",
+          "402"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "83",
-          "158",
-          "164",
-          "257",
-          "347",
-          "475",
-          "753"
+          "4",
+          "-3",
+          "17",
+          "-38",
+          "-75",
+          "-40",
+          "-46"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "4.7%",
-          "6%",
-          "4.3%",
-          "5%",
-          "5%",
-          "6%",
-          "8%"
+          "1.7%",
+          "-1.9%",
+          "9%",
+          "-14%",
+          "-24%",
+          "-10%",
+          "-13%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "10",
-          "12",
-          "27",
           "30",
-          "30",
-          "27",
-          "15"
+          "60",
+          "116",
+          "129",
+          "185",
+          "157",
+          "187"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "46",
-          "32",
-          "47",
-          "76",
-          "84",
-          "108",
-          "118"
+          "5",
+          "4",
+          "6",
+          "8",
+          "7",
+          "8",
+          "12"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "60",
-          "72",
-          "96",
-          "173",
-          "224",
-          "266",
-          "320"
+          "7",
+          "8",
+          "5",
+          "7",
+          "9",
+          "12",
+          "16"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-12",
-          "66",
-          "47",
-          "38",
-          "69",
-          "127",
-          "330"
+          "22",
+          "45",
+          "122",
+          "76",
+          "94",
+          "97",
+          "113"
         ]
       },
       {
@@ -147,38 +147,38 @@
         "label": "Tax %",
         "values": [
           "31%",
-          "7%",
-          "13%",
-          "35%",
-          "37%",
-          "42%",
-          "38%"
+          "19%",
+          "15%",
+          "25%",
+          "-29%",
+          "-0%",
+          "22%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-16",
-          "62",
-          "41",
-          "21",
-          "40",
-          "72",
-          "204"
+          "15",
+          "36",
+          "104",
+          "57",
+          "121",
+          "97",
+          "88"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-0.06",
-          "0.23",
-          "0.14",
-          "0.07",
-          "0.11",
-          "0.23",
-          "0.70"
+          "0.06",
+          "0.13",
+          "0.36",
+          "0.20",
+          "0.42",
+          "0.34",
+          "0.31"
         ]
       },
       {
@@ -195,7 +195,7 @@
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/NYKAA/consolidated/"
+    "source_url": "https://www.screener.in/company/NYKAA/"
   },
   "growth": {
     "cards": [
@@ -211,17 +211,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 33.0
+            "value": 20.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 25.0
+            "value": 9.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 27.0
+            "value": -12.0
           }
         ]
       },
@@ -237,17 +237,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 28.0
+            "value": 20.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 122.0
+            "value": 16.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 234.0
+            "value": 26.0
           }
         ]
       },
@@ -294,12 +294,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 8.0
+            "value": 6.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 15.0
+            "value": 5.0
           }
         ]
       }
@@ -487,7 +487,7 @@
       ]
     }
   },
-  "generated_at": "2026-10-30T10:30:00.699141+05:30",
-  "generated_at_ist": "30 Oct 2026, 10:30 IST",
+  "generated_at": "2026-10-30T16:09:13.525870+05:30",
+  "generated_at_ist": "30 Oct 2026, 16:09 IST",
   "source": "screener"
 }
