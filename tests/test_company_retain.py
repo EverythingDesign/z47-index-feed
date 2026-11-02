@@ -83,6 +83,41 @@ class FullRunTests(unittest.TestCase):
         self.assertEqual((entry["ratios_ok"], entry["refresh_error"]), (5, "HTTP Error 429: Too Many Requests"))
         self.assertEqual(entry["generated_at_ist"], "26 Oct 2026, 12:44 IST")
 
+    def test_refused_companies_are_tried_again_after_a_pause(self):
+        out = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, out)
+        (out / "zetwerk.json").write_text(json.dumps(GOOD))
+        zetwerk = [c for c in hero.COMPANIES if c["ticker"] == "ZETWERK"]
+        fresh = {**GOOD, "price": 163.0, "generated_at_ist": "02 Nov 2026, 16:20 IST"}
+        with mock.patch.object(hero, "OUT_DIR", out), mock.patch.object(hero, "COMPANIES", zetwerk), \
+             mock.patch.object(hero, "scrape_company", side_effect=[dict(BLANK), dict(fresh)]) as scrape, \
+             mock.patch.object(hero.time, "sleep") as sleep, \
+             mock.patch.object(sys, "argv", ["build_company_hero.py"]), contextlib.redirect_stdout(io.StringIO()):
+            hero.main()
+        self.assertEqual(scrape.call_count, 2)
+        self.assertIn(mock.call(60), sleep.call_args_list)
+        page = json.loads((out / "zetwerk.json").read_text())
+        self.assertEqual((page["price"], page["generated_at_ist"]), (163.0, "02 Nov 2026, 16:20 IST"))
+        self.assertIsNone(json.loads((out / "_index.json").read_text())["companies"][0]["refresh_error"])
+
+
+class RefusalTests(unittest.TestCase):
+    def test_a_refusal_is_not_retried_straight_away(self):
+        naukri = next(c for c in hero.COMPANIES if c["ticker"] == "NAUKRI")
+        refused = hero.urllib.error.HTTPError("https://www.screener.in/company/NAUKRI/", 429, "Too Many Requests", None, None)
+        with mock.patch.object(hero, "_http_get", side_effect=refused) as get, mock.patch.object(hero.time, "sleep"):
+            row = hero.scrape_company(naukri)
+        self.assertEqual(get.call_count, 1)  # neither the retries nor the consolidated page
+        self.assertEqual(row["error"], "HTTP Error 429: Too Many Requests")
+        self.assertTrue(hero.refresh_failed(row))
+
+    def test_other_errors_still_retry(self):
+        naukri = next(c for c in hero.COMPANIES if c["ticker"] == "NAUKRI")
+        with mock.patch.object(hero, "_http_get", side_effect=TimeoutError("timed out")) as get, \
+             mock.patch.object(hero.time, "sleep"):
+            hero.scrape_company(naukri)
+        self.assertEqual(get.call_count, 6)  # 3 standalone + 3 consolidated, as before
+
 
 if __name__ == "__main__":
     unittest.main()

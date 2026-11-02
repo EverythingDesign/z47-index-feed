@@ -23,6 +23,7 @@ import re
 import ssl
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime
@@ -113,6 +114,11 @@ def _http_get(url: str) -> str:
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=30, context=CTX) as r:
         return r.read().decode("utf-8", errors="ignore")
+
+
+def _refused(e: Exception) -> bool:
+    """Screener's rate limit. Retrying within seconds only extends it; main() tries again later."""
+    return isinstance(e, urllib.error.HTTPError) and e.code == 429
 
 
 def _f(s: str | None) -> float | None:
@@ -534,6 +540,7 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         return scrape_nasdaq_hero(c, row)
     parsed: dict = {}
     html = ""
+    refused = False
 
     # Hero ratios from standalone (Screener default). Consolidated differs
     # (e.g. MILKYMIST PE 324 vs 113) and caused client-visible drift.
@@ -548,6 +555,9 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
         except Exception as e:
             parsed = {"error": str(e)}
             html = ""
+            if _refused(e):
+                refused = True
+                break
         time.sleep(1.0 * attempt + random.random())
 
     row.update({k: v for k, v in parsed.items() if k != "ratios_ok"})
@@ -559,7 +569,7 @@ def scrape_company(c: dict, retries: int = 3) -> dict:
     row["screener_consolidated"] = False
 
     consolidated_html = ""
-    for attempt in range(1, retries + 1):
+    for attempt in range(1, retries + 1 if not refused else 1):
         try:
             consolidated_html = _http_get(
                 f"https://www.screener.in/company/{urllib.parse.quote(ticker)}/consolidated/"
@@ -625,47 +635,58 @@ def retain_last_good(new: dict, path: Path) -> dict:
     return row
 
 
+def refresh_company(c: dict) -> dict:
+    """Scrape one company and save its page, keeping the last good figures if Screener refuses."""
+    row = apply_profile_fallbacks(scrape_company(c))
+    path = OUT_DIR / f"{row['slug']}.json"
+    row = retain_last_good(row, path)
+    path.write_text(json.dumps(row, indent=2, ensure_ascii=False) + "\n")
+    return row
+
+
+def print_row(label: str, row: dict) -> None:
+    status = "ok" if row.get("ratios_ok", 0) >= 4 else "thin"
+    if row.get("refresh_status") == "cached":
+        status = f"kept {row.get('generated_at_ist')} figures ({row['refresh_error']})"
+    pl_n = len((row.get("pl") or {}).get("rows") or [])
+    g_n = len((row.get("growth") or {}).get("cards") or [])
+    sh = row.get("shareholding") or {}
+    sh_n = len((sh.get("quarterly") or {}).get("periods") or [])
+    print(
+        f"[{label}] {row['ticker']:12} {status} "
+        f"pe={row.get('pe')} roce={row.get('roce')} roe={row.get('roe')} "
+        f"hl={row.get('high')}/{row.get('low')} pl_rows={pl_n} growth={g_n} shp_q={sh_n}",
+        flush=True,
+    )
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="", help="Comma-separated tickers")
     ap.add_argument("--sleep", type=float, default=0.8)
+    ap.add_argument("--retry-wait", type=float, default=60, help="Pause before retrying companies Screener refused")
+    ap.add_argument("--retry-sleep", type=float, default=8, help="Gap between those retries")
     args = ap.parse_args()
 
     only = {t.strip().upper() for t in args.only.split(",") if t.strip()}
     companies = [c for c in COMPANIES if not only or c["ticker"] in only]
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    index = []
-    ok = 0
+    rows = {}
     for i, c in enumerate(companies, 1):
-        row = apply_profile_fallbacks(scrape_company(c))
-        path = OUT_DIR / f"{row['slug']}.json"
-        row = retain_last_good(row, path)
-        path.write_text(json.dumps(row, indent=2, ensure_ascii=False) + "\n")
-        index.append(
-            {
-                "slug": row["slug"],
-                "ticker": row["ticker"],
-                "name": row["name"],
-                "ratios_ok": row.get("ratios_ok", 0),
-                "source": row.get("source"),
-            }
-        )
-        status = "ok" if row.get("ratios_ok", 0) >= 4 else "thin"
-        if row.get("refresh_status") == "cached":
-            status = f"kept {row.get('generated_at_ist')} figures ({row['refresh_error']})"
-        elif status == "ok":
-            ok += 1
-        pl_n = len((row.get("pl") or {}).get("rows") or [])
-        g_n = len((row.get("growth") or {}).get("cards") or [])
-        sh = row.get("shareholding") or {}
-        sh_n = len((sh.get("quarterly") or {}).get("periods") or [])
-        print(
-            f"[{i}/{len(companies)}] {row['ticker']:12} {status} "
-            f"pe={row.get('pe')} roce={row.get('roce')} roe={row.get('roe')} "
-            f"hl={row.get('high')}/{row.get('low')} pl_rows={pl_n} growth={g_n} shp_q={sh_n}"
-        )
+        rows[c["ticker"]] = row = refresh_company(c)
+        print_row(f"{i}/{len(companies)}", row)
         time.sleep(args.sleep + random.random() * 0.4)
+
+    # A refusal (HTTP 429) lasts a while: pause, then try those companies once more, slowly.
+    refused = [c for c in companies if rows[c["ticker"]].get("refresh_status") == "cached"]
+    if refused:
+        print(f"Screener refused {len(refused)}; trying them again in {args.retry_wait:.0f} s", flush=True)
+        time.sleep(args.retry_wait)
+        for i, c in enumerate(refused, 1):
+            rows[c["ticker"]] = row = refresh_company(c)
+            print_row(f"retry {i}/{len(refused)}", row)
+            time.sleep(args.retry_sleep + random.random())
 
     index = []
     for company in COMPANIES:
@@ -685,7 +706,9 @@ def main() -> int:
         )
         + "\n"
     )
-    print(f"Updated {len(companies)} company files; indexed {len(index)} active companies → {OUT_DIR} ({ok} with full ratios)")
+    ok = sum(1 for r in rows.values() if r.get("ratios_ok", 0) >= 4 and r.get("refresh_status") != "cached")
+    kept = sum(1 for r in rows.values() if r.get("refresh_status") == "cached")
+    print(f"Updated {len(companies)} company files ({ok} with full ratios, {kept} kept previous figures); indexed {len(index)} active companies → {OUT_DIR}")
     return 0
 
 

@@ -44,7 +44,9 @@ jobs:
           fi
 
   refresh-companies:
-    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '45 10 * * 1-5' || github.event.schedule == '15 22 * * 1-5'
+    # After the index job: both use the same Screener login, and Screener refuses (HTTP 429) when they overlap.
+    needs: refresh-index
+    if: always() && (github.event_name == 'workflow_dispatch' || github.event.schedule == '45 10 * * 1-5' || github.event.schedule == '15 22 * * 1-5')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
