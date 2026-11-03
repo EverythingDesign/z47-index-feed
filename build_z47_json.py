@@ -39,6 +39,7 @@ preserves previously published history; see docs/inr-transition-2026-09-29.md.
 
 Run:  python3 scripts/build_z47_json.py            # writes data/z47_index.json
       python3 scripts/build_z47_json.py --write-history   # also upserts today's row into data/z47_history.csv
+      python3 scripts/build_z47_json.py --light           # market-hours run: no Screener / BSE / StockAnalysis
 """
 from __future__ import annotations
 
@@ -712,6 +713,55 @@ def fetch_table_live(usd_to_inr: float) -> dict[str, dict]:
     return out
 
 
+COMPANIES_DIR = os.path.join(HERE, "data", "companies")
+
+
+def carried_table_live(fetched: dict, usd_to_inr: float, prev_path: str = None,
+                       companies_dir: str = None) -> dict[str, dict]:
+    """Market-hours runs (--light): no Screener / BSE / StockAnalysis calls.
+
+    Each company keeps a share count implied by an earlier mcap ÷ price and is valued at
+    Yahoo's latest price, so mcap moves with the price. NSE companies take theirs from the
+    company page (Screener, logged in and kept last-good); the index job's own Screener calls
+    are often refused, so its last feed can hold Yahoo fallbacks. NASDAQ companies, and any
+    NSE company without a page figure, take it from the last feed. Price and day % then come
+    from Yahoo; a company with neither falls back to the Yahoo reconciliation in mcap_mn_inr().
+    """
+    try:
+        with open(prev_path or OUT_JSON) as f:
+            prev = json.load(f)
+    except Exception:  # noqa: BLE001
+        prev = {}
+    prev_fx = ((prev.get("meta") or {}).get("usdinr") or {}).get("value")
+    prev_rows = {r.get("ticker"): r for r in prev.get("constituents", [])}
+    out: dict[str, dict] = {}
+    for c in COMPANIES:
+        meta, series = fetched.get(yf_ticker(c), ({}, []))
+        price = meta.get("regularMarketPrice") or (series[-1][1] if series else None)
+        if not price:
+            continue
+        page = {}
+        if c["exchange"] == "NSE":
+            try:
+                with open(os.path.join(companies_dir or COMPANIES_DIR, f"{company_slug(c)}.json")) as f:
+                    page = json.load(f)
+            except Exception:  # noqa: BLE001
+                pass
+        row = prev_rows.get(c["ticker"], {})
+        if page.get("price") and page.get("mcap_cr"):
+            mcap_mn, source = page["mcap_cr"] * 10.0 * price / page["price"], "Yahoo price × company page shares"
+        elif row.get("price") and row.get("mcap_mn"):
+            mcap_mn, source = row["mcap_mn"] * price / row["price"], "Yahoo price × last feed's shares"
+            if c["exchange"] != "NSE" and prev_fx and usd_to_inr:
+                mcap_mn *= usd_to_inr / prev_fx
+        else:
+            continue
+        out[c["ticker"]] = {"mcap_mn": mcap_mn, "price": None, "daily_pct": None, "source": source}
+    print(f"  table live: {len(out)}/{len(COMPANIES)} carried from company pages / the last feed (no Screener)",
+          file=sys.stderr)
+    return out
+
+
 # Back-compat alias used by fetch_mcap_table.py / older call sites
 def fetch_table_mcap_mn(usd_to_inr: float) -> dict[str, tuple[float, str]]:
     live = fetch_table_live(usd_to_inr)
@@ -799,6 +849,7 @@ def monthly_takeaways(rows, today_iso):
 
 def main():
     write_history = "--write-history" in sys.argv
+    light = "--light" in sys.argv
     now_ist = datetime.now(IST)
     # "today_iso" = the date of the LATEST data point, i.e. the most recent trading
     # session — not the wall-clock date. Before the open (and just after a close,
@@ -915,7 +966,8 @@ def main():
         raise RuntimeError('History does not end at the last cap reset; retaining last-good feed')
 
     # Table live fields (₹ mn mcap + NSE price/day): Screener → BSE → NASDAQ(Yahoo×FX).
-    table_live = fetch_table_live(usd_to_inr)
+    # Market-hours runs (--light) skip those sites; see carried_table_live().
+    table_live = carried_table_live(fetched, usd_to_inr) if light else fetch_table_live(usd_to_inr)
 
     # ── Per-constituent live snapshot ──────────────────────────────────────
     constituents = []

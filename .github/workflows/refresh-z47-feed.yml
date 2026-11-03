@@ -1,13 +1,21 @@
 name: Refresh Z47'47 feed
 
 # Index: NSE-session snapshots. Companies: after NSE and US close + manual run.
+# The z47-index-data Cloudflare Worker dispatches this on time (GitHub's own schedule starts hours late):
+# scope "index" every 15 min in market hours, "all" after the NSE and US closes.
 on:
   schedule:
     - cron: "30 4-9 * * 1-5"
     - cron: "45 10 * * 1-5"
     # After US close in both EST and EDT (03:45 IST next day).
     - cron: "15 22 * * 1-5"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: "all = index and company pages; index = index only, without Screener (market hours)"
+        type: choice
+        options: [all, index]
+        default: all
 
 permissions:
   contents: write
@@ -29,7 +37,8 @@ jobs:
       - name: Build index feed
         env:
           SCREENER_SESSIONID: ${{ secrets.SCREENER_SESSIONID }}
-        run: python3 build_z47_json.py --write-history
+        # Market-hours runs skip Screener, which refuses frequent calls (see carried_table_live).
+        run: python3 build_z47_json.py --write-history ${{ (inputs.scope == 'index' || github.event.schedule == '30 4-9 * * 1-5') && '--light' || '' }}
       - name: Commit index if changed
         run: |
           git config user.name  "z47-feed-bot"
@@ -46,7 +55,7 @@ jobs:
   refresh-companies:
     # After the index job: both use the same Screener login, and Screener refuses (HTTP 429) when they overlap.
     needs: refresh-index
-    if: always() && (github.event_name == 'workflow_dispatch' || github.event.schedule == '45 10 * * 1-5' || github.event.schedule == '15 22 * * 1-5')
+    if: always() && ((github.event_name == 'workflow_dispatch' && inputs.scope != 'index') || github.event.schedule == '45 10 * * 1-5' || github.event.schedule == '15 22 * * 1-5')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
