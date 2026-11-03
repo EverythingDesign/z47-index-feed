@@ -4,8 +4,8 @@
   "name": "Urban Company",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/URBANCO/",
-  "mcap_cr": 24192.0,
-  "price": 157.0,
+  "mcap_cr": 24573.0,
+  "price": 159.0,
   "high": 184.0,
   "low": 96.4,
   "pe": null,
@@ -20,7 +20,7 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=URBANCO",
   "screener_id": "1285641",
   "ratios_ok": 5,
-  "daily_pct": 2.66,
+  "daily_pct": 1.63,
   "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/URBANCO/consolidated/",
@@ -49,6 +49,19 @@
           "828",
           "1,144",
           "1,556"
+        ]
+      },
+      {
+        "key": "sales_growth",
+        "label": "Sales growth",
+        "values": [
+          "",
+          "+13%",
+          "+77%",
+          "+45%",
+          "+30%",
+          "+38%",
+          "+36%"
         ]
       },
       {
@@ -273,7 +286,7 @@
           {
             "key": "1y",
             "label": "1 Year:",
-            "value": 3.0
+            "value": 5.0
           }
         ]
       },
@@ -440,7 +453,7 @@
       ]
     }
   },
-  "generated_at": "2026-11-03T09:02:23.360181+05:30",
-  "generated_at_ist": "03 Nov 2026, 09:02 IST",
+  "generated_at": "2026-11-03T17:48:39.057408+05:30",
+  "generated_at_ist": "03 Nov 2026, 17:48 IST",
   "source": "screener"
 }
