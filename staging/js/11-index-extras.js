@@ -429,7 +429,10 @@
       g.fillStyle = "#e5e5e5"; g.fillRect(P, H - 170, W - 2 * P, 2);
       g.fillStyle = "#555"; g.font = "400 34px " + font;
       g.fillText("Source: Z47, " + PAGE_URL_LABEL + "  ·  Downloaded " + istNow(), P, H - 110);
-      g.fillText("Rebased to 100 at the start of the period. For information only; not investment advice.", P, H - 60);
+      g.fillText("Rebased to 100 at the start of the period.", P, H - 60);
+      g.textAlign = "right";
+      g.fillText("For information only; not investment advice.", W - P, H - 60);
+      g.textAlign = "left";
       return out;
     });
   }
