@@ -1,13 +1,17 @@
-/* Z47 — Index page, Phase 1 extras
+/* Z47 — Index page, Phase 1 extras (3 Nov 2026 review)
    File: staging/js/11-index-extras.js   (load after 01-performance.js)
 
    Adds, without touching 01-performance.js or the Designer layout:
-     1. Hero top bar — latest value, change vs previous close, prev. close, as-of
-     2. Download — PNG / PDF snapshot of the chart for the selected range
-     3. Constituent change log above the Constituents-tab disclaimer
+     1. Chart range: YTD / 1Y / Jan 2024 stay as tabs; 1D, 3D, 1W, 1M, 3M, 6M move into a dropdown
+     2. Top Movers: same treatment (1M / 3M / 6M in a dropdown)
+     3. Download (PNG / PDF) in place of the LATEST UPDATE badge
+     4. End-value labels on the chart lines
+     5. Performance tab constituent snapshot: first 7 rows, then Load more
+     6. Constituent change log above the Constituents-tab disclaimer, with a "why" tooltip per change
+     7. Disclaimer: narrower text column, kept on the right (desktop)
 
    Reads the feed 01-performance.js already loaded (window.__Z47) and waits for its
-   "z47:performance-state" event. If the feed never arrives, nothing new is shown. */
+   "z47:performance-state" event. If the feed never arrives, the page stays as designed. */
 (function () {
   "use strict";
   if (window.__Z47_EXTRAS) return;
@@ -23,16 +27,29 @@
   var JSPDF_SRI = "sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk";
   var PAGE_URL_LABEL = "z47.com/z47-forty-seven";
 
-  // Short periods, counted in NSE sessions back from the latest close.
+  // Chart ranges in the dropdown, in menu order. Short ones are counted in NSE sessions.
+  var CHART_MENU     = ["1D", "3D", "1W", "1M", "3M", "6M"];
+  var MOVERS_MENU    = ["1M", "3M", "6M"];          // Top Movers only has these in the feed
+  var SHORT_SESSIONS = { "1D": 1, "3D": 3, "1W": 5 };
   var RANGE_LABELS = {
-    "1M": "Last 1 month", "3M": "Last 3 months",
-    "6M": "Last 6 months", "1Y": "Last 1 year", "YTD": "Year to date", "SINCE": "Since Jan 2024"
+    "1D": "Last 1 day", "3D": "Last 3 days", "1W": "Last 1 week",
+    "1M": "Last 1 month", "3M": "Last 3 months", "6M": "Last 6 months",
+    "1Y": "Last 1 year", "YTD": "Year to date", "SINCE": "Since Jan 2024"
   };
 
-  // Change log: first effective date shown publicly, and the public wording per change.
-  // Reasons stay hidden until Z47 supplies copy (keyed by effective_date).
+  var SNAPSHOT_ROWS = 7;   // Performance tab: rows shown before "Load more"
+
+  // Change log: first effective date shown publicly, and the public "why" per change.
+  // DRAFT wording from the feed's internal notes. Needs Z47 sign-off before go-live.
   var CHANGE_LOG_FROM = "2026-06-16";
-  var CHANGE_REASONS = {};
+  var CHANGE_REASONS = {
+    "2026-06-16": "June 2026 review. Home First Finance and India Shelter Finance (both sub-scale housing finance lenders), Yatra Online and Niva Bupa left the index. Angel One and Affle joined, along with two recent listings: Amagi Media Labs (listed 21 Jan 2026) and Fractal Analytics (listed 16 Feb 2026).",
+    "2026-08-20": "August 2026 review, made for three new listings. Turtlemint, Shiprocket and Milky Mist joined at the 20 Aug close; SBI Card, MobiKwik and Unicommerce made way.",
+    "2026-09-18": "Rentomojo joined after its listing and replaced Medi Assist.",
+    "2026-10-05": "Moneyview joined after its listing and replaced Awfis.",
+    "2026-10-26": "Zetwerk joined the index in the B2B sector and replaced Turtlemint."
+  };
+  var CHANGE_NOTE = "Value-neutral: the index level is unchanged on the day of the change.";
   // Names for companies no longer in the index (constituents[] only lists current members).
   var FORMER_NAMES = {
     "SBICARD": "SBI Card", "MOBIKWIK": "MobiKwik", "UNIECOM": "Unicommerce",
@@ -42,14 +59,19 @@
     "360ONE": "360 ONE WAM"
   };
 
+  // The site's double arrow (same SVG as the "Z47 Portfolio" button); rotated down via .button_arrow-wrap.rotate
+  var ARROW_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 19" fill="none" aria-hidden="true">'
+    + '<path d="M19.8772 8.59997H0.122559V6.79997H15.5L10.7363 2.03627L12.0089 0.763672L18.9452 7.69997L19.8772 8.59997Z" fill="currentColor"/>'
+    + '<path d="M19.8772 10.4H0.122559V12.2H15.5L10.7363 16.9637L12.0089 18.2363L18.9452 11.3L19.8772 10.4Z" fill="currentColor"/></svg>';
+  var CHEVRON_SVG = '<svg class="z47x-menu__chev" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">'
+    + '<path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+
   /* ------------------------------ HELPERS --------------------------------- */
   function $all(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
   function fin(n) { return typeof n === "number" && isFinite(n); }
   function fmtNum(n, dp) {
     return fin(n) ? n.toLocaleString("en-IN", { minimumFractionDigits: dp, maximumFractionDigits: dp }) : "—";
   }
-  // Same sign style as 01-performance.js ("+3.0%" / "-1.5%").
-  function fmtPct(n) { return fin(n) ? (n >= 0 ? "+" : "") + n.toFixed(2) + "%" : "—"; }
   function fmtPct1(n) { return fin(n) ? (n >= 0 ? "+" : "") + n.toFixed(1) + "%" : "—"; }
   function colorFor(n) { return fin(n) ? (n >= 0 ? POS_COLOR : NEG_COLOR) : ""; }
   function esc(s) {
@@ -69,6 +91,11 @@
     return new Date().toLocaleString("en-GB", { timeZone: "Asia/Kolkata", day: "numeric", month: "short",
       year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }) + " IST";
   }
+  function asOfText(d) {
+    return d.meta.market_open
+      ? "Intraday, as of " + (d.meta.generated_at_ist || "")
+      : "As of close, " + dayLabel(d.meta.data_as_of, true);
+  }
   function addStyle(id, css) {
     if (document.getElementById(id)) return;
     var st = document.createElement("style");
@@ -78,89 +105,229 @@
   function guard(name, fn) {
     try { fn(); } catch (e) { console.error("[z47 extras] " + name + " failed:", e); }
   }
-
-  // Return over the last n sessions, from the daily closes in history[].
-  // Return for the selected chart range, straight from the feed.
-  function rangeReturns(d, range) {
-    var k = range === "SINCE" ? "since_base" : range;
-    return { z47: d.index.returns[k], nifty: d.benchmark.returns[k] };
-  }
-  function activeRange() {
-    var a = document.querySelector("[data-z47-range].is-active");
-    return a ? a.getAttribute("data-z47-range") : "SINCE";
-  }
-
-  /* --------------------------- 1. HERO TOP BAR ---------------------------- */
-  addStyle("z47x-bar-css",
-    ".z47x-bar{display:flex;flex-direction:column;gap:6px;font-family:inherit;color:#111;}"
-  + ".z47x-bar[hidden]{display:none;}"
-  + ".z47x-bar__main{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;}"
-  + ".z47x-bar__value{font-size:clamp(2rem,1.6rem + 1.6vw,3rem);font-weight:500;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}"
-  + ".z47x-bar__chg{font-size:clamp(1.05rem,1rem + .3vw,1.3rem);font-weight:600;font-variant-numeric:tabular-nums;}"
-  + ".z47x-bar__meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:.95rem;color:#555;}"
-  + ".z47x-bar__meta b{color:#111;font-weight:600;font-variant-numeric:tabular-nums;}"
-  + ".z47x-bar.is-loading .z47x-bar__value,.z47x-bar.is-loading .z47x-bar__chg,.z47x-bar.is-loading .z47x-bar__meta b{color:transparent;background:#efe6dc;border-radius:4px;}"
-  + "@media(max-width:479px){.z47x-bar__meta{font-size:.85rem;}}");
-
-  var bar = null;
-  function mountBar() {
-    if (bar) return bar;
-    var anchor = document.querySelector(".index-hero-text .index-context.max-width-full")
-              || document.querySelector(".index-hero-text");
-    if (!anchor) return null;
-    bar = document.createElement("div");
-    bar.className = "z47x-bar is-loading";
-    bar.setAttribute("data-z47", "live-bar");
-    bar.setAttribute("aria-live", "polite");
-    bar.innerHTML =
-        '<div class="z47x-bar__main">'
-      +   '<span class="z47x-bar__value" data-z47="live-value">000.00</span>'
-      +   '<span class="z47x-bar__chg" data-z47="live-change">▲ 0.00 (+0.00%)</span>'
-      + '</div>'
-      + '<div class="z47x-bar__meta">'
-      +   '<span>Prev. close <b data-z47="live-prev-close">000.00</b></span>'
-      +   '<span aria-hidden="true">·</span>'
-      +   '<span data-z47="live-asof">Loading latest value</span>'
-      + '</div>';
-    anchor.parentNode.insertBefore(bar, anchor.nextSibling);
-    return bar;
-  }
-  function paintBar(d) {
-    if (!mountBar()) return;
-    var h = d.history, last = h[h.length - 1];
-    // history[] ends with the latest snapshot when it carries today's date
-    var prevRow = last.date === d.meta.data_as_of ? h[h.length - 2] : last;
-    var value = d.index.value, prev = prevRow && prevRow.z47;
-    if (!fin(value) || !fin(prev)) { bar.hidden = true; return; }
-    var chg = value - prev;
-    var pct = fin(d.index.daily_pct) ? d.index.daily_pct : (chg / prev) * 100;
-    var up = chg >= 0;
-    bar.querySelector('[data-z47="live-value"]').textContent = fmtNum(value, 2);
-    var c = bar.querySelector('[data-z47="live-change"]');
-    c.textContent = (up ? "▲ " : "▼ ") + fmtNum(Math.abs(chg), 2) + " (" + fmtPct(pct) + ")";
-    c.style.color = up ? POS_COLOR : NEG_COLOR;
-    bar.querySelector('[data-z47="live-prev-close"]').textContent = fmtNum(prev, 2);
-    var asof = d.meta.market_open
-      ? "Intraday, as of " + (d.meta.generated_at_ist || "")
-      : "As of close, " + dayLabel(d.meta.data_as_of, true);
-    bar.querySelector('[data-z47="live-asof"]').textContent = asof;
-    bar.title = "Updated " + (d.meta.generated_at_ist || "") + ". Scheduled updates; not streaming quotes.";
-    bar.classList.remove("is-loading");
-  }
-
-  /* --------------------------- 2. DOWNLOAD -------------------------------- */
   function chartInstance() {
     var canvas = document.getElementById("z47-chart");
     return canvas && window.Chart && Chart.getChart ? Chart.getChart(canvas) : null;
   }
+
+  // Return over the last n sessions, from the daily closes in history[].
+  function sessionReturn(hist, key, n) {
+    if (!hist || hist.length <= n) return null;
+    var a = hist[hist.length - 1 - n][key], b = hist[hist.length - 1][key];
+    return fin(a) && fin(b) && a > 0 ? (b / a - 1) * 100 : null;
+  }
+  // Return for any chart range: feed returns for the long ones, sessions for the short ones.
+  function rangeReturns(d, range) {
+    if (SHORT_SESSIONS[range]) {
+      return { z47: sessionReturn(d.history, "z47", SHORT_SESSIONS[range]),
+               nifty: sessionReturn(d.history, "nifty500", SHORT_SESSIONS[range]) };
+    }
+    var k = range === "SINCE" ? "since_base" : range;
+    return { z47: d.index.returns[k], nifty: d.benchmark.returns[k] };
+  }
+  var currentRange = "SINCE";   // what the chart shows now; 01-performance's default
+
+  /* ----------------------- 1 + 2. RANGE DROPDOWNS ------------------------- */
+  addStyle("z47x-menu-css",
+    ".z47x-moved,.z47x-hidden{display:none!important;}"
+  + ".z47x-menu{position:relative;display:flex;}"
+  + ".z47x-menu > .chart-tabs{width:100%;cursor:pointer;}"
+  + ".z47x-menu .chart-tenure-text{display:inline-flex;align-items:center;white-space:nowrap;}"
+  + ".z47x-menu__chev{margin-left:6px;flex:0 0 auto;transition:transform .15s ease;}"
+  + ".z47x-menu.is-open .z47x-menu__chev{transform:rotate(180deg);}"
+  + ".z47x-menu__list{position:absolute;left:0;top:calc(100% + 4px);z-index:30;min-width:100%;background:#fff;"
+  + "border:1px solid #cfcfcf;box-shadow:0 8px 24px rgba(0,0,0,.12);display:flex;flex-direction:column;}"
+  + ".z47x-menu__list[hidden]{display:none;}"
+  + ".z47x-menu__list button{all:unset;box-sizing:border-box;cursor:pointer;padding:10px 16px;font:inherit;"
+  + "font-size:.9rem;letter-spacing:.04em;color:#111;white-space:nowrap;}"
+  + ".z47x-menu__list button:hover,.z47x-menu__list button:focus-visible{background:#fdeddd;}"
+  + ".z47x-menu__list button[aria-checked=true]{color:" + Z47_COLOR + ";font-weight:600;}");
+
+  // Moves the tabs for `keys` out of `row` into one dropdown tab. pick(key) does the switching.
+  function buildMenu(row, attr, keys, idleLabel, pick) {
+    var tpl = row.querySelector("[" + attr + "]");
+    var first = keys.map(function (k) { return row.querySelector("[" + attr + '="' + k + '"]'); })
+                    .filter(Boolean)[0];   // the dropdown takes the place of the first tab it absorbs
+    if (!tpl || !first || row.querySelector(".z47x-menu")) return null;
+    var wrap = document.createElement("div");
+    wrap.className = "z47x-menu";
+    var trig = tpl.cloneNode(true);
+    ["id", "data-w-id", attr, "data-tenure", "href"].forEach(function (a) { trig.removeAttribute(a); });
+    trig.classList.remove("is-active", "w--current");
+    trig.setAttribute("role", "button");
+    trig.setAttribute("tabindex", "0");
+    trig.setAttribute("aria-haspopup", "true");
+    trig.setAttribute("aria-expanded", "false");
+    var text = trig.querySelector(".chart-tenure-text") || trig;
+    var list = document.createElement("div");
+    list.className = "z47x-menu__list";
+    list.hidden = true;
+    list.setAttribute("role", "menu");
+    list.innerHTML = keys.map(function (k) {
+      return '<button type="button" role="menuitemradio" aria-checked="false" data-key="' + k + '">' + k + "</button>";
+    }).join("");
+
+    function setOpen(open) {
+      list.hidden = !open;
+      wrap.classList.toggle("is-open", open);
+      trig.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    function show(key) {   // key = selected menu range, or null when a plain tab is active
+      text.innerHTML = "<span>" + esc(key || idleLabel) + "</span>" + CHEVRON_SVG;
+      trig.classList.toggle("is-active", !!key);
+      $all("button", list).forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-key") === key ? "true" : "false"); });
+    }
+    trig.addEventListener("click", function (e) { e.preventDefault(); setOpen(list.hidden); });
+    trig.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+        e.preventDefault(); setOpen(true);
+        var b = list.querySelector("button"); if (b) b.focus();
+      }
+    });
+    $all("button", list).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var k = b.getAttribute("data-key");
+        pick(k); show(k); setOpen(false); trig.focus();
+      });
+    });
+    document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) setOpen(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !list.hidden) { setOpen(false); trig.focus(); } });
+
+    var active = null;
+    keys.forEach(function (k) {
+      var a = row.querySelector("[" + attr + '="' + k + '"]');
+      if (!a) return;
+      if (a.classList.contains("is-active")) active = k;
+      a.classList.add("z47x-moved");
+    });
+    // A plain tab takes over: clear the dropdown's selection.
+    $all("[" + attr + "]", row).forEach(function (a) {
+      if (!a.classList.contains("z47x-moved")) a.addEventListener("click", function () { show(null); setOpen(false); });
+    });
+    wrap.appendChild(trig);
+    wrap.appendChild(list);
+    first.parentNode.insertBefore(wrap, first);
+    // Size like the other tabs (auto on desktop, stretched on phones).
+    var ref = row.querySelector("[" + attr + "]:not(.z47x-moved)");
+    function syncFlex() { if (ref) wrap.style.flex = getComputedStyle(ref).flex; }
+    syncFlex();
+    window.addEventListener("resize", syncFlex);
+    show(active);
+    return wrap;
+  }
+
+  function setPill(key, n) {
+    $all('[data-z47="' + key + '"]').forEach(function (el) {
+      el.textContent = fmtPct1(n);
+      el.classList.remove("ai-color-parrotgreen", "ai-color-red");
+      el.style.color = colorFor(n);
+      el.setAttribute("data-z47-value-state", fin(n) ? "ready" : "unavailable");
+    });
+  }
+  function renderShortRange(d, range) {
+    var chart = chartInstance();
+    if (!chart) return;
+    var slice = d.history.slice(-(SHORT_SESSIONS[range] + 1));
+    var z0 = slice[0].z47, n0 = slice[0].nifty500;
+    chart.data.labels = slice.map(function (p) { return p.date; });
+    chart.data.datasets[0].data = slice.map(function (p) { return p.z47 / z0 * 100; });
+    chart.data.datasets[1].data = slice.map(function (p) { return p.nifty500 / n0 * 100; });
+    chart.data.datasets.forEach(function (ds) { ds.pointRadius = 3; ds.pointHoverRadius = 5; });
+    var o = chart.options;
+    o.scales.x.ticks.callback = function (v) { return dayLabel(this.getLabelForValue(v), false); };
+    o.scales.x.ticks.maxTicksLimit = slice.length;
+    o.plugins.tooltip.callbacks.title = function (items) { return dayLabel(items[0].label, true); };
+    chart.update();
+    var rr = rangeReturns(d, range);
+    setPill("chart-z47-pct", rr.z47);
+    setPill("chart-nifty-pct", rr.nifty);
+  }
+  function addChartMenu(d) {
+    var row = document.querySelector(".chart-tenure-links:not(.top-movers)");
+    if (!row) return;
+    // Track every plain-tab switch (01-performance renders those).
+    $all("[data-z47-range]", row).forEach(function (a) {
+      a.addEventListener("click", function () { currentRange = a.getAttribute("data-z47-range"); });
+    });
+    var act = row.querySelector("[data-z47-range].is-active");
+    if (act) currentRange = act.getAttribute("data-z47-range");
+    buildMenu(row, "data-z47-range", CHART_MENU, "1D – 6M", function (k) {
+      var tab = row.querySelector('[data-z47-range="' + k + '"]');
+      if (tab) { tab.click(); }                    // 1M / 3M / 6M: 01-performance renders it
+      else {
+        $all("[data-z47-range]").forEach(function (x) { x.classList.remove("is-active"); });
+        renderShortRange(d, k);
+      }
+      currentRange = k;
+    });
+  }
+  function addMoversMenu() {
+    var row = document.querySelector(".chart-tenure-links.top-movers");
+    if (!row) return;
+    buildMenu(row, "data-z47-period", MOVERS_MENU, "1M – 6M", function (k) {
+      var tab = row.querySelector('[data-z47-period="' + k + '"]');
+      if (tab) tab.click();
+    });
+  }
+
+  /* ----------------------- 4. END-VALUE LABELS ---------------------------- */
+  // Draws each line's last value at its end. Only on the performance chart and its export.
+  var endLabels = {
+    id: "z47xEndLabels",
+    afterDatasetsDraw: function (chart) {
+      var cv = chart.canvas;
+      var isExport = cv && cv.getAttribute("data-z47x-export") === "1";
+      if (!cv || (cv.id !== "z47-chart" && !isExport)) return;
+      var area = chart.chartArea, g = chart.ctx;
+      var fs = isExport ? 30 : 12, padX = isExport ? 12 : 5, padY = isExport ? 7 : 3, gap = isExport ? 12 : 6;
+      var font = "600 " + fs + "px " + getComputedStyle(document.body).fontFamily;
+      var h = fs + padY * 2;
+      var items = [];
+      chart.data.datasets.forEach(function (ds, i) {
+        var meta = chart.getDatasetMeta(i);
+        var v = ds.data[ds.data.length - 1];
+        if (meta.hidden || !meta.data.length || !fin(v)) return;
+        var pt = meta.data[meta.data.length - 1];
+        items.push({ x: pt.x, y: pt.y, text: v.toFixed(1), color: ds.borderColor });
+      });
+      if (!items.length) return;
+      g.save();
+      g.font = font;
+      // Higher line's label sits above its end point, lower line's below, so they never cover each other.
+      items.sort(function (a, b) { return a.y - b.y; });
+      items.forEach(function (it, idx) {
+        var w = g.measureText(it.text).width + padX * 2;
+        var top = idx === 0 ? it.y - gap - h : it.y + gap;
+        top = Math.max(area.top, Math.min(area.bottom - h, top));
+        var left = Math.min(it.x, area.right) - w;
+        g.fillStyle = it.color;
+        g.beginPath();
+        if (g.roundRect) g.roundRect(left, top, w, h, 3); else g.rect(left, top, w, h);
+        g.fill();
+        g.fillStyle = "#fff";
+        g.textBaseline = "middle";
+        g.fillText(it.text, left + padX, top + h / 2 + 0.5);
+      });
+      g.restore();
+    }
+  };
+  function registerEndLabels() {
+    if (window.Chart && Chart.register && !window.__Z47X_END_LABELS) {
+      Chart.register(endLabels);
+      window.__Z47X_END_LABELS = true;
+      var c = chartInstance();
+      if (c) c.update("none");
+    }
+  }
+
+  /* --------------------------- 3. DOWNLOAD -------------------------------- */
   addStyle("z47x-dl-css",
-    ".z47x-dl{position:relative;display:flex;}"
-  + ".z47x-dl > .chart-tabs{height:100%;cursor:pointer;background:#fff;box-shadow:inset 0 0 0 1px #cfcfcf;}"
-  + ".z47x-dl > .chart-tabs:hover{background:#fdeddd;}"
-  + ".z47x-dl__menu{position:absolute;right:0;top:calc(100% + 6px);z-index:20;min-width:180px;background:#fff;"
+    ".z47x-dl{position:relative;display:flex;align-items:center;margin-left:auto;}"
+  + ".z47x-dl .button_arrow{width:1rem;height:1rem;}"
+  + ".z47x-dl__menu{position:absolute;right:0;top:calc(100% + 6px);z-index:30;min-width:200px;background:#fff;"
   + "border:1px solid #cfcfcf;box-shadow:0 8px 24px rgba(0,0,0,.12);display:flex;flex-direction:column;}"
   + ".z47x-dl__menu[hidden]{display:none;}"
-  + ".z47x-dl__menu button{all:unset;cursor:pointer;padding:12px 16px;font:inherit;font-size:.95rem;color:#111;}"
+  + ".z47x-dl__menu button{all:unset;box-sizing:border-box;cursor:pointer;padding:12px 16px;font:inherit;font-size:.95rem;color:#111;}"
   + ".z47x-dl__menu button:hover,.z47x-dl__menu button:focus-visible{background:#fdeddd;}"
   + ".z47x-dl__menu button[disabled]{opacity:.5;cursor:progress;}");
 
@@ -179,8 +346,10 @@
   // Fixed-size offscreen chart, so the export looks the same from any device.
   function exportChartCanvas(d, range) {
     var live = chartInstance();
+    var dayTicks = !!SHORT_SESSIONS[range] || range === "1M";
     var c = document.createElement("canvas");
     c.width = 2800; c.height = 1160;
+    c.setAttribute("data-z47x-export", "1");
     var font = getComputedStyle(document.body).fontFamily;
     var ch = new Chart(c, {
       type: "line",
@@ -188,16 +357,16 @@
         labels: live.data.labels.slice(),
         datasets: live.data.datasets.map(function (ds) {
           return { label: ds.label, data: ds.data.slice(), borderColor: ds.borderColor, borderWidth: 3,
-                   pointRadius: 0, pointBackgroundColor: ds.borderColor, tension: 0.15 };
+                   pointRadius: SHORT_SESSIONS[range] ? 6 : 0, pointBackgroundColor: ds.borderColor, tension: 0.15 };
         })
       },
       options: {
         responsive: false, animation: false, devicePixelRatio: 1,
         plugins: { legend: { display: false }, tooltip: { enabled: false } },
         scales: {
-          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 9,
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: dayTicks ? 8 : 9,
                font: { family: font, size: 24 }, color: "#555",
-               callback: function (v) { return monthLabel(this.getLabelForValue(v)); } } },
+               callback: function (v) { var l = this.getLabelForValue(v); return dayTicks ? dayLabel(l, false) : monthLabel(l); } } },
           y: { grid: { color: "rgba(0,0,0,0.07)" }, ticks: { precision: 0, maxTicksLimit: 7, font: { family: font, size: 24 }, color: "#555" } }
         }
       }
@@ -214,7 +383,7 @@
       g.fillStyle = "#ffffff"; g.fillRect(0, 0, W, H);
       g.textBaseline = "alphabetic";
 
-      // Header: logo + title + range
+      // Header: logo + title + range, as-of on the right
       var y = P + 70;
       var x = P;
       if (logo && logo.naturalWidth) {
@@ -227,8 +396,8 @@
       var tw = g.measureText("vs NIFTY 500").width;
       g.fillStyle = "#555"; g.font = "400 44px " + font;
       g.fillText("·  " + (RANGE_LABELS[range] || range), x + tw + 28, y);
-      g.textAlign = "right"; g.fillStyle = "#555"; g.font = "400 36px " + font;
-      g.fillText("Data as of " + (d.meta.generated_at_ist || d.meta.data_as_of), W - P, y);
+      g.textAlign = "right"; g.fillStyle = "#111"; g.font = "500 40px " + font;
+      g.fillText(asOfText(d), W - P, y);
       g.textAlign = "left";
 
       // Key numbers
@@ -256,10 +425,10 @@
       g.drawImage(ex.canvas, P, cy, W - 2 * P, (W - 2 * P) * ex.canvas.height / ex.canvas.width);
       ex.chart.destroy();
 
-      // Footer
+      // Footer: source + download time
       g.fillStyle = "#e5e5e5"; g.fillRect(P, H - 170, W - 2 * P, 2);
       g.fillStyle = "#555"; g.font = "400 34px " + font;
-      g.fillText("Source: " + PAGE_URL_LABEL + "  ·  Downloaded " + istNow(), P, H - 110);
+      g.fillText("Source: Z47, " + PAGE_URL_LABEL + "  ·  Downloaded " + istNow(), P, H - 110);
       g.fillText("Rebased to 100 at the start of the period. For information only; not investment advice.", P, H - 60);
       return out;
     });
@@ -289,7 +458,7 @@
     return jsPdfLoad;
   }
   function download(d, kind, btn) {
-    var range = activeRange();
+    var range = currentRange;
     btn.disabled = true;
     return composeSnapshot(d, range).then(function (canvas) {
       if (kind === "png") {
@@ -305,21 +474,20 @@
     }).then(function () { btn.disabled = false; });
   }
   function addDownload(d) {
-    var links = document.querySelector(".chart-tenure-links");
-    var b1M = document.querySelector('[data-z47-range="1M"]');
-    if (!links || !b1M || links.querySelector(".z47x-dl")) return;
+    var badge = document.querySelector('.index-tab-pane[data-w-tab="Tab 1"] .live-badge') || document.querySelector(".live-badge");
+    if (!badge || document.querySelector('[data-z47="chart-download"]')) return;
     var wrap = document.createElement("div");
     wrap.className = "z47x-dl";
-    var btn = b1M.cloneNode(true);
-    ["id", "data-w-id", "data-z47-range", "data-tenure", "href"].forEach(function (a) { btn.removeAttribute(a); });
-    btn.classList.remove("is-active", "w--current");
+    var btn = document.createElement("a");
+    btn.href = "#";
+    btn.className = "button is-icon b2-orange-2";
     btn.setAttribute("role", "button");
-    btn.setAttribute("tabindex", "0");
     btn.setAttribute("aria-haspopup", "true");
     btn.setAttribute("aria-expanded", "false");
     btn.setAttribute("data-z47", "chart-download");
-    var label = btn.querySelector(".chart-tenure-text span") || btn.querySelector(".chart-tenure-text");
-    if (label) label.textContent = "Download ↓";
+    btn.title = "Download the chart for the selected period. " + asOfText(d) + ".";
+    btn.innerHTML = "<div>Download</div>"
+      + '<div class="button_arrow-wrap rotate"><div class="button_arrow">' + ARROW_SVG + "</div></div>";
     var menu = document.createElement("div");
     menu.className = "z47x-dl__menu";
     menu.hidden = true;
@@ -332,7 +500,7 @@
     }
     btn.addEventListener("click", function (e) { e.preventDefault(); toggle(menu.hidden); });
     btn.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(menu.hidden); }
+      if (e.key === " ") { e.preventDefault(); toggle(menu.hidden); }
     });
     $all("button", menu).forEach(function (m) {
       m.addEventListener("click", function () { download(d, m.getAttribute("data-kind"), m).then(function () { toggle(false); }); });
@@ -341,27 +509,81 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") toggle(false); });
     wrap.appendChild(btn);
     wrap.appendChild(menu);
-    links.appendChild(wrap);
+    badge.parentNode.insertBefore(wrap, badge);
+    badge.classList.add("z47x-hidden");
   }
 
-  /* ------------------------- 3. CHANGE LOG -------------------------------- */
+  /* -------------------- 5. SNAPSHOT: FIRST 7 + LOAD MORE ------------------- */
+  function addLoadMore(d) {
+    var pane = document.querySelector('.index-tab-pane[data-w-tab="Tab 1"]');
+    var grid = pane && pane.querySelector('[data-z47="constituents-body"]');
+    var host = grid && grid.closest(".constituent-live-prices");
+    var total = (d.constituents || []).length;
+    if (!host || total <= SNAPSHOT_ROWS || host.querySelector(".z47x-more")) return;
+    var head = host.querySelector(".live-prices-header");
+    var cols = head ? head.children.length : 7;
+    // 03-constituents-table.js paints the rows as flat grid cells (cols per row), possibly after this runs.
+    // CSS hides everything after row 7, so it holds whenever the table repaints.
+    addStyle("z47x-more-css",
+      '[data-z47x-rows="collapsed"] > :nth-child(n+' + (SNAPSHOT_ROWS * cols + 1) + "){display:none!important;}"
+    + ".z47x-more{display:flex;justify-content:center;margin-top:1.25rem;}"
+    + ".z47x-more[hidden]{display:none;}"
+    + ".z47x-more .advisory-card_loadmore.button.load-more{margin:0;gap:.75rem;}"
+    + ".z47x-more .advisory-card_loadmore.button.load-more:hover{background-color:var(--ai-report-swatches--ai-grey);color:#fff;}"
+    + ".z47x-more .button_arrow{width:1rem;height:1rem;}");
+    grid.setAttribute("data-z47x-rows", "collapsed");
+    var row = document.createElement("div");
+    row.className = "z47x-more";
+    row.innerHTML = '<a href="#" role="button" class="advisory-card_loadmore button load-more is-icon" data-z47="snapshot-more">'
+      + "<div>Load more</div>"
+      + '<div class="button_arrow-wrap rotate"><div class="button_arrow">' + ARROW_SVG + "</div></div></a>";
+    // The staging company search filters by hiding rows; while it has a query, show every match.
+    var expanded = false;
+    function sync() {
+      var input = host.querySelector(".z47-company-search input");
+      var open = expanded || !!(input && input.value.trim());
+      if (open) grid.removeAttribute("data-z47x-rows"); else grid.setAttribute("data-z47x-rows", "collapsed");
+      row.hidden = open;
+    }
+    ["input", "search", "keyup"].forEach(function (ev) { host.addEventListener(ev, sync); });
+    row.querySelector("a").addEventListener("click", function (e) {
+      e.preventDefault();
+      expanded = true;
+      sync();
+    });
+    var after = host.querySelector(".constituent-live-prices-wrapper") || grid;
+    after.parentNode.insertBefore(row, after.nextSibling);
+  }
+
+  /* -------------------- 6. CHANGE LOG + WHY TOOLTIP ----------------------- */
   addStyle("z47x-log-css",
-    ".z47x-log{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem;}"
+    ".z47x-log{position:relative;display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem;}"
   + ".z47x-log__intro{margin:0;color:#555;}"
   + ".z47x-log__track{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:8px;border-top:2px solid #cfcfcf;}"
   + ".z47x-log__month{flex:0 0 260px;scroll-snap-align:start;padding:0 20px 0 0;position:relative;}"
   + ".z47x-log__month::before{content:'';position:absolute;top:-8px;left:0;width:14px;height:14px;border-radius:50%;background:" + Z47_COLOR + ";}"
   + ".z47x-log__label{padding-top:18px;font-weight:600;font-size:1.05rem;}"
-  + ".z47x-log__event{margin-top:12px;padding:12px 14px;background:#fff7e8;display:flex;flex-direction:column;gap:6px;}"
-  + ".z47x-log__meta{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:#777;}"
+  + ".z47x-log__event{position:relative;margin-top:12px;padding:12px 14px;background:#fff7e8;display:flex;flex-direction:column;gap:6px;"
+  + "border:1px solid transparent;transition:border-color .15s ease,box-shadow .15s ease;}"
+  + ".z47x-log__event[data-why]{cursor:help;}"
+  + ".z47x-log__event[data-why]:hover,.z47x-log__event[data-why]:focus-visible,.z47x-log__event.is-tip{border-color:" + Z47_COLOR + ";box-shadow:0 4px 14px rgba(238,90,36,.15);outline:none;}"
+  + ".z47x-log__meta{display:flex;justify-content:space-between;gap:8px;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:#777;}"
+  + ".z47x-log__info{flex:0 0 auto;width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;font:600 11px/13px sans-serif;"
+  + "text-align:center;text-transform:none;letter-spacing:0;color:" + Z47_COLOR + ";}"
   + ".z47x-log__row{display:flex;gap:8px;align-items:baseline;font-size:.95rem;}"
   + ".z47x-log__sign{font-weight:700;width:12px;flex:0 0 12px;}"
   + ".z47x-log__row.is-in .z47x-log__sign{color:" + POS_COLOR + ";}"
   + ".z47x-log__row.is-out .z47x-log__sign{color:" + NEG_COLOR + ";}"
   + ".z47x-log__row.is-out .z47x-log__name{color:#666;}"
   + ".z47x-log__sector{color:#777;font-size:.85rem;}"
-  + ".z47x-log__why{font-size:.85rem;color:#555;}"
   + ".z47x-log a{color:inherit;text-decoration:none;}.z47x-log a:hover{text-decoration:underline;}"
+  + ".z47x-tip{position:absolute;z-index:40;width:320px;max-width:calc(100% - 8px);padding:14px 16px;background:#2b2118;color:#fff;"
+  + "font-size:.9rem;line-height:1.45;box-shadow:0 10px 30px rgba(0,0,0,.25);pointer-events:none;"
+  + "opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;}"
+  + ".z47x-tip.is-on{opacity:1;transform:none;}"
+  + ".z47x-tip__head{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#ffb27f;margin-bottom:6px;}"
+  + ".z47x-tip__note{margin-top:8px;font-size:.8rem;color:#cfc4ba;}"
+  + "@media(prefers-reduced-motion:reduce){.z47x-tip{transition:none;transform:none;}}"
   + "@media(max-width:479px){.z47x-log__month{flex-basis:230px;}}");
 
   function asList(v) { return v == null ? [] : (Array.isArray(v) ? v : [v]); }
@@ -402,10 +624,11 @@
             })).join("");
             var kind = e.event_type === "batch_swap" ? "Rebalance" : "Replacement";
             var why = CHANGE_REASONS[e.effective_date];
-            return '<div class="z47x-log__event">'
-              + '<div class="z47x-log__meta">' + esc(dayLabel(e.effective_date, false)) + " · " + kind + "</div>"
+            var head = dayLabel(e.effective_date, true) + " · " + kind;
+            return '<div class="z47x-log__event"' + (why ? ' tabindex="0" data-why="' + esc(why) + '" data-head="' + esc(head) + '" aria-describedby="z47x-tip"' : "") + ">"
+              + '<div class="z47x-log__meta"><span>' + esc(dayLabel(e.effective_date, false)) + " · " + kind + "</span>"
+              + (why ? '<span class="z47x-log__info" aria-hidden="true">i</span>' : "") + "</div>"
               + rows
-              + (why ? '<div class="z47x-log__why">' + esc(why) + "</div>" : "")
               + "</div>";
           }).join("")
         + "</div>";
@@ -416,32 +639,82 @@
     wrap.setAttribute("data-z47", "change-log");
     wrap.innerHTML =
         '<div class="index-header-wrap"><h4 class="index-heading ai-heading-h4 ai-color-brown-3 u-text-capitalize">Index changes</h4></div>'
-      + '<p class="z47x-log__intro">Companies added to and removed from the index, by month.</p>'
-      + '<div class="z47x-log__track" role="list">' + html + "</div>";
+      + '<p class="z47x-log__intro">Companies added to and removed from the index, by month. Hover over or tap a change to see why it was made.</p>'
+      + '<div class="z47x-log__track" role="list">' + html + "</div>"
+      + '<div class="z47x-tip" id="z47x-tip" role="tooltip" aria-hidden="true"></div>';
     disclaimer.parentNode.insertBefore(wrap, disclaimer);
     var track = wrap.querySelector(".z47x-log__track");
     track.scrollLeft = track.scrollWidth;   // latest month in view on narrow screens
+    wireTips(wrap, track);
   }
+  // One shared tooltip, positioned under the hovered/focused/tapped change card.
+  function wireTips(wrap, track) {
+    var tip = wrap.querySelector(".z47x-tip");
+    var current = null;
+    function show(card) {
+      if (current && current !== card) current.classList.remove("is-tip");
+      current = card;
+      card.classList.add("is-tip");
+      tip.innerHTML = '<div class="z47x-tip__head">' + esc(card.getAttribute("data-head")) + "</div>"
+        + "<div>" + esc(card.getAttribute("data-why")) + "</div>"
+        + '<div class="z47x-tip__note">' + esc(CHANGE_NOTE) + "</div>";
+      var w = wrap.getBoundingClientRect(), c = card.getBoundingClientRect();
+      var left = Math.max(0, Math.min(c.left - w.left, w.width - tip.offsetWidth));
+      tip.style.left = left + "px";
+      tip.style.top = (c.bottom - w.top + 8) + "px";
+      tip.classList.add("is-on");
+      tip.setAttribute("aria-hidden", "false");
+    }
+    function hide() {
+      if (current) current.classList.remove("is-tip");
+      current = null;
+      tip.classList.remove("is-on");
+      tip.setAttribute("aria-hidden", "true");
+    }
+    $all(".z47x-log__event[data-why]", wrap).forEach(function (card) {
+      card.addEventListener("mouseenter", function () { show(card); });
+      card.addEventListener("mouseleave", hide);
+      card.addEventListener("focus", function () { show(card); });
+      card.addEventListener("blur", hide);
+      // Tap on touch screens toggles. A tap also fires mouseenter/focus before click,
+      // so whether it was open is read at pointerdown. Links inside the card still work.
+      var openAtDown = false;
+      card.addEventListener("pointerdown", function () { openAtDown = current === card; });
+      card.addEventListener("click", function (e) {
+        if (e.target.closest("a")) return;
+        if (openAtDown && e.pointerType && e.pointerType !== "mouse") hide(); else show(card);
+      });
+    });
+    track.addEventListener("scroll", hide, { passive: true });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") hide(); });
+    document.addEventListener("click", function (e) { if (!e.target.closest(".z47x-log__event")) hide(); });
+  }
+
+  /* ------------------------- 7. DISCLAIMER -------------------------------- */
+  // Desktop: keep "Disclaimer" on the left, cap the text column (~70 characters a line) and pin it right.
+  addStyle("z47x-disc-css",
+    "@media(min-width:992px){"
+  + ".index-tab-pane .disclaimer-wrapper .disclaimer-header{flex:1 1 auto;}"
+  + ".index-tab-pane .disclaimer-wrapper .disclaimer-pointer-wrap{flex:0 1 44rem;width:auto;max-width:44rem;margin-left:auto;}"
+  + "}");
 
   /* ------------------------------- INIT ----------------------------------- */
   var started = false;
   function start(d) {
     if (started || !d || !d.index || !Array.isArray(d.history) || d.history.length < 7) return;
     started = true;
-    guard("top bar", function () { paintBar(d); });
+    guard("end labels", registerEndLabels);
+    guard("chart range menu", function () { addChartMenu(d); });
+    guard("top movers menu", addMoversMenu);
     guard("download", function () { addDownload(d); });
+    guard("load more", function () { addLoadMore(d); });
     guard("change log", function () { addChangeLog(d); });
   }
-  function fail() { if (!started && bar) bar.hidden = true; }
 
   window.addEventListener("z47:performance-state", function (e) {
     if (e.detail === "ready") start(window.__Z47);
-    else if (e.detail === "error") fail();
   });
-  function boot() {
-    guard("top bar mount", mountBar);
-    if (window.__Z47) start(window.__Z47);
-  }
+  function boot() { if (window.__Z47 && chartInstance()) start(window.__Z47); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
