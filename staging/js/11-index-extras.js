@@ -641,7 +641,9 @@
     wrap.className = "z47x-log";
     wrap.setAttribute("data-z47", "change-log");
     wrap.innerHTML =
-        '<div class="index-header-wrap"><h4 class="index-heading ai-heading-h4 ai-color-brown-3 u-text-capitalize">Index changes</h4></div>'
+        // Same "without-gap" header variant as the page's other headings (no left padding).
+        '<div data-wf--index-page-header--variant="without-gap" class="index-header-wrap">'
+      + '<h4 class="index-heading ai-heading-h4 ai-color-brown-3 u-text-capitalize w-variant-62a05fcb-f9c0-f157-e193-6bdcbe0e623c">Index changes</h4></div>'
       + '<p class="z47x-log__intro">Companies added to and removed from the index, by month. Hover over or tap a change to see why it was made.</p>'
       + '<div class="z47x-log__track" role="list">' + html + "</div>"
       + '<div class="z47x-tip" id="z47x-tip" role="tooltip" aria-hidden="true"></div>';
