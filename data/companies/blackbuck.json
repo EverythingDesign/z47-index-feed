@@ -4,13 +4,13 @@
   "name": "BlackBuck",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/BLACKBUCK/",
-  "mcap_cr": 9750.0,
+  "mcap_cr": 9747.0,
   "price": 535.0,
   "high": 720.0,
   "low": 495.0,
-  "pe": 52.2,
-  "roce": 13.1,
-  "roe": 12.5,
+  "pe": 53.0,
+  "roce": 12.8,
+  "roe": 12.2,
   "about": "Incorporated in 2015, Zinka Logistics Solutions Ltd provides a digital trucking platform for payments, telematics, loads marketplace, and vehicle financing services[1]",
   "website": "http://www.blackbuck.com",
   "website_label": "blackbuck.com",
@@ -21,15 +21,14 @@
   "screener_id": "1285151",
   "ratios_ok": 6,
   "daily_pct": -0.35,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/BLACKBUCK/",
-  "ratios_source_url": "https://www.screener.in/company/BLACKBUCK/",
+  "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
-      "Mar 2020",
       "Mar 2021",
       "Mar 2022",
       "Mar 2023",
@@ -42,13 +41,12 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "2,230",
-          "853",
-          "767",
-          "668",
-          "296",
-          "422",
-          "641"
+          "867",
+          "119",
+          "176",
+          "297",
+          "427",
+          "652"
         ]
       },
       {
@@ -56,48 +54,44 @@
         "label": "Sales growth",
         "values": [
           "",
-          "-62%",
-          "-10%",
-          "-13%",
-          "-56%",
-          "+42%",
-          "+52%"
+          "-86%",
+          "+47%",
+          "+69%",
+          "+44%",
+          "+53%"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "2,644",
-          "1,046",
-          "1,050",
-          "953",
-          "454",
-          "331",
-          "472"
+          "1,066",
+          "350",
+          "407",
+          "455",
+          "333",
+          "485"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "-414",
-          "-192",
-          "-283",
-          "-285",
+          "-200",
+          "-231",
+          "-232",
           "-158",
-          "91",
-          "169"
+          "93",
+          "167"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "-19%",
           "-23%",
-          "-37%",
-          "-43%",
+          "-194%",
+          "-132%",
           "-53%",
           "22%",
           "26%"
@@ -107,64 +101,59 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "54",
-          "27",
-          "36",
-          "20",
-          "-8",
-          "-309",
-          "57"
+          "26",
+          "-17",
+          "-34",
+          "-7",
+          "-308",
+          "59"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "76",
           "57",
-          "31",
-          "12",
+          "21",
+          "4",
           "3",
-          "3",
-          "3"
+          "4",
+          "6"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "9",
           "11",
           "15",
           "20",
           "25",
           "34",
-          "52"
+          "53"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-446",
-          "-234",
-          "-293",
-          "-297",
+          "-241",
+          "-284",
+          "-290",
           "-194",
-          "-254",
-          "171"
+          "-253",
+          "167"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-96%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "-97%",
           "4%"
         ]
       },
@@ -172,43 +161,40 @@
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-446",
-          "-234",
-          "-293",
-          "-297",
+          "-241",
+          "-285",
+          "-290",
           "-194",
           "-9",
-          "164"
+          "160"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-44,109.90",
-          "-23,136.63",
-          "-29,051.49",
-          "-29,420.79",
-          "-19,257.43",
-          "-0.51",
-          "9.01"
+          "-23,904.95",
+          "-28,174.26",
+          "-28,762.38",
+          "-19,202.97",
+          "-0.49",
+          "8.82"
         ]
       },
       {
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%"
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/BLACKBUCK/"
+    "source_url": "https://www.screener.in/company/BLACKBUCK/consolidated/"
   },
   "growth": {
     "cards": [
@@ -229,7 +215,7 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": -1.0
+            "value": 55.0
           },
           {
             "key": "ttm",
@@ -260,7 +246,7 @@
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": -51.0
+            "value": -52.0
           }
         ]
       },
@@ -307,12 +293,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 14.0
+            "value": 13.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 13.0
+            "value": 12.0
           }
         ]
       }
@@ -458,7 +444,7 @@
       ]
     }
   },
-  "generated_at": "2026-11-04T23:57:15.183721+05:30",
-  "generated_at_ist": "04 Nov 2026, 23:57 IST",
+  "generated_at": "2026-11-05T08:11:06.151640+05:30",
+  "generated_at_ist": "05 Nov 2026, 08:11 IST",
   "source": "screener"
 }
