@@ -4,13 +4,13 @@
   "name": "Pine Labs",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/PINELABS/",
-  "mcap_cr": 18672.0,
+  "mcap_cr": 18664.0,
   "price": 162.0,
   "high": 284.0,
   "low": 135.0,
-  "pe": 82.6,
-  "roce": 4.36,
-  "roe": 2.96,
+  "pe": 115.0,
+  "roce": 4.15,
+  "roe": 2.46,
   "about": "Incorporated in 1998, Pine Labs is a leading Indian merchant commerce platform that provides point-of-sale (POS) solutions, payment processing, and merchant financing services.[1]",
   "website": "http://www.pinelabs.com",
   "website_label": "pinelabs.com",
@@ -21,13 +21,13 @@
   "screener_id": "1285758",
   "ratios_ok": 6,
   "daily_pct": 2.45,
-  "screener_consolidated": false,
-  "financial_basis": "standalone",
-  "financial_source_url": "https://www.screener.in/company/PINELABS/",
-  "ratios_source_url": "https://www.screener.in/company/PINELABS/",
+  "screener_consolidated": true,
+  "financial_basis": "consolidated",
+  "financial_source_url": "https://www.screener.in/company/PINELABS/consolidated/",
+  "ratios_source_url": "https://www.screener.in/company/PINELABS/consolidated/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": false,
+    "consolidated": true,
     "periods": [
       "Mar 2020",
       "Mar 2021",
@@ -42,13 +42,13 @@
         "key": "sales",
         "label": "Sales",
         "values": [
-          "664",
-          "650",
+          "848",
+          "670",
           "932",
-          "1,281",
-          "1,333",
-          "1,597",
-          "1,926"
+          "1,598",
+          "1,770",
+          "2,274",
+          "2,711"
         ]
       },
       {
@@ -56,159 +56,159 @@
         "label": "Sales growth",
         "values": [
           "",
-          "-2%",
-          "+43%",
-          "+37%",
-          "+4%",
-          "+20%",
-          "+21%"
+          "-21%",
+          "+39%",
+          "+71%",
+          "+11%",
+          "+29%",
+          "+19%"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "606",
-          "552",
+          "760",
+          "560",
           "820",
-          "1,130",
-          "1,230",
-          "1,421",
-          "1,650"
+          "1,592",
+          "1,794",
+          "2,056",
+          "2,352"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "58",
-          "98",
+          "87",
+          "110",
           "112",
-          "151",
-          "104",
-          "177",
-          "276"
+          "5",
+          "-25",
+          "218",
+          "358"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "9%",
-          "15%",
+          "10%",
+          "16%",
           "12%",
-          "12%",
-          "8%",
-          "11%",
-          "14%"
+          "0.3%",
+          "-1.4%",
+          "10%",
+          "13%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "14",
-          "33",
+          "18",
+          "13",
           "25",
-          "47",
-          "42",
-          "143",
-          "170"
+          "56",
+          "55",
+          "16",
+          "133"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
-          "16",
+          "18",
           "22",
           "24",
-          "34",
-          "58",
-          "70",
-          "70"
+          "36",
+          "64",
+          "79",
+          "84"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
-          "102",
-          "183",
+          "155",
+          "175",
           "189",
-          "239",
-          "328",
-          "213",
-          "197"
+          "315",
+          "363",
+          "292",
+          "270"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-46",
-          "-74",
+          "-68",
           "-74",
           "-75",
-          "-240",
-          "36",
-          "179"
+          "-289",
+          "-398",
+          "-136",
+          "137"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "-27%",
+          "-30%",
           "-25%",
           "-70%",
-          "-25%",
-          "-22%",
-          "22%",
-          "16%"
+          "-8%",
+          "-14%",
+          "7%",
+          "18%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-33",
+          "-47",
           "-56",
           "-23",
-          "-56",
-          "-187",
-          "28",
-          "150"
+          "-265",
+          "-342",
+          "-145",
+          "113"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-0.46",
+          "-0.66",
           "-0.72",
           "-0.28",
-          "-0.67",
-          "-2.23",
-          "0.33",
-          "1.31"
+          "-3.17",
+          "-4.07",
+          "-1.73",
+          "0.98"
         ]
       },
       {
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%",
-          "-0%"
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/PINELABS/"
+    "source_url": "https://www.screener.in/company/PINELABS/consolidated/"
   },
   "growth": {
     "cards": [
@@ -224,12 +224,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 24.0
+            "value": 32.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 15.0
+            "value": 19.0
           },
           {
             "key": "ttm",
@@ -250,17 +250,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": 35.0
+            "value": 32.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 66.0
+            "value": 36.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 6466.0
+            "value": 485.0
           }
         ]
       },
@@ -302,17 +302,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": -1.0
+            "value": -4.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 0.0
+            "value": -3.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 3.0
+            "value": 2.0
           }
         ]
       }
@@ -410,7 +410,7 @@
       ]
     }
   },
-  "generated_at": "2026-11-05T23:50:36.256004+05:30",
-  "generated_at_ist": "05 Nov 2026, 23:50 IST",
+  "generated_at": "2026-11-06T08:03:01.021403+05:30",
+  "generated_at_ist": "06 Nov 2026, 08:03 IST",
   "source": "screener"
 }
