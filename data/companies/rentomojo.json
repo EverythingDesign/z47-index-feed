@@ -4,13 +4,13 @@
   "name": "Rentomojo",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/RENTOMOJO/",
-  "mcap_cr": 6032.0,
-  "price": 579.0,
+  "mcap_cr": 6158.0,
+  "price": 591.0,
   "high": 649.0,
   "low": 480.0,
-  "pe": 54.5,
-  "roce": null,
-  "roe": null,
+  "pe": 54.8,
+  "roce": 21.5,
+  "roe": 45.4,
   "about": "Incorporated in April 2012, Rentomojo \nLtd is a D2C online rental and subscription platform for furniture and appliances in India[1]",
   "bse_code": "544915",
   "bse_url": "https://www.bseindia.com/stock-share-price/rentomojo-ltd/RENTOMOJO/544915/",
@@ -18,7 +18,7 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=RENTOMOJO",
   "screener_id": "1286155",
   "ratios_ok": 6,
-  "daily_pct": -1.2,
+  "daily_pct": -1.1,
   "screener_consolidated": true,
   "financial_basis": "consolidated",
   "financial_source_url": "https://www.screener.in/company/RENTOMOJO/consolidated/",
@@ -27,6 +27,7 @@
     "unit": "Rs. Crores",
     "consolidated": true,
     "periods": [
+      "Mar 2025",
       "Mar 2026"
     ],
     "rows": [
@@ -34,6 +35,7 @@
         "key": "sales",
         "label": "Sales",
         "values": [
+          "266",
           "387"
         ]
       },
@@ -41,41 +43,47 @@
         "key": "sales_growth",
         "label": "Sales growth",
         "values": [
-          ""
+          "",
+          "+46%"
         ]
       },
       {
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "228"
+          "151",
+          "224"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "159"
+          "114",
+          "163"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "41%"
+          "43%",
+          "42%"
         ]
       },
       {
         "key": "other_income",
         "label": "Other Income",
         "values": [
-          "5"
+          "4",
+          "1"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "27",
           "25"
         ]
       },
@@ -83,6 +91,7 @@
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
+          "49",
           "70"
         ]
       },
@@ -90,6 +99,7 @@
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
+          "43",
           "68"
         ]
       },
@@ -97,6 +107,7 @@
         "key": "tax",
         "label": "Tax %",
         "values": [
+          "-0%",
           "-54%"
         ]
       },
@@ -104,6 +115,7 @@
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
+          "43",
           "104"
         ]
       },
@@ -111,6 +123,7 @@
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
+          "17.38",
           "30.22"
         ]
       },
@@ -118,7 +131,8 @@
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%"
+          "-0%",
+          "-0%"
         ]
       }
     ],
@@ -148,7 +162,7 @@
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": null
+            "value": 46.0
           }
         ]
       },
@@ -174,7 +188,7 @@
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": null
+            "value": 157.0
           }
         ]
       },
@@ -226,7 +240,7 @@
           {
             "key": "last",
             "label": "Last Year:",
-            "value": null
+            "value": 45.0
           }
         ]
       }
@@ -332,8 +346,8 @@
       ]
     }
   },
-  "generated_at": "2026-11-07T07:42:03.154857+05:30",
-  "generated_at_ist": "07 Nov 2026, 07:42 IST",
+  "generated_at": "2026-11-10T02:49:43.109667+05:30",
+  "generated_at_ist": "10 Nov 2026, 02:49 IST",
   "source": "screener",
   "website": "https://www.rentomojo.com/",
   "website_label": "rentomojo.com"
