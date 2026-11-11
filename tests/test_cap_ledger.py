@@ -178,6 +178,18 @@ class BuildTests(unittest.TestCase):
         _, ledger, _ = self.build((2026, 11, 3, 16, 15), prices, n500_prev=21400.0)
         self.assertEqual(ledger[-1]['effective_date'], '2026-11-02')
 
+    def test_nse_holiday_is_not_a_session(self):
+        # 10 Nov 2026 (Diwali Balipratipada): Yahoo dates a live quote on the holiday and the
+        # US-listed names move, but NSE is shut, so the history must stop at 9 Nov.
+        prices = {'2026-10-23': {}, '2026-11-09': {'ETERNAL.NS': 105.0}, '2026-11-10': {'FRSH': 110.0}}
+        for now in ((2026, 11, 10, 14, 0), (2026, 11, 11, 7, 30)):
+            out, _, rows = self.build(now, prices, n500_prev=21500.0)
+            self.assertEqual(out['history'][-1]['date'], '2026-11-09')
+            self.assertNotIn('2026-11-10', [r['date'] for r in rows])
+            self.assertAlmostEqual(out['index']['value'], out['history'][-1]['z47'], places=2)
+            self.assertIsNotNone(out['index']['value_mcap'])
+            self.assertFalse(out['meta']['market_open'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -84,6 +84,25 @@ class CompanyFixes(unittest.TestCase):
         self.assertEqual(out['refresh_status'],'partial')
         self.assertEqual(new['periods']['Max']['price'],[])
 
+    def test_yahoo_history_behind_the_cache_is_fetched_again(self):
+        import tempfile
+        from datetime import timedelta
+        today=datetime.now(chart.IST).date()
+        day=lambda n:(today-timedelta(days=n)).isoformat()
+        row=lambda d:{'slug':'frsh','ticker':'FRSH','source':'yahoo','periods':{'1Y':{'price':[[d,11.88]]}}}
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp)
+            (out/'frsh-chart.json').write_text(json.dumps(row(day(1))))
+            for fetches,status in (([row(day(2)),row(day(1))],'ok'),([row(day(2)),row(day(2))],'cached')):
+                with patch.object(chart,'OUT_DIR',out), patch.object(chart,'YAHOO_RETRY_WAIT_S',0), \
+                     patch.object(chart,'load_company_meta',return_value=[{'slug':'frsh','ticker':'FRSH'}]), \
+                     patch.object(chart,'build_one',side_effect=fetches) as build, \
+                     patch.object(sys,'argv',['build_company_chart.py','--sleep','0']), patch('builtins.print'):
+                    chart.main()
+                self.assertEqual(build.call_count,2)
+                saved=json.loads((out/'frsh-chart.json').read_text())
+                self.assertEqual((saved['refresh_status'],saved['data_as_of']),(status,day(1)))
+
     def test_nasdaq_builder_keeps_unavailable_financial_schema(self):
         provider=SimpleNamespace(nasdaq_live=lambda *a, **k: {'price':12.73}, usd_inr_rate=lambda:95)
         with patch.dict(sys.modules, {'stockanalysis_nasdaq':provider}), patch.object(hero,'yahoo_fallback',return_value={}):

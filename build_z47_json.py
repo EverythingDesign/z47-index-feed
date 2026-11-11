@@ -91,6 +91,15 @@ N500_BASE = 19418.40            # ^CRSLDX on 2024-01-02 (index = 100)
 N500_YF   = "^CRSLDX"
 BASE_DATE = "2024-01-02"        # rebase date (z47 = 100)
 
+# NSE equity trading holidays on weekdays. Yahoo still returns a live quote on these days
+# (the previous close, plus the US names' moves), so without this list the holiday became a
+# session of its own in the history. Add next year's list each December.
+NSE_HOLIDAYS = frozenset({
+    "2026-01-26", "2026-03-03", "2026-03-26", "2026-03-31", "2026-04-03", "2026-04-14",
+    "2026-05-01", "2026-05-28", "2026-06-26", "2026-09-14", "2026-10-02", "2026-10-20",
+    "2026-11-10", "2026-11-24", "2026-12-25",
+})
+
 # Capped-index resets (frozen prices, shares and units). History through the last
 # reset's price date is preserved; later sessions are valued from its units.
 CAP_LEDGER = os.path.join(ROOT, "data", "rebalances", "cap-ledger.json")
@@ -940,7 +949,8 @@ def main():
     if calendar and calendar[-1] < today_iso and n500_meta.get("regularMarketPrice"):
         calendar.append(today_iso)
 
-    calendar = sorted(set(calendar) | {ANCHOR_DATE})
+    # The live quotes are dated today_iso, so a holiday reaches the day counts above too.
+    calendar = sorted((set(calendar) - NSE_HOLIDAYS) | {ANCHOR_DATE})
     ff = {}
     for tk in tickers + held:
         series = dict(fetched.get(tk, ({}, []))[1])
@@ -1064,7 +1074,7 @@ def main():
     # ── Headline values + return summary ───────────────────────────────────
     last_day     = sessions[-1] if sessions else ANCHOR_DATE
     z47_now      = values[last_day][0] if sessions else base["level_fs"]
-    z47_mcap_now = values[today_iso][1] if today_iso in values else None
+    z47_mcap_now = values[last_day][1] if last_day in values else None
     z47_prev     = (values[sessions[-2]][0] if len(sessions) >= 2 else base["level_fs"]) if sessions else None
     daily_pct    = (z47_now / z47_prev - 1) * 100 if z47_prev else None
     weights_now  = cap_ledger.weights(entry, {tk: ff[tk].get(last_day) for tk in tickers}, fx_by_day.get(last_day))
@@ -1135,7 +1145,8 @@ def main():
             "index_weight_pct": r2(sum(c["index_weight_pct"] for c in members), 6),
         })
 
-    market_open = (now_ist.weekday() < 5 and _time(9, 15) <= now_ist.time() <= _time(15, 35))
+    market_open = (now_ist.weekday() < 5 and now_ist.date().isoformat() not in NSE_HOLIDAYS
+                   and _time(9, 15) <= now_ist.time() <= _time(15, 35))
 
     out = {
         "meta": {

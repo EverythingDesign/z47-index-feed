@@ -32,6 +32,9 @@ from zoneinfo import ZoneInfo
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 OUT_DIR = ROOT / "data" / "companies"
+# Yahoo's daily history for a US name sometimes ends a session early for a while (FRSH in
+# the 7 and 11 Nov 2026 morning runs). Ask once more after this wait before keeping the cache.
+YAHOO_RETRY_WAIT_S = 30
 
 CTX = ssl._create_unverified_context()
 UA = (
@@ -321,8 +324,14 @@ def main() -> int:
     for i, m in enumerate(metas, 1):
         row = build_one(m)
         path = OUT_DIR / f"{row['slug']}-chart.json"
-        rate_limited = row.get("rate_limited")
         previous = json.loads(path.read_text()) if path.exists() else None
+        old_latest = price_as_of(previous or {})
+        if row.get("source") == "yahoo" and old_latest and (price_as_of(row) or "") < old_latest:
+            print(f"[{i}/{len(metas)}] {row['ticker']:12} Yahoo history ends before the cached "
+                  f"{old_latest}; asking again in {YAHOO_RETRY_WAIT_S} s", flush=True)
+            time.sleep(YAHOO_RETRY_WAIT_S)
+            row = build_one(m)
+        rate_limited = row.get("rate_limited")
         row = retain_last_good(row, previous)
         path.write_text(json.dumps(row, ensure_ascii=False) + "\n")
         p1 = len((row.get("periods") or {}).get("1Y", {}).get("price") or [])
