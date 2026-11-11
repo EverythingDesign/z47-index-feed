@@ -43,7 +43,7 @@
   // DRAFT wording from the feed's internal notes. Needs Z47 sign-off before go-live.
   var CHANGE_LOG_FROM = "2026-06-16";
   var CHANGE_REASONS = {
-    "2026-06-16": "June 2026 review. Home First Finance and India Shelter Finance (both sub-scale housing finance lenders), Yatra Online and Niva Bupa left the index. Angel One and Affle joined, along with two recent listings: Amagi Media Labs (listed 21 Jan 2026) and Fractal Analytics (listed 16 Feb 2026).",
+    "2026-06-16": "June 2026 review. Home First Finance, India Shelter Finance, Yatra Online and Niva Bupa left the index. Angel One and Affle joined, along with two recent listings: Amagi Media Labs (listed 21 Jan 2026) and Fractal Analytics (listed 16 Feb 2026).",
     "2026-08-20": "August 2026 review, made for three new listings. Turtlemint, Shiprocket and Milky Mist joined at the 20 Aug close; SBI Card, MobiKwik and Unicommerce made way.",
     "2026-09-18": "Rentomojo joined after its listing and replaced Medi Assist.",
     "2026-10-05": "Moneyview joined after its listing and replaced Awfis.",
