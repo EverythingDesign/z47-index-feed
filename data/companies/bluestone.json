@@ -4,13 +4,13 @@
   "name": "BlueStone",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/BLUESTONE/",
-  "mcap_cr": 11722.0,
-  "price": 767.0,
+  "mcap_cr": 12215.0,
+  "price": 799.0,
   "high": 971.0,
   "low": 400.0,
-  "pe": 112.0,
-  "roce": 6.78,
-  "roe": 1.11,
+  "pe": 101.0,
+  "roce": 7.15,
+  "roe": 1.93,
   "about": "Incorporated in 2011, BlueStone Jewellery and Lifestyle Limited manufactures and provides diamond, gold, platinum and studded jewellery.[1]",
   "website": "http://www.bluestone.com",
   "website_label": "bluestone.com",
@@ -20,15 +20,20 @@
   "nse_url": "https://www.nseindia.com/get-quotes/equity?symbol=BLUESTONE",
   "screener_id": "1285596",
   "ratios_ok": 6,
-  "daily_pct": 3.99,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/BLUESTONE/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/BLUESTONE/consolidated/",
+  "daily_pct": 8.36,
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/BLUESTONE/",
+  "ratios_source_url": "https://www.screener.in/company/BLUESTONE/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2020",
+      "Mar 2021",
+      "Mar 2022",
+      "Mar 2023",
+      "Mar 2024",
       "Mar 2025",
       "Mar 2026"
     ],
@@ -37,8 +42,13 @@
         "key": "sales",
         "label": "Sales",
         "values": [
+          "255",
+          "245",
+          "461",
+          "771",
+          "1,266",
           "1,770",
-          "2,436"
+          "2,441"
         ]
       },
       {
@@ -46,6 +56,11 @@
         "label": "Sales growth",
         "values": [
           "",
+          "-4%",
+          "+89%",
+          "+67%",
+          "+64%",
+          "+40%",
           "+38%"
         ]
       },
@@ -53,23 +68,38 @@
         "key": "expenses",
         "label": "Expenses",
         "values": [
-          "1,694",
-          "2,049"
+          "273",
+          "261",
+          "1,697",
+          "826",
+          "1,212",
+          "1,692",
+          "2,047"
         ]
       },
       {
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
-          "76",
-          "388"
+          "-18",
+          "-16",
+          "-1,236",
+          "-55",
+          "53",
+          "78",
+          "395"
         ]
       },
       {
         "key": "opm",
         "label": "OPM %",
         "values": [
-          "4.3%",
+          "-7%",
+          "-7%",
+          "-268%",
+          "-7%",
+          "4.2%",
+          "4.4%",
           "16%"
         ]
       },
@@ -77,68 +107,108 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
+          "1",
+          "8",
+          "15",
+          "17",
+          "38",
           "58",
-          "46"
+          "49"
         ]
       },
       {
         "key": "interest",
         "label": "Interest",
         "values": [
+          "3",
+          "9",
+          "19",
+          "67",
+          "138",
           "208",
-          "211"
+          "210"
         ]
       },
       {
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
+          "4",
+          "13",
+          "22",
+          "62",
+          "95",
           "147",
-          "210"
+          "208"
         ]
       },
       {
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
-          "-222",
-          "13"
+          "-24",
+          "-31",
+          "-1,261",
+          "-167",
+          "-142",
+          "-219",
+          "26"
         ]
       },
       {
         "key": "tax",
         "label": "Tax %",
         "values": [
-          "0%",
-          "0%"
+          "-0%",
+          "-0%",
+          "1%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       },
       {
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
-          "-222",
-          "13"
+          "-24",
+          "-31",
+          "-1,268",
+          "-167",
+          "-142",
+          "-219",
+          "26"
         ]
       },
       {
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
-          "-62.91",
-          "0.97"
+          "-24.13",
+          "-31.48",
+          "-634.20",
+          "-78.24",
+          "-66.54",
+          "-62.21",
+          "1.71"
         ]
       },
       {
         "key": "dividend_payout",
         "label": "Dividend Payout %",
         "values": [
-          "0%",
-          "0%"
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%",
+          "-0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/BLUESTONE/consolidated/"
+    "source_url": "https://www.screener.in/company/BLUESTONE/"
   },
   "growth": {
     "cards": [
@@ -154,12 +224,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 58.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": 47.0
           },
           {
             "key": "ttm",
@@ -180,17 +250,17 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 23.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": 29.0
           },
           {
             "key": "ttm",
             "label": "TTM:",
-            "value": 164.0
+            "value": 177.0
           }
         ]
       },
@@ -237,12 +307,12 @@
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": -16.0
           },
           {
             "key": "last",
             "label": "Last Year:",
-            "value": 1.0
+            "value": 2.0
           }
         ]
       }
@@ -364,7 +434,7 @@
       ]
     }
   },
-  "generated_at": "2026-11-11T10:22:32.722737+05:30",
-  "generated_at_ist": "11 Nov 2026, 10:22 IST",
+  "generated_at": "2026-11-11T16:21:46.235733+05:30",
+  "generated_at_ist": "11 Nov 2026, 16:21 IST",
   "source": "screener"
 }
