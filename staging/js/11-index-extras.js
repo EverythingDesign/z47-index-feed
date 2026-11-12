@@ -7,7 +7,7 @@
      3. Download (PNG / PDF) in place of the LATEST UPDATE badge
      4. End-value labels on the chart lines
      5. Performance tab constituent snapshot: first 7 rows, then Load more
-     6. Constituent change log above the Constituents-tab disclaimer, with a "why" tooltip per change
+     6. Constituent change log above the Constituents-tab disclaimer, with a "why" tooltip per company
      7. Disclaimer: narrower text column, kept on the right (desktop)
 
    Reads the feed 01-performance.js already loaded (window.__Z47) and waits for its
@@ -39,15 +39,40 @@
 
   var SNAPSHOT_ROWS = 7;   // Performance tab: rows shown before "Load more"
 
-  // Change log: first effective date shown publicly, and the public "why" per change.
-  // DRAFT wording from the feed's internal notes. Needs Z47 sign-off before go-live.
+  // Change log: first effective date shown publicly, and the public "why" per company,
+  // by effective date and ticker. Wording from Girish, 12 Nov 2026.
   var CHANGE_LOG_FROM = "2026-06-16";
   var CHANGE_REASONS = {
-    "2026-06-16": "June 2026 review. Home First Finance, India Shelter Finance, Yatra Online and Niva Bupa left the index. Angel One and Affle joined, along with two recent listings: Amagi Media Labs (listed 21 Jan 2026) and Fractal Analytics (listed 16 Feb 2026).",
-    "2026-08-20": "August 2026 review, made for three new listings. Turtlemint, Shiprocket and Milky Mist joined at the 20 Aug close; SBI Card, MobiKwik and Unicommerce made way.",
-    "2026-09-18": "Rentomojo joined after its listing and replaced Medi Assist.",
-    "2026-10-05": "Moneyview joined after its listing and replaced Awfis.",
-    "2026-10-26": "Zetwerk joined the index in the B2B sector and replaced Turtlemint."
+    "2026-06-16": {
+      ANGELONE: "Added to capture the growing scale of digital broking and retail investing.",
+      AFFLE: "Added to expand exposure to AI-led advertising and consumer intelligence.",
+      AMAGI: "Added to represent global SaaS and cloud-based media infrastructure.",
+      FRACTAL: "Added to capture a category-leading enterprise AI and analytics platform.",
+      HOMEFIRST: "Reclassified as the index sharpened its focus on new-age fintech platforms.",
+      INDIASHLTR: "Refined lending exposure under updated index selection criteria.",
+      YATRA: "Rebalanced consumer-tech representation as the eligible universe expanded.",
+      NIVABUPA: "Excluded under revised VC-backed criteria, reflecting its strategic and PE-led ownership history."
+    },
+    "2026-08-20": {
+      TURTLEMINT: "Added to capture VC-backed digital insurance distribution.",
+      SHIPROCKET: "Added to represent a category-leading ecommerce infrastructure platform.",
+      MILKYMIST: "Added to broaden consumer exposure beyond digital platforms into scaled new-age brands.",
+      SBICARD: "Excluded under revised VC-backed criteria, given its traditional banking and PE ownership history.",
+      MOBIKWIK: "Fintech composition refined to reflect newer entrants and evolving index priorities.",
+      UNIECOM: "B2B technology representation reassessed under updated index selection criteria."
+    },
+    "2026-09-18": {
+      RENTOMOJO: "Added to introduce subscription-led consumer rentals and circular-economy exposure.",
+      MEDIASSIST: "Refined healthcare-services exposure under the index\u2019s new-age technology focus."
+    },
+    "2026-10-05": {
+      MONEYVIEW: "Added to strengthen exposure to digital lending and financial inclusion.",
+      AWFIS: "Rebalanced B2B exposure to accommodate newly eligible technology-led businesses."
+    },
+    "2026-10-26": {
+      ZETWERK: "Added to introduce technology-enabled manufacturing and industrial supply chains.",
+      TURTLEMINT: "Fell below the \u20b92,000 Cr market-cap threshold, prompting replacement."
+    }
   };
   var CHANGE_NOTE = "Value-neutral: the index level is unchanged on the day of the change.";
   // Names for companies no longer in the index (constituents[] only lists current members).
@@ -568,8 +593,9 @@
   + ".z47x-log__label{padding-top:18px;font-weight:600;font-size:1.05rem;}"
   + ".z47x-log__event{position:relative;margin-top:12px;padding:12px 14px;background:#fff7e8;display:flex;flex-direction:column;gap:6px;"
   + "border:1px solid transparent;transition:border-color .15s ease,box-shadow .15s ease;}"
-  + ".z47x-log__event[data-why]{cursor:help;}"
-  + ".z47x-log__event[data-why]:hover,.z47x-log__event[data-why]:focus-visible,.z47x-log__event.is-tip{border-color:" + Z47_COLOR + ";box-shadow:0 4px 14px rgba(238,90,36,.15);outline:none;}"
+  + ".z47x-log__row[data-why]{cursor:help;margin:0 -6px;padding:2px 6px;transition:background-color .15s ease;}"
+  + ".z47x-log__row[data-why]:hover,.z47x-log__row[data-why]:focus-visible,.z47x-log__row.is-tip{background:rgba(238,90,36,.12);outline:none;}"
+  + ".z47x-log__row .z47x-log__info{margin-left:auto;align-self:center;}"
   + ".z47x-log__meta{display:flex;justify-content:space-between;gap:8px;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:#777;}"
   + ".z47x-log__info{flex:0 0 auto;width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;font:600 11px/13px sans-serif;"
   + "text-align:center;text-transform:none;letter-spacing:0;color:" + Z47_COLOR + ";}"
@@ -620,17 +646,21 @@
       return '<div class="z47x-log__month" role="listitem">'
         + '<div class="z47x-log__label">' + monthLabel(m.key + "-01") + "</div>"
         + m.events.map(function (e) {
-            var rows = asList(e.added).map(function (t) {
-              return '<div class="z47x-log__row is-in"><span class="z47x-log__sign" aria-label="Added">+</span><span>' + nameHtml(t, true) + "</span></div>";
-            }).concat(asList(e.removed).map(function (t) {
-              return '<div class="z47x-log__row is-out"><span class="z47x-log__sign" aria-label="Removed">−</span><span>' + nameHtml(t, false) + "</span></div>";
-            })).join("");
             var kind = e.event_type === "batch_swap" ? "Rebalance" : "Replacement";
-            var why = CHANGE_REASONS[e.effective_date];
             var head = dayLabel(e.effective_date, true) + " · " + kind;
-            return '<div class="z47x-log__event"' + (why ? ' tabindex="0" data-why="' + esc(why) + '" data-head="' + esc(head) + '" aria-describedby="z47x-tip"' : "") + ">"
-              + '<div class="z47x-log__meta"><span>' + esc(dayLabel(e.effective_date, false)) + " · " + kind + "</span>"
-              + (why ? '<span class="z47x-log__info" aria-hidden="true">i</span>' : "") + "</div>"
+            var reasons = CHANGE_REASONS[e.effective_date] || {};
+            function row(t, added) {
+              var why = reasons[t];
+              return '<div class="z47x-log__row ' + (added ? "is-in" : "is-out") + '"'
+                + (why ? ' tabindex="0" data-why="' + esc(why) + '" data-head="' + esc(head) + '" aria-describedby="z47x-tip"' : "") + ">"
+                + '<span class="z47x-log__sign" aria-label="' + (added ? "Added" : "Removed") + '">' + (added ? "+" : "−") + "</span>"
+                + "<span>" + nameHtml(t, added) + "</span>"
+                + (why ? '<span class="z47x-log__info" aria-hidden="true">i</span>' : "") + "</div>";
+            }
+            var rows = asList(e.added).map(function (t) { return row(t, true); })
+              .concat(asList(e.removed).map(function (t) { return row(t, false); })).join("");
+            return '<div class="z47x-log__event">'
+              + '<div class="z47x-log__meta"><span>' + esc(dayLabel(e.effective_date, false)) + " · " + kind + "</span></div>"
               + rows
               + "</div>";
           }).join("")
@@ -644,7 +674,7 @@
         // Same "without-gap" header variant as the page's other headings (no left padding).
         '<div data-wf--index-page-header--variant="without-gap" class="index-header-wrap">'
       + '<h4 class="index-heading ai-heading-h4 ai-color-brown-3 u-text-capitalize w-variant-62a05fcb-f9c0-f157-e193-6bdcbe0e623c">Index changes</h4></div>'
-      + '<p class="z47x-log__intro">Companies added to and removed from the index, by month. Hover over or tap a change to see why it was made.</p>'
+      + '<p class="z47x-log__intro">Companies added to and removed from the index, by month. Hover over or tap a company to see why it was added or removed.</p>'
       + '<div class="z47x-log__track" role="list">' + html + "</div>"
       + '<div class="z47x-tip" id="z47x-tip" role="tooltip" aria-hidden="true"></div>';
     disclaimer.parentNode.insertBefore(wrap, disclaimer);
@@ -652,7 +682,7 @@
     track.scrollLeft = track.scrollWidth;   // latest month in view on narrow screens
     wireTips(wrap, track);
   }
-  // One shared tooltip, positioned under the hovered/focused/tapped change card.
+  // One shared tooltip, positioned under the hovered/focused/tapped company row.
   function wireTips(wrap, track) {
     var tip = wrap.querySelector(".z47x-tip");
     var current = null;
@@ -676,13 +706,13 @@
       tip.classList.remove("is-on");
       tip.setAttribute("aria-hidden", "true");
     }
-    $all(".z47x-log__event[data-why]", wrap).forEach(function (card) {
+    $all(".z47x-log__row[data-why]", wrap).forEach(function (card) {
       card.addEventListener("mouseenter", function () { show(card); });
       card.addEventListener("mouseleave", hide);
       card.addEventListener("focus", function () { show(card); });
       card.addEventListener("blur", hide);
       // Tap on touch screens toggles. A tap also fires mouseenter/focus before click,
-      // so whether it was open is read at pointerdown. Links inside the card still work.
+      // so whether it was open is read at pointerdown. Links inside the row still work.
       var openAtDown = false;
       card.addEventListener("pointerdown", function () { openAtDown = current === card; });
       card.addEventListener("click", function (e) {
@@ -692,7 +722,7 @@
     });
     track.addEventListener("scroll", hide, { passive: true });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") hide(); });
-    document.addEventListener("click", function (e) { if (!e.target.closest(".z47x-log__event")) hide(); });
+    document.addEventListener("click", function (e) { if (!e.target.closest(".z47x-log__row[data-why]")) hide(); });
   }
 
   /* ------------------------- 7. DISCLAIMER -------------------------------- */
