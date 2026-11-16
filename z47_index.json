@@ -1,16 +1,16 @@
 {
   "meta": {
-    "generated_at": "2026-11-16T10:00:55+05:30",
-    "generated_at_ist": "16 Nov 2026, 10:00 IST",
+    "generated_at": "2026-11-16T10:16:00+05:30",
+    "generated_at_ist": "16 Nov 2026, 10:16 IST",
     "market_open": true,
     "data_as_of": "2026-11-16",
     "pricing_mode": "scheduled_snapshot",
     "index_currency": "INR",
     "currency_methodology_effective_date": "2026-09-29",
     "usdinr": {
-      "value": 94.1,
-      "daily_pct": -0.14,
-      "as_of": "10:01 IST"
+      "value": 94.13,
+      "daily_pct": -0.11,
+      "as_of": "10:16 IST"
     },
     "base_date": "2024-01-02",
     "anchor_date": "2026-10-30",
@@ -35,29 +35,29 @@
     ]
   },
   "index": {
-    "value": 140.53,
-    "value_mcap": 152.55,
-    "daily_pct": 0.26,
+    "value": 140.16,
+    "value_mcap": 152.21,
+    "daily_pct": 0.09,
     "returns": {
-      "1M": 6.73,
-      "3M": 2.71,
-      "6M": 17.98,
-      "1Y": 1.98,
-      "YTD": 5.85,
-      "since_base": 40.53
+      "1M": 6.45,
+      "3M": 2.44,
+      "6M": 17.67,
+      "1Y": 1.71,
+      "YTD": 5.57,
+      "since_base": 40.16
     }
   },
   "benchmark": {
     "name": "NIFTY 500",
-    "value": 23820.3,
-    "indexed": 122.67,
+    "value": 23787.8,
+    "indexed": 122.5,
     "returns": {
-      "1M": 8.07,
-      "3M": 1.48,
-      "6M": 5.5,
-      "1Y": -0.56,
-      "YTD": -0.21,
-      "since_base": 22.67
+      "1M": 7.92,
+      "3M": 1.34,
+      "6M": 5.36,
+      "1Y": -0.7,
+      "YTD": -0.35,
+      "since_base": 22.5
     }
   },
   "history": [
@@ -3718,53 +3718,53 @@
     },
     {
       "date": "2026-11-02",
-      "z47": 130.006,
+      "z47": 129.9499,
       "nifty500": 114.5378
     },
     {
       "date": "2026-11-03",
-      "z47": 131.6869,
+      "z47": 131.6381,
       "nifty500": 115.9743
     },
     {
       "date": "2026-11-04",
-      "z47": 132.7307,
+      "z47": 132.6592,
       "nifty500": 117.2558
     },
     {
       "date": "2026-11-05",
-      "z47": 135.5435,
+      "z47": 135.4669,
       "nifty500": 119.6015
     },
     {
       "date": "2026-11-06",
-      "z47": 135.0181,
+      "z47": 134.9465,
       "nifty500": 120.7975
     },
     {
       "date": "2026-11-09",
-      "z47": 135.7486,
+      "z47": 135.6579,
       "nifty500": 121.3643
     },
     {
       "date": "2026-11-11",
-      "z47": 136.5467,
+      "z47": 136.4317,
       "nifty500": 122.4576
     },
     {
       "date": "2026-11-12",
-      "z47": 139.4681,
+      "z47": 139.345,
       "nifty500": 122.903
     },
     {
       "date": "2026-11-13",
-      "z47": 140.1647,
+      "z47": 140.0402,
       "nifty500": 122.2253
     },
     {
       "date": "2026-11-16",
-      "z47": 140.5308,
-      "nifty500": 122.6687
+      "z47": 140.1632,
+      "nifty500": 122.5013
     }
   ],
   "constituents": [
@@ -3776,20 +3776,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 74.43,
-      "price": 371.4,
+      "price": 371.05,
       "ccy": "INR",
-      "daily_pct": 2.13,
-      "ret_1m": 15.99,
-      "ret_3m": 17.57,
-      "ret_6m": 52.63,
-      "ret_1y": 19.98,
-      "ret_ytd": 30.87,
-      "since_pct": 198.31,
-      "mcap_mn": 3580693.9,
-      "mcap_cr": 358069.4,
-      "mcap_usd_mn": 38052.0,
+      "daily_pct": 2.03,
+      "ret_1m": 15.88,
+      "ret_3m": 17.46,
+      "ret_6m": 52.48,
+      "ret_1y": 19.87,
+      "ret_ytd": 30.74,
+      "since_pct": 198.03,
+      "mcap_mn": 3577319.4,
+      "mcap_cr": 357731.9,
+      "mcap_usd_mn": 38004.0,
       "detail_url": "/z47-forty-seven/eternal",
-      "index_weight_pct": 9.933827
+      "index_weight_pct": 9.950496
     },
     {
       "num": 2,
@@ -3799,20 +3799,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 9.71,
-      "price": 225.69,
+      "price": 225.45,
       "ccy": "INR",
-      "daily_pct": 0.62,
-      "ret_1m": 13.94,
-      "ret_3m": 16.45,
-      "ret_6m": 19.73,
-      "ret_1y": 29.37,
-      "ret_ytd": 45.33,
-      "since_pct": 71.85,
-      "mcap_mn": 1415577.8,
-      "mcap_cr": 141557.8,
-      "mcap_usd_mn": 15043.3,
+      "daily_pct": 0.51,
+      "ret_1m": 13.82,
+      "ret_3m": 16.33,
+      "ret_6m": 19.6,
+      "ret_1y": 29.23,
+      "ret_ytd": 45.17,
+      "since_pct": 71.67,
+      "mcap_mn": 1414072.5,
+      "mcap_cr": 141407.2,
+      "mcap_usd_mn": 15022.5,
       "detail_url": "/z47-forty-seven/groww",
-      "index_weight_pct": 5.304227
+      "index_weight_pct": 5.312484
     },
     {
       "num": 3,
@@ -3822,20 +3822,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 49.57,
-      "price": 189.21,
+      "price": 188.56,
       "ccy": "INR",
-      "daily_pct": 1.34,
-      "ret_1m": -17.38,
-      "ret_3m": -30.95,
-      "ret_6m": -26.19,
-      "ret_1y": -52.07,
-      "ret_ytd": -51.57,
-      "since_pct": -58.51,
-      "mcap_mn": 521440.5,
-      "mcap_cr": 52144.1,
-      "mcap_usd_mn": 5541.3,
+      "daily_pct": 1.0,
+      "ret_1m": -17.66,
+      "ret_3m": -31.18,
+      "ret_6m": -26.44,
+      "ret_1y": -52.24,
+      "ret_ytd": -51.74,
+      "since_pct": -58.65,
+      "mcap_mn": 519649.2,
+      "mcap_cr": 51964.9,
+      "mcap_usd_mn": 5520.5,
       "detail_url": "/z47-forty-seven/swiggy",
-      "index_weight_pct": 3.535397
+      "index_weight_pct": 3.532492
     },
     {
       "num": 4,
@@ -3845,20 +3845,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 58.77,
-      "price": 1185.4,
+      "price": 1184.5,
       "ccy": "INR",
-      "daily_pct": -0.19,
-      "ret_1m": -2.84,
-      "ret_3m": -12.51,
-      "ret_6m": 25.81,
-      "ret_1y": -11.02,
-      "ret_ytd": -11.6,
-      "since_pct": 15.1,
-      "mcap_mn": 768374.7,
-      "mcap_cr": 76837.5,
-      "mcap_usd_mn": 8165.5,
+      "daily_pct": -0.26,
+      "ret_1m": -2.91,
+      "ret_3m": -12.58,
+      "ret_6m": 25.71,
+      "ret_1y": -11.09,
+      "ret_ytd": -11.66,
+      "since_pct": 15.01,
+      "mcap_mn": 767791.3,
+      "mcap_cr": 76779.1,
+      "mcap_usd_mn": 8156.7,
       "detail_url": "/z47-forty-seven/naukri",
-      "index_weight_pct": 5.31189
+      "index_weight_pct": 5.321779
     },
     {
       "num": 5,
@@ -3868,20 +3868,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 16.81,
-      "price": 739.45,
+      "price": 738.5,
       "ccy": "INR",
-      "daily_pct": 1.71,
-      "ret_1m": 15.55,
-      "ret_3m": 17.67,
-      "ret_6m": 51.88,
-      "ret_1y": 71.39,
-      "ret_ytd": 68.63,
-      "since_pct": 83.44,
-      "mcap_mn": 1286470.1,
-      "mcap_cr": 128647.0,
-      "mcap_usd_mn": 13671.3,
+      "daily_pct": 1.58,
+      "ret_1m": 15.4,
+      "ret_3m": 17.52,
+      "ret_6m": 51.69,
+      "ret_1y": 71.17,
+      "ret_ytd": 68.42,
+      "since_pct": 83.21,
+      "mcap_mn": 1284817.3,
+      "mcap_cr": 128481.7,
+      "mcap_usd_mn": 13649.4,
       "detail_url": "/z47-forty-seven/lenskart",
-      "index_weight_pct": 6.064599
+      "index_weight_pct": 6.072694
     },
     {
       "num": 6,
@@ -3891,20 +3891,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 65.52,
-      "price": 1919.4,
+      "price": 1901.8,
       "ccy": "INR",
-      "daily_pct": -1.06,
-      "ret_1m": 13.86,
-      "ret_3m": 24.13,
-      "ret_6m": 66.4,
-      "ret_1y": 44.0,
-      "ret_ytd": 48.59,
-      "since_pct": 197.07,
-      "mcap_mn": 1232917.7,
-      "mcap_cr": 123291.8,
-      "mcap_usd_mn": 13102.2,
+      "daily_pct": -1.96,
+      "ret_1m": 12.81,
+      "ret_3m": 22.99,
+      "ret_6m": 64.87,
+      "ret_1y": 42.68,
+      "ret_ytd": 47.23,
+      "since_pct": 194.35,
+      "mcap_mn": 1221612.4,
+      "mcap_cr": 122161.2,
+      "mcap_usd_mn": 12977.9,
       "detail_url": "/z47-forty-seven/paytm",
-      "index_weight_pct": 10.795052
+      "index_weight_pct": 10.724121
     },
     {
       "num": 7,
@@ -3914,20 +3914,20 @@
       "exchange": "NSE",
       "sector": "B2B",
       "float_pct": 7.79,
-      "price": 178.87,
+      "price": 176.7,
       "ccy": "INR",
-      "daily_pct": -3.07,
+      "daily_pct": -4.24,
       "ret_1m": null,
       "ret_3m": null,
       "ret_6m": null,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 29.38,
-      "mcap_mn": 302280.6,
-      "mcap_cr": 30228.1,
-      "mcap_usd_mn": 3212.3,
+      "since_pct": 0.0,
+      "mcap_mn": 298613.4,
+      "mcap_cr": 29861.3,
+      "mcap_usd_mn": 3172.4,
       "detail_url": "/z47-forty-seven/zetwerk",
-      "index_weight_pct": 0.342354
+      "index_weight_pct": 0.339087
     },
     {
       "num": 8,
@@ -3937,20 +3937,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 47.63,
-      "price": 364.85,
+      "price": 363.45,
       "ccy": "INR",
-      "daily_pct": -0.1,
-      "ret_1m": 8.38,
-      "ret_3m": 13.8,
-      "ret_6m": 33.5,
-      "ret_1y": 35.76,
-      "ret_ytd": 37.29,
-      "since_pct": 112.25,
-      "mcap_mn": 1045750.1,
-      "mcap_cr": 104575.0,
-      "mcap_usd_mn": 11113.2,
+      "daily_pct": -0.48,
+      "ret_1m": 7.96,
+      "ret_3m": 13.37,
+      "ret_6m": 32.99,
+      "ret_1y": 35.24,
+      "ret_ytd": 36.76,
+      "since_pct": 111.43,
+      "mcap_mn": 1041737.4,
+      "mcap_cr": 104173.7,
+      "mcap_usd_mn": 11067.0,
       "detail_url": "/z47-forty-seven/nykaa",
-      "index_weight_pct": 8.041744
+      "index_weight_pct": 8.031898
     },
     {
       "num": 9,
@@ -3960,20 +3960,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 73.43,
-      "price": 1093.2,
+      "price": 1090.5,
       "ccy": "INR",
-      "daily_pct": -1.07,
-      "ret_1m": 5.62,
-      "ret_3m": -37.42,
-      "ret_6m": -40.26,
-      "ret_1y": -39.79,
-      "ret_ytd": -39.46,
-      "since_pct": 36.5,
-      "mcap_mn": 508511.1,
-      "mcap_cr": 50851.1,
-      "mcap_usd_mn": 5403.9,
+      "daily_pct": -1.31,
+      "ret_1m": 5.36,
+      "ret_3m": -37.58,
+      "ret_6m": -40.41,
+      "ret_1y": -39.94,
+      "ret_ytd": -39.61,
+      "since_pct": 36.16,
+      "mcap_mn": 507255.2,
+      "mcap_cr": 50725.5,
+      "mcap_usd_mn": 5388.9,
       "detail_url": "/z47-forty-seven/policybzr",
-      "index_weight_pct": 5.444016
+      "index_weight_pct": 5.444814
     },
     {
       "num": 10,
@@ -3983,20 +3983,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 6.22,
-      "price": 257.35,
+      "price": 256.81,
       "ccy": "INR",
-      "daily_pct": -0.16,
-      "ret_1m": 12.09,
-      "ret_3m": 33.38,
-      "ret_6m": 32.69,
+      "daily_pct": -0.37,
+      "ret_1m": 11.86,
+      "ret_3m": 33.1,
+      "ret_6m": 32.41,
       "ret_1y": null,
-      "ret_ytd": 41.73,
-      "since_pct": 51.3,
-      "mcap_mn": 1192111.3,
-      "mcap_cr": 119211.1,
-      "mcap_usd_mn": 12668.6,
+      "ret_ytd": 41.43,
+      "since_pct": 50.98,
+      "mcap_mn": 1189609.9,
+      "mcap_cr": 118961.0,
+      "mcap_usd_mn": 12637.9,
       "detail_url": "/z47-forty-seven/meesho",
-      "index_weight_pct": 5.965638
+      "index_weight_pct": 5.968735
     },
     {
       "num": 11,
@@ -4015,11 +4015,11 @@
       "ret_1y": -30.82,
       "ret_ytd": -37.49,
       "since_pct": 11.48,
-      "mcap_mn": 452621.0,
-      "mcap_cr": 45262.1,
+      "mcap_mn": 452765.3,
+      "mcap_cr": 45276.5,
       "mcap_usd_mn": 4810.0,
       "detail_url": "/z47-forty-seven/mmyt",
-      "index_weight_pct": 1.935375
+      "index_weight_pct": 1.94107
     },
     {
       "num": 12,
@@ -4029,20 +4029,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 53.55,
-      "price": 349.4,
+      "price": 346.8,
       "ccy": "INR",
-      "daily_pct": 0.11,
-      "ret_1m": 15.35,
-      "ret_3m": 19.76,
-      "ret_6m": 7.51,
-      "ret_1y": 22.71,
-      "ret_ytd": 47.88,
-      "since_pct": -2.49,
-      "mcap_mn": 319746.0,
-      "mcap_cr": 31974.6,
-      "mcap_usd_mn": 3397.9,
+      "daily_pct": -0.63,
+      "ret_1m": 14.49,
+      "ret_3m": 18.87,
+      "ret_6m": 6.71,
+      "ret_1y": 21.8,
+      "ret_ytd": 46.78,
+      "since_pct": -3.22,
+      "mcap_mn": 317366.7,
+      "mcap_cr": 31736.7,
+      "mcap_usd_mn": 3371.6,
       "detail_url": "/z47-forty-seven/angelone",
-      "index_weight_pct": 2.47689
+      "index_weight_pct": 2.464907
     },
     {
       "num": 13,
@@ -4052,20 +4052,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 16.12,
-      "price": 131.7,
+      "price": 130.61,
       "ccy": "INR",
-      "daily_pct": 0.09,
-      "ret_1m": 1.29,
-      "ret_3m": 7.91,
-      "ret_6m": 17.01,
+      "daily_pct": -0.74,
+      "ret_1m": 0.45,
+      "ret_3m": 7.01,
+      "ret_6m": 16.05,
       "ret_1y": null,
-      "ret_ytd": -0.7,
-      "since_pct": -15.16,
-      "mcap_mn": 381850.2,
-      "mcap_cr": 38185.0,
-      "mcap_usd_mn": 4057.9,
+      "ret_ytd": -1.52,
+      "since_pct": -15.87,
+      "mcap_mn": 378689.8,
+      "mcap_cr": 37869.0,
+      "mcap_usd_mn": 4023.1,
       "detail_url": "/z47-forty-seven/pwl",
-      "index_weight_pct": 1.118946
+      "index_weight_pct": 1.112596
     },
     {
       "num": 14,
@@ -4075,20 +4075,20 @@
       "exchange": "NSE",
       "sector": "B2B",
       "float_pct": 74.39,
-      "price": 440.4,
+      "price": 439.4,
       "ccy": "INR",
-      "daily_pct": 0.94,
-      "ret_1m": 10.1,
-      "ret_3m": -2.52,
-      "ret_6m": -3.59,
-      "ret_1y": 0.07,
-      "ret_ytd": 9.94,
-      "since_pct": 14.58,
-      "mcap_mn": 330320.2,
-      "mcap_cr": 33032.0,
-      "mcap_usd_mn": 3510.3,
+      "daily_pct": 0.71,
+      "ret_1m": 9.85,
+      "ret_3m": -2.74,
+      "ret_6m": -3.81,
+      "ret_1y": -0.16,
+      "ret_ytd": 9.69,
+      "since_pct": 14.32,
+      "mcap_mn": 329570.2,
+      "mcap_cr": 32957.0,
+      "mcap_usd_mn": 3501.2,
       "detail_url": "/z47-forty-seven/delhivery",
-      "index_weight_pct": 3.896543
+      "index_weight_pct": 3.897892
     },
     {
       "num": 15,
@@ -4098,20 +4098,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 25.96,
-      "price": 253.85,
+      "price": 253.5,
       "ccy": "INR",
-      "daily_pct": 1.4,
-      "ret_1m": -11.69,
-      "ret_3m": -0.74,
-      "ret_6m": -18.4,
-      "ret_1y": -28.36,
-      "ret_ytd": -26.8,
-      "since_pct": -17.04,
-      "mcap_mn": 235176.8,
-      "mcap_cr": 23517.7,
-      "mcap_usd_mn": 2499.2,
+      "daily_pct": 1.26,
+      "ret_1m": -11.81,
+      "ret_3m": -0.88,
+      "ret_6m": -18.51,
+      "ret_1y": -28.46,
+      "ret_ytd": -26.9,
+      "since_pct": -17.16,
+      "mcap_mn": 234852.5,
+      "mcap_cr": 23485.3,
+      "mcap_usd_mn": 2495.0,
       "detail_url": "/z47-forty-seven/godigit",
-      "index_weight_pct": 0.911472
+      "index_weight_pct": 0.912603
     },
     {
       "num": 16,
@@ -4121,20 +4121,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 49.83,
-      "price": 2012.4,
+      "price": 2015.6,
       "ccy": "INR",
-      "daily_pct": 3.47,
-      "ret_1m": 37.93,
-      "ret_3m": 37.29,
-      "ret_6m": 121.37,
-      "ret_1y": 210.34,
-      "ret_ytd": 172.5,
-      "since_pct": 565.7,
-      "mcap_mn": 798690.0,
-      "mcap_cr": 79869.0,
-      "mcap_usd_mn": 8487.7,
+      "daily_pct": 3.63,
+      "ret_1m": 38.15,
+      "ret_3m": 37.51,
+      "ret_6m": 121.73,
+      "ret_1y": 210.83,
+      "ret_ytd": 172.93,
+      "since_pct": 566.75,
+      "mcap_mn": 799960.0,
+      "mcap_cr": 79996.0,
+      "mcap_usd_mn": 8498.5,
       "detail_url": "/z47-forty-seven/atherenerg",
-      "index_weight_pct": 4.41434
+      "index_weight_pct": 4.432956
     },
     {
       "num": 17,
@@ -4144,20 +4144,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 15.37,
-      "price": 171.75,
+      "price": 171.66,
       "ccy": "INR",
-      "daily_pct": -2.53,
-      "ret_1m": 4.86,
-      "ret_3m": 7.13,
-      "ret_6m": 15.06,
-      "ret_1y": -28.57,
-      "ret_ytd": -26.95,
-      "since_pct": -31.54,
-      "mcap_mn": 198820.1,
-      "mcap_cr": 19882.0,
-      "mcap_usd_mn": 2112.9,
+      "daily_pct": -2.58,
+      "ret_1m": 4.8,
+      "ret_3m": 7.07,
+      "ret_6m": 15.0,
+      "ret_1y": -28.61,
+      "ret_ytd": -26.99,
+      "since_pct": -31.58,
+      "mcap_mn": 198716.0,
+      "mcap_cr": 19871.6,
+      "mcap_usd_mn": 2111.1,
       "detail_url": "/z47-forty-seven/pinelabs",
-      "index_weight_pct": 1.41774
+      "index_weight_pct": 1.420714
     },
     {
       "num": 18,
@@ -4176,11 +4176,11 @@
       "ret_1y": 7.56,
       "ret_ytd": 9.22,
       "since_pct": -42.62,
-      "mcap_mn": 312412.0,
-      "mcap_cr": 31241.2,
+      "mcap_mn": 312511.6,
+      "mcap_cr": 31251.2,
       "mcap_usd_mn": 3320.0,
       "detail_url": "/z47-forty-seven/frsh",
-      "index_weight_pct": 3.760706
+      "index_weight_pct": 3.771772
     },
     {
       "num": 19,
@@ -4190,20 +4190,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 21.81,
-      "price": 168.64,
+      "price": 167.77,
       "ccy": "INR",
-      "daily_pct": -0.11,
-      "ret_1m": 18.36,
-      "ret_3m": 16.33,
-      "ret_6m": 41.13,
-      "ret_1y": 16.16,
-      "ret_ytd": 28.39,
-      "since_pct": 1.08,
-      "mcap_mn": 259795.4,
-      "mcap_cr": 25979.5,
-      "mcap_usd_mn": 2760.8,
+      "daily_pct": -0.62,
+      "ret_1m": 17.75,
+      "ret_3m": 15.73,
+      "ret_6m": 40.41,
+      "ret_1y": 15.56,
+      "ret_ytd": 27.73,
+      "since_pct": 0.56,
+      "mcap_mn": 258455.2,
+      "mcap_cr": 25845.5,
+      "mcap_usd_mn": 2745.7,
       "detail_url": "/z47-forty-seven/urbanco",
-      "index_weight_pct": 0.882727
+      "index_weight_pct": 0.880476
     },
     {
       "num": 20,
@@ -4213,20 +4213,20 @@
       "exchange": "NSE",
       "sector": "B2B",
       "float_pct": 31.36,
-      "price": 1605.7,
+      "price": 1600.9,
       "ccy": "INR",
-      "daily_pct": -0.7,
-      "ret_1m": -0.49,
-      "ret_3m": -6.0,
-      "ret_6m": 36.16,
-      "ret_1y": -0.7,
-      "ret_ytd": -1.11,
-      "since_pct": 14.18,
-      "mcap_mn": 174388.6,
-      "mcap_cr": 17438.9,
-      "mcap_usd_mn": 1853.2,
+      "daily_pct": -1.0,
+      "ret_1m": -0.79,
+      "ret_3m": -6.28,
+      "ret_6m": 35.75,
+      "ret_1y": -1.0,
+      "ret_ytd": -1.41,
+      "since_pct": 13.84,
+      "mcap_mn": 173867.3,
+      "mcap_cr": 17386.7,
+      "mcap_usd_mn": 1847.1,
       "detail_url": "/z47-forty-seven/tbotek",
-      "index_weight_pct": 0.775302
+      "index_weight_pct": 0.775011
     },
     {
       "num": 21,
@@ -4236,20 +4236,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 42.29,
-      "price": 159.47,
+      "price": 159.25,
       "ccy": "INR",
-      "daily_pct": -0.7,
-      "ret_1m": -8.45,
-      "ret_3m": -22.08,
-      "ret_6m": -27.81,
-      "ret_1y": -52.14,
-      "ret_ytd": -44.45,
-      "since_pct": -76.52,
-      "mcap_mn": 83462.6,
-      "mcap_cr": 8346.3,
-      "mcap_usd_mn": 887.0,
+      "daily_pct": -0.84,
+      "ret_1m": -8.57,
+      "ret_3m": -22.18,
+      "ret_6m": -27.91,
+      "ret_1y": -52.21,
+      "ret_ytd": -44.52,
+      "since_pct": -76.55,
+      "mcap_mn": 83347.5,
+      "mcap_cr": 8334.7,
+      "mcap_usd_mn": 885.5,
       "detail_url": "/z47-forty-seven/firstcry",
-      "index_weight_pct": 0.542008
+      "index_weight_pct": 0.54268
     },
     {
       "num": 22,
@@ -4259,20 +4259,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 70.54,
-      "price": 177.56,
+      "price": 177.82,
       "ccy": "INR",
-      "daily_pct": 0.74,
-      "ret_1m": -16.74,
-      "ret_3m": -30.91,
-      "ret_6m": -34.02,
-      "ret_1y": -39.41,
-      "ret_ytd": -37.05,
-      "since_pct": -46.21,
-      "mcap_mn": 88922.0,
-      "mcap_cr": 8892.2,
-      "mcap_usd_mn": 945.0,
+      "daily_pct": 0.89,
+      "ret_1m": -16.61,
+      "ret_3m": -30.81,
+      "ret_6m": -33.92,
+      "ret_1y": -39.32,
+      "ret_ytd": -36.95,
+      "since_pct": -46.13,
+      "mcap_mn": 89052.3,
+      "mcap_cr": 8905.2,
+      "mcap_usd_mn": 946.1,
       "detail_url": "/z47-forty-seven/aptus",
-      "index_weight_pct": 0.905671
+      "index_weight_pct": 0.909376
     },
     {
       "num": 23,
@@ -4282,20 +4282,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 45.42,
-      "price": 34.48,
+      "price": 34.25,
       "ccy": "INR",
-      "daily_pct": -0.55,
-      "ret_1m": -0.03,
-      "ret_3m": -10.7,
-      "ret_6m": -6.71,
-      "ret_1y": -18.45,
-      "ret_ytd": -8.1,
-      "since_pct": -62.19,
-      "mcap_mn": 172599.3,
-      "mcap_cr": 17259.9,
-      "mcap_usd_mn": 1834.2,
+      "daily_pct": -1.21,
+      "ret_1m": -0.7,
+      "ret_3m": -11.29,
+      "ret_6m": -7.33,
+      "ret_1y": -18.99,
+      "ret_ytd": -8.72,
+      "since_pct": -62.45,
+      "mcap_mn": 171448.0,
+      "mcap_cr": 17144.8,
+      "mcap_usd_mn": 1821.4,
       "detail_url": "/z47-forty-seven/olaelec",
-      "index_weight_pct": 0.985092
+      "index_weight_pct": 0.981088
     },
     {
       "num": 24,
@@ -4305,20 +4305,20 @@
       "exchange": "NSE",
       "sector": "B2B",
       "float_pct": 50.77,
-      "price": 1589.9,
+      "price": 1587.0,
       "ccy": "INR",
-      "daily_pct": -1.25,
-      "ret_1m": -0.37,
-      "ret_3m": -9.31,
-      "ret_6m": -20.43,
-      "ret_1y": -35.77,
-      "ret_ytd": -27.54,
-      "since_pct": -41.66,
-      "mcap_mn": 95641.2,
-      "mcap_cr": 9564.1,
-      "mcap_usd_mn": 1016.4,
+      "daily_pct": -1.43,
+      "ret_1m": -0.55,
+      "ret_3m": -9.47,
+      "ret_6m": -20.57,
+      "ret_1y": -35.89,
+      "ret_ytd": -27.67,
+      "since_pct": -41.77,
+      "mcap_mn": 95466.7,
+      "mcap_cr": 9546.7,
+      "mcap_usd_mn": 1014.2,
       "detail_url": "/z47-forty-seven/indiamart",
-      "index_weight_pct": 0.599966
+      "index_weight_pct": 0.600442
     },
     {
       "num": 25,
@@ -4328,20 +4328,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 65.56,
-      "price": 439.6,
+      "price": 439.7,
       "ccy": "INR",
-      "daily_pct": -0.5,
-      "ret_1m": -12.35,
-      "ret_3m": -17.89,
-      "ret_6m": -1.0,
-      "ret_1y": -30.41,
-      "ret_ytd": -17.73,
-      "since_pct": -40.17,
-      "mcap_mn": 129667.1,
-      "mcap_cr": 12966.7,
-      "mcap_usd_mn": 1378.0,
+      "daily_pct": -0.48,
+      "ret_1m": -12.33,
+      "ret_3m": -17.87,
+      "ret_6m": -0.98,
+      "ret_1y": -30.39,
+      "ret_ytd": -17.71,
+      "since_pct": -40.15,
+      "mcap_mn": 129696.6,
+      "mcap_cr": 12969.7,
+      "mcap_usd_mn": 1377.8,
       "detail_url": "/z47-forty-seven/fivestar",
-      "index_weight_pct": 1.314217
+      "index_weight_pct": 1.317964
     },
     {
       "num": 26,
@@ -4351,20 +4351,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 87.96,
-      "price": 2663.7,
+      "price": 2654.1,
       "ccy": "INR",
-      "daily_pct": -0.65,
-      "ret_1m": -12.17,
-      "ret_3m": -4.96,
-      "ret_6m": 46.02,
-      "ret_1y": -18.49,
-      "ret_ytd": -5.86,
-      "since_pct": 268.93,
-      "mcap_mn": 129499.7,
-      "mcap_cr": 12950.0,
-      "mcap_usd_mn": 1376.2,
+      "daily_pct": -1.0,
+      "ret_1m": -12.49,
+      "ret_3m": -5.3,
+      "ret_6m": 45.49,
+      "ret_1y": -18.79,
+      "ret_ytd": -6.2,
+      "since_pct": 267.6,
+      "mcap_mn": 129033.0,
+      "mcap_cr": 12903.3,
+      "mcap_usd_mn": 1370.8,
       "detail_url": "/z47-forty-seven/cartrade",
-      "index_weight_pct": 1.628937
+      "index_weight_pct": 1.627324
     },
     {
       "num": 27,
@@ -4374,20 +4374,20 @@
       "exchange": "NSE",
       "sector": "SaaS / AI",
       "float_pct": 43.69,
-      "price": 1615.9,
+      "price": 1605.7,
       "ccy": "INR",
-      "daily_pct": 0.48,
-      "ret_1m": 11.43,
-      "ret_3m": -5.57,
-      "ret_6m": 11.91,
-      "ret_1y": -6.52,
-      "ret_ytd": -9.29,
-      "since_pct": 22.41,
-      "mcap_mn": 232546.9,
-      "mcap_cr": 23254.7,
-      "mcap_usd_mn": 2471.3,
+      "daily_pct": -0.16,
+      "ret_1m": 10.73,
+      "ret_3m": -6.17,
+      "ret_6m": 11.21,
+      "ret_1y": -7.11,
+      "ret_ytd": -9.86,
+      "since_pct": 21.63,
+      "mcap_mn": 231079.0,
+      "mcap_cr": 23107.9,
+      "mcap_usd_mn": 2454.9,
       "detail_url": "/z47-forty-seven/affle",
-      "index_weight_pct": 1.439033
+      "index_weight_pct": 1.4337
     },
     {
       "num": 28,
@@ -4397,20 +4397,20 @@
       "exchange": "NSE",
       "sector": "B2B",
       "float_pct": 57.32,
-      "price": 551.9,
+      "price": 551.8,
       "ccy": "INR",
-      "daily_pct": -1.6,
-      "ret_1m": -5.55,
-      "ret_3m": -6.27,
-      "ret_6m": 3.9,
-      "ret_1y": -19.21,
-      "ret_ytd": -18.18,
-      "since_pct": 112.23,
-      "mcap_mn": 100552.1,
-      "mcap_cr": 10055.2,
-      "mcap_usd_mn": 1068.6,
+      "daily_pct": -1.61,
+      "ret_1m": -5.56,
+      "ret_3m": -6.28,
+      "ret_6m": 3.88,
+      "ret_1y": -19.23,
+      "ret_ytd": -18.2,
+      "since_pct": 112.19,
+      "mcap_mn": 100533.8,
+      "mcap_cr": 10053.4,
+      "mcap_usd_mn": 1068.0,
       "detail_url": "/z47-forty-seven/blackbuck",
-      "index_weight_pct": 0.857531
+      "index_weight_pct": 0.859625
     },
     {
       "num": 29,
@@ -4420,20 +4420,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 61.16,
-      "price": 422.85,
+      "price": 428.45,
       "ccy": "INR",
-      "daily_pct": -0.51,
-      "ret_1m": 4.61,
-      "ret_3m": 18.93,
-      "ret_6m": 45.28,
-      "ret_1y": 57.72,
-      "ret_ytd": 51.02,
-      "since_pct": 97.35,
-      "mcap_mn": 172930.7,
-      "mcap_cr": 17293.1,
-      "mcap_usd_mn": 1837.7,
+      "daily_pct": 0.81,
+      "ret_1m": 6.0,
+      "ret_3m": 20.5,
+      "ret_6m": 47.21,
+      "ret_1y": 59.81,
+      "ret_ytd": 53.02,
+      "since_pct": 99.97,
+      "mcap_mn": 175220.9,
+      "mcap_cr": 17522.1,
+      "mcap_usd_mn": 1861.5,
       "detail_url": "/z47-forty-seven/nazara",
-      "index_weight_pct": 1.424503
+      "index_weight_pct": 1.447154
     },
     {
       "num": 30,
@@ -4443,20 +4443,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 59.66,
-      "price": 603.3,
+      "price": 604.65,
       "ccy": "INR",
-      "daily_pct": -2.57,
-      "ret_1m": 0.66,
-      "ret_3m": -9.26,
-      "ret_6m": -33.76,
-      "ret_1y": -23.38,
-      "ret_ytd": -25.58,
-      "since_pct": -18.54,
-      "mcap_mn": 72513.0,
-      "mcap_cr": 7251.3,
-      "mcap_usd_mn": 770.6,
+      "daily_pct": -2.35,
+      "ret_1m": 0.88,
+      "ret_3m": -9.05,
+      "ret_6m": -33.61,
+      "ret_1y": -23.2,
+      "ret_ytd": -25.41,
+      "since_pct": -18.36,
+      "mcap_mn": 72675.2,
+      "mcap_cr": 7267.5,
+      "mcap_usd_mn": 772.1,
       "detail_url": "/z47-forty-seven/medplus",
-      "index_weight_pct": 0.608602
+      "index_weight_pct": 0.611563
     },
     {
       "num": 31,
@@ -4466,20 +4466,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 48.82,
-      "price": 166.77,
+      "price": 166.12,
       "ccy": "INR",
-      "daily_pct": 2.16,
-      "ret_1m": 6.17,
-      "ret_3m": -3.19,
-      "ret_6m": 3.03,
-      "ret_1y": -38.83,
-      "ret_ytd": -30.76,
-      "since_pct": 0.63,
-      "mcap_mn": 73675.5,
-      "mcap_cr": 7367.6,
-      "mcap_usd_mn": 782.9,
+      "daily_pct": 1.76,
+      "ret_1m": 5.76,
+      "ret_3m": -3.56,
+      "ret_6m": 2.63,
+      "ret_1y": -39.07,
+      "ret_ytd": -31.03,
+      "since_pct": 0.24,
+      "mcap_mn": 73388.3,
+      "mcap_cr": 7338.8,
+      "mcap_usd_mn": 779.6,
       "detail_url": "/z47-forty-seven/ixigo",
-      "index_weight_pct": 0.484715
+      "index_weight_pct": 0.484092
     },
     {
       "num": 32,
@@ -4489,20 +4489,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 41.66,
-      "price": 510.65,
+      "price": 509.45,
       "ccy": "INR",
-      "daily_pct": 2.13,
-      "ret_1m": 15.69,
-      "ret_3m": 7.6,
-      "ret_6m": 43.14,
-      "ret_1y": 70.87,
-      "ret_ytd": 80.06,
-      "since_pct": 19.63,
-      "mcap_mn": 166602.1,
-      "mcap_cr": 16660.2,
-      "mcap_usd_mn": 1770.5,
+      "daily_pct": 1.89,
+      "ret_1m": 15.42,
+      "ret_3m": 7.34,
+      "ret_6m": 42.8,
+      "ret_1y": 70.47,
+      "ret_ytd": 79.64,
+      "since_pct": 19.35,
+      "mcap_mn": 166210.6,
+      "mcap_cr": 16621.1,
+      "mcap_usd_mn": 1765.8,
       "detail_url": "/z47-forty-seven/honasa",
-      "index_weight_pct": 1.092427
+      "index_weight_pct": 1.092718
     },
     {
       "num": 33,
@@ -4512,20 +4512,20 @@
       "exchange": "NSE",
       "sector": "SaaS / AI",
       "float_pct": 20.99,
-      "price": 545.5,
+      "price": 546.1,
       "ccy": "INR",
-      "daily_pct": -0.27,
-      "ret_1m": -3.38,
-      "ret_3m": -5.81,
-      "ret_6m": 33.02,
+      "daily_pct": -0.16,
+      "ret_1m": -3.28,
+      "ret_3m": -5.71,
+      "ret_6m": 33.16,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 56.64,
-      "mcap_mn": 120079.8,
-      "mcap_cr": 12008.0,
-      "mcap_usd_mn": 1276.1,
+      "since_pct": 56.81,
+      "mcap_mn": 120211.9,
+      "mcap_cr": 12021.2,
+      "mcap_usd_mn": 1277.1,
       "detail_url": "/z47-forty-seven/amagi",
-      "index_weight_pct": 0.359056
+      "index_weight_pct": 0.360394
     },
     {
       "num": 34,
@@ -4535,20 +4535,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 8.1,
-      "price": 57.4,
+      "price": 57.68,
       "ccy": "INR",
-      "daily_pct": -1.12,
-      "ret_1m": 2.1,
+      "daily_pct": -0.64,
+      "ret_1m": 2.6,
       "ret_3m": null,
       "ret_6m": null,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 6.53,
-      "mcap_mn": 100953.0,
-      "mcap_cr": 10095.3,
-      "mcap_usd_mn": 1072.8,
+      "since_pct": 7.05,
+      "mcap_mn": 101445.4,
+      "mcap_cr": 10144.5,
+      "mcap_usd_mn": 1077.7,
       "detail_url": "/z47-forty-seven/moneyview",
-      "index_weight_pct": 0.118586
+      "index_weight_pct": 0.119477
     },
     {
       "num": 35,
@@ -4558,20 +4558,20 @@
       "exchange": "NSE",
       "sector": "SaaS / AI",
       "float_pct": 51.41,
-      "price": 662.0,
+      "price": 662.5,
       "ccy": "INR",
-      "daily_pct": -2.27,
-      "ret_1m": -17.2,
-      "ret_3m": -29.27,
-      "ret_6m": 0.38,
-      "ret_1y": -7.41,
-      "ret_ytd": -5.7,
-      "since_pct": -7.33,
-      "mcap_mn": 78469.1,
-      "mcap_cr": 7846.9,
-      "mcap_usd_mn": 833.9,
+      "daily_pct": -2.2,
+      "ret_1m": -17.14,
+      "ret_3m": -29.22,
+      "ret_6m": 0.45,
+      "ret_1y": -7.34,
+      "ret_ytd": -5.63,
+      "since_pct": -7.26,
+      "mcap_mn": 78528.3,
+      "mcap_cr": 7852.8,
+      "mcap_usd_mn": 834.3,
       "detail_url": "/z47-forty-seven/rategain",
-      "index_weight_pct": 0.571745
+      "index_weight_pct": 0.573677
     },
     {
       "num": 36,
@@ -4581,20 +4581,20 @@
       "exchange": "NSE",
       "sector": "SaaS / AI",
       "float_pct": 31.56,
-      "price": 890.15,
+      "price": 889.8,
       "ccy": "INR",
-      "daily_pct": 0.42,
-      "ret_1m": 1.85,
-      "ret_3m": -12.09,
-      "ret_6m": -2.39,
-      "ret_1y": -47.6,
-      "ret_ytd": -48.57,
-      "since_pct": -53.85,
-      "mcap_mn": 48768.2,
-      "mcap_cr": 4876.8,
-      "mcap_usd_mn": 518.3,
+      "daily_pct": 0.38,
+      "ret_1m": 1.81,
+      "ret_3m": -12.13,
+      "ret_6m": -2.43,
+      "ret_1y": -47.62,
+      "ret_ytd": -48.59,
+      "since_pct": -53.87,
+      "mcap_mn": 48749.0,
+      "mcap_cr": 4874.9,
+      "mcap_usd_mn": 517.9,
       "detail_url": "/z47-forty-seven/mapmyindia",
-      "index_weight_pct": 0.219305
+      "index_weight_pct": 0.219793
     },
     {
       "num": 37,
@@ -4604,20 +4604,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 36.14,
-      "price": 720.0,
+      "price": 712.25,
       "ccy": "INR",
-      "daily_pct": -1.73,
-      "ret_1m": -5.99,
-      "ret_3m": -12.24,
-      "ret_6m": 55.59,
-      "ret_1y": 26.45,
-      "ret_ytd": 51.05,
-      "since_pct": 31.87,
-      "mcap_mn": 110018.0,
-      "mcap_cr": 11001.8,
-      "mcap_usd_mn": 1169.2,
+      "daily_pct": -2.79,
+      "ret_1m": -7.0,
+      "ret_3m": -13.18,
+      "ret_6m": 53.92,
+      "ret_1y": 25.09,
+      "ret_ytd": 49.43,
+      "since_pct": 30.45,
+      "mcap_mn": 108833.7,
+      "mcap_cr": 10883.4,
+      "mcap_usd_mn": 1156.2,
       "detail_url": "/z47-forty-seven/bluestone",
-      "index_weight_pct": 0.880685
+      "index_weight_pct": 0.87349
     },
     {
       "num": 38,
@@ -4627,20 +4627,20 @@
       "exchange": "NSE",
       "sector": "B2B",
       "float_pct": 20.86,
-      "price": 285.1,
+      "price": 284.55,
       "ccy": "INR",
-      "daily_pct": 0.26,
-      "ret_1m": 0.3,
-      "ret_3m": 10.77,
-      "ret_6m": 45.96,
+      "daily_pct": 0.07,
+      "ret_1m": 0.11,
+      "ret_3m": 10.56,
+      "ret_6m": 45.68,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 159.23,
-      "mcap_mn": 167857.6,
-      "mcap_cr": 16785.8,
-      "mcap_usd_mn": 1783.8,
+      "since_pct": 158.73,
+      "mcap_mn": 167533.8,
+      "mcap_cr": 16753.4,
+      "mcap_usd_mn": 1779.8,
       "detail_url": "/z47-forty-seven/shadowfax",
-      "index_weight_pct": 0.289874
+      "index_weight_pct": 0.290074
     },
     {
       "num": 39,
@@ -4650,20 +4650,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 20.01,
-      "price": 135.08,
+      "price": 135.05,
       "ccy": "INR",
-      "daily_pct": 0.12,
-      "ret_1m": -0.7,
-      "ret_3m": 2.71,
-      "ret_6m": -5.46,
+      "daily_pct": 0.1,
+      "ret_1m": -0.72,
+      "ret_3m": 2.68,
+      "ret_6m": -5.48,
       "ret_1y": null,
-      "ret_ytd": -27.39,
-      "since_pct": -29.75,
-      "mcap_mn": 44776.5,
-      "mcap_cr": 4477.7,
-      "mcap_usd_mn": 475.8,
+      "ret_ytd": -27.4,
+      "since_pct": -29.77,
+      "mcap_mn": 44766.6,
+      "mcap_cr": 4476.7,
+      "mcap_usd_mn": 475.6,
       "detail_url": "/z47-forty-seven/wakefit",
-      "index_weight_pct": 0.219984
+      "index_weight_pct": 0.220512
     },
     {
       "num": 40,
@@ -4673,20 +4673,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 30.02,
-      "price": 158.29,
+      "price": 157.7,
       "ccy": "INR",
-      "daily_pct": -0.45,
-      "ret_1m": 10.68,
-      "ret_3m": -7.86,
-      "ret_6m": 12.09,
+      "daily_pct": -0.82,
+      "ret_1m": 10.27,
+      "ret_3m": -8.21,
+      "ret_6m": 11.67,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 22.79,
-      "mcap_mn": 39074.7,
-      "mcap_cr": 3907.5,
-      "mcap_usd_mn": 415.2,
+      "since_pct": 22.33,
+      "mcap_mn": 38929.1,
+      "mcap_cr": 3892.9,
+      "mcap_usd_mn": 413.6,
       "detail_url": "/z47-forty-seven/aye",
-      "index_weight_pct": 0.16842
+      "index_weight_pct": 0.168233
     },
     {
       "num": 41,
@@ -4696,20 +4696,20 @@
       "exchange": "NSE",
       "sector": "SaaS / AI",
       "float_pct": 41.93,
-      "price": 540.1,
+      "price": 537.5,
       "ccy": "INR",
-      "daily_pct": -3.56,
-      "ret_1m": -18.19,
-      "ret_3m": -18.73,
-      "ret_6m": 62.12,
-      "ret_1y": 106.81,
-      "ret_ytd": 170.16,
-      "since_pct": 681.9,
-      "mcap_mn": 111038.8,
-      "mcap_cr": 11103.9,
-      "mcap_usd_mn": 1180.0,
+      "daily_pct": -4.03,
+      "ret_1m": -18.58,
+      "ret_3m": -19.12,
+      "ret_6m": 61.34,
+      "ret_1y": 105.81,
+      "ret_ytd": 168.86,
+      "since_pct": 678.14,
+      "mcap_mn": 110504.2,
+      "mcap_cr": 11050.4,
+      "mcap_usd_mn": 1174.0,
       "detail_url": "/z47-forty-seven/e2e",
-      "index_weight_pct": 0.059618
+      "index_weight_pct": 0.059487
     },
     {
       "num": 42,
@@ -4719,20 +4719,20 @@
       "exchange": "NSE",
       "sector": "SaaS / AI",
       "float_pct": 18.77,
-      "price": 510.05,
+      "price": 510.55,
       "ccy": "INR",
-      "daily_pct": -1.04,
-      "ret_1m": -3.55,
-      "ret_3m": -0.66,
-      "ret_6m": -1.45,
+      "daily_pct": -0.94,
+      "ret_1m": -3.45,
+      "ret_3m": -0.56,
+      "ret_6m": -1.35,
       "ret_1y": null,
-      "ret_ytd": -24.67,
-      "since_pct": -15.9,
-      "mcap_mn": 40675.2,
-      "mcap_cr": 4067.5,
-      "mcap_usd_mn": 432.3,
+      "ret_ytd": -24.59,
+      "since_pct": -15.82,
+      "mcap_mn": 40715.1,
+      "mcap_cr": 4071.5,
+      "mcap_usd_mn": 432.5,
       "detail_url": "/z47-forty-seven/capillary",
-      "index_weight_pct": 0.172048
+      "index_weight_pct": 0.172669
     },
     {
       "num": 43,
@@ -4742,20 +4742,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 11.18,
-      "price": 614.45,
+      "price": 612.0,
       "ccy": "INR",
-      "daily_pct": 0.48,
-      "ret_1m": 8.3,
+      "daily_pct": 0.08,
+      "ret_1m": 7.87,
       "ret_3m": null,
       "ret_6m": null,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 15.01,
-      "mcap_mn": 63945.0,
-      "mcap_cr": 6394.5,
-      "mcap_usd_mn": 679.5,
+      "since_pct": 14.55,
+      "mcap_mn": 63690.0,
+      "mcap_cr": 6369.0,
+      "mcap_usd_mn": 676.6,
       "detail_url": "/z47-forty-seven/rentomojo",
-      "index_weight_pct": 0.103624
+      "index_weight_pct": 0.103482
     },
     {
       "num": 44,
@@ -4765,20 +4765,20 @@
       "exchange": "NSE",
       "sector": "Fintech / Financial Services",
       "float_pct": 28.31,
-      "price": 350.15,
+      "price": 350.85,
       "ccy": "INR",
-      "daily_pct": -0.64,
-      "ret_1m": 2.17,
-      "ret_3m": 15.73,
-      "ret_6m": 41.53,
+      "daily_pct": -0.44,
+      "ret_1m": 2.38,
+      "ret_3m": 15.96,
+      "ret_6m": 41.81,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 67.83,
-      "mcap_mn": 71661.4,
-      "mcap_cr": 7166.1,
-      "mcap_usd_mn": 761.5,
+      "since_pct": 68.17,
+      "mcap_mn": 71804.6,
+      "mcap_cr": 7180.5,
+      "mcap_usd_mn": 762.8,
       "detail_url": "/z47-forty-seven/kissht",
-      "index_weight_pct": 0.242046
+      "index_weight_pct": 0.243166
     },
     {
       "num": 45,
@@ -4788,20 +4788,20 @@
       "exchange": "NSE",
       "sector": "SaaS / AI",
       "float_pct": 20.25,
-      "price": 818.0,
+      "price": 810.55,
       "ccy": "INR",
-      "daily_pct": -1.54,
-      "ret_1m": 14.65,
-      "ret_3m": -0.91,
-      "ret_6m": -12.39,
+      "daily_pct": -2.44,
+      "ret_1m": 13.61,
+      "ret_3m": -1.81,
+      "ret_6m": -13.18,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": -3.44,
-      "mcap_mn": 142387.1,
-      "mcap_cr": 14238.7,
-      "mcap_usd_mn": 1513.1,
+      "since_pct": -4.32,
+      "mcap_mn": 141090.3,
+      "mcap_cr": 14109.0,
+      "mcap_usd_mn": 1498.9,
       "detail_url": "/z47-forty-seven/fractal",
-      "index_weight_pct": 0.412782
+      "index_weight_pct": 0.410095
     },
     {
       "num": 46,
@@ -4811,20 +4811,20 @@
       "exchange": "NSE",
       "sector": "B2B",
       "float_pct": 94.78,
-      "price": 126.63,
+      "price": 126.32,
       "ccy": "INR",
-      "daily_pct": -1.19,
-      "ret_1m": 0.87,
+      "daily_pct": -1.43,
+      "ret_1m": 0.62,
       "ret_3m": null,
       "ret_6m": null,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": -11.73,
-      "mcap_mn": 92281.6,
-      "mcap_cr": 9228.2,
-      "mcap_usd_mn": 980.7,
+      "since_pct": -11.94,
+      "mcap_mn": 92055.7,
+      "mcap_cr": 9205.6,
+      "mcap_usd_mn": 978.0,
       "detail_url": "/z47-forty-seven/shiprocket",
-      "index_weight_pct": 1.2678
+      "index_weight_pct": 1.268014
     },
     {
       "num": 47,
@@ -4834,20 +4834,20 @@
       "exchange": "NSE",
       "sector": "Consumer / Consumer Tech",
       "float_pct": 20.49,
-      "price": 307.45,
+      "price": 305.85,
       "ccy": "INR",
-      "daily_pct": 2.14,
-      "ret_1m": 5.22,
-      "ret_3m": 69.39,
+      "daily_pct": 1.61,
+      "ret_1m": 4.67,
+      "ret_3m": 68.51,
       "ret_6m": null,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 69.39,
-      "mcap_mn": 236370.0,
-      "mcap_cr": 23637.0,
-      "mcap_usd_mn": 2511.9,
+      "since_pct": 68.51,
+      "mcap_mn": 235139.9,
+      "mcap_cr": 23514.0,
+      "mcap_usd_mn": 2498.0,
       "detail_url": "/z47-forty-seven/milkymist",
-      "index_weight_pct": 0.702939
+      "index_weight_pct": 0.701115
     }
   ],
   "movers": {
@@ -4858,8 +4858,8 @@
         "sector": "Consumer / Consumer Tech",
         "slug": "atherenerg",
         "detail_url": "/z47-forty-seven/atherenerg",
-        "ret": 37.93,
-        "ret_1m": 37.93
+        "ret": 38.15,
+        "ret_1m": 38.15
       },
       {
         "name": "Urban Company",
@@ -4867,8 +4867,8 @@
         "sector": "Consumer / Consumer Tech",
         "slug": "urbanco",
         "detail_url": "/z47-forty-seven/urbanco",
-        "ret": 18.36,
-        "ret_1m": 18.36
+        "ret": 17.75,
+        "ret_1m": 17.75
       },
       {
         "name": "Eternal (Zomato)",
@@ -4876,8 +4876,8 @@
         "sector": "Consumer / Consumer Tech",
         "slug": "eternal",
         "detail_url": "/z47-forty-seven/eternal",
-        "ret": 15.99,
-        "ret_1m": 15.99
+        "ret": 15.88,
+        "ret_1m": 15.88
       },
       {
         "name": "Honasa (Mamaearth)",
@@ -4885,8 +4885,8 @@
         "sector": "Consumer / Consumer Tech",
         "slug": "honasa",
         "detail_url": "/z47-forty-seven/honasa",
-        "ret": 15.69,
-        "ret_1m": 15.69
+        "ret": 15.42,
+        "ret_1m": 15.42
       },
       {
         "name": "Lenskart",
@@ -4894,8 +4894,8 @@
         "sector": "Consumer / Consumer Tech",
         "slug": "lenskart",
         "detail_url": "/z47-forty-seven/lenskart",
-        "ret": 15.55,
-        "ret_1m": 15.55
+        "ret": 15.4,
+        "ret_1m": 15.4
       }
     ],
     "losers": [
@@ -4905,8 +4905,8 @@
         "sector": "SaaS / AI",
         "slug": "e2e",
         "detail_url": "/z47-forty-seven/e2e",
-        "ret": -18.19,
-        "ret_1m": -18.19
+        "ret": -18.58,
+        "ret_1m": -18.58
       },
       {
         "name": "Swiggy",
@@ -4914,8 +4914,8 @@
         "sector": "Consumer / Consumer Tech",
         "slug": "swiggy",
         "detail_url": "/z47-forty-seven/swiggy",
-        "ret": -17.38,
-        "ret_1m": -17.38
+        "ret": -17.66,
+        "ret_1m": -17.66
       },
       {
         "name": "RateGain",
@@ -4923,8 +4923,8 @@
         "sector": "SaaS / AI",
         "slug": "rategain",
         "detail_url": "/z47-forty-seven/rategain",
-        "ret": -17.2,
-        "ret_1m": -17.2
+        "ret": -17.14,
+        "ret_1m": -17.14
       },
       {
         "name": "Aptus Value Housing",
@@ -4932,17 +4932,17 @@
         "sector": "Fintech / Financial Services",
         "slug": "aptus",
         "detail_url": "/z47-forty-seven/aptus",
-        "ret": -16.74,
-        "ret_1m": -16.74
+        "ret": -16.61,
+        "ret_1m": -16.61
       },
       {
-        "name": "Five-Star Business Finance",
-        "ticker": "FIVESTAR",
-        "sector": "Fintech / Financial Services",
-        "slug": "fivestar",
-        "detail_url": "/z47-forty-seven/fivestar",
-        "ret": -12.35,
-        "ret_1m": -12.35
+        "name": "CarTrade",
+        "ticker": "CARTRADE",
+        "sector": "Consumer / Consumer Tech",
+        "slug": "cartrade",
+        "detail_url": "/z47-forty-seven/cartrade",
+        "ret": -12.49,
+        "ret_1m": -12.49
       }
     ]
   },
@@ -4955,8 +4955,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "atherenerg",
           "detail_url": "/z47-forty-seven/atherenerg",
-          "ret": 37.93,
-          "ret_1m": 37.93
+          "ret": 38.15,
+          "ret_1m": 38.15
         },
         {
           "name": "Urban Company",
@@ -4964,8 +4964,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "urbanco",
           "detail_url": "/z47-forty-seven/urbanco",
-          "ret": 18.36,
-          "ret_1m": 18.36
+          "ret": 17.75,
+          "ret_1m": 17.75
         },
         {
           "name": "Eternal (Zomato)",
@@ -4973,8 +4973,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "eternal",
           "detail_url": "/z47-forty-seven/eternal",
-          "ret": 15.99,
-          "ret_1m": 15.99
+          "ret": 15.88,
+          "ret_1m": 15.88
         },
         {
           "name": "Honasa (Mamaearth)",
@@ -4982,8 +4982,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "honasa",
           "detail_url": "/z47-forty-seven/honasa",
-          "ret": 15.69,
-          "ret_1m": 15.69
+          "ret": 15.42,
+          "ret_1m": 15.42
         },
         {
           "name": "Lenskart",
@@ -4991,8 +4991,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "lenskart",
           "detail_url": "/z47-forty-seven/lenskart",
-          "ret": 15.55,
-          "ret_1m": 15.55
+          "ret": 15.4,
+          "ret_1m": 15.4
         }
       ],
       "losers": [
@@ -5002,8 +5002,8 @@
           "sector": "SaaS / AI",
           "slug": "e2e",
           "detail_url": "/z47-forty-seven/e2e",
-          "ret": -18.19,
-          "ret_1m": -18.19
+          "ret": -18.58,
+          "ret_1m": -18.58
         },
         {
           "name": "Swiggy",
@@ -5011,8 +5011,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "swiggy",
           "detail_url": "/z47-forty-seven/swiggy",
-          "ret": -17.38,
-          "ret_1m": -17.38
+          "ret": -17.66,
+          "ret_1m": -17.66
         },
         {
           "name": "RateGain",
@@ -5020,8 +5020,8 @@
           "sector": "SaaS / AI",
           "slug": "rategain",
           "detail_url": "/z47-forty-seven/rategain",
-          "ret": -17.2,
-          "ret_1m": -17.2
+          "ret": -17.14,
+          "ret_1m": -17.14
         },
         {
           "name": "Aptus Value Housing",
@@ -5029,17 +5029,17 @@
           "sector": "Fintech / Financial Services",
           "slug": "aptus",
           "detail_url": "/z47-forty-seven/aptus",
-          "ret": -16.74,
-          "ret_1m": -16.74
+          "ret": -16.61,
+          "ret_1m": -16.61
         },
         {
-          "name": "Five-Star Business Finance",
-          "ticker": "FIVESTAR",
-          "sector": "Fintech / Financial Services",
-          "slug": "fivestar",
-          "detail_url": "/z47-forty-seven/fivestar",
-          "ret": -12.35,
-          "ret_1m": -12.35
+          "name": "CarTrade",
+          "ticker": "CARTRADE",
+          "sector": "Consumer / Consumer Tech",
+          "slug": "cartrade",
+          "detail_url": "/z47-forty-seven/cartrade",
+          "ret": -12.49,
+          "ret_1m": -12.49
         }
       ]
     },
@@ -5051,8 +5051,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "milkymist",
           "detail_url": "/z47-forty-seven/milkymist",
-          "ret": 69.39,
-          "ret_1m": 69.39
+          "ret": 68.51,
+          "ret_1m": 68.51
         },
         {
           "name": "Ather Energy",
@@ -5060,8 +5060,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "atherenerg",
           "detail_url": "/z47-forty-seven/atherenerg",
-          "ret": 37.29,
-          "ret_1m": 37.29
+          "ret": 37.51,
+          "ret_1m": 37.51
         },
         {
           "name": "Meesho",
@@ -5069,8 +5069,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "meesho",
           "detail_url": "/z47-forty-seven/meesho",
-          "ret": 33.38,
-          "ret_1m": 33.38
+          "ret": 33.1,
+          "ret_1m": 33.1
         },
         {
           "name": "Paytm",
@@ -5078,17 +5078,17 @@
           "sector": "Fintech / Financial Services",
           "slug": "paytm",
           "detail_url": "/z47-forty-seven/paytm",
-          "ret": 24.13,
-          "ret_1m": 24.13
+          "ret": 22.99,
+          "ret_1m": 22.99
         },
         {
-          "name": "Angel One",
-          "ticker": "ANGELONE",
-          "sector": "Fintech / Financial Services",
-          "slug": "angelone",
-          "detail_url": "/z47-forty-seven/angelone",
-          "ret": 19.76,
-          "ret_1m": 19.76
+          "name": "Nazara Technologies",
+          "ticker": "NAZARA",
+          "sector": "Consumer / Consumer Tech",
+          "slug": "nazara",
+          "detail_url": "/z47-forty-seven/nazara",
+          "ret": 20.5,
+          "ret_1m": 20.5
         }
       ],
       "losers": [
@@ -5098,8 +5098,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "policybzr",
           "detail_url": "/z47-forty-seven/policybzr",
-          "ret": -37.42,
-          "ret_1m": -37.42
+          "ret": -37.58,
+          "ret_1m": -37.58
         },
         {
           "name": "Swiggy",
@@ -5107,8 +5107,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "swiggy",
           "detail_url": "/z47-forty-seven/swiggy",
-          "ret": -30.95,
-          "ret_1m": -30.95
+          "ret": -31.18,
+          "ret_1m": -31.18
         },
         {
           "name": "Aptus Value Housing",
@@ -5116,8 +5116,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "aptus",
           "detail_url": "/z47-forty-seven/aptus",
-          "ret": -30.91,
-          "ret_1m": -30.91
+          "ret": -30.81,
+          "ret_1m": -30.81
         },
         {
           "name": "RateGain",
@@ -5125,8 +5125,8 @@
           "sector": "SaaS / AI",
           "slug": "rategain",
           "detail_url": "/z47-forty-seven/rategain",
-          "ret": -29.27,
-          "ret_1m": -29.27
+          "ret": -29.22,
+          "ret_1m": -29.22
         },
         {
           "name": "FirstCry",
@@ -5134,8 +5134,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "firstcry",
           "detail_url": "/z47-forty-seven/firstcry",
-          "ret": -22.08,
-          "ret_1m": -22.08
+          "ret": -22.18,
+          "ret_1m": -22.18
         }
       ]
     },
@@ -5147,8 +5147,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "atherenerg",
           "detail_url": "/z47-forty-seven/atherenerg",
-          "ret": 121.37,
-          "ret_1m": 121.37
+          "ret": 121.73,
+          "ret_1m": 121.73
         },
         {
           "name": "Paytm",
@@ -5156,8 +5156,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "paytm",
           "detail_url": "/z47-forty-seven/paytm",
-          "ret": 66.4,
-          "ret_1m": 66.4
+          "ret": 64.87,
+          "ret_1m": 64.87
         },
         {
           "name": "E2E Networks",
@@ -5165,8 +5165,8 @@
           "sector": "SaaS / AI",
           "slug": "e2e",
           "detail_url": "/z47-forty-seven/e2e",
-          "ret": 62.12,
-          "ret_1m": 62.12
+          "ret": 61.34,
+          "ret_1m": 61.34
         },
         {
           "name": "BlueStone",
@@ -5174,8 +5174,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "bluestone",
           "detail_url": "/z47-forty-seven/bluestone",
-          "ret": 55.59,
-          "ret_1m": 55.59
+          "ret": 53.92,
+          "ret_1m": 53.92
         },
         {
           "name": "Eternal (Zomato)",
@@ -5183,8 +5183,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "eternal",
           "detail_url": "/z47-forty-seven/eternal",
-          "ret": 52.63,
-          "ret_1m": 52.63
+          "ret": 52.48,
+          "ret_1m": 52.48
         }
       ],
       "losers": [
@@ -5194,8 +5194,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "policybzr",
           "detail_url": "/z47-forty-seven/policybzr",
-          "ret": -40.26,
-          "ret_1m": -40.26
+          "ret": -40.41,
+          "ret_1m": -40.41
         },
         {
           "name": "Aptus Value Housing",
@@ -5203,8 +5203,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "aptus",
           "detail_url": "/z47-forty-seven/aptus",
-          "ret": -34.02,
-          "ret_1m": -34.02
+          "ret": -33.92,
+          "ret_1m": -33.92
         },
         {
           "name": "MedPlus Health",
@@ -5212,8 +5212,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "medplus",
           "detail_url": "/z47-forty-seven/medplus",
-          "ret": -33.76,
-          "ret_1m": -33.76
+          "ret": -33.61,
+          "ret_1m": -33.61
         },
         {
           "name": "FirstCry",
@@ -5221,8 +5221,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "firstcry",
           "detail_url": "/z47-forty-seven/firstcry",
-          "ret": -27.81,
-          "ret_1m": -27.81
+          "ret": -27.91,
+          "ret_1m": -27.91
         },
         {
           "name": "Swiggy",
@@ -5230,8 +5230,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "swiggy",
           "detail_url": "/z47-forty-seven/swiggy",
-          "ret": -26.19,
-          "ret_1m": -26.19
+          "ret": -26.44,
+          "ret_1m": -26.44
         }
       ]
     },
@@ -5243,8 +5243,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "atherenerg",
           "detail_url": "/z47-forty-seven/atherenerg",
-          "ret": 172.5,
-          "ret_1m": 172.5
+          "ret": 172.93,
+          "ret_1m": 172.93
         },
         {
           "name": "E2E Networks",
@@ -5252,8 +5252,8 @@
           "sector": "SaaS / AI",
           "slug": "e2e",
           "detail_url": "/z47-forty-seven/e2e",
-          "ret": 170.16,
-          "ret_1m": 170.16
+          "ret": 168.86,
+          "ret_1m": 168.86
         },
         {
           "name": "Honasa (Mamaearth)",
@@ -5261,8 +5261,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "honasa",
           "detail_url": "/z47-forty-seven/honasa",
-          "ret": 80.06,
-          "ret_1m": 80.06
+          "ret": 79.64,
+          "ret_1m": 79.64
         },
         {
           "name": "Lenskart",
@@ -5270,17 +5270,17 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "lenskart",
           "detail_url": "/z47-forty-seven/lenskart",
-          "ret": 68.63,
-          "ret_1m": 68.63
+          "ret": 68.42,
+          "ret_1m": 68.42
         },
         {
-          "name": "BlueStone",
-          "ticker": "BLUESTONE",
+          "name": "Nazara Technologies",
+          "ticker": "NAZARA",
           "sector": "Consumer / Consumer Tech",
-          "slug": "bluestone",
-          "detail_url": "/z47-forty-seven/bluestone",
-          "ret": 51.05,
-          "ret_1m": 51.05
+          "slug": "nazara",
+          "detail_url": "/z47-forty-seven/nazara",
+          "ret": 53.02,
+          "ret_1m": 53.02
         }
       ],
       "losers": [
@@ -5290,8 +5290,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "swiggy",
           "detail_url": "/z47-forty-seven/swiggy",
-          "ret": -51.57,
-          "ret_1m": -51.57
+          "ret": -51.74,
+          "ret_1m": -51.74
         },
         {
           "name": "MapmyIndia",
@@ -5299,8 +5299,8 @@
           "sector": "SaaS / AI",
           "slug": "mapmyindia",
           "detail_url": "/z47-forty-seven/mapmyindia",
-          "ret": -48.57,
-          "ret_1m": -48.57
+          "ret": -48.59,
+          "ret_1m": -48.59
         },
         {
           "name": "FirstCry",
@@ -5308,8 +5308,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "firstcry",
           "detail_url": "/z47-forty-seven/firstcry",
-          "ret": -44.45,
-          "ret_1m": -44.45
+          "ret": -44.52,
+          "ret_1m": -44.52
         },
         {
           "name": "PolicyBazaar",
@@ -5317,8 +5317,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "policybzr",
           "detail_url": "/z47-forty-seven/policybzr",
-          "ret": -39.46,
-          "ret_1m": -39.46
+          "ret": -39.61,
+          "ret_1m": -39.61
         },
         {
           "name": "MakeMyTrip",
@@ -5339,8 +5339,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "atherenerg",
           "detail_url": "/z47-forty-seven/atherenerg",
-          "ret": 210.34,
-          "ret_1m": 210.34
+          "ret": 210.83,
+          "ret_1m": 210.83
         },
         {
           "name": "E2E Networks",
@@ -5348,8 +5348,8 @@
           "sector": "SaaS / AI",
           "slug": "e2e",
           "detail_url": "/z47-forty-seven/e2e",
-          "ret": 106.81,
-          "ret_1m": 106.81
+          "ret": 105.81,
+          "ret_1m": 105.81
         },
         {
           "name": "Lenskart",
@@ -5357,8 +5357,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "lenskart",
           "detail_url": "/z47-forty-seven/lenskart",
-          "ret": 71.39,
-          "ret_1m": 71.39
+          "ret": 71.17,
+          "ret_1m": 71.17
         },
         {
           "name": "Honasa (Mamaearth)",
@@ -5366,8 +5366,8 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "honasa",
           "detail_url": "/z47-forty-seven/honasa",
-          "ret": 70.87,
-          "ret_1m": 70.87
+          "ret": 70.47,
+          "ret_1m": 70.47
         },
         {
           "name": "Nazara Technologies",
@@ -5375,28 +5375,28 @@
           "sector": "Consumer / Consumer Tech",
           "slug": "nazara",
           "detail_url": "/z47-forty-seven/nazara",
-          "ret": 57.72,
-          "ret_1m": 57.72
+          "ret": 59.81,
+          "ret_1m": 59.81
         }
       ],
       "losers": [
-        {
-          "name": "FirstCry",
-          "ticker": "FIRSTCRY",
-          "sector": "Consumer / Consumer Tech",
-          "slug": "firstcry",
-          "detail_url": "/z47-forty-seven/firstcry",
-          "ret": -52.14,
-          "ret_1m": -52.14
-        },
         {
           "name": "Swiggy",
           "ticker": "SWIGGY",
           "sector": "Consumer / Consumer Tech",
           "slug": "swiggy",
           "detail_url": "/z47-forty-seven/swiggy",
-          "ret": -52.07,
-          "ret_1m": -52.07
+          "ret": -52.24,
+          "ret_1m": -52.24
+        },
+        {
+          "name": "FirstCry",
+          "ticker": "FIRSTCRY",
+          "sector": "Consumer / Consumer Tech",
+          "slug": "firstcry",
+          "detail_url": "/z47-forty-seven/firstcry",
+          "ret": -52.21,
+          "ret_1m": -52.21
         },
         {
           "name": "MapmyIndia",
@@ -5404,8 +5404,8 @@
           "sector": "SaaS / AI",
           "slug": "mapmyindia",
           "detail_url": "/z47-forty-seven/mapmyindia",
-          "ret": -47.6,
-          "ret_1m": -47.6
+          "ret": -47.62,
+          "ret_1m": -47.62
         },
         {
           "name": "PolicyBazaar",
@@ -5413,8 +5413,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "policybzr",
           "detail_url": "/z47-forty-seven/policybzr",
-          "ret": -39.79,
-          "ret_1m": -39.79
+          "ret": -39.94,
+          "ret_1m": -39.94
         },
         {
           "name": "Aptus Value Housing",
@@ -5422,8 +5422,8 @@
           "sector": "Fintech / Financial Services",
           "slug": "aptus",
           "detail_url": "/z47-forty-seven/aptus",
-          "ret": -39.41,
-          "ret_1m": -39.41
+          "ret": -39.32,
+          "ret_1m": -39.32
         }
       ]
     }
@@ -5432,46 +5432,46 @@
     {
       "name": "Consumer / Consumer Tech",
       "count": 21,
-      "weight_pct": 63.4,
-      "avg_ret_1m": 5.6,
+      "weight_pct": 63.5,
+      "avg_ret_1m": 5.38,
       "top_mover": {
         "name": "Ather Energy",
-        "ret_1m": 37.93
+        "ret_1m": 38.15
       },
-      "index_weight_pct": 55.877999
+      "index_weight_pct": 55.93041
     },
     {
       "name": "Fintech / Financial Services",
       "count": 11,
       "weight_pct": 23.7,
-      "avg_ret_1m": 2.53,
+      "avg_ret_1m": 2.34,
       "top_mover": {
         "name": "Angel One",
-        "ret_1m": 15.35
+        "ret_1m": 14.49
       },
-      "index_weight_pct": 29.098337
+      "index_weight_pct": 29.037859
     },
     {
       "name": "SaaS / AI",
       "count": 8,
       "weight_pct": 5.9,
-      "avg_ret_1m": -3.09,
+      "avg_ret_1m": -3.33,
       "top_mover": {
         "name": "Fractal Analytics",
-        "ret_1m": 14.65
+        "ret_1m": 13.61
       },
-      "index_weight_pct": 6.994293
+      "index_weight_pct": 7.001587
     },
     {
       "name": "B2B",
       "count": 7,
       "weight_pct": 6.9,
-      "avg_ret_1m": 0.81,
+      "avg_ret_1m": 0.61,
       "top_mover": {
         "name": "Delhivery",
-        "ret_1m": 10.1
+        "ret_1m": 9.85
       },
-      "index_weight_pct": 8.02937
+      "index_weight_pct": 8.030145
     }
   ],
   "events": [
