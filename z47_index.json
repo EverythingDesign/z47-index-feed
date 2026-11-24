@@ -1,7 +1,7 @@
 {
   "meta": {
-    "generated_at": "2026-11-24T15:00:56+05:30",
-    "generated_at_ist": "24 Nov 2026, 15:00 IST",
+    "generated_at": "2026-11-24T15:15:53+05:30",
+    "generated_at_ist": "24 Nov 2026, 15:15 IST",
     "market_open": false,
     "data_as_of": "2026-11-24",
     "pricing_mode": "scheduled_snapshot",
@@ -10,7 +10,7 @@
     "usdinr": {
       "value": 92.9,
       "daily_pct": 0.0,
-      "as_of": "15:01 IST"
+      "as_of": "15:16 IST"
     },
     "base_date": "2024-01-02",
     "anchor_date": "2026-10-30",
@@ -37,7 +37,7 @@
   "index": {
     "value": 136.53,
     "value_mcap": 148.65,
-    "daily_pct": -0.34,
+    "daily_pct": -0.4,
     "returns": {
       "1M": 6.97,
       "3M": -3.73,
@@ -3718,72 +3718,72 @@
     },
     {
       "date": "2026-11-02",
-      "z47": 129.9499,
+      "z47": 130.006,
       "nifty500": 114.5378
     },
     {
       "date": "2026-11-03",
-      "z47": 131.6381,
+      "z47": 131.6869,
       "nifty500": 115.9743
     },
     {
       "date": "2026-11-04",
-      "z47": 132.6592,
+      "z47": 132.7307,
       "nifty500": 117.2558
     },
     {
       "date": "2026-11-05",
-      "z47": 135.4669,
+      "z47": 135.5435,
       "nifty500": 119.6015
     },
     {
       "date": "2026-11-06",
-      "z47": 134.9465,
+      "z47": 135.0181,
       "nifty500": 120.7975
     },
     {
       "date": "2026-11-09",
-      "z47": 135.6579,
+      "z47": 135.7486,
       "nifty500": 121.3643
     },
     {
       "date": "2026-11-11",
-      "z47": 136.4317,
+      "z47": 136.5467,
       "nifty500": 122.4576
     },
     {
       "date": "2026-11-12",
-      "z47": 139.345,
+      "z47": 139.4681,
       "nifty500": 122.903
     },
     {
       "date": "2026-11-13",
-      "z47": 140.0402,
+      "z47": 140.1647,
       "nifty500": 122.2253
     },
     {
       "date": "2026-11-16",
-      "z47": 139.3897,
+      "z47": 139.4858,
       "nifty500": 122.319
     },
     {
       "date": "2026-11-17",
-      "z47": 139.4306,
+      "z47": 139.5329,
       "nifty500": 122.679
     },
     {
       "date": "2026-11-18",
-      "z47": 137.6787,
+      "z47": 137.7552,
       "nifty500": 121.69
     },
     {
       "date": "2026-11-19",
-      "z47": 136.7289,
+      "z47": 136.8135,
       "nifty500": 123.0645
     },
     {
       "date": "2026-11-20",
-      "z47": 136.9878,
+      "z47": 137.0749,
       "nifty500": 124.0514
     },
     {
@@ -3942,12 +3942,12 @@
       "price": 181.92,
       "ccy": "INR",
       "daily_pct": 6.62,
-      "ret_1m": null,
+      "ret_1m": 26.61,
       "ret_3m": null,
       "ret_6m": null,
       "ret_1y": null,
       "ret_ytd": null,
-      "since_pct": 0.0,
+      "since_pct": 31.59,
       "mcap_mn": 308084.5,
       "mcap_cr": 30808.5,
       "mcap_usd_mn": 3316.3,
@@ -4878,6 +4878,15 @@
   "movers": {
     "gainers": [
       {
+        "name": "Zetwerk",
+        "ticker": "ZETWERK",
+        "sector": "B2B",
+        "slug": "zetwerk",
+        "detail_url": "/z47-forty-seven/zetwerk",
+        "ret": 26.61,
+        "ret_1m": 26.61
+      },
+      {
         "name": "Ather Energy",
         "ticker": "ATHERENERG",
         "sector": "Consumer / Consumer Tech",
@@ -4912,15 +4921,6 @@
         "detail_url": "/z47-forty-seven/delhivery",
         "ret": 21.87,
         "ret_1m": 21.87
-      },
-      {
-        "name": "Honasa (Mamaearth)",
-        "ticker": "HONASA",
-        "sector": "Consumer / Consumer Tech",
-        "slug": "honasa",
-        "detail_url": "/z47-forty-seven/honasa",
-        "ret": 21.66,
-        "ret_1m": 21.66
       }
     ],
     "losers": [
@@ -4975,6 +4975,15 @@
     "1M": {
       "gainers": [
         {
+          "name": "Zetwerk",
+          "ticker": "ZETWERK",
+          "sector": "B2B",
+          "slug": "zetwerk",
+          "detail_url": "/z47-forty-seven/zetwerk",
+          "ret": 26.61,
+          "ret_1m": 26.61
+        },
+        {
           "name": "Ather Energy",
           "ticker": "ATHERENERG",
           "sector": "Consumer / Consumer Tech",
@@ -5009,15 +5018,6 @@
           "detail_url": "/z47-forty-seven/delhivery",
           "ret": 21.87,
           "ret_1m": 21.87
-        },
-        {
-          "name": "Honasa (Mamaearth)",
-          "ticker": "HONASA",
-          "sector": "Consumer / Consumer Tech",
-          "slug": "honasa",
-          "detail_url": "/z47-forty-seven/honasa",
-          "ret": 21.66,
-          "ret_1m": 21.66
         }
       ],
       "losers": [
@@ -5491,10 +5491,10 @@
       "name": "B2B",
       "count": 7,
       "weight_pct": 7.1,
-      "avg_ret_1m": 2.37,
+      "avg_ret_1m": 5.83,
       "top_mover": {
-        "name": "Delhivery",
-        "ret_1m": 21.87
+        "name": "Zetwerk",
+        "ret_1m": 26.61
       },
       "index_weight_pct": 8.142686
     }
