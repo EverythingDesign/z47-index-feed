@@ -4,11 +4,11 @@
   "name": "Rentomojo",
   "exchange": "NSE",
   "screener_url": "https://www.screener.in/company/RENTOMOJO/",
-  "mcap_cr": 5747.0,
+  "mcap_cr": 5739.0,
   "price": 551.0,
   "high": 652.0,
   "low": 480.0,
-  "pe": 73.8,
+  "pe": 73.7,
   "roce": 21.5,
   "roe": 45.4,
   "about": "Incorporated in April 2012, Rentomojo \nLtd is a D2C online rental and subscription platform for furniture and appliances in India[1]",
@@ -19,14 +19,18 @@
   "screener_id": "1286155",
   "ratios_ok": 6,
   "daily_pct": -0.28,
-  "screener_consolidated": true,
-  "financial_basis": "consolidated",
-  "financial_source_url": "https://www.screener.in/company/RENTOMOJO/consolidated/",
-  "ratios_source_url": "https://www.screener.in/company/RENTOMOJO/consolidated/",
+  "screener_consolidated": false,
+  "financial_basis": "standalone",
+  "financial_source_url": "https://www.screener.in/company/RENTOMOJO/",
+  "ratios_source_url": "https://www.screener.in/company/RENTOMOJO/",
   "pl": {
     "unit": "Rs. Crores",
-    "consolidated": true,
+    "consolidated": false,
     "periods": [
+      "Mar 2020",
+      "Mar 2021",
+      "Mar 2022",
+      "Mar 2023",
       "Mar 2024",
       "Mar 2025",
       "Mar 2026"
@@ -36,6 +40,10 @@
         "key": "sales",
         "label": "Sales",
         "values": [
+          "143",
+          "106",
+          "99",
+          "121",
           "193",
           "266",
           "387"
@@ -46,6 +54,10 @@
         "label": "Sales growth",
         "values": [
           "",
+          "-26%",
+          "-7%",
+          "+23%",
+          "+59%",
           "+38%",
           "+46%"
         ]
@@ -54,6 +66,10 @@
         "key": "expenses",
         "label": "Expenses",
         "values": [
+          "203",
+          "158",
+          "100",
+          "96",
           "117",
           "151",
           "224"
@@ -63,6 +79,10 @@
         "key": "operating_profit",
         "label": "Operating Profit",
         "values": [
+          "-60",
+          "-53",
+          "-1",
+          "25",
           "76",
           "114",
           "163"
@@ -72,6 +92,10 @@
         "key": "opm",
         "label": "OPM %",
         "values": [
+          "-42%",
+          "-50%",
+          "-1.4%",
+          "21%",
           "39%",
           "43%",
           "42%"
@@ -81,6 +105,10 @@
         "key": "other_income",
         "label": "Other Income",
         "values": [
+          "-2",
+          "-2",
+          "-1",
+          "2",
           "2",
           "4",
           "1"
@@ -90,6 +118,10 @@
         "key": "interest",
         "label": "Interest",
         "values": [
+          "12",
+          "9",
+          "7",
+          "11",
           "26",
           "27",
           "25"
@@ -99,6 +131,10 @@
         "key": "depreciation",
         "label": "Depreciation",
         "values": [
+          "11",
+          "12",
+          "4",
+          "10",
           "30",
           "49",
           "70"
@@ -108,6 +144,10 @@
         "key": "profit_before_tax",
         "label": "Profit before tax",
         "values": [
+          "-86",
+          "-75",
+          "-14",
+          "6",
           "22",
           "43",
           "68"
@@ -119,6 +159,10 @@
         "values": [
           "0%",
           "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
           "-54%"
         ]
       },
@@ -126,6 +170,10 @@
         "key": "net_profit",
         "label": "Net Profit",
         "values": [
+          "-86",
+          "-75",
+          "-14",
+          "6",
           "22",
           "43",
           "104"
@@ -135,6 +183,10 @@
         "key": "eps_in_rs",
         "label": "EPS in Rs",
         "values": [
+          "-8.52",
+          "-7.47",
+          "-1.35",
+          "0.62",
           "2.23",
           "4.29",
           "10.39"
@@ -146,11 +198,15 @@
         "values": [
           "0%",
           "0%",
+          "0%",
+          "0%",
+          "0%",
+          "0%",
           "0%"
         ]
       }
     ],
-    "source_url": "https://www.screener.in/company/RENTOMOJO/consolidated/"
+    "source_url": "https://www.screener.in/company/RENTOMOJO/"
   },
   "growth": {
     "cards": [
@@ -166,12 +222,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 30.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": 47.0
           },
           {
             "key": "ttm",
@@ -192,12 +248,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 28.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": null
+            "value": 169.0
           },
           {
             "key": "ttm",
@@ -244,12 +300,12 @@
           {
             "key": "5y",
             "label": "5 Years:",
-            "value": null
+            "value": 33.0
           },
           {
             "key": "3y",
             "label": "3 Years:",
-            "value": 32.0
+            "value": 36.0
           },
           {
             "key": "last",
@@ -360,8 +416,8 @@
       ]
     }
   },
-  "generated_at": "2026-11-26T01:49:20.676850+05:30",
-  "generated_at_ist": "26 Nov 2026, 01:49 IST",
+  "generated_at": "2026-11-26T04:00:52.988181+05:30",
+  "generated_at_ist": "26 Nov 2026, 04:00 IST",
   "source": "screener",
   "website": "https://www.rentomojo.com/",
   "website_label": "rentomojo.com"
